@@ -1,0 +1,170 @@
+import { create } from "zustand";
+import { getApiUrl } from "@/lib/config";
+import { fetchApi } from "@/hooks/useAuthToken";
+
+interface User {
+  id: string;
+  phone: string;
+  name?: string;
+  username?: string;
+}
+
+interface AuthState {
+  user: User | null;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+
+  setUser: (user: User | null) => void;
+  setLoading: (loading: boolean) => void;
+
+  sendOTP: (phone: string) => Promise<boolean>;
+  verifyOTP: (phone: string, otp: string) => Promise<boolean>;
+  resendOTP: (phone: string) => Promise<boolean>;
+  logout: () => Promise<void>;
+  refreshToken: () => Promise<boolean>;
+  getUserInfo: () => Promise<boolean>;
+}
+let refreshingTokenPromise: Promise<boolean> | null = null;
+
+export const useAuthStore = create<AuthState>()((set, get) => ({
+  user: null,
+  isAuthenticated: false,
+  isLoading: true,
+
+  setUser: (user) => set({ user, isAuthenticated: !!user }),
+
+  setLoading: (isLoading) => set({ isLoading }),
+
+  sendOTP: async (phone: string): Promise<boolean> => {
+    try {
+      const response = await fetch(getApiUrl("/v1/auth/send-otp"), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ phone }),
+        credentials: "include",
+      });
+
+      if (response.ok) return true;
+      const error = await response.json();
+      throw new Error(error.message || "Failed to send OTP");
+    } catch (error) {
+      console.error("Send OTP error:", error);
+      throw error;
+    }
+  },
+
+  verifyOTP: async (phone: string, otp: string): Promise<boolean> => {
+    try {
+      const response = await fetch(getApiUrl("/v1/auth/verfiy-otp"), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ phone, otpCode: otp }),
+        credentials: "include",
+      });
+      if (response.ok) {
+        const data = await response.json();
+        set({ user: data.user ?? null, isAuthenticated: !!data.user });
+        return !!data.user;
+      } else {
+        const error = await response.json();
+        throw new Error(error.message || "Invalid OTP");
+      }
+    } catch (error) {
+      console.error("Verify OTP error:", error);
+      set({ user: null, isAuthenticated: false });
+      throw error;
+    }
+  },
+
+  resendOTP: async (phone: string): Promise<boolean> => {
+    try {
+      const response = await fetch(getApiUrl("/v1/auth/resend-otp"), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ phone }),
+        credentials: "include",
+      });
+
+      if (response.ok) return true;
+      const error = await response.json();
+      throw new Error(error.message || "Failed to resend OTP");
+    } catch (error) {
+      console.error("Resend OTP error:", error);
+      throw error;
+    }
+  },
+
+  logout: async (): Promise<void> => {
+    try {
+      await fetch(getApiUrl("/v1/auth/logout"), {
+        method: "GET",
+        credentials: "include",
+      });
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      set({ user: null, isAuthenticated: false });
+    }
+  },
+
+  getUserInfo: async (): Promise<boolean> => {
+    try {
+      const data = await fetchApi.get<{ data: User }>("/v1/user");
+      set({ user: data.data ?? null, isAuthenticated: !!data.data });
+      return !!data.data;
+    } catch (error) {
+      console.error("Get user info error:", error);
+      set({ user: null, isAuthenticated: false });
+      return false;
+    }
+  },
+
+  refreshToken: async (): Promise<boolean> => {
+    if (refreshingTokenPromise) {
+      return refreshingTokenPromise;
+    }
+
+    refreshingTokenPromise = (async () => {
+      try {
+        const response = await fetch(getApiUrl("/v1/auth/refresh"), {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.user) {
+            set({
+              user: data.user,
+              isAuthenticated: true,
+            });
+            return true;
+          } else {
+            const ok = await get().getUserInfo();
+            return ok;
+          }
+        } else {
+          set({ user: null, isAuthenticated: false });
+          return false;
+        }
+      } catch (error) {
+        console.error("Refresh token error:", error);
+        set({ user: null, isAuthenticated: false });
+        return false;
+      } finally {
+        refreshingTokenPromise = null;
+      }
+    })();
+
+    return refreshingTokenPromise;
+  },
+}));
