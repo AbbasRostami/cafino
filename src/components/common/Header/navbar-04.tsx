@@ -28,7 +28,8 @@ import {
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import CafeinLogo from "./../../../assets/Cafino_prev_ui.png";
+import CafeinLogoLight from "./../../../assets/Logo/9.png";
+import CafeinLogoDark from "./../../../assets/Logo/10.png";
 import Image from "next/image";
 import { ThemeSwitcher } from "../ThemeToggle";
 const Navbar = () => {
@@ -58,7 +59,21 @@ const Navbar = () => {
     <div className="bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 dark:from-[#18181c] dark:via-[#23232a] dark:to-[#18181c]">
       <nav className="fixed top-6 inset-x-4 h-16 bg-white/80 dark:bg-[#23232a]/80 backdrop-blur-sm border border-white/20 dark:border-[#23232a]/60 max-w-screen-xl mx-auto rounded-full shadow-lg z-50">
         <div className="h-full flex items-center justify-between mx-auto px-4">
-          <Image src={CafeinLogo} width={140} height={140} alt="Cafein Logo" />
+          <div className="relative w-48 h-48 ">
+            <Image
+              src={CafeinLogoLight}
+              alt="Cafein Logo Light"
+              className="block dark:hidden w-full h-full object-contain mt-3 "
+              fill
+            />
+
+            <Image
+              src={CafeinLogoDark}
+              alt="Cafein Logo Dark"
+              className="hidden dark:block w-full h-full object-contain "
+              fill
+            />
+          </div>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-6">
@@ -102,7 +117,7 @@ const Navbar = () => {
                     <DropdownMenuTrigger asChild>
                       <Button
                         variant="outline"
-                        className="hidden sm:inline-flex rounded-full gap-2 cursor-pointer px-2"
+                        className="hidden bg-gray-200 sm:inline-flex rounded-full gap-2 cursor-pointer px-4 py-5"
                       >
                         <Avatar>
                           <AvatarImage
@@ -117,22 +132,22 @@ const Navbar = () => {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent side="bottom" align="end">
-                      <DropdownMenuLabel>
+                      <DropdownMenuLabel className="font-bold">
                         {user.first_name} {user.last_name}
-                        <div className="text-xs text-muted-foreground">
+                        <div className="text-xs text-muted-foreground font-bold">
                           {user.phone}
                         </div>
                       </DropdownMenuLabel>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem asChild className="cursor-pointer">
-                        <Link href="/profile">
+                        <Link href="/profile" className="font-bold">
                           <User className="w-4 h-4" />
                           ورود به پنل
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem
-                        className="cursor-pointer"
+                        className="cursor-pointer font-bold"
                         onClick={async () => {
                           await logout();
                         }}
@@ -175,12 +190,21 @@ const Navbar = () => {
                   <div className="flex flex-col h-full">
                     {/* Logo centered at top */}
                     <div className="flex justify-center border-b">
-                      <Image
-                        src={CafeinLogo}
-                        width={120}
-                        height={120}
-                        alt="Cafein Logo"
-                      />
+                      <div className="relative w-10 sm:w-48 h-48">
+                        <Image
+                          src={CafeinLogoLight}
+                          alt="Cafein Logo Light"
+                          className="block dark:hidden w-full h-full object-contain"
+                          fill
+                        />
+
+                        <Image
+                          src={CafeinLogoDark}
+                          alt="Cafein Logo Dark"
+                          className="hidden dark:block w-full h-full object-contain"
+                          fill
+                        />
+                      </div>
                     </div>
 
                     {/* Navigation items */}
