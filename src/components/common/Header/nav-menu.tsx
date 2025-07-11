@@ -17,7 +17,7 @@ import {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link href="#">بلاگ</Link>
+            <Link  href="/success">بلاگ</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>

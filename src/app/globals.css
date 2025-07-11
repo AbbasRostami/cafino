@@ -121,6 +121,13 @@
   }
 }
 
+body {
+  @apply min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50;
+}
+.dark body {
+  @apply bg-gradient-to-br from-[#18181c] via-[#23232a] to-[#18181c];
+}
+
 [data-input-otp-container] {
   direction: ltr !important;
 }

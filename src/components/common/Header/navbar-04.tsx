@@ -3,17 +3,62 @@
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Menu, Home, FileText, Users, Phone, LogIn } from "lucide-react";
-import { Logo } from "./logo";
+import {
+  Menu,
+  Home,
+  FileText,
+  Users,
+  Phone,
+  LogIn,
+  User,
+  LogOut,
+} from "lucide-react";
+
 import { LoginForm } from "@/components/auth/LoginForm";
 import Link from "next/link";
-
+import { useAuthStore } from "@/store/authStore";
+import type { User as UserType } from "@/store/authStore";
+import React, { useState, useEffect } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import CafeinLogo from "./../../../assets/Cafino_prev_ui.png";
+import Image from "next/image";
+import { ThemeSwitcher } from "../ThemeToggle";
 const Navbar = () => {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
+  const [openLoginDialog, setOpenLoginDialog] = useState(false);
+  const [openMobileLoginDialog, setOpenMobileLoginDialog] = useState(false);
+
+  const getUserInfo = useAuthStore((state) => state.getUserInfo);
+
+  useEffect(() => {
+    if (isAuthenticated && !user) {
+      getUserInfo();
+    }
+  }, []);
+
+  const getInitials = (user: UserType | null) => {
+    if (!user) return "?";
+    if (user.first_name && user.last_name)
+      return user.first_name[0] + user.last_name[0];
+    if (user.username) return user.username[0];
+    return "?";
+  };
+
   return (
-    <div className="min-h-screen bg-muted">
-      <nav className="fixed top-6 inset-x-4 h-16 bg-background border dark:border-slate-700/70 max-w-screen-xl mx-auto rounded-full">
+    <div className="bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 dark:from-[#18181c] dark:via-[#23232a] dark:to-[#18181c]">
+      <nav className="fixed top-6 inset-x-4 h-16 bg-white/80 dark:bg-[#23232a]/80 backdrop-blur-sm border border-white/20 dark:border-[#23232a]/60 max-w-screen-xl mx-auto rounded-full shadow-lg z-50">
         <div className="h-full flex items-center justify-between mx-auto px-4">
-          <Logo />
+          <Image src={CafeinLogo} width={140} height={140} alt="Cafein Logo" />
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-6">
@@ -25,7 +70,7 @@ const Navbar = () => {
               خانه
             </Link>
             <Link
-              href="#"
+              href="/success"
               className="flex items-center gap-2 hover:text-primary transition-colors"
             >
               <FileText className="w-4 h-4" />
@@ -48,19 +93,69 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-3">
+            <ThemeSwitcher />
             {/* Desktop Login Button */}
-            <Dialog>
+            <Dialog open={openLoginDialog} onOpenChange={setOpenLoginDialog}>
               <DialogTrigger asChild>
-                <Button
-                  variant="outline"
-                  className="hidden sm:inline-flex rounded-full gap-2"
-                >
-                  <LogIn className="w-4 h-4" />
-                  ورود
-                </Button>
+                {isAuthenticated && user ? (
+                  <DropdownMenu dir="rtl">
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="hidden sm:inline-flex rounded-full gap-2 cursor-pointer px-2"
+                      >
+                        <Avatar>
+                          <AvatarImage
+                            src={user.imageUrl}
+                            alt={user.username || "avatar"}
+                          />
+                          <AvatarFallback>{getInitials(user)}</AvatarFallback>
+                        </Avatar>
+                        <span className="max-w-[100px] truncate">
+                          {user.first_name || user.username}
+                        </span>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent side="bottom" align="end">
+                      <DropdownMenuLabel>
+                        {user.first_name} {user.last_name}
+                        <div className="text-xs text-muted-foreground">
+                          {user.phone}
+                        </div>
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem asChild className="cursor-pointer">
+                        <Link href="/profile">
+                          <User className="w-4 h-4" />
+                          ورود به پنل
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        className="cursor-pointer"
+                        onClick={async () => {
+                          await logout();
+                        }}
+                        variant="destructive"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        خروج
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                ) : (
+                  <Button
+                    variant="outline"
+                    className="hidden sm:inline-flex rounded-full gap-2 cursor-pointer"
+                    onClick={() => setOpenLoginDialog(true)}
+                  >
+                    <LogIn className="w-4 h-4 cursor-pointer" />
+                    ورود به سیستم
+                  </Button>
+                )}
               </DialogTrigger>
-              <DialogContent className="sm:max-w-md">
-                <LoginForm />
+              <DialogContent className="sm:max-w-md p-0">
+                <LoginForm onSuccess={() => setOpenLoginDialog(false)} />
               </DialogContent>
             </Dialog>
 
@@ -79,55 +174,90 @@ const Navbar = () => {
                 <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                   <div className="flex flex-col h-full">
                     {/* Logo centered at top */}
-                    <div className="flex justify-center py-6 border-b">
-                      <Logo />
+                    <div className="flex justify-center border-b">
+                      <Image
+                        src={CafeinLogo}
+                        width={120}
+                        height={120}
+                        alt="Cafein Logo"
+                      />
                     </div>
 
                     {/* Navigation items */}
-                    <div className="flex-1 py-6 px-4 space-y-4">
+                    <div className="flex-1 py-6 px-4 space-y-2 overflow-y-auto">
                       <Link
                         href="#"
-                        className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition-colors"
+                        className="flex items-center gap-3 p-4 rounded-xl hover:bg-primary/5 hover:text-primary transition-all duration-200 border border-transparent hover:border-primary/20"
                       >
                         <Home className="w-5 h-5" />
                         <span>خانه</span>
                       </Link>
                       <Link
-                        href="#"
-                        className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition-colors"
+                        href="/success"
+                        className="flex items-center gap-3 p-4 rounded-xl hover:bg-primary/5 hover:text-primary transition-all duration-200 border border-transparent hover:border-primary/20"
                       >
                         <FileText className="w-5 h-5" />
                         <span>بلاگ</span>
                       </Link>
                       <Link
                         href="#"
-                        className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition-colors"
+                        className="flex items-center gap-3 p-4 rounded-xl hover:bg-primary/5 hover:text-primary transition-all duration-200 border border-transparent hover:border-primary/20"
                       >
                         <Users className="w-5 h-5" />
                         <span>درباره ما</span>
                       </Link>
                       <Link
                         href="#"
-                        className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition-colors"
+                        className="flex items-center gap-3 p-4 rounded-xl hover:bg-primary/5 hover:text-primary transition-all duration-200 border border-transparent hover:border-primary/20"
                       >
                         <Phone className="w-5 h-5" />
                         <span>تماس با ما</span>
                       </Link>
+                      {isAuthenticated && user && (
+                        <>
+                          <Link
+                            href="/profile"
+                            className="flex items-center gap-3 p-4 rounded-xl hover:bg-primary/5 hover:text-primary transition-all duration-200 border border-transparent hover:border-primary/20"
+                          >
+                            <User className="w-5 h-5" />
+                            <span>ورود به پنل</span>
+                          </Link>
+                          <button
+                            onClick={async () => {
+                              await logout();
+                            }}
+                            className="flex items-center gap-3 p-4 rounded-xl hover:bg-destructive/5 hover:text-destructive transition-all duration-200 border border-transparent hover:border-destructive/20 text-destructive w-full text-right"
+                          >
+                            <LogOut className="w-5 h-5" />
+                            <span>خروج</span>
+                          </button>
+                        </>
+                      )}
                     </div>
 
-                    {/* Login button at bottom */}
-                    <div className="border-t pt-6 px-4">
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <Button className="w-full gap-2">
-                            <LogIn className="w-4 h-4" />
-                            ورود به سیستم
-                          </Button>
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-md">
-                          <LoginForm />
-                        </DialogContent>
-                      </Dialog>
+                    {/* Login/Profile button at bottom */}
+                    <div className="border-t pt-6 pb-6 px-4">
+                      {!isAuthenticated && (
+                        <Dialog
+                          open={openMobileLoginDialog}
+                          onOpenChange={setOpenMobileLoginDialog}
+                        >
+                          <DialogTrigger asChild>
+                            <Button
+                              className="w-full gap-2"
+                              onClick={() => setOpenMobileLoginDialog(true)}
+                            >
+                              <LogIn className="w-4 h-4 " />
+                              ورود به سیستم
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="sm:max-w-md p-0">
+                            <LoginForm
+                              onSuccess={() => setOpenMobileLoginDialog(false)}
+                            />
+                          </DialogContent>
+                        </Dialog>
+                      )}
                     </div>
                   </div>
                 </SheetContent>

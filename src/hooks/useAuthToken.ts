@@ -59,7 +59,6 @@ export async function fetchWithAuth(url: string, options: RequestInit = {}) {
       } else {
         await useAuthStore.getState().logout();
         toast.error("نشست شما منقضی شده، لطفاً دوباره وارد شوید.");
-        window.location.href = "/login";
         throw new Error("نشست منقضی شده");
       }
     }
