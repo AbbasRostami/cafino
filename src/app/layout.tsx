@@ -3,6 +3,9 @@ import "./globals.css";
 import { ThemeProvider } from "@/context/Theme-Provider";
 import localFont from "next/font/local";
 import { Toaster } from "@/components/ui/sonner";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import React from "react";
+import QueryProvider from "@/hooks/QueryProviders";
 
 const vazirmatn = localFont({
   src: "./../assets/fonts/Vazirmatn.ttf",
@@ -23,15 +26,17 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl">
       <body className={vazirmatn.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Toaster position="top-right" richColors />
-          {children}
-        </ThemeProvider>
+        <QueryProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Toaster position="top-right" richColors />
+            {children}
+          </ThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   );
