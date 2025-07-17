@@ -119,8 +119,8 @@ const Footer = () => {
             <div className="space-y-2">
               {[
                 { href: "#", text: "خانه", icon: "🏠" },
-                { href: "/category", text: "منو", icon: "🍽️" },
-                { href: "/success", text: "بلاگ", icon: "📝" },
+                { href: "/category", text: "دسته بندی", icon: "🍽️" },
+                { href: "/menu", text: "منو", icon: "📝" },
                 { href: "#", text: "درباره ما", icon: "ℹ️" },
                 { href: "#", text: "تماس با ما", icon: "📞" },
               ].map((link, index) => (
