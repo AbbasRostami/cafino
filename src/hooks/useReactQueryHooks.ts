@@ -49,7 +49,18 @@ export const useDelete = <T, D = any>(
   options?: UseMutationOptions<T, ServerError, D>
 ) => {
   return useMutation<T, ServerError, D>({
-    mutationFn: (data: D) => fetchApi.delete<T>(getUrl(data)),
+    mutationFn: (data: D) => fetchApi.delete<T>(getUrl(data), data),
+    ...options,
+  });
+};
+
+// PATCH
+export const usePatch = <T, D = any>(
+  url: string,
+  options?: UseMutationOptions<T, ServerError, D>
+) => {
+  return useMutation<T, ServerError, D>({
+    mutationFn: (data: D) => fetchApi.patch<T>(url, data),
     ...options,
   });
 };
