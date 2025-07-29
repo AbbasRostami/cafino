@@ -3,6 +3,7 @@ import {
   useMutation,
   UseQueryOptions,
   UseMutationOptions,
+  UseMutationResult,
 } from "@tanstack/react-query";
 import { fetchApi } from "@/hooks/useAuthToken";
 
@@ -23,22 +24,27 @@ export const useGet = <T>(
 
 // POST
 export const usePost = <T, D = any>(
-  url: string,
+  getUrl: (data: D) => string,
   options?: UseMutationOptions<T, ServerError, D>
 ) => {
   return useMutation<T, ServerError, D>({
-    mutationFn: (data: D) => fetchApi.post<T>(url, data),
+    mutationFn: (data: D) => fetchApi.post<T>(getUrl(data), data),
     ...options,
   });
 };
 
-// PUT
+// usePut
 export const usePut = <T, D = any>(
-  url: string,
+  getUrl: (data: D) => string,
+  getBody?: (data: D) => D,
   options?: UseMutationOptions<T, ServerError, D>
 ) => {
   return useMutation<T, ServerError, D>({
-    mutationFn: (data: D) => fetchApi.put<T>(url, data),
+    mutationFn: (data: D) => {
+      const url = getUrl(data);
+      const body = getBody ? getBody(data) : data;
+      return fetchApi.put<T>(url, body);
+    },
     ...options,
   });
 };
@@ -54,11 +60,10 @@ export const useDelete = <T, D = any>(
   });
 };
 
-// PATCH
 export const usePatch = <T, D = any>(
   url: string,
   options?: UseMutationOptions<T, ServerError, D>
-) => {
+): UseMutationResult<T, ServerError, D> => {
   return useMutation<T, ServerError, D>({
     mutationFn: (data: D) => fetchApi.patch<T>(url, data),
     ...options,

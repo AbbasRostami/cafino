@@ -1,13 +1,17 @@
 import { getApiUrl } from "@/lib/config";
 import { useAuthStore } from "@/store/authStore";
+import { cookies } from "next/headers";
 import { toast } from "sonner";
 
 const makeRequest = (url: string, options: RequestInit) => {
   const fullUrl = getApiUrl(url);
+  const isFormData = options.body instanceof FormData;
+
   const headers = {
-    "Content-Type": "application/json",
     Accept: "application/json",
     ...(options.headers || {}),
+    // Only set Content-Type for JSON, not for FormData
+    ...(isFormData ? {} : { "Content-Type": "application/json" }),
   };
 
   return fetch(fullUrl, {
@@ -37,7 +41,14 @@ const onError = async (error: Response | Error) => {
   if (error instanceof Response) {
     handleErrorStatus(error.status);
     const data = await error.json().catch(() => null);
-    throw new Error(data?.message || error.statusText || "Server Error");
+
+    // Create a custom error object that preserves all data
+    const customError = new Error(
+      data?.message || error.statusText || "Server Error"
+    );
+    (customError as any).response = { data };
+
+    throw customError;
   }
 
   throw error;
@@ -115,6 +126,40 @@ export const fetchApi = {
     }) as Promise<T>;
   },
 
-  delete: <T>(url: string, options: FetchOptions = {}): Promise<T> =>
-    fetchWithAuth(url, { ...options, method: "DELETE" }) as Promise<T>,
+  delete: <T, D = any>(
+    url: string,
+    data?: D,
+    options: FetchOptions = {}
+  ): Promise<T> => {
+    const isFormData = data instanceof FormData;
+
+    return fetchWithAuth(url, {
+      ...options,
+      method: "DELETE",
+      body: isFormData ? data : data ? JSON.stringify(data) : undefined,
+      headers: {
+        ...(options.headers || {}),
+        ...(isFormData ? {} : { "Content-Type": "application/json" }),
+      },
+    }) as Promise<T>;
+  },
+
+  patch: <T, D = any>(
+    url: string,
+    data?: D,
+    options: FetchOptions = {}
+  ): Promise<T> => {
+    const isFormData = data instanceof FormData;
+
+    return fetchWithAuth(url, {
+      ...options,
+      method: "PATCH",
+      body: isFormData ? data : data ? JSON.stringify(data) : undefined,
+      headers: {
+        ...(options.headers || {}),
+        // Don't set Content-Type for FormData - let browser set it with boundary
+        ...(isFormData ? {} : { "Content-Type": "application/json" }),
+      },
+    }) as Promise<T>;
+  },
 };
