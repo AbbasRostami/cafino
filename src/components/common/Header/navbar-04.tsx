@@ -32,35 +32,25 @@ import CafeinLogoLight from "./../../../assets/Logo/9.png";
 import CafeinLogoDark from "./../../../assets/Logo/10.png";
 import Image from "next/image";
 import { ThemeSwitcher } from "../ThemeToggle";
+// import { useCartStore } from "@/store/cartStore";
+import CartSidebar from "./CartSidebar";
+import { useUserProfile } from "@/services/update";
 const Navbar = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
   const [openLoginDialog, setOpenLoginDialog] = useState(false);
   const [openMobileLoginDialog, setOpenMobileLoginDialog] = useState(false);
 
-  const getUserInfo = useAuthStore((state) => state.getUserInfo);
-
-  useEffect(() => {
-    if (isAuthenticated && !user) {
-      getUserInfo();
-    }
-  }, []);
-
-  const getInitials = (user: UserType | null) => {
-    if (!user) return "?";
-    if (user.first_name && user.last_name)
-      return user.first_name[0] + user.last_name[0];
-    if (user.username) return user.username[0];
-    return "?";
-  };
-
+  const { data: userProfile } = useUserProfile();
+  const user = userProfile;
+  console.log("userProfile", user);
   return (
     <div className="bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 dark:from-[#18181c] dark:via-[#23232a] dark:to-[#18181c]">
       <nav className="fixed top-6 inset-x-4 h-16 bg-white/80 dark:bg-[#23232a]/80 backdrop-blur-sm border border-white/20 dark:border-[#23232a]/60 max-w-screen-xl mx-auto rounded-full shadow-lg z-50">
         <div className="h-full flex items-center justify-between mx-auto px-4">
           <div className="relative w-48 h-48 ">
             <Image
+              priority
               src={CafeinLogoLight}
               alt="Cafein Logo Light"
               className="block dark:hidden w-full h-full object-contain mt-3 "
@@ -68,6 +58,7 @@ const Navbar = () => {
             />
 
             <Image
+              priority
               src={CafeinLogoDark}
               alt="Cafein Logo Dark"
               className="hidden dark:block w-full h-full object-contain "
@@ -78,18 +69,18 @@ const Navbar = () => {
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-6">
             <Link
-              href="#"
+              href="/"
               className="flex items-center gap-2 hover:text-primary transition-colors"
             >
               <Home className="w-4 h-4" />
-              خانه
+              صفحه اصلی
             </Link>
             <Link
-              href="/success"
+              href="/menu"
               className="flex items-center gap-2 hover:text-primary transition-colors"
             >
               <FileText className="w-4 h-4" />
-              بلاگ
+              منو
             </Link>
             <Link
               href="#"
@@ -98,17 +89,15 @@ const Navbar = () => {
               <Users className="w-4 h-4" />
               درباره ما
             </Link>
-            <Link
-              href="#"
-              className="flex items-center gap-2 hover:text-primary transition-colors"
-            >
-              <Phone className="w-4 h-4" />
-              تماس با ما
-            </Link>
           </div>
 
           <div className="flex items-center gap-3">
-            <ThemeSwitcher />
+            {/* Desktop Theme Switcher */}
+            <div className="hidden md:block">
+              <ThemeSwitcher />
+            </div>
+            {/* Shopping Cart Icon with Badge */}
+            <CartSidebar />
             {/* Desktop Login Button */}
             <Dialog open={openLoginDialog} onOpenChange={setOpenLoginDialog}>
               <DialogTrigger asChild>
@@ -121,28 +110,37 @@ const Navbar = () => {
                       >
                         <Avatar>
                           <AvatarImage
-                            src={user.imageUrl}
-                            alt={user.username || "avatar"}
+                            src={user?.imageUrl || ""}
+                            alt={user?.username || "avatar"}
                           />
-                          <AvatarFallback>{getInitials(user)}</AvatarFallback>
+                          <AvatarFallback>
+                            {user?.first_name?.[0] || user?.username?.[0]}
+                          </AvatarFallback>
                         </Avatar>
                         <span className="max-w-[100px] truncate">
-                          {user.first_name || user.username}
+                          {user?.first_name || user?.username}
                         </span>
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent side="bottom" align="end">
                       <DropdownMenuLabel className="font-bold">
-                        {user.first_name} {user.last_name}
+                        {user?.first_name} {user?.last_name}
                         <div className="text-xs text-muted-foreground font-bold">
-                          {user.phone}
+                          {user?.phone}
                         </div>
                       </DropdownMenuLabel>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem asChild className="cursor-pointer">
-                        <Link href="/profile" className="font-bold">
+                        <Link href="/profile/overview" className="font-bold">
                           <User className="w-4 h-4" />
-                          ورود به پنل
+                          پنل کاربری
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem asChild className="cursor-pointer">
+                        <Link href="/checkout-cart" className="font-bold">
+                          <User className="w-4 h-4" />
+                          لیست سفارشات
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
@@ -154,7 +152,7 @@ const Navbar = () => {
                         variant="destructive"
                       >
                         <LogOut className="w-4 h-4" />
-                        خروج
+                        خروج از حساب کاربری
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -192,6 +190,7 @@ const Navbar = () => {
                     <div className="flex justify-center border-b">
                       <div className="relative w-10 sm:w-48 h-48">
                         <Image
+                          priority
                           src={CafeinLogoLight}
                           alt="Cafein Logo Light"
                           className="block dark:hidden w-full h-full object-contain"
@@ -199,6 +198,7 @@ const Navbar = () => {
                         />
 
                         <Image
+                          priority
                           src={CafeinLogoDark}
                           alt="Cafein Logo Dark"
                           className="hidden dark:block w-full h-full object-contain"
@@ -210,18 +210,18 @@ const Navbar = () => {
                     {/* Navigation items */}
                     <div className="flex-1 py-6 px-4 space-y-2 overflow-y-auto">
                       <Link
-                        href="#"
+                        href="/"
                         className="flex items-center gap-3 p-4 rounded-xl hover:bg-primary/5 hover:text-primary transition-all duration-200 border border-transparent hover:border-primary/20"
                       >
                         <Home className="w-5 h-5" />
-                        <span>خانه</span>
+                        <span>صفحه اصلی</span>
                       </Link>
                       <Link
-                        href="/success"
+                        href="/menu"
                         className="flex items-center gap-3 p-4 rounded-xl hover:bg-primary/5 hover:text-primary transition-all duration-200 border border-transparent hover:border-primary/20"
                       >
                         <FileText className="w-5 h-5" />
-                        <span>بلاگ</span>
+                        <span>منو</span>
                       </Link>
                       <Link
                         href="#"
@@ -259,8 +259,13 @@ const Navbar = () => {
                       )}
                     </div>
 
-                    {/* Login/Profile button at bottom */}
-                    <div className="border-t pt-6 pb-6 px-4">
+                    {/* Theme Switcher and Login/Profile button at bottom */}
+                    <div className="border-t pt-6 pb-6 px-4 space-y-4">
+                      {/* Mobile Theme Switcher */}
+                      <div className="flex justify-center">
+                        <ThemeSwitcher />
+                      </div>
+
                       {!isAuthenticated && (
                         <Dialog
                           open={openMobileLoginDialog}

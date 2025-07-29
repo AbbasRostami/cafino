@@ -55,7 +55,7 @@ const Footer = () => {
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent"></div>
 
       <div className="relative container mx-auto px-4 sm:px-12 pt-12 pb-5 z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2 pb-3 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 pb-3 items-start">
           <div className="flex flex-col items-start h-full">
             <div className="relative group transition-all duration-500 hover:scale-[1.02] mb-6">
               <div className="absolute -inset-2  blur-md opacity-70 group-hover:opacity-100 transition-all duration-500"></div>
@@ -118,7 +118,7 @@ const Footer = () => {
             </div>
             <div className="space-y-2">
               {[
-                { href: "#", text: "خانه", icon: "🏠" },
+                { href: "/", text: "صفحه اصلی", icon: "🏠" },
                 { href: "/category", text: "دسته بندی", icon: "🍽️" },
                 { href: "/menu", text: "منو", icon: "📝" },
                 { href: "#", text: "درباره ما", icon: "ℹ️" },
@@ -141,36 +141,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="space-y-3 items-start h-full">
-            <div className="relative pb-3 border-b border-amber-200 dark:border-amber-800/50">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white relative inline-block">
-                خدمات ما
-              </h3>
-            </div>
-            <div className="space-y-2">
-              {[
-                { href: "#", text: "قهوه‌های تخصصی", icon: "☕" },
-                { href: "#", text: "فست فود و ساندویچ", icon: "🍔" },
-                { href: "#", text: "دسر و شیرینی", icon: "🍰" },
-                { href: "#", text: "سفارش آنلاین", icon: "📱" },
-                { href: "#", text: "پذیرایی در محل", icon: "🎉" },
-              ].map((service, index) => (
-                <Link
-                  key={index}
-                  href={service.href}
-                  className="group flex items-center space-x-3 space-x-reverse text-gray-700 dark:text-gray-300 hover:text-amber-700 dark:hover:text-amber-400 transition-all duration-300 p-2 rounded-xl hover:bg-amber-50 dark:hover:bg-amber-900/10"
-                >
-                  <span className="text-lg transition-all duration-300 transform group-hover:scale-125 group-hover:text-amber-500">
-                    {service.icon}
-                  </span>
-                  <span className="relative text-base font-medium pb-1">
-                    {service.text}
-                    <div className="absolute bottom-0 right-0 w-0 h-0.5 bg-gradient-to-r from-amber-400 to-amber-200 group-hover:w-full transition-all duration-500"></div>
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </div>
+   
 
           <div className="space-y-3 items-start h-full">
             <div className="relative pb-3 border-b border-amber-200 dark:border-amber-800/50">
@@ -245,8 +216,8 @@ const Footer = () => {
         onClick={scrollToTop}
         aria-label="بازگشت به بالا"
         className={`
-        fixed bottom-6 right-6 w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 
-        text-white flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-500 z-50
+         hidden md:flex fixed bottom-6 right-6 w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 
+        text-white  items-center justify-center shadow-lg hover:shadow-xl transition-all duration-500 z-50
         ${
           visible
             ? "opacity-100 pointer-events-auto"
