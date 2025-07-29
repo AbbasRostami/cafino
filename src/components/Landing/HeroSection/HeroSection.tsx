@@ -16,13 +16,14 @@ import {
   Play,
 } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
-import Photo1 from "./../../assets/HeroSection/HeroSection1.png";
-import Photo2 from "./../../assets/HeroSection/HeroSection2.png";
-import Photo3 from "./../../assets/HeroSection/HeroSection3.png";
-import Photo4 from "./../../assets/HeroSection/HeroSection4.png";
+import Photo1 from "./../../../assets/HeroSection/HeroSection1.png";
+import Photo2 from "./../../../assets/HeroSection/HeroSection2.png";
+import Photo3 from "./../../../assets/HeroSection/HeroSection3.png";
+import Photo4 from "./../../../assets/HeroSection/HeroSection4.png";
 import Image from "next/image";
 import Autoplay from "embla-carousel-autoplay";
 import Fade from "embla-carousel-fade";
+import { useRouter } from "next/navigation";
 const HeroSection = () => {
   const [openLoginDialog, setOpenLoginDialog] = React.useState(false);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -44,7 +45,7 @@ const HeroSection = () => {
       document.head.removeChild(style);
     };
   }, []);
-
+  const router = useRouter();
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pb-10 pt-28">
       <div className="absolute inset-0">
@@ -115,6 +116,7 @@ const HeroSection = () => {
                 </Dialog>
               ) : (
                 <Button
+                  onClick={() => router.push("/menu")}
                   size="lg"
                   className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
                 >
