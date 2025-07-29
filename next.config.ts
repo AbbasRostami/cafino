@@ -17,7 +17,31 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "cafino.storage.c2.liara.space",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
         hostname: "4kwallpapers.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "uiparadox.co.uk",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "i.pinimg.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
         port: "",
         pathname: "/**",
       },
