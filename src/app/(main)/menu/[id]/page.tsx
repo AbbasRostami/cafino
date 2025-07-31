@@ -3,7 +3,7 @@
 import { use } from "react";
 import { useGet } from "@/hooks/useReactQueryHooks";
 import ItemsDetails from "@/components/items-details/ItemsDetails";
-import { ItemDetailsSkeleton } from "@/components/skeleton/ItemDetailsSkeleton";
+import { ItemDetailsSkeleton } from "@/components/skeleton/main/item-details/ItemDetailsSkeleton";
 
 const MenuItemClient = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = use(params);

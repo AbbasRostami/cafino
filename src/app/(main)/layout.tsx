@@ -1,6 +1,6 @@
 import { Toaster } from "@/components/ui/sonner";
 import React from "react";
-import Footer from "@/components/common/Footer";
+import Footer from "@/components/common/Footer/Footer";
 import Navbar from "@/components/common/Header/navbar-04";
 import { ConfirmModal } from "@/components/common/ConfirmModal";
 

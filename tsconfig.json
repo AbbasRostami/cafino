@@ -24,6 +24,12 @@
       "@/validation/*": ["src/validation/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/(profile)/profile/orders/Common.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/components/common/formatters.tsx"
+  ],
   "exclude": ["node_modules"]
 }

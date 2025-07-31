@@ -8,7 +8,7 @@ import {
   TbLayoutSidebarLeftExpandFilled,
   TbLayoutSidebarRightExpandFilled,
 } from "react-icons/tb";
-import { ThemeSwitcher } from "@/components/common/ThemeToggle";
+import { ThemeSwitcher } from "@/components/common/ThemeToggle/ThemeToggle";
 
 const AppHeader: React.FC = () => {
   const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);

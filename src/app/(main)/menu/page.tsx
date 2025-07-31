@@ -2,19 +2,14 @@
 import Menus from "@/components/menu/Menus";
 import { useSearchParams } from "next/navigation";
 import { getMenuQueryParams } from "@/lib/query";
-import { useGet } from "@/hooks/useReactQueryHooks";
+import { useGetItems } from "@/services/item";
 
 const MenuPage = () => {
   const searchParams = useSearchParams();
   const { queryString, query } = getMenuQueryParams(searchParams);
 
-  const endpoint = `/v1/item?${queryString}`;
+  const { data: items, isLoading } = useGetItems(queryString);
 
-  const { data: items, isLoading } = useGet<any>(endpoint, {
-    queryKey: ["items", queryString],
-    staleTime: 10 * 1000,
-  });
-  console.log("itemsTTTT", items);
   const pageNum = Number(items?.page ?? query.page);
   const limitNum = Number(items?.limit ?? query.limit);
   const totalNum = Number(items?.total || 0);
