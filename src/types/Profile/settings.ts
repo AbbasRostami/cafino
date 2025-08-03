@@ -1,0 +1,76 @@
+// User types
+export interface User {
+  id?: string;
+  username?: string;
+  first_name?: string;
+  last_name?: string;
+  birthday?: string;
+  image?: string;
+  imageUrl?: string;
+  phone?: string;
+  email?: string;
+  role?: string;
+  is_email_verified?: boolean;
+  status?: string;
+  created_at?: string;
+  updated_at?: string;
+  addressList?: string[];
+}
+
+// API Response types
+export interface UserResponse {
+  data: User;
+  statusCode: number;
+}
+
+export interface UpdateProfileRequest {
+  username: string;
+  first_name: string;
+  last_name: string;
+  birthday: string;
+  email: string;
+}
+
+// Form types
+export interface ProfileFormData {
+  username: string;
+  first_name: string;
+  last_name: string;
+  birthday: string;
+  email: string;
+}
+
+// Avatar types
+export interface AvatarProps {
+  user: User | undefined;
+  avatarPreview: string | null;
+  isUpdatingImage: boolean;
+  isRemovingImage: boolean;
+  onAvatarChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onRemoveImage: () => void;
+}
+
+// Profile info types
+export interface ProfileInfoProps {
+  user: User | undefined;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// Edit modal types
+export interface EditModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: (data: ProfileFormData) => void;
+  isPending: boolean;
+  user: User | undefined;
+}
+
+// Input block types
+export interface InputBlockProps {
+  label: string;
+  name: string;
+  register: any;
+  errors: any;
+  type?: string;
+}
