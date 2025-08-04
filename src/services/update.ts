@@ -1,29 +1,7 @@
 import { useGet, usePut } from "@/hooks/useReactQueryHooks";
 import { useQueryClient } from "@tanstack/react-query";
-import { get } from "http";
 import { toast } from "sonner";
-
-interface User {
-  id?: string;
-  username?: string;
-  first_name?: string;
-  last_name?: string;
-  birthday?: string;
-  image?: string;
-  imageUrl?: string;
-  phone?: string;
-  email?: string;
-  role?: string;
-  is_email_verified?: boolean;
-  status?: string;
-  created_at?: string;
-  updated_at?: string;
-  addressList?: string[];
-}
-export interface UserResponse {
-  data: User;
-  statusCode: number;
-}
+import { User, UserResponse, UpdateProfileRequest } from "@/types/Profile";
 
 export const useUserProfile = () => {
   const {
@@ -37,13 +15,6 @@ export const useUserProfile = () => {
   return { data: user?.data, isLoading, error };
 };
 
-interface UpdateProfileRequest {
-  username: string;
-  first_name: string;
-  last_name: string;
-  birthday: string;
-  email: string;
-}
 export const useUpdateProfile = () => {
   const queryClient = useQueryClient();
 

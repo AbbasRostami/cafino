@@ -1,5 +1,10 @@
 import { create } from "zustand";
-import { usePost, useDelete, usePatch } from "@/hooks/useReactQueryHooks";
+import {
+  usePost,
+  useDelete,
+  usePatch,
+  useGet,
+} from "@/hooks/useReactQueryHooks";
 import { useAuthStore } from "@/store/authStore";
 import queryClient from "@/hooks/QueryProviders";
 import { useQueryClient } from "@tanstack/react-query";
@@ -247,10 +252,25 @@ interface CartState {
 // }
 
 // React Query Hooks for mutations (for authenticated users only)
+export const useCart = () => {
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const {
+    data: cart,
+    isLoading: isCartLoading,
+    refetch,
+    error: cartError,
+  } = useGet<any>("/v1/cart", {
+    queryKey: ["/v1/cart"],
+    staleTime: 0,
+  });
+  return { cart, isCartLoading, refetch, cartError, isAuthenticated };
+};
+
 export const useAddToCart = () => {
   const queryClient = useQueryClient();
   const { mutate, isPending, error } = usePost<any, { itemId: string }>(
     () => "/v1/cart/add",
+    undefined,
     {
       onSuccess: () => {
         toast.success("محصول با موفقیت به سبد خرید اضافه شد");
@@ -274,6 +294,7 @@ export const useIncItem = () => {
   const queryClient = useQueryClient();
   const { mutate, isPending, error } = usePatch<any, { itemId: string }>(
     "/v1/cart/inc-item",
+    undefined,
     {
       onSuccess: () => {
         toast.success("تعداد محصول با موفقیت افزایش یافت");
@@ -297,6 +318,7 @@ export const useDecItem = () => {
   const queryClient = useQueryClient();
   const { mutate, isPending, error } = usePatch<any, { itemId: string }>(
     "/v1/cart/dec-item",
+    undefined,
     {
       onSuccess: () => {
         toast.success("تعداد محصول با موفقیت کاهش یافت");
@@ -349,8 +371,9 @@ export const useClearCart = () => {
 
 export const useAddDiscount = () => {
   const queryClient = useQueryClient();
-  const { mutate, isPending, error } = usePost<any, { code: string }>(
+  const { mutate, isPending, error } = usePost<{ code: string }>(
     () => "/v1/cart/add-discount",
+    undefined,
     {
       onSuccess: () => {
         toast.success("کد تخفیف با موفقیت اضافه شد");
@@ -374,7 +397,7 @@ export const useAddDiscount = () => {
 
 export const useRemoveDiscount = () => {
   const queryClient = useQueryClient();
-  const { mutate, isPending, error } = useDelete<any, { code: string }>(
+  const { mutate, isPending, error } = useDelete<{ code: string }>(
     () => "/v1/cart/remove-discount/",
     {
       onSuccess: () => {

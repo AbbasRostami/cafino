@@ -1,10 +1,11 @@
 import { useGet, usePost, usePut } from "@/hooks/useReactQueryHooks";
+import { ItemUser } from "@/types/main/items-details/items-details";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 // See all comments by admin
 
-interface Comment {
+interface CommentAdmin {
   id: string;
   text: string;
   accept: boolean;
@@ -21,7 +22,7 @@ interface Comment {
 
 export const useGetComments = (limit: number = 10, page: number = 1) => {
   return useGet<{
-    data: Comment[];
+    data: CommentAdmin[];
     total: number;
     page: number;
     limit: number;
@@ -30,25 +31,86 @@ export const useGetComments = (limit: number = 10, page: number = 1) => {
   });
 };
 
+// get comments for menu item
+export interface UserComment {
+  id: string;
+  username: string;
+  first_name: string;
+  last_name: string;
+  phone: string;
+  email: string;
+}
+
+export interface Comment {
+  itemId: string;
+  id: string;
+  text: string;
+  star?: number;
+  created_at: string;
+  user: ItemUser;
+  children?: Comment[];
+}
+
+export interface GetCommentsResponse {
+  data: {
+    comments: Comment[];
+    total: number;
+    page: number;
+    lastPage: number;
+  };
+  statusCode: number;
+}
+export type SortBy = "lowestRated" | "highestRated" | "newest" | "oldest";
+
+interface UseGetCommentsItemsProps {
+  itemId: string;
+  page?: number;
+  limit?: number;
+  sortBy?: SortBy;
+}
+
+export const useGetCommentsItems = ({
+  itemId,
+  page = 1,
+  limit = 10,
+  sortBy = "newest",
+}: UseGetCommentsItemsProps) => {
+  const { data, isLoading, error } = useGet<GetCommentsResponse>(
+    `/v1/comment/${itemId}/comments?limit=${limit}&page=${page}&sortBy=${sortBy}`,
+    {
+      queryKey: ["comments", itemId, page, limit, sortBy],
+    }
+  );
+
+  return { data, isLoading, error };
+};
+
 // Create new comment for menu item
 
 interface AddCommentRequest {
   text: string;
   itemId: string;
   parentId?: string;
+  star: number;
 }
 export const useAddComment = () => {
   const queryClient = useQueryClient();
 
-  return usePost<AddCommentRequest>((data) => `/v1/comment`, {
-    onSuccess: () => {
-      toast.success("بعد تایید توسط مدیریت نظر شما با موفقیت اضافه خواهد شد");
-      queryClient.invalidateQueries({ queryKey: ["v1/item"] });
-    },
-    onError: () => {
-      toast.error("خطا در اضافه کردن نظر");
-    },
-  });
+  const { mutate: addComment, isPending } = usePost<AddCommentRequest>(
+    (data) => `/v1/comment`,
+    undefined,
+    {
+      onSuccess: () => {
+        toast.success("بعد تایید توسط مدیریت نظر شما با موفقیت اضافه خواهد شد");
+        queryClient.invalidateQueries({ queryKey: ["v1/item"] });
+      },
+      onError: () => {
+        toast.error("خطا در اضافه کردن نظر");
+      },
+    }
+  );
+
+  return { addComment, isPending };
 };
 
 // Accept comment for menu item by admin
@@ -59,18 +121,22 @@ interface AcceptCommentRequest {
 export const useAcceptComment = () => {
   const queryClient = useQueryClient();
 
-  return usePut<AcceptCommentRequest>(
-    (data) => `/v1/comment/accept/${data?.id}`,
-    {
-      onSuccess: () => {
-        toast.success("نظر با موفقیت قبول شد");
-        queryClient.invalidateQueries({ queryKey: ["comments"] });
-      },
-      onError: () => {
-        toast.error("خطا در قبول نظر");
-      },
-    }
-  );
+  const { mutate: acceptComment, isPending: isAcceptingComment } =
+    usePut<AcceptCommentRequest>(
+      (data) => `/v1/comment/accept/${data?.id}`,
+      undefined,
+      {
+        onSuccess: () => {
+          toast.success("نظر با موفقیت قبول شد");
+          queryClient.invalidateQueries({ queryKey: ["comments"] });
+        },
+        onError: () => {
+          toast.error("خطا در قبول نظر");
+        },
+      }
+    );
+
+  return { acceptComment, isAcceptingComment };
 };
 
 // Reject comment for menu item by admin
@@ -81,16 +147,20 @@ interface RejectCommentRequest {
 export const useRejectComment = () => {
   const queryClient = useQueryClient();
 
-  return usePut<RejectCommentRequest>(
-    (data) => `/v1/comment/reject/${data?.id}`,
-    {
-      onSuccess: () => {
-        toast.success("نظر با موفقیت رد شد");
-        queryClient.invalidateQueries({ queryKey: ["comments"] });
-      },
-      onError: () => {
-        toast.error("خطا در رد نظر");
-      },
-    }
-  );
+  const { mutate: rejectComment, isPending: isRejectingComment } =
+    usePut<RejectCommentRequest>(
+      (data) => `/v1/comment/reject/${data?.id}`,
+      undefined,
+      {
+        onSuccess: () => {
+          toast.success("نظر با موفقیت رد شد");
+          queryClient.invalidateQueries({ queryKey: ["comments"] });
+        },
+        onError: () => {
+          toast.error("خطا در رد نظر");
+        },
+      }
+    );
+
+  return { rejectComment, isRejectingComment };
 };

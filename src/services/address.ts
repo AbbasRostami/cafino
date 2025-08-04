@@ -1,17 +1,13 @@
 import { useDelete, useGet, usePost, usePut } from "@/hooks/useReactQueryHooks";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import {
+  AddressResponse,
+  AddressRequest,
+  DeleteAddressRequest,
+  UpdateAddressRequest,
+} from "@/types/Profile";
 
-interface AddressResponse {
-  data: {
-    [x: string]: string | undefined;
-    id: string;
-    province: string;
-    city: string;
-    address: string;
-    created_at: string;
-  }[];
-}
 export const useGetAddresses = () => {
   const { data, isLoading, isError } = useGet<AddressResponse>(
     `/v1/profile/address`,
@@ -26,15 +22,10 @@ export const useGetAddresses = () => {
   };
 };
 
-interface AddressRequest {
-  province: string;
-  city: string;
-  address: string;
-}
 export const useAddAddress = () => {
   const queryClient = useQueryClient();
 
-  return usePost<AddressRequest>((data) => `/v1/profile/address`, {
+  return usePost<AddressRequest>((data) => `/v1/profile/address`, undefined, {
     onSuccess: () => {
       toast.success("آدرس با موفقیت اضافه شد");
       queryClient.invalidateQueries({ queryKey: ["addresses"] });
@@ -44,10 +35,6 @@ export const useAddAddress = () => {
     },
   });
 };
-
-interface DeleteAddressRequest {
-  id: string;
-}
 
 export const useDeleteAddress = () => {
   const queryClient = useQueryClient();
@@ -69,7 +56,7 @@ export const useDeleteAddress = () => {
 export const useUpdateAddress = () => {
   const queryClient = useQueryClient();
 
-  return usePut(
+  return usePut<UpdateAddressRequest>(
     (data) => `/v1/profile/address/${data.id}`,
     (data) => {
       const { id, ...body } = data;

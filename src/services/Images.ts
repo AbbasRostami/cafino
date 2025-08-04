@@ -6,6 +6,7 @@ export const useUpdateImage = () => {
   const queryClient = useQueryClient();
   const { mutate, isPending, error } = usePatch<any, FormData>(
     "/v1/profile/image",
+    undefined,
     {
       onSuccess: () => {
         toast.success("تصویر پروفایل با موفقیت ویرایش شد");
