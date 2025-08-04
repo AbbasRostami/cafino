@@ -3,7 +3,6 @@ import {
   useMutation,
   UseQueryOptions,
   UseMutationOptions,
-  UseMutationResult,
 } from "@tanstack/react-query";
 import { fetchApi } from "@/hooks/useAuthToken";
 
@@ -24,25 +23,32 @@ export const useGet = <T>(
 
 // POST
 export const usePost = <T, D = any>(
-  getUrl: (data: D) => string,
-  options?: UseMutationOptions<T, ServerError, D>
-) => {
-  return useMutation<T, ServerError, D>({
-    mutationFn: (data: D) => fetchApi.post<T>(getUrl(data), data),
-    ...options,
-  });
-};
-
-// usePut
-export const usePut = <T, D = any>(
-  getUrl: (data: D) => string,
-  getBody?: (data: D) => D,
+  getUrl: string | ((data: D) => string),
+  getBody?: (data: D) => unknown,
   options?: UseMutationOptions<T, ServerError, D>
 ) => {
   return useMutation<T, ServerError, D>({
     mutationFn: (data: D) => {
-      const url = getUrl(data);
+      const url = typeof getUrl === "string" ? getUrl : getUrl(data);
       const body = getBody ? getBody(data) : data;
+      return fetchApi.post<T>(url, body);
+    },
+    ...options,
+  });
+};
+
+// PUT
+export const usePut = <T, D = any>(
+  getUrl?: (data: D) => string,
+  getBody?: (data: D) => unknown,
+  options?: UseMutationOptions<T, ServerError, D>
+) => {
+  return useMutation<T, ServerError, D>({
+    mutationFn: (data: D) => {
+      const url = getUrl ? getUrl(data) : "";
+      const hasBody = typeof getBody === "function";
+      const body = hasBody ? getBody(data) : undefined;
+
       return fetchApi.put<T>(url, body);
     },
     ...options,
@@ -60,12 +66,18 @@ export const useDelete = <T, D = any>(
   });
 };
 
+// PATCH
 export const usePatch = <T, D = any>(
-  url: string,
+  getUrl: string | ((data: D) => string),
+  getBody?: (data: D) => unknown,
   options?: UseMutationOptions<T, ServerError, D>
-): UseMutationResult<T, ServerError, D> => {
+) => {
   return useMutation<T, ServerError, D>({
-    mutationFn: (data: D) => fetchApi.patch<T>(url, data),
+    mutationFn: (data: D) => {
+      const url = typeof getUrl === "string" ? getUrl : getUrl(data);
+      const body = getBody ? getBody(data) : data;
+      return fetchApi.patch<T>(url, body);
+    },
     ...options,
   });
 };

@@ -56,8 +56,12 @@ export async function fetchWithAuth(url: string, options: RequestInit = {}) {
     const response = await makeRequest(url, options);
 
     if (response.status === 401) {
-      console.log("🔄 Trying to refresh token...");
+      const authState = useAuthStore.getState();
+      if (!authState.isAuthenticated && !authState.user) {
+        throw new Error("کاربر لاگین نیست");
+      }
 
+      console.log("🔄 Trying to refresh token...");
       const refreshed = await useAuthStore.getState().refreshToken();
 
       if (refreshed) {
@@ -77,6 +81,9 @@ export async function fetchWithAuth(url: string, options: RequestInit = {}) {
 
     return await onSuccess(response);
   } catch (error) {
+    if (error instanceof Error && error.message === "کاربر لاگین نیست") {
+      throw error;
+    }
     return await onError(error as Response | Error);
   }
 }

@@ -147,6 +147,11 @@ export const useAuthStore = create<AuthState>()(
           return refreshingTokenPromise;
         }
 
+        const currentState = get();
+        if (!currentState.isAuthenticated && !currentState.user) {
+          return false;
+        }
+
         refreshingTokenPromise = (async () => {
           try {
             const response = await fetch(getApiUrl("/v1/auth/refresh"), {

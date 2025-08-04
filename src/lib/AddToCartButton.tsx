@@ -5,8 +5,9 @@ import {
   useIncItem,
   useDecItem,
   useRemoveItem,
+  useClearCart,
+  useCart,
 } from "@/store/cartStore";
-import { useGet } from "@/hooks/useReactQueryHooks";
 
 interface AddToCartButtonLogicProps {
   itemId: string;
@@ -17,40 +18,16 @@ export function useAddToCartButtonLogic({
   itemId,
   disabled = false,
 }: AddToCartButtonLogicProps) {
-  const {
-    data: cart,
-    isLoading: isCartLoading,
-    refetch,
-  } = useGet<any>("/v1/cart", {
-    queryKey: ["/v1/cart"],
-    staleTime: 0,
-  });
+  const { cart, isCartLoading, refetch } = useCart();
 
   const cartItem = cart?.cartItems?.find((i: any) => i.itemId === itemId);
   const count = cartItem?.count || 0;
 
-  const {
-    mutate: addToCart,
-    isPending: addLoading,
-    error: addError,
-  } = useAddToCart();
-  const {
-    mutate: incItem,
-    isPending: incLoading,
-    error: incError,
-  } = useIncItem();
-  const {
-    mutate: decItem,
-    isPending: decLoading,
-    error: decError,
-  } = useDecItem();
-  const {
-    mutate: removeItem,
-    isPending: removeLoading,
-    error: removeError,
-  } = useRemoveItem();
-
-  // گرفتن isLoading از هر mutation به صورت جداگانه
+  const { mutate: addToCart, isPending: addLoading } = useAddToCart();
+  const { mutate: incItem, isPending: incLoading } = useIncItem();
+  const { mutate: decItem, isPending: decLoading } = useDecItem();
+  const { mutate: removeItem, isPending: removeLoading } = useRemoveItem();
+  const { mutate: clearCart, isPending: clearLoading } = useClearCart();
 
   const handleAdd = async () => {
     try {
@@ -91,7 +68,13 @@ export function useAddToCartButtonLogic({
       // مدیریت خطا در صورت نیاز
     }
   };
-
+  const handleClearCart = async () => {
+    try {
+      await clearCart();
+      await refetch();
+    } catch (error) {}
+  };
+  
   return {
     count,
     disabled,
@@ -100,9 +83,11 @@ export function useAddToCartButtonLogic({
     incLoading,
     decLoading,
     removeLoading,
+    clearLoading,
     handleAdd,
     handleInc,
     handleDec,
     handleRemove,
+    handleClearCart,
   };
 }

@@ -25,7 +25,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import { toast } from "sonner";
-import { phoneSchema, otpSchema } from "@/validation/auth/login";
+import { phoneSchema, otpSchema } from "@/schemas/auth/login";
 // import { useAddToCart, migrateGuestCartToServer } from "@/store/cartStore";
 // import { useQueryClient } from "@tanstack/react-query";
 

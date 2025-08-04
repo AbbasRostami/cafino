@@ -2,15 +2,18 @@ import { useGet, usePut } from "@/hooks/useReactQueryHooks";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { User, UserResponse, UpdateProfileRequest } from "@/types/Profile";
+import { useAuthStore } from "@/store/authStore";
 
 export const useUserProfile = () => {
-  const {
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+    const {
     data: user,
     isLoading,
     error,
   } = useGet<UserResponse>("/v1/user", {
     queryKey: ["profile"],
     staleTime: 1000 * 60 * 5,
+    enabled: isAuthenticated,
   });
   return { data: user?.data, isLoading, error };
 };

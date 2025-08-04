@@ -28,7 +28,6 @@ export const AddToCartButtonStyled: React.FC<AddToCartButtonStyledProps> = ({
     handleDec,
     disabled: isDisabled,
   } = logic;
-
   // دکمه افزودن اولیه
   if (count === 0) {
     return (
@@ -147,7 +146,7 @@ export const AddToCartButtonStyled: React.FC<AddToCartButtonStyledProps> = ({
           className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-100 to-green-100 dark:from-amber-900/20 dark:to-orange-900/20 border-green-200 dark:border-amber-800/50 text-green-600 dark:text-amber-400"
         >
           <AnimatePresence mode="wait">
-                {incLoading ? (
+            {incLoading ? (
               <motion.div
                 key="loading-inc"
                 initial={{ opacity: 0, rotate: -180 }}

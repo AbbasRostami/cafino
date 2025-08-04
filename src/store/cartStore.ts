@@ -262,6 +262,7 @@ export const useCart = () => {
   } = useGet<any>("/v1/cart", {
     queryKey: ["/v1/cart"],
     staleTime: 0,
+    enabled: isAuthenticated,
   });
   return { cart, isCartLoading, refetch, cartError, isAuthenticated };
 };
