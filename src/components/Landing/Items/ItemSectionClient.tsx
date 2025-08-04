@@ -1,58 +1,16 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { Star, ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
-import { useAddToCart } from "@/store/cartStore";
-import { useAuthStore } from "@/store/authStore";
-import { toast } from "sonner";
 import Link from "next/link";
-import { Skeleton } from "@/components/ui/skeleton";
 import { FavoriteToggleButton } from "@/lib/FavoriteToggleButton";
 import { AddToCartButtonStyled } from "@/lib/AddToCartButtonStyled";
-
-const SkeletonCard = () => {
-  return (
-    <div className="group bg-white dark:bg-[#1a1a1a] rounded-2xl shadow-xl relative border border-transparent min-w-[70vw] sm:min-w-[48vw] md:min-w-[32vw] lg:min-w-[25%] xl:min-w-[25%] max-w-[320px] w-full">
-      <div className="relative rounded-t-2xl aspect-[4/3] w-full overflow-hidden">
-        <Skeleton className="absolute inset-0 w-full h-full" />
-      </div>
-
-      <div className="p-5 flex flex-col gap-3 !rtl">
-        <div className="flex justify-between items-start">
-          <div className="flex flex-col gap-1">
-            <Skeleton className="h-5 w-32" />
-            <Skeleton className="h-4 w-20" />
-          </div>
-          <Skeleton className="h-6 w-12 rounded-full" />
-        </div>
-
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-4 w-[80%]" />
-
-        <div className="flex gap-2 mt-2">
-          <Skeleton className="h-6 w-16 rounded-full" />
-          <Skeleton className="h-6 w-14 rounded-full" />
-          <Skeleton className="h-6 w-12 rounded-full" />
-        </div>
-
-        <div className="mt-3 space-y-2">
-          <Skeleton className="h-3 w-full" />
-          <Skeleton className="h-2 w-full rounded-full" />
-          <Skeleton className="h-6 w-40 rounded-full" />
-        </div>
-
-        <div className="mt-4 flex flex-col xl:flex-row justify-between items-center gap-3">
-          <Skeleton className="h-6 w-24" />
-          <Skeleton className="h-10 w-full xl:w-32 rounded-lg" />
-        </div>
-      </div>
-    </div>
-  );
-};
+import { Item } from "@/types/main/Landing/itemsSection/itemsSection";
+import { SkeletonItemSection } from "@/components/skeleton/main/Landing/ItemSectionSkeleton";
 
 interface ItemSectionClientProps {
-  items: any[];
+  items: Item[];
   isLoading: boolean;
 }
 
@@ -66,39 +24,9 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({
     direction: "rtl",
   });
 
-  const addToCartApi = useAddToCart();
-  // const addToCartLocal = useCartStore((s: any) => s.addToCart);
-  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-  const [addingId, setAddingId] = useState<string | null>(null);
   const [scrollSnaps, setScrollSnaps] = React.useState<number[]>([]);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const [addedIds, setAddedIds] = useState<string[]>([]);
 
-  const handleAddToCart = async (item: any) => {
-    setAddingId(item.id);
-    if (isAuthenticated) {
-      try {
-        await addToCartApi.mutateAsync({ itemId: item.id });
-        toast.success("محصول با موفقیت به سبد خرید اضافه شد");
-        setAddedIds([...addedIds, item?.id]);
-      } catch (e) {}
-    } else {
-      toast.error("لطفا برای افزودن به سبد خرید وارد حساب کاربری خود شوید");
-      /* addToCartLocal({
-        itemId: item.id,
-        title: item.title,
-        description: item.description,
-        price: item.price,
-        discount: item.discount,
-        count: 1,
-        finalPrice: finalPrice,
-        images: item.images?.map((img: any) => img.imageUrl) || [],
-        category: { title: item.category?.title || "" },
-        quantity: item.quantity,
-      }); */
-    }
-    setAddingId(null);
-  };
   React.useEffect(() => {
     if (!emblaApi) return;
     setScrollSnaps(emblaApi.scrollSnapList());
@@ -133,9 +61,9 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({
         <div className="flex gap-6 flex-nowrap" style={{ direction: "rtl" }}>
           {isLoading
             ? Array.from({ length: 10 }).map((_, index) => (
-                <SkeletonCard key={index} />
+                <SkeletonItemSection key={index} />
               ))
-            : items?.map((item: any) => {
+            : items?.map((item: Item) => {
                 const discount = Number(item?.discount || 0);
                 const originalPrice = Number(item?.price);
                 const finalPrice = discount

@@ -990,6 +990,15 @@ span.flatpickr-weekday,
 }
 
 /* Scrollbar */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Firefox */
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE و Edge */
+}
 
 ::-webkit-scrollbar {
   width: 10px;

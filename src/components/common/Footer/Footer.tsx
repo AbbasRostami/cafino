@@ -14,8 +14,8 @@ import {
   HeartPulse,
 } from "lucide-react";
 import Image from "next/image";
-import CafeinLogoLight from "../../assets/Logo/1.webp";
-import CafeinLogoDark from "../../assets/Logo/2.webp";
+import CafeinLogoLight from "../../../assets/Logo/1.webp";
+import CafeinLogoDark from "../../../assets/Logo/2.webp";
 import { RiTelegram2Fill } from "react-icons/ri";
 import { useEffect, useState } from "react";
 

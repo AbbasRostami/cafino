@@ -31,7 +31,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import CafeinLogoLight from "./../../../assets/Logo/9.png";
 import CafeinLogoDark from "./../../../assets/Logo/10.png";
 import Image from "next/image";
-import { ThemeSwitcher } from "../ThemeToggle";
+import { ThemeSwitcher } from "../ThemeToggle/ThemeToggle";
 // import { useCartStore } from "@/store/cartStore";
 import CartSidebar from "./CartSidebar";
 import { useUserProfile } from "@/services/update";

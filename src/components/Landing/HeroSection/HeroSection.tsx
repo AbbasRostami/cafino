@@ -2,9 +2,6 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { LoginForm } from "@/components/auth/LoginForm";
-import { useAuthStore } from "@/store/authStore";
 import {
   Coffee,
   Utensils,
@@ -25,8 +22,6 @@ import Autoplay from "embla-carousel-autoplay";
 import Fade from "embla-carousel-fade";
 import { useRouter } from "next/navigation";
 const HeroSection = () => {
-  const [openLoginDialog, setOpenLoginDialog] = React.useState(false);
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const [emblaRef] = useEmblaCarousel({ loop: true, direction: "rtl" }, [
     Autoplay({ delay: 3000 }),
     Fade(),
@@ -95,36 +90,15 @@ const HeroSection = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              {!isAuthenticated ? (
-                <Dialog
-                  open={openLoginDialog}
-                  onOpenChange={setOpenLoginDialog}
-                >
-                  <DialogTrigger asChild>
-                    <Button
-                      size="lg"
-                      className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-                    >
-                      <Coffee className="w-5 h-5 ml-2" />
-                      سفارش آنلاین
-                      <ArrowRight className="w-5 h-5 mr-2" />
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="sm:max-w-md p-0">
-                    <LoginForm onSuccess={() => setOpenLoginDialog(false)} />
-                  </DialogContent>
-                </Dialog>
-              ) : (
-                <Button
-                  onClick={() => router.push("/menu")}
-                  size="lg"
-                  className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-                >
-                  <Coffee className="w-5 h-5 ml-2" />
-                  سفارش آنلاین
-                  <ArrowRight className="w-5 h-5 mr-2" />
-                </Button>
-              )}
+              <Button
+                onClick={() => router.push("/menu")}
+                size="lg"
+                className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+              >
+                <Coffee className="w-5 h-5 ml-2" />
+                سفارش آنلاین
+                <ArrowRight className="w-5 h-5 mr-2" />
+              </Button>
 
               <Button
                 variant="outline"

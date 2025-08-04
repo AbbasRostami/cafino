@@ -14,6 +14,7 @@ import { useAuthStore } from "@/store/authStore";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { CartItemControls } from "@/lib/CartItemControls";
+import { useCart } from "@/store/cartStore";
 
 interface CartSidebarProps {
   // cartItems is now handled internally from cart store
@@ -32,16 +33,7 @@ const CartSidebar: React.FC<CartSidebarProps> = () => {
   // const guestSyncCart = useCartStore((s) => s.syncCart);
 
   // Server cart (authenticated)
-  const {
-    data: cart,
-    isLoading: cartLoading,
-    error: cartError,
-    refetch: refetchCart,
-  } = useGet<CartApiResponse>("/v1/cart", {
-    queryKey: ["/v1/cart"],
-    staleTime: 5000,
-    enabled: isAuthenticated,
-  });
+  const { cart, isCartLoading, refetch, cartError } = useCart();
   const cartData = isAuthenticated
     ? cartError && "statusCode" in cartError && cartError.statusCode === 404
       ? { cartItems: [], totalAmount: 0, totalDiscount: 0, paymentAmount: 0 }
@@ -56,7 +48,7 @@ const CartSidebar: React.FC<CartSidebarProps> = () => {
         clearCartMutation.mutate();
         setIsOpen(false);
         setTimeout(() => {
-          refetchCart();
+          refetch();
         }, 100);
       } catch (error) {
         console.error("Error clearing cart:", error);
@@ -69,7 +61,9 @@ const CartSidebar: React.FC<CartSidebarProps> = () => {
   };
 
   const getItemMaxQuantity = (itemId: string) => {
-    const item = cartData?.cartItems?.find((item) => item.itemId === itemId);
+    const item = cartData?.cartItems?.find(
+      (item: any) => item.itemId === itemId
+    );
     return item?.quantity ?? 10;
   };
 
@@ -138,7 +132,7 @@ const CartSidebar: React.FC<CartSidebarProps> = () => {
 
         {/* Scrollable Items Section */}
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
-          {cartLoading ? (
+          {isCartLoading ? (
             <div className="flex flex-col items-center justify-center h-full text-center">
               <div className="w-10 h-10 border-4 border-amber-400 border-t-transparent rounded-full animate-spin mb-4"></div>
               <h3 className="text-lg font-semibold text-gray-600 dark:text-gray-300 mb-2">

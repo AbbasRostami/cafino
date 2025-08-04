@@ -4,18 +4,10 @@ import React from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import WaveBackground from "@/assets/vector";
 import Image from "next/image";
-interface CategoryItem {
-  id: string;
-  title: string;
-  slug: string;
-  image: string;
-}
-
-interface CategorySectionClientProps {
-  items: CategoryItem[];
-  itemsPerSlide?: number;
-  onItemClick?: (item: CategoryItem, index: number) => void;
-}
+import {
+  Category,
+  CategorySectionClientProps,
+} from "@/types/main/Landing/Category/CategorySection";
 
 const CategorySectionClient: React.FC<CategorySectionClientProps> = ({
   items,
@@ -51,7 +43,7 @@ const CategorySectionClient: React.FC<CategorySectionClientProps> = ({
         ref={emblaRef}
       >
         <div className="flex" style={{ direction: "rtl" }}>
-          {items?.map((item: any, index: number) => (
+          {items?.map((item: Category, index: number) => (
             <div
               key={item.id}
               className="px-2 rounded-[30px] cursor-pointer category-embla-slide"
@@ -74,7 +66,7 @@ const CategorySectionClient: React.FC<CategorySectionClientProps> = ({
                 <Image
                   width={200}
                   height={200}
-                  src={item.image}
+                  src={item.imageUrl}
                   alt={item?.title || "محصول"}
                   className="mx-auto mb-7 w-[50%] max-h-[190px] object-contain"
                   loading="lazy"
