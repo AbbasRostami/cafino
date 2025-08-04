@@ -3,7 +3,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
 
-export default function SkeletonCart() {
+export default function CheckoutSkeleton() {
   return (
     <div className="min-h-screen pt-36 py-8 px-4">
       <div className="container mx-auto px-2 md:px-8 lg:px-28">
@@ -29,7 +29,6 @@ export default function SkeletonCart() {
                       <Skeleton className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-800" />
                       <Skeleton className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-800" />
                       <Skeleton className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-800" />
-
                     </div>
                   </div>
                 </div>
@@ -72,7 +71,7 @@ export default function SkeletonCart() {
         <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 shadow-2xl z-50">
           <div className="p-4 flex justify-between items-center">
             <div>
-                <Skeleton className="h-4 w-24 mb-2 bg-gray-200 dark:bg-gray-800" />
+              <Skeleton className="h-4 w-24 mb-2 bg-gray-200 dark:bg-gray-800" />
               <Skeleton className="h-6 w-40 bg-gray-200 dark:bg-gray-800" />
             </div>
             <Skeleton className="h-10 w-28 rounded-md bg-gray-200 dark:bg-gray-800" />
