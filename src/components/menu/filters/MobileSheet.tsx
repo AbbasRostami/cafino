@@ -4,41 +4,55 @@ import { Filter, X } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { Slider } from "@/components/ui/slider";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useMenuFilters } from "@/hooks/useMenuFilters";
+import { MobileSheetProps } from "@/types/main/menu/menu";
 
-interface MobileSheetProps {
-  isOpen: boolean;
-  setIsOpen: (open: boolean) => void;
-  tempCategoryId: string | null;
-  setTempCategoryId: (id: string | null) => void;
-  tempPriceRange: [number, number];
-  setTempPriceRange: (range: [number, number]) => void;
-  tempAvailableOnly: boolean;
-  setTempAvailableOnly: (val: boolean) => void;
-  categories: any;
-  FilterSectionHeader: React.FC<{ title: string }>;
-  DEFAULT_MIN: number;
-  DEFAULT_MAX: number;
-  searchParams: URLSearchParams;
-  router: any;
-}
-
-const MobileSheet: React.FC<MobileSheetProps> = ({
+const MobileSheet = ({
   isOpen,
   setIsOpen,
-  tempCategoryId,
-  setTempCategoryId,
-  tempPriceRange,
-  setTempPriceRange,
-  tempAvailableOnly,
-  setTempAvailableOnly,
   categories,
   FilterSectionHeader,
-  DEFAULT_MIN,
-  DEFAULT_MAX,
-  searchParams,
-  router,
-}) => {
+}: MobileSheetProps) => {
+  const { filters, updateFilter, resetFilters, DEFAULT_MIN, DEFAULT_MAX } =
+    useMenuFilters();
+
+  // Local state for temporary filters
+  const [tempCategoryId, setTempCategoryId] = useState(filters.categoryId);
+  const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([
+    filters.minPrice,
+    filters.maxPrice,
+  ]);
+  const [tempAvailableOnly, setTempAvailableOnly] = useState(
+    filters.availableOnly
+  );
+
+  // Update local state when filters change
+  useEffect(() => {
+    setTempCategoryId(filters.categoryId);
+    setTempPriceRange([filters.minPrice, filters.maxPrice]);
+    setTempAvailableOnly(filters.availableOnly);
+  }, [filters]);
+
+  const handleApplyFilters = () => {
+    updateFilter({
+      categoryId: tempCategoryId,
+      minPrice: tempPriceRange[0],
+      maxPrice: tempPriceRange[1],
+      availableOnly: tempAvailableOnly,
+    });
+
+    setIsOpen(false);
+  };
+
+  const handleClearFilters = () => {
+    setTempCategoryId(null);
+    setTempPriceRange([DEFAULT_MIN, DEFAULT_MAX]);
+    setTempAvailableOnly(false);
+    resetFilters();
+    setIsOpen(false);
+  };
+
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger onClick={(e) => e.stopPropagation()} asChild>
@@ -78,7 +92,7 @@ const MobileSheet: React.FC<MobileSheetProps> = ({
               {/* دسته‌بندی */}
               <div>
                 <div className="grid grid-cols-2 gap-3">
-                  {categories?.data?.map((category: any) => {
+                  {categories?.map((category: any) => {
                     const isSelected = tempCategoryId === category.id;
                     return (
                       <div
@@ -124,10 +138,9 @@ const MobileSheet: React.FC<MobileSheetProps> = ({
                 <div className="space-y-4">
                   <Slider
                     value={tempPriceRange}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      e.preventDefault();
-                    }}
+                    min={DEFAULT_MIN}
+                    max={DEFAULT_MAX}
+                    step={1000}
                     onValueChange={(val) =>
                       setTempPriceRange(val as [number, number])
                     }
@@ -197,51 +210,13 @@ const MobileSheet: React.FC<MobileSheetProps> = ({
               <Button
                 variant="outline"
                 className="flex-1 py-3 border-amber-500 text-amber-500 hover:bg-amber-50 dark:hover:bg-amber-900/20"
-                onClick={() => {
-                  setTempCategoryId(null);
-                  setTempPriceRange([DEFAULT_MIN, DEFAULT_MAX]);
-                  setTempAvailableOnly(false);
-                  const params = new URLSearchParams();
-                  params.set("page", "1");
-                  router.push(`?${params.toString()}`, { scroll: false });
-                  setIsOpen(false);
-                }}
+                onClick={handleClearFilters}
               >
                 پاک کردن همه
               </Button>
               <Button
                 className="flex-1 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white"
-                onClick={() => {
-                  const params = new URLSearchParams(searchParams.toString());
-                  // اعمال categoryId
-                  if (tempCategoryId) {
-                    params.set("categoryId", tempCategoryId);
-                  } else {
-                    params.delete("categoryId");
-                  }
-                  // اعمال availableOnly
-                  if (tempAvailableOnly) {
-                    params.set("availableOnly", "true");
-                  } else {
-                    params.delete("availableOnly");
-                  }
-                  // اعمال محدوده قیمت
-                  if (tempPriceRange[0] !== DEFAULT_MIN) {
-                    params.set("minPrice", String(tempPriceRange[0]));
-                  } else {
-                    params.delete("minPrice");
-                  }
-                  if (tempPriceRange[1] !== DEFAULT_MAX) {
-                    params.set("maxPrice", String(tempPriceRange[1]));
-                  } else {
-                    params.delete("maxPrice");
-                  }
-                  // صفحه به ۱
-                  params.set("page", "1");
-                  // اعمال فیلتر
-                  router.push(`?${params.toString()}`, { scroll: false });
-                  setIsOpen(false);
-                }}
+                onClick={handleApplyFilters}
               >
                 اعمال فیلتر
               </Button>
