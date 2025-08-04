@@ -1,6 +1,5 @@
 import { getApiUrl } from "@/lib/config";
 import { useAuthStore } from "@/store/authStore";
-import { cookies } from "next/headers";
 import { toast } from "sonner";
 
 const makeRequest = (url: string, options: RequestInit) => {
@@ -10,7 +9,6 @@ const makeRequest = (url: string, options: RequestInit) => {
   const headers = {
     Accept: "application/json",
     ...(options.headers || {}),
-    // Only set Content-Type for JSON, not for FormData
     ...(isFormData ? {} : { "Content-Type": "application/json" }),
   };
 
@@ -42,7 +40,6 @@ const onError = async (error: Response | Error) => {
     handleErrorStatus(error.status);
     const data = await error.json().catch(() => null);
 
-    // Create a custom error object that preserves all data
     const customError = new Error(
       data?.message || error.statusText || "Server Error"
     );
