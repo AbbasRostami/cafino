@@ -1,5 +1,5 @@
 import React from "react";
-import { Plus, Minus, Trash2 } from "lucide-react";
+import { Plus, Minus, Trash2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import {
@@ -57,7 +57,11 @@ export const CheckoutItemControls: React.FC<CheckoutItemControlsProps> = ({
                   whileHover={{ rotate: 15, scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Trash2 size={18} />
+                  {removeLoading ? (
+                    <Loader2 className="animate-spin" size={22} />
+                  ) : (
+                    <Trash2 size={22} />
+                  )}
                 </motion.div>
               </Button>
             </TooltipTrigger>
@@ -77,7 +81,11 @@ export const CheckoutItemControls: React.FC<CheckoutItemControlsProps> = ({
             whileHover={{ rotate: -12, scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Minus size={18} />
+            {decLoading ? (
+              <Loader2 className="animate-spin" size={22} />
+            ) : (
+              <Minus size={22} />
+            )}
           </motion.div>
         </Button>
       )}
@@ -105,7 +113,11 @@ export const CheckoutItemControls: React.FC<CheckoutItemControlsProps> = ({
           whileHover={{ rotate: 12, scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >
-          <Plus size={18} />
+          {incLoading ? (
+            <Loader2 className="animate-spin" size={30} />
+          ) : (
+            <Plus size={30} />
+          )}
         </motion.div>
       </Button>
     </motion.div>
