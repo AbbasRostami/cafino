@@ -16,8 +16,9 @@ import {
 // Import custom hook
 
 import { useOrders } from "@/hooks/useOrders";
+import { Suspense } from "react";
 
-const OrdersPage = () => {
+const OrdersPageClient = () => {
   // Custom hook for managing orders state
 
   const {
@@ -90,4 +91,10 @@ const OrdersPage = () => {
   );
 };
 
-export default OrdersPage;
+export default function OrdersPage() {
+  return (
+    <Suspense fallback={<div>Loading orders...</div>}>
+      <OrdersPageClient />
+    </Suspense>
+  );
+}

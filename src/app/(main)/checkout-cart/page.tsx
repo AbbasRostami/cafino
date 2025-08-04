@@ -1,29 +1,20 @@
 "use client";
-import { useGet } from "@/hooks/useReactQueryHooks";
-import { CartApiResponse } from "@/store/cartStore";
-import { useAuthStore } from "@/store/authStore";
+import { CartApiResponse, useCart } from "@/store/cartStore";
 import CheckoutCart from "@/components/checkout/CheckoutCart";
+import CheckoutSkeleton from "@/components/skeleton/main/checkout-cart/CheckoutSkeleton";
 
 const CartPage = () => {
-  const { isAuthenticated } = useAuthStore();
-  const {
-    data: cart,
-    isLoading,
-    refetch: refetchCart,
-  } = useGet<CartApiResponse>("/v1/cart", {
-    queryKey: ["/v1/cart"],
-    staleTime: 5000,
-    enabled: isAuthenticated,
-  });
+  const { cart, isCartLoading } = useCart();
   console.log("cart: ", cart);
 
   return (
-    <CheckoutCart
-      cart={cart as CartApiResponse}
-      isLoading={isLoading}
-      refetchCart={refetchCart}
-      isAuthenticated={isAuthenticated}
-    />
+    <>
+      {isCartLoading ? (
+        <CheckoutSkeleton />
+      ) : (
+        <CheckoutCart cart={cart as CartApiResponse} />
+      )}
+    </>
   );
 };
 

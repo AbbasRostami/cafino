@@ -15,8 +15,9 @@ import {
 
 // Import custom hook
 import { useFavorites } from "@/hooks/useFavorites";
+import { Suspense } from "react";
 
-const FavoritesPage = () => {
+const FavoritesPageClient = () => {
   // Custom hook for managing favorites state
   const {
     limitParam,
@@ -84,5 +85,10 @@ const FavoritesPage = () => {
     </div>
   );
 };
-
-export default FavoritesPage;
+export default function FavoritesPage() {
+  return (
+    <Suspense fallback={<div>Loading favorites...</div>}>
+      <FavoritesPageClient />
+    </Suspense>
+  );
+}
