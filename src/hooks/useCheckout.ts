@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { confirm } from "@/components/common/ConfirmModal";
 import { useAddDiscount, useRemoveDiscount, useCart } from "@/store/cartStore";
 import { useAddToCartButtonLogic } from "@/lib/AddToCartButton";
-import { discountSchema, DiscountFormValues } from "@/validation/checkout";
+import { discountSchema, DiscountFormValues } from "@/schemas/main/checkout/checkout";
 
 export const useCheckout = () => {
   const { cart } = useCart();

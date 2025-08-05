@@ -12,12 +12,19 @@ import { ThemeSwitcher } from "@/components/common/ThemeToggle/ThemeToggle";
 
 const AppHeader: React.FC = () => {
   const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);
-
+  const [windowWidth, setWindowWidth] = useState(0);
   const { isMobileOpen, toggleSidebar, toggleMobileSidebar, isExpanded } =
     useSidebar();
-
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   const handleToggle = () => {
-    if (window.innerWidth >= 1024) {
+    if (windowWidth !== null && windowWidth >= 1024) {
       toggleSidebar();
     } else {
       toggleMobileSidebar();
@@ -59,7 +66,7 @@ const AppHeader: React.FC = () => {
                 size={28}
                 className="text-gray-800 dark:text-amber-50"
               />
-            ) : window.innerWidth >= 1024 ? (
+            ) : windowWidth >= 1024 ? (
               isExpanded ? (
                 <TbLayoutSidebarLeftCollapseFilled
                   size={28}
@@ -107,11 +114,7 @@ const AppHeader: React.FC = () => {
           <div className="flex items-center gap-2 2xsm:gap-3 border-l-2 border-gray-300 dark:border-gray-800 pl-4">
             <ThemeSwitcher />
           </div>
-          <HiOutlineBellAlert
-            size={30}
-            className="cursor-pointer hover:text-blue-500 bord"
-          />
-          <UserDropdown />
+            <UserDropdown />
         </div>
       </div>
     </header>

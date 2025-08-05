@@ -6,7 +6,7 @@ import Backdrop from "../layout/Backdrop";
 import AppHeader from "../layout/AppHeader";
 import { useSidebar } from "../context/SidebarContext";
 import dynamic from "next/dynamic";
-import BuyerBreadcrumbs from "../components/Breadcrumbs";
+import DashboardBreadcrumbs from "../components/Breadcrumbs";
 import { Toaster } from "sonner";
 
 const ConfirmModal = dynamic(
@@ -27,7 +27,7 @@ export default function DashboardClient({
   const mainContentMargin = isMobileOpen
     ? "mr-0"
     : isExpanded || isHovered
-    ? "lg:mr-[310px]"
+    ? "lg:mr-[240px]"
     : "lg:mr-[110px]";
 
   return (
@@ -38,8 +38,7 @@ export default function DashboardClient({
         <AppHeader />
         <div className="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
           <ConfirmModal />
-          <BuyerBreadcrumbs />
-          <Toaster position="top-center" />
+          <DashboardBreadcrumbs />
           {children}
         </div>
       </div>

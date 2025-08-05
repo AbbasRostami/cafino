@@ -17,7 +17,6 @@ import {
 import { LoginForm } from "@/components/auth/LoginForm";
 import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
-import type { User as UserType } from "@/store/authStore";
 import React, { useState, useEffect } from "react";
 import {
   DropdownMenu,

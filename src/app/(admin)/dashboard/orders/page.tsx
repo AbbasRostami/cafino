@@ -10,7 +10,7 @@ import {
 import { useMemo, useState } from "react";
 import { BsArrowDown, BsArrowUp } from "react-icons/bs";
 import { TiDeleteOutline } from "react-icons/ti";
-import { PiSealWarningBold, PiWarningCircleBold } from "react-icons/pi";
+import { PiWarningCircleBold } from "react-icons/pi";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { FaUsers } from "react-icons/fa";
 
@@ -18,7 +18,6 @@ import { SlBan } from "react-icons/sl";
 import { GiConfirmed } from "react-icons/gi";
 import { confirm } from "@/components/common/ConfirmModal";
 import moment from "moment-jalaali";
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,7 +26,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import { Select, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 moment.loadPersian({ dialect: "persian-modern" });
@@ -65,7 +71,7 @@ const data = [
     actions: "actions",
   },
 ];
-export default function BookingTable() {
+export default function Orders() {
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 5,
@@ -308,7 +314,7 @@ export default function BookingTable() {
             ))}
           </thead>
           <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              {/* {Array.from({ length: 5 }).map((_, i: number) => (
+            {/* {Array.from({ length: 5 }).map((_, i: number) => (
                 <tr key={i}>
                   {Array.from({ length: columns.length }).map((_, j) => (
                     <td key={j} className="p-2">
@@ -367,40 +373,42 @@ export default function BookingTable() {
       </div>
       <div className="w-full flex flex-col-reverse md:flex-row justify-between items-center gap-5 md:gap-2">
         <div className=" flex flex-col xl:flex-row items-center gap-3">
-       <Select>
-        <SelectTrigger className="w-28">
-          <SelectValue placeholder="نمایش" />
-        </SelectTrigger>
-       </Select>
+          <Select>
+            <SelectTrigger className="w-28">
+              <SelectValue placeholder="نمایش" />
+            </SelectTrigger>
+          </Select>
           <Pagination dir="ltr" className="mt-6 w-full">
-          <PaginationContent>
-            {currentPage > 1 && (
-              <PaginationItem>
-                <PaginationPrevious onClick={() => goToPage(currentPage - 1)} />
-              </PaginationItem>
-            )}
-
-            {[...Array(totalPages)].map((_, index) => {
-              const page = index + 1;
-              return (
-                <PaginationItem key={page}>
-                  <PaginationLink
-                    isActive={page === currentPage}
-                    onClick={() => goToPage(page)}
-                  >
-                    {page}
-                  </PaginationLink>
+            <PaginationContent>
+              {currentPage > 1 && (
+                <PaginationItem>
+                  <PaginationPrevious
+                    onClick={() => goToPage(currentPage - 1)}
+                  />
                 </PaginationItem>
-              );
-            })}
+              )}
 
-            {currentPage < totalPages && (
-              <PaginationItem>
-                <PaginationNext onClick={() => goToPage(currentPage + 1)} />
-              </PaginationItem>
-            )}
-          </PaginationContent>
-        </Pagination>
+              {[...Array(totalPages)].map((_, index) => {
+                const page = index + 1;
+                return (
+                  <PaginationItem key={page}>
+                    <PaginationLink
+                      isActive={page === currentPage}
+                      onClick={() => goToPage(page)}
+                    >
+                      {page}
+                    </PaginationLink>
+                  </PaginationItem>
+                );
+              })}
+
+              {currentPage < totalPages && (
+                <PaginationItem>
+                  <PaginationNext onClick={() => goToPage(currentPage + 1)} />
+                </PaginationItem>
+              )}
+            </PaginationContent>
+          </Pagination>
         </div>
       </div>
     </div>

@@ -4,101 +4,65 @@ import {
   DropdownMenuTrigger,
   DropdownMenuItem,
   DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { FaBell, FaPlusCircle, FaUser, FaSignOutAlt } from "react-icons/fa";
-import { useRouter } from "next/navigation";
-import { confirm } from "@/components/common/ConfirmModal";
-// import { useProfile } from "@/app/(admin)/services/Profile/getProfile";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useUserProfile } from "@/services/update";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Edit, LogOut } from "lucide-react";
+import { useAuthStore } from "@/store/authStore";
 export default function UserDropdown() {
-  const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
-
-  if (true)
-    return (
-      <div className="flex items-center gap-3 w-fit px-2 py-1">
-        <div>
-          <Skeleton className="animate-pulse bg-gray-200 dark:bg-gray-700 w-10 h-10 rounded-full" />
-        </div>
-
-        <div className="flex flex-col gap-1">
-          <Skeleton className="animate-pulse bg-gray-200 dark:bg-gray-700 h-4 w-24 rounded-md" />
-          <Skeleton className="animate-pulse bg-gray-200 dark:bg-gray-700 h-3 w-16 rounded-md" />
-        </div>
-      </div>
-    );
-
-  if (true) return <div>Error: </div>;
-
+  const { data: user, isLoading } = useUserProfile();
+  const logout = useAuthStore((state) => state.logout);
   return (
     <>
-      <DropdownMenu>
+      <DropdownMenu dir="rtl">
         <DropdownMenuTrigger asChild>
-          <Avatar className="h-10 w-10">
-            <AvatarImage src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-        </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56" aria-label="User Actions">
-          <DropdownMenuItem
-            textValue="پروفایل"
-            key="profile"
-            className="h-14 gap-2"
+          <Button
+            variant="outline"
+            className=" bg-gray-200 rounded-full gap-2 cursor-pointer px-4 py-5"
           >
             <Avatar>
-              <AvatarImage src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarImage
+                src={user?.imageUrl || ""}
+                alt={user?.username || "avatar"}
+              />
+              <AvatarFallback>
+                {user?.first_name?.[0] || user?.username?.[0]}
+              </AvatarFallback>
             </Avatar>
+            <span className="max-w-[100px] truncate">
+              {user?.first_name || user?.username}
+            </span>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent side="bottom" align="end">
+          <DropdownMenuLabel className="font-bold">
+            {user?.first_name} {user?.last_name}
+            <div className="text-xs text-muted-foreground font-bold">
+              {user?.phone}
+            </div>
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem asChild className="cursor-pointer">
+            <Link href="/dashboard/profile" className="font-bold">
+              <Edit className="w-4 h-4" />
+              ویرایش اطلاعات
+            </Link>
           </DropdownMenuItem>
 
-          <DropdownMenuItem key="settings" textValue="شارژ کردن کیف پول">
-            <div className="flex items-center gap-2">
-              <FaPlusCircle />
-              شارژ کردن کیف پول
-            </div>
-          </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem
-            onClick={() => setIsOpen(true)}
-            key="team_settings"
-            textValue="تنظیمات نوتیفیکیشن ها"
-          >
-            <div className="flex items-center gap-2">
-              <FaBell />
-              تنظیمات نوتیفیکیشن ها
-            </div>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            key="system"
-            onClick={() => router.push("/buyer/profile")}
-            textValue="ویرایش اطلاعات کاربری"
-          >
-            <div className="flex items-center gap-2">
-              <FaUser />
-              ویرایش اطلاعات کاربری
-            </div>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            textValue="خروج از حساب کاربری"
-            key="logout"
+            className="cursor-pointer font-bold"
             onClick={async () => {
-              const isConfirmed = await confirm({
-                title: "آیا از خروج از حساب کاربری مطمئن هستید؟",
-                description: "آیا مطمئن هستید؟",
-                confirmText: "خروج",
-                cancelText: "انصراف",
-              });
-
-              if (isConfirmed) {
-                // signOut({ callbackUrl: "/" });
-              }
+              await logout();
             }}
+            variant="destructive"
           >
-            <div className="flex items-center gap-2">
-              <FaSignOutAlt />
-              خروج از حساب کاربری
-            </div>
+            <LogOut className="w-4 h-4" />
+            خروج از حساب کاربری
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

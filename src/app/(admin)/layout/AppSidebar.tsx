@@ -1,17 +1,26 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { TbHomeFilled } from "react-icons/tb";
-import { MdOutlinePayments } from "react-icons/md";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import logo from "./../../../assets/Logo/2.webp";
-import { FaHeart, FaPlusCircle } from "react-icons/fa";
-import { IoPersonSharp } from "react-icons/io5";
+import logo from "./../../../assets/Logo/7.png";
 import { BiChevronDown } from "react-icons/bi";
 import { BsPcHorizontal } from "react-icons/bs";
 import { useSidebar } from "../context/SidebarContext";
-import { Tooltip } from "@/components/ui/tooltip";
-
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
+  BadgeDollarSign,
+  ChartBarStacked,
+  CircleUserRound,
+  ClipboardPlus,
+  Hamburger,
+  OctagonMinus,
+} from "lucide-react";
 type NavItem = {
   name: string;
   icon: React.ReactNode;
@@ -23,19 +32,37 @@ const navItems: NavItem[] = [
   {
     icon: <TbHomeFilled />,
     name: "داشبورد",
-    path: "/dashboard/dashboard",
+    path: "/dashboard/dashboard", // صفحه اصلی داشبورد
   },
-
-  {
-    icon: <IoPersonSharp />,
-    name: "اطلاعات کاربری",
-    path: "/dashboard/profile",
-  },
-
   {
     name: "مدیریت کاربران",
-    icon: <FaPlusCircle />,
-    path: "/dashboard/users-management",
+    icon: <CircleUserRound />,
+    path: "/dashboard/users", // مدیریت کاربران
+  },
+  {
+    name: "مدیریت دسته‌بندی",
+    icon: <ChartBarStacked />,
+    path: "/dashboard/categories", // مدیریت دسته‌بندی‌ها
+  },
+  {
+    name: "مدیریت آیتم‌ها",
+    icon: <Hamburger />,
+    path: "/dashboard/items", // مدیریت آیتم‌ها یا محصولات
+  },
+  {
+    name: "مدیریت سفارشات",
+    icon: <BadgeDollarSign />,
+    path: "/dashboard/orders", // مدیریت سفارشات
+  },
+  {
+    name: "مدیریت تخفیف‌ها",
+    icon: <ClipboardPlus />,
+    path: "/dashboard/discounts", // مدیریت تخفیف‌ها
+  },
+  {
+    name: "لیست سیاه",
+    icon: <OctagonMinus />,
+    path: "/dashboard/blacklist", // لیست سیاه
   },
 ];
 
@@ -108,81 +135,92 @@ const AppSidebar: React.FC = () => {
       {items.map((nav, index) => (
         <li key={nav.name}>
           {nav.subItems ? (
-            <Tooltip
-              content={<div>{nav.name}</div>}
-              placement="left"
-              open={isExpanded || isMobileOpen}
-              className="rounded-lg"
-            >
-              <button
-                onClick={() => handleSubmenuToggle(index, menuType)}
-                className={`menu-item group flex items-center px-4 py-3 rounded-lg ${
-                  openSubmenu?.type === menuType && openSubmenu?.index === index
-                    ? "menu-item-active"
-                    : "menu-item-inactive"
-                } cursor-pointer ${
-                  !isExpanded ? "lg:justify-center" : "lg:justify-start"
-                }`}
-              >
-                <span
-                  className={`menu-item-icon-size flex items-center justify-center text-2xl ${
-                    openSubmenu?.type === menuType &&
-                    openSubmenu?.index === index
-                      ? "menu-item-icon-active"
-                      : "menu-item-icon-inactive text-gray-500 dark:text-white"
-                  }`}
-                >
-                  {nav.icon}
-                </span>
-                {(isExpanded || isMobileOpen) && (
-                  <span className="menu-item-text text-lg mr-3">
-                    {nav.name}
-                  </span>
-                )}
-                {(isExpanded || isMobileOpen) && (
-                  <BiChevronDown
-                    className={`mr-auto w-6 h-6 transition-transform duration-200 ${
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={() => handleSubmenuToggle(index, menuType)}
+                    className={`menu-item group flex items-center px-4 py-3 rounded-lg ${
                       openSubmenu?.type === menuType &&
                       openSubmenu?.index === index
-                        ? "rotate-180 text-brand-500"
-                        : ""
-                    }`}
-                  />
-                )}
-              </button>
-            </Tooltip>
-          ) : (
-            nav.path && (
-              <Tooltip
-                content={<div>{nav.name}</div>}
-                placement="left"
-                open={isExpanded || isMobileOpen}
-                className="rounded-lg "
-              >
-                <Link
-                  href={nav.path}
-                  className={`menu-item group flex items-center px-4 py-3 rounded-lg ${
-                    isActive(nav.path)
-                      ? "menu-item-active"
-                      : "menu-item-inactive"
-                  } ${!isExpanded ? "lg:justify-center" : "lg:justify-start"}`}
-                >
-                  <span
-                    className={`menu-item-icon-size flex items-center justify-center text-2xl ${
-                      isActive(nav.path)
-                        ? "menu-item-icon-active"
-                        : "menu-item-icon-inactive text-gray-500 dark:text-white"
+                        ? "menu-item-active"
+                        : "menu-item-inactive"
+                    } cursor-pointer ${
+                      !isExpanded ? "lg:justify-center" : "lg:justify-start"
                     }`}
                   >
-                    {nav.icon}
-                  </span>
-                  {(isExpanded || isMobileOpen) && (
-                    <span className="menu-item-text text-medium  mr-3">
-                      {nav.name}
+                    <span
+                      className={`menu-item-icon-size flex items-center justify-center text-2xl ${
+                        openSubmenu?.type === menuType &&
+                        openSubmenu?.index === index
+                          ? "menu-item-icon-active"
+                          : "menu-item-icon-inactive text-gray-500 dark:text-white"
+                      }`}
+                    >
+                      {nav.icon}
                     </span>
-                  )}
-                </Link>
+                    {(isExpanded || isMobileOpen) && (
+                      <span className="menu-item-text text-lg mr-3">
+                        {nav.name}
+                      </span>
+                    )}
+                    {(isExpanded || isMobileOpen) && (
+                      <BiChevronDown
+                        className={`mr-auto w-6 h-6 transition-transform duration-200 ${
+                          openSubmenu?.type === menuType &&
+                          openSubmenu?.index === index
+                            ? "rotate-180 text-brand-500"
+                            : ""
+                        }`}
+                      />
+                    )}
+                  </button>
+                </TooltipTrigger>
+                {!isExpanded && !isMobileOpen && (
+                  <TooltipContent side="right" className="rounded-lg">
+                    {nav.name}
+                  </TooltipContent>
+                )}
               </Tooltip>
+            </TooltipProvider>
+          ) : (
+            nav.path && (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Link
+                      href={nav.path}
+                      className={`menu-item group flex items-center px-4 py-3 rounded-lg ${
+                        isActive(nav.path)
+                          ? "menu-item-active"
+                          : "menu-item-inactive"
+                      } ${
+                        !isExpanded ? "lg:justify-center" : "lg:justify-start"
+                      }`}
+                    >
+                      <span
+                        className={`menu-item-icon-size flex items-center justify-center text-2xl ${
+                          isActive(nav.path)
+                            ? "menu-item-icon-active"
+                            : "menu-item-icon-inactive text-gray-500 dark:text-white"
+                        }`}
+                      >
+                        {nav.icon}
+                      </span>
+                      {(isExpanded || isMobileOpen) && (
+                        <span className="menu-item-text text-medium mr-3">
+                          {nav.name}
+                        </span>
+                      )}
+                    </Link>
+                  </TooltipTrigger>
+                  {!isExpanded && !isMobileOpen && (
+                    <TooltipContent side="right" className="rounded-lg">
+                      {nav.name}
+                    </TooltipContent>
+                  )}
+                </Tooltip>
+              </TooltipProvider>
             )
           )}
           {nav.subItems && (isExpanded || isMobileOpen) && (
@@ -250,9 +288,9 @@ const AppSidebar: React.FC = () => {
       className={`fixed flex flex-col lg:mt-0 top-0 px-2 right-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 h-screen transition-all duration-300 ease-in-out z-50 border-l border-gray-200 
         ${
           isExpanded || isMobileOpen
-            ? "w-[320px]"
+            ? "w-[240px]"
             : isHovered
-            ? "w-[320px]"
+            ? "w-[280px]"
             : "w-[110px]"
         }
         ${
@@ -262,7 +300,7 @@ const AppSidebar: React.FC = () => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className={`py-8 flex  ${
+        className={`py-4 flex  ${
           !isExpanded && !isHovered ? "lg:justify-center" : "justify-center "
         }`}
       >
@@ -270,23 +308,25 @@ const AppSidebar: React.FC = () => {
           {isExpanded || isHovered || isMobileOpen ? (
             <>
               <Image
-                className="dark:hidden h-auto w-auto  "
+                className="dark:hidden h-auto w-auto  max-h-[70px] "
                 src={logo}
                 alt="Logo"
                 width={70}
+                height={70}
               />
+              
               <Image
-                className="hidden dark:block h-auto w-auto"
+                className="hidden dark:block h-auto w-auto max-h-[70px]"
                 src={logo}
                 alt="Logo"
                 width={70}
               />
               <h1 className="text-4xl font-extrabold mt-1 text-neutral-900 tracking-tight leading-none">
                 <span className="dark:text-emerald-400 bg-gradient-to-r from-neutral-900 via-neutral-700 to-neutral-900 bg-clip-text text-black drop-shadow-sm">
-                  CAF
+                  Caf
                 </span>
                 <span className="text-[#fca804] dark:text-amber-400 drop-shadow-sm">
-                  INO
+                  ino
                 </span>
               </h1>
             </>
@@ -299,19 +339,7 @@ const AppSidebar: React.FC = () => {
         <nav className="mb-6">
           <div className="flex flex-col gap-4">
             <div>
-              <h2
-                className={`mb-4 text-sm uppercase flex leading-[20px] text-gray-400 ${
-                  !isExpanded && !isHovered
-                    ? "lg:justify-center"
-                    : "justify-start"
-                }`}
-              >
-                {isExpanded || isHovered || isMobileOpen ? (
-                  "منو"
-                ) : (
-                  <BsPcHorizontal className="size-6" />
-                )}
-              </h2>
+             
               {renderMenuItems(navItems, "main")}
             </div>
             <div className="">
