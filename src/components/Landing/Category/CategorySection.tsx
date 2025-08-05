@@ -1,7 +1,11 @@
 import { fetchApi } from "@/hooks/useAuthToken";
 import CategorySectionClient from "./CategorySectionClient";
 import { Category } from "@/types/main/Landing/Category/CategorySection";
+import { cookies } from "next/headers";
 const CategorySection = async () => {
+   const cookieStore = await cookies();
+  const allCookies = cookieStore.getAll();
+  console.log("🍪 All cookies:", allCookies);
   let categories: Category[] = [];
   try {
     const res = await fetchApi.get<{ data: Category[] }>("/v1/category");
@@ -15,6 +19,7 @@ const CategorySection = async () => {
       </section>
     );
   }
+
 
   return (
     <section className="pt-10 mb-10">
