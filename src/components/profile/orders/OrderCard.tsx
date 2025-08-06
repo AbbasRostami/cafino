@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "lucide-react";
 import moment from "moment-jalaali";
 import { OrderCardProps } from "@/types/Profile";
-import { formatCurrency, getStatusBadge } from "@/components/common/formatters";
+import { formatCurrency, getStatusBadge } from "@/utils/formatters";
 
 export const OrderCard = ({
   orders,

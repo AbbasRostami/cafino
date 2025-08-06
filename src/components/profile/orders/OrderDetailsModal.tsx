@@ -14,7 +14,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Package, CreditCard, MapPin, Download, Truck, X } from "lucide-react";
-import { formatCurrency } from "@/components/common/formatters";
+import { formatCurrency } from "@/utils/formatters";
 import { OrderDetailsModalProps } from "@/types/Profile";
 
 export const OrderDetailsModal = ({

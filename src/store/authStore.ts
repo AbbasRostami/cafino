@@ -34,7 +34,6 @@ interface AuthState {
   resendOTP: (phone: string) => Promise<boolean>;
   logout: () => Promise<void>;
   refreshToken: () => Promise<boolean>;
-  getUserInfo: () => Promise<boolean>;
 }
 let refreshingTokenPromise: Promise<boolean> | null = null;
 
@@ -44,7 +43,6 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       isAuthenticated: false,
       isLoading: true,
-
       setUser: (user) => set({ user, isAuthenticated: !!user }),
 
       setLoading: (isLoading) => set({ isLoading }),
@@ -70,31 +68,27 @@ export const useAuthStore = create<AuthState>()(
         }
       },
 
-      verifyOTP: async (phone: string, otp: string): Promise<boolean> => {
-        try {
-          const response = await fetch(getApiUrl("/v1/auth/verfiy-otp"), {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            body: JSON.stringify({ phone, otpCode: otp }),
-            credentials: "include",
-          });
-          if (response.ok) {
-            const data = await response.json();
-            set({ user: data.user ?? null, isAuthenticated: !!data.user });
-            return !!data.user;
-          } else {
-            const error = await response.json();
-            throw new Error(error.message || "Invalid OTP");
-          }
-        } catch (error) {
-          console.error("Verify OTP error:", error);
-          set({ user: null, isAuthenticated: false });
-          throw error;
-        }
-      },
+   verifyOTP: async (phone: string, otp: string): Promise<boolean> => {
+  try {
+    const response = await fetch(getApiUrl("/v1/auth/verfiy-otp"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({ phone, otpCode: otp }),
+      credentials: "include",
+    });
+    if (response.ok) {
+      set({ isAuthenticated: true });
+      return true;
+    } else {
+      const error = await response.json();
+      throw new Error(error.message || "Invalid OTP");
+    }
+  } catch (error) {
+    console.error("Verify OTP error:", error);
+    set({ user: null, isAuthenticated: false });
+    throw error;
+  }
+},
 
       resendOTP: async (phone: string): Promise<boolean> => {
         try {
@@ -130,25 +124,14 @@ export const useAuthStore = create<AuthState>()(
         }
       },
 
-      getUserInfo: async (): Promise<boolean> => {
-        try {
-          const data = await fetchApi.get<{ data: User }>("/v1/user");
-          set({ user: data.data ?? null, isAuthenticated: !!data.data });
-          return !!data.data;
-        } catch (error) {
-          console.error("Get user info error:", error);
-          set({ user: null, isAuthenticated: false });
-          return false;
-        }
-      },
 
-      refreshToken: async (): Promise<boolean> => {
+     refreshToken: async (): Promise<boolean> => {
         if (refreshingTokenPromise) {
           return refreshingTokenPromise;
         }
 
         const currentState = get();
-        if (!currentState.isAuthenticated && !currentState.user) {
+        if (!currentState.isAuthenticated) {
           return false;
         }
 
@@ -160,24 +143,15 @@ export const useAuthStore = create<AuthState>()(
             });
 
             if (response.ok) {
-              const data = await response.json();
-              if (data.user) {
-                set({
-                  user: data.user,
-                  isAuthenticated: true,
-                });
-                return true;
-              } else {
-                const ok = await get().getUserInfo();
-                return ok;
-              }
+              set({ isAuthenticated: true });
+              return true;
             } else {
-              set({ user: null, isAuthenticated: false });
+              set({ isAuthenticated: false });
               return false;
             }
           } catch (error) {
             console.error("Refresh token error:", error);
-            set({ user: null, isAuthenticated: false });
+            set({ isAuthenticated: false });
             return false;
           } finally {
             refreshingTokenPromise = null;
@@ -190,7 +164,6 @@ export const useAuthStore = create<AuthState>()(
     {
       name: "auth-storage",
       partialize: (state) => ({
-        user: state.user,
         isAuthenticated: state.isAuthenticated,
       }),
     }

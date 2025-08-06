@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Clock } from "lucide-react";
 import Link from "next/link";
 import moment from "moment-jalaali";
-import { getStatusBadge } from "@/components/common/formatters";
+import { getStatusBadge } from "@/utils/formatters";
 import {
   Tooltip,
   TooltipContent,

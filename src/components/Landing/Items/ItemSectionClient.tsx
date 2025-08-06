@@ -8,6 +8,7 @@ import { FavoriteToggleButton } from "@/lib/FavoriteToggleButton";
 import { AddToCartButtonStyled } from "@/lib/AddToCartButtonStyled";
 import { Item } from "@/types/main/Landing/itemsSection/itemsSection";
 import { SkeletonItemSection } from "@/components/skeleton/main/Landing/ItemSectionSkeleton";
+import { CartItem } from "@/store/cartStore";
 
 interface ItemSectionClientProps {
   items: Item[];
@@ -73,6 +74,23 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({
                 const isOutOfStock = item?.quantity === 0;
                 const isLowStock = item?.quantity > 0 && item?.quantity < 3;
                 const isMediumStock = item?.quantity >= 3 && item?.quantity < 6;
+
+                // تبدیل item به CartItem برای مهمان‌ها
+                const itemData: CartItem = {
+                  itemId: item.id,
+                  title: item.title,
+                  description: item.description,
+                  count: 0, // این مقدار در store تنظیم می‌شود
+                  images: item.images.map((img) => img.imageUrl), // تبدیل به آرایه string
+                  price: originalPrice.toString(),
+                  discount: discount.toString(),
+                  finalPrice: finalPrice,
+                  category: {
+                    title: item.category?.title || "",
+                  },
+                  quantity: item.quantity,
+                };
+
                 return (
                   <div
                     key={item?.id}
@@ -99,61 +117,56 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({
                             : "text-white border-white"
                         }`}
                       />
-                      {/* تخفیف */}
+
+                      {/* برچسب تخفیف */}
                       {discount > 0 && (
-                        <div className="absolute bottom-4 right-4 bg-gradient-to-tr from-red-500 to-red-600 text-white text-sm font-bold px-3 py-1 rounded-full shadow-lg z-20">
-                          {discount}% تخفیف
+                        <div className="absolute top-4 right-4 bg-gradient-to-tr from-red-500 to-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-20">
+                          {Math.round(discount)}% تخفیف
                         </div>
                       )}
                     </div>
 
-                    {/* جزئیات محصول */}
-                    <div className="p-5 flex flex-col gap-3 !rtl">
+                    <div className="p-4 flex flex-col gap-3">
                       <div className="flex justify-between items-start">
                         <div>
-                          <h3 className=" text-sm sm:text-xl font-bold text-gray-800 dark:text-white">
+                          <h3 className="text-lg font-bold text-gray-800 dark:text-white line-clamp-1">
                             {item?.title}
                           </h3>
-                          <span className="text-sm text-amber-600 dark:text-amber-400 mt-1 block">
+                          <span className="text-xs text-amber-600 dark:text-amber-400 mt-1 block">
                             {item?.category?.title}
                           </span>
                         </div>
 
                         {/* امتیاز */}
                         <div className="flex items-center gap-1 bg-amber-100 dark:bg-amber-900/30 px-2 py-1 rounded-full">
-                          <Star
-                            size={18}
-                            className="text-yellow-400 fill-yellow-400"
-                          />
-                          <span className="text-sm font-medium text-amber-800 dark:text-amber-200">
-                            {item?.rate?.toFixed(1) ?? "-"}
+                          <Star className="text-yellow-400 fill-current" />
+                          <span className="text-xs font-medium text-amber-800 dark:text-amber-200">
+                            {item?.rate.toFixed(1)}
                           </span>
                         </div>
                       </div>
 
-                      <p className="text-gray-600 dark:text-gray-400 text-sm mt-1 line-clamp-2 truncate">
+                      <p className="text-gray-600 dark:text-gray-400 text-sm truncate line-clamp-2 text-justify">
                         {item?.description}
                       </p>
 
                       {/* مواد تشکیل دهنده */}
-                      <div className="flex flex-wrap gap-1 mt-2">
+                      <div className="flex flex-wrap gap-1">
                         {item?.ingredients
-                          ?.slice(0, 2)
-                          .map((ingredient: string, index: number) => (
+                          .slice(0, 2)
+                          .map((ingredient: any, index: number) => (
                             <span
                               key={index}
                               className="text-xs bg-amber-100 dark:bg-amber-900/20 text-amber-800 dark:text-amber-200 px-2 py-1 rounded-full"
                             >
-                              {ingredient} {index !== 0 && ", ..."}
+                              {ingredient}
                             </span>
                           ))}
                       </div>
 
-                      {/* بخش جدید نمایش موجودی */}
-                      <div className="mt-3">
-                        {/* نمایش گرافیکی موجودی */}
+                      {/* موجودی */}
+                      <div className="mt-2">
                         <div className="relative flex items-center">
-                          {/* نمایش عددی موجودی */}
                           <div className="flex-1">
                             <div className="flex justify-between text-xs mb-1">
                               <span className="text-gray-500 dark:text-gray-400">
@@ -174,7 +187,6 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({
                               </span>
                             </div>
 
-                            {/* نمایش گرافیکی میزان موجودی */}
                             <div className="relative w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                               <div
                                 className={`absolute top-0 left-0 h-2 rounded-full ${
@@ -238,6 +250,7 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({
                         <div className="flex justify-end">
                           <AddToCartButtonStyled
                             itemId={item?.id}
+                            itemData={itemData}
                             disabled={item?.quantity === 0}
                           />
                         </div>

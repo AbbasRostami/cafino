@@ -17,7 +17,7 @@ import {
 import { LoginForm } from "@/components/auth/LoginForm";
 import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -31,18 +31,15 @@ import CafeinLogoLight from "./../../../assets/Logo/9.png";
 import CafeinLogoDark from "./../../../assets/Logo/10.png";
 import Image from "next/image";
 import { ThemeSwitcher } from "../ThemeToggle/ThemeToggle";
-// import { useCartStore } from "@/store/cartStore";
-import CartSidebar from "./CartSidebar";
+import CartSidebar from "../../CartSidebar";
 import { useUserProfile } from "@/services/update";
 const Navbar = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const logout = useAuthStore((state) => state.logout);
   const [openLoginDialog, setOpenLoginDialog] = useState(false);
   const [openMobileLoginDialog, setOpenMobileLoginDialog] = useState(false);
-
   const { data: userProfile } = useUserProfile();
   const user = userProfile;
-  console.log("userProfile", user);
   return (
     <div className="bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 dark:from-[#18181c] dark:via-[#23232a] dark:to-[#18181c]">
       <nav className="fixed top-6 inset-x-4 h-16 bg-white/80 dark:bg-[#23232a]/80 backdrop-blur-sm border border-white/20 dark:border-[#23232a]/60 max-w-screen-xl mx-auto rounded-full shadow-lg z-50">

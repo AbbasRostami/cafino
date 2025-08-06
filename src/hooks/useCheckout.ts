@@ -5,10 +5,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { confirm } from "@/components/common/ConfirmModal";
+import { confirm } from "@/components/common/ConfirmModal/ConfirmModal";
 import { useAddDiscount, useRemoveDiscount, useCart } from "@/store/cartStore";
 import { useAddToCartButtonLogic } from "@/lib/AddToCartButton";
-import { discountSchema, DiscountFormValues } from "@/schemas/main/checkout/checkout";
+import {
+  discountSchema,
+  DiscountFormValues,
+} from "@/schemas/main/checkout/checkout";
 
 export const useCheckout = () => {
   const { cart } = useCart();

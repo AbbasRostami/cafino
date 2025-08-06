@@ -1,6 +1,6 @@
 "use client";
 
-import { useConfirmStore } from "../../app/(admin)/context/useConfirmStore";
+import { useConfirmStore } from "../../../store/useConfirmStore";
 import { TriangleAlert } from "lucide-react";
 
 export const ConfirmModal = () => {

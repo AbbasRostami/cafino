@@ -6,6 +6,7 @@ import {
   AddToFavoriteRequest,
   DeleteFromFavoriteRequest,
 } from "@/types/Profile";
+import { useAuthStore } from "@/store/authStore";
 
 export const useGetFavorites = (limit: number = 6, page: number = 1) => {
   return useGet<FavoriteListResponse>(
@@ -18,8 +19,17 @@ export const useGetFavorites = (limit: number = 6, page: number = 1) => {
 
 export const useAddToFavorite = () => {
   const queryClient = useQueryClient();
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
   return usePost<AddToFavoriteRequest>(
-    (data) => `/v1/profile/favorite?itemId=${data.itemId}`,
+    (data) => {
+      if (!isAuthenticated) {
+        toast.error("لطفاً ابتدا وارد حساب کاربری خود شوید.");
+        // چون درخواست نزدم، throw می‌کنم تا mutate ارور بزنه و متوقف بشه
+        throw new Error("User is not authenticated");
+      }
+      return `/v1/profile/favorite?itemId=${data.itemId}`;
+    },
     undefined,
     {
       onSuccess: () => {
@@ -27,24 +37,38 @@ export const useAddToFavorite = () => {
         queryClient.invalidateQueries({ queryKey: ["favorites"] });
         queryClient.invalidateQueries({ queryKey: ["items"] });
       },
-      onError: () => {
-        toast.error("خطا در اضافه کردن به علاقه مندی ها");
+      onError: (error: any) => {
+        // اگر ارور به خاطر لاگین نبودن باشه دیگه اینجا نیازی به توست نیست چون همونجا زدن
+        if (error.message !== "User is not authenticated") {
+          toast.error("خطا در اضافه کردن به علاقه مندی ها");
+        }
       },
     }
   );
 };
 
-export const useDeleteFromFavorite = (p0?: { onSuccess: () => void }) => {
+export const useDeleteFromFavorite = () => {
   const queryClient = useQueryClient();
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
   return useDelete<DeleteFromFavoriteRequest>(
-    (data) => `/v1/profile/favorite?itemId=${data?.itemId}`,
+    (data) => {
+      if (!isAuthenticated) {
+        toast.error("لطفاً ابتدا وارد حساب کاربری خود شوید.");
+        throw new Error("User is not authenticated");
+      }
+      return `/v1/profile/favorite?itemId=${data?.itemId}`;
+    },
     {
       onSuccess: () => {
         toast.success("ایتم با موفقیت از علاقه مندی ها حذف شد");
         queryClient.invalidateQueries({ queryKey: ["favorites"] });
+        queryClient.invalidateQueries({ queryKey: ["items"] });
       },
-      onError: () => {
-        toast.error("خطا در حذف از علاقه مندی ها");
+      onError: (error: any) => {
+        if (error.message !== "User is not authenticated") {
+          toast.error("خطا در حذف از علاقه مندی ها");
+        }
       },
     }
   );

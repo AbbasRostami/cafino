@@ -7,7 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { formatDate } from "@/components/common/formatters";
+import { formatDate } from "@/utils/formatters";
 import { CommentItemProps } from "@/types/main/items-details/items-details";
 import { useState } from "react";
 
@@ -17,8 +17,8 @@ export const CommentItem = ({
   activeReplyId,
   onReplySubmit,
 }: CommentItemProps) => {
-  console.log("ksfjdkxhdskla",comment);
-  
+  console.log("ksfjdkxhdskla", comment);
+
   const [replyText, setReplyText] = useState("");
 
   const handleReplyClick = (id: string) => {

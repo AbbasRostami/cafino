@@ -8,7 +8,7 @@ import { IoMoon } from "react-icons/io5";
 export function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
-  
+
   useEffect(() => {
     setMounted(true);
   }, []);

@@ -7,7 +7,8 @@ import { FavoriteToggleButton } from "@/lib/FavoriteToggleButton";
 import { AddToCartButtonStyled } from "@/lib/AddToCartButtonStyled";
 import { MenuItemCardProps, PriceInfo } from "@/types/main/menu/menu";
 import { cn } from "@/lib/utils";
-import { getStockStatus } from "@/components/common/formatters";
+import { getStockStatus } from "@/utils/formatters";
+import { CartItem } from "@/store/cartStore";
 
 const calculatePrice = (item: any): PriceInfo => {
   const discount = item?.discount || 0;
@@ -29,6 +30,22 @@ export const MenuItemCard = ({ item, viewMode }: MenuItemCardProps) => {
   const router = useRouter();
   const stockStatus = getStockStatus(item.quantity);
   const priceInfo = calculatePrice(item);
+
+  // تبدیل item به CartItem برای مهمان‌ها
+  const itemData: CartItem = {
+    itemId: item.id,
+    title: item.title,
+    description: item.description,
+    count: 0, // این مقدار در store تنظیم می‌شود
+    images: item.images.map((img) => img.imageUrl), // تبدیل به آرایه string
+    price: priceInfo.originalPrice.toString(),
+    discount: priceInfo.discount.toString(),
+    finalPrice: priceInfo.finalPrice,
+    category: {
+      title: item.category?.title || "",
+    },
+    quantity: item.quantity,
+  };
 
   return (
     <div
@@ -187,6 +204,7 @@ export const MenuItemCard = ({ item, viewMode }: MenuItemCardProps) => {
           {/* دکمه افزودن */}
           <AddToCartButtonStyled
             itemId={item?.id}
+            itemData={itemData}
             disabled={item?.quantity === 0}
           />
         </div>

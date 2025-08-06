@@ -5,7 +5,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { confirm } from "@/components/common/ConfirmModal";
+import { confirm } from "@/components/common/ConfirmModal/ConfirmModal";
 import AddToCartButtonStyled from "@/lib/AddToCartButtonStyled";
 import { FavoriteItem } from "@/types/Profile";
 import { MotionDiv } from "@/utils/MotionWrapper";

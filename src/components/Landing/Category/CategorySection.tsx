@@ -2,9 +2,9 @@ import { fetchApi } from "@/hooks/useAuthToken";
 import CategorySectionClient from "./CategorySectionClient";
 import { Category } from "@/types/main/Landing/Category/CategorySection";
 import { cookies } from "next/headers";
+const cookieStore = cookies();
+const allCookies = cookieStore.getAll();
 const CategorySection = async () => {
-   const cookieStore = await cookies();
-  const allCookies = cookieStore.getAll();
   console.log("🍪 All cookies:", allCookies);
   let categories: Category[] = [];
   try {

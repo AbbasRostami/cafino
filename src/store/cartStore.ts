@@ -6,7 +6,6 @@ import {
   useGet,
 } from "@/hooks/useReactQueryHooks";
 import { useAuthStore } from "@/store/authStore";
-import queryClient from "@/hooks/QueryProviders";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -35,7 +34,6 @@ export interface CartApiResponse {
   statusCode?: number;
 }
 
-// Helper: check if running in browser
 const isBrowser = typeof window !== "undefined";
 
 function getDefaultCart(): CartApiResponse {
@@ -47,7 +45,6 @@ function getDefaultCart(): CartApiResponse {
   };
 }
 
-// --- Guest cart management (localStorage) ---
 const LOCAL_CART_KEY = "guest-cart";
 
 function getLocalCart(): CartApiResponse {
@@ -65,191 +62,229 @@ function setLocalCart(cart: CartApiResponse) {
   if (!isBrowser) return;
   try {
     localStorage.setItem(LOCAL_CART_KEY, JSON.stringify(cart));
-  } catch (e) {
-    // می‌توانی اینجا لاگ کنی یا بی‌صدا رد کنی
-    // console.error('localStorage set error:', e);
-  }
+  } catch {}
 }
 
 function clearLocalCart() {
   if (!isBrowser) return;
   try {
     localStorage.removeItem(LOCAL_CART_KEY);
-  } catch (e) {
-    // می‌توانی اینجا لاگ کنی یا بی‌صدا رد کنی
-    // console.error('localStorage clear error:', e);
-  }
+  } catch {}
 }
 
 interface CartState {
   cart: CartApiResponse;
-  addToCart: (item: CartItem) => void;
-  incItem: (itemId: string) => void;
-  decItem: (itemId: string) => void;
-  removeItem: (itemId: string) => void;
-  clearCart: () => void;
+  addToCart: (item: CartItem) => Promise<void>;
+  incItem: (itemId: string) => Promise<void>;
+  decItem: (itemId: string) => Promise<void>;
+  removeItem: (itemId: string) => Promise<void>;
+  clearCart: () => Promise<void>;
   syncCart: () => void;
+  getCartItemCount: (itemId: string) => number;
 }
 
-// export const useCartStore = create<CartState>()((set, get) => ({
-//   cart: getLocalCart(),
-//   addToCart: (item) => {
-//     const isAuthenticated = useAuthStore.getState().isAuthenticated;
-//     if (isAuthenticated) {
-//       // عملیات سرور باید در کامپوننت انجام شود (هوک useAddToCart)
-//       return;
-//     }
-//     const prev = getLocalCart();
-//     const existing = prev.cartItems.find((i) => i.itemId === item.itemId);
-//     let newCartItems;
-//     if (existing) {
-//       // محدودیت: اگر تعداد فعلی به اندازه quantity بود، افزایش نده
-//       const maxQty = typeof item.quantity === "number" ? item.quantity : 10;
-//       if (existing.count >= maxQty) {
-//         newCartItems = prev.cartItems;
-//       } else {
-//         newCartItems = prev.cartItems.map((i) =>
-//           i.itemId === item.itemId ? { ...i, count: i.count + 1 } : i
-//         );
-//       }
-//     } else {
-//       newCartItems = [...prev.cartItems, { ...item, count: 1 }];
-//     }
-//     const totalAmount = newCartItems.reduce(
-//       (sum, i) => sum + Number(i.finalPrice) * i.count,
-//       0
-//     );
-//     const totalDiscount = newCartItems.reduce(
-//       (sum, i) => sum + (Number(i.price) - Number(i.finalPrice)) * i.count,
-//       0
-//     );
-//     const cart: CartApiResponse = {
-//       ...prev,
-//       cartItems: newCartItems,
-//       totalAmount,
-//       paymentAmount: totalAmount,
-//       totalDiscount,
-//     };
-//     setLocalCart(cart);
-//     if (JSON.stringify(get().cart) !== JSON.stringify(cart)) {
-//       set({ cart });
-//     }
-//   },
-//   incItem: (itemId) => {
-//     const prev = getLocalCart();
-//     const item = prev.cartItems.find((i) => i.itemId === itemId);
-//     const maxQty = typeof item?.quantity === "number" ? item.quantity : 10;
-//     if (item && item.count >= maxQty) {
-//       setLocalCart(prev);
-//       return;
-//     }
-//     const newCartItems = prev.cartItems.map((i) =>
-//       i.itemId === itemId ? { ...i, count: i.count + 1 } : i
-//     );
-//     const totalAmount = newCartItems.reduce(
-//       (sum, i) => sum + Number(i.finalPrice) * i.count,
-//       0
-//     );
-//     const totalDiscount = newCartItems.reduce(
-//       (sum, i) => sum + (Number(i.price) - Number(i.finalPrice)) * i.count,
-//       0
-//     );
-//     const cart: CartApiResponse = {
-//       ...prev,
-//       cartItems: newCartItems,
-//       totalAmount,
-//       paymentAmount: totalAmount,
-//       totalDiscount,
-//     };
-//     setLocalCart(cart);
-//     if (JSON.stringify(get().cart) !== JSON.stringify(cart)) {
-//       set({ cart });
-//     }
-//   },
-//   decItem: (itemId) => {
-//     const prev = getLocalCart();
-//     const newCartItems = prev.cartItems
-//       .map((i) => (i.itemId === itemId ? { ...i, count: i.count - 1 } : i))
-//       .filter((i) => i.count > 0);
-//     const totalAmount = newCartItems.reduce(
-//       (sum, i) => sum + Number(i.finalPrice) * i.count,
-//       0
-//     );
-//     const totalDiscount = newCartItems.reduce(
-//       (sum, i) => sum + (Number(i.price) - Number(i.finalPrice)) * i.count,
-//       0
-//     );
-//     const cart: CartApiResponse = {
-//       ...prev,
-//       cartItems: newCartItems,
-//       totalAmount,
-//       paymentAmount: totalAmount,
-//       totalDiscount,
-//     };
-//     setLocalCart(cart);
-//     if (JSON.stringify(get().cart) !== JSON.stringify(cart)) {
-//       set({ cart });
-//     }
-//   },
-//   removeItem: (itemId) => {
-//     const prev = getLocalCart();
-//     const newCartItems = prev.cartItems.filter((i) => i.itemId !== itemId);
-//     const totalAmount = newCartItems.reduce(
-//       (sum, i) => sum + Number(i.finalPrice) * i.count,
-//       0
-//     );
-//     const totalDiscount = newCartItems.reduce(
-//       (sum, i) => sum + (Number(i.price) - Number(i.finalPrice)) * i.count,
-//       0
-//     );
-//     const cart: CartApiResponse = {
-//       ...prev,
-//       cartItems: newCartItems,
-//       totalAmount,
-//       paymentAmount: totalAmount,
-//       totalDiscount,
-//     };
-//     setLocalCart(cart);
-//     if (JSON.stringify(get().cart) !== JSON.stringify(cart)) {
-//       set({ cart });
-//     }
-//   },
-//   clearCart: () => {
-//     clearLocalCart();
-//     const emptyCart = getDefaultCart();
-//     if (JSON.stringify(get().cart) !== JSON.stringify(emptyCart)) {
-//       set({ cart: emptyCart });
-//     }
-//   },
-//   syncCart: () => {
-//     const localCart = getLocalCart();
-//     if (JSON.stringify(get().cart) !== JSON.stringify(localCart)) {
-//       set({ cart: localCart });
-//     }
-//   },
-// }));
+export const useCartStore = create<CartState>((set, get) => ({
+  cart: getLocalCart(),
 
-// Migration function: move guest cart to server after login
-// export async function migrateGuestCartToServer(
-//   addToCartApi: (itemId: string) => Promise<any>,
-//   refetchCart: () => void
-// ) {
-//   if (typeof window === "undefined") return;
-//   const guestCart = getLocalCart();
-//   if (guestCart?.cartItems?.length) {
-//     for (const item of guestCart.cartItems) {
-//       for (let i = 0; i < item.count; i++) {
-//         try {
-//           await addToCartApi(item.itemId);
-//         } catch (e) {
-//           // اگر خطا داشت، ادامه بده
-//         }
-//       }
-//     }
-//     clearLocalCart();
-//     setTimeout(() => refetchCart(), 1000);
-//   }
-// }
+  addToCart: async (item) => {
+    // مهمان: کار با localStorage
+    const prev = getLocalCart();
+    const existing = prev.cartItems.find((i) => i.itemId === item.itemId);
+    let newCartItems;
+
+    if (existing) {
+      const maxQty = typeof item.quantity === "number" ? item.quantity : 10;
+      if (existing.count >= maxQty) {
+        toast.error(`حداکثر تعداد موجودی این محصول ${maxQty} عدد است`);
+        return;
+      }
+      newCartItems = prev.cartItems.map((i) =>
+        i.itemId === item.itemId ? { ...i, count: i.count + 1 } : i
+      );
+    } else {
+      newCartItems = [...prev.cartItems, { ...item, count: 1 }];
+    }
+
+    const totalAmount = newCartItems.reduce(
+      (sum, i) => sum + Number(i.finalPrice) * i.count,
+      0
+    );
+    const totalDiscount = newCartItems.reduce(
+      (sum, i) => sum + (Number(i.price) - Number(i.finalPrice)) * i.count,
+      0
+    );
+
+    const cart: CartApiResponse = {
+      ...prev,
+      cartItems: newCartItems,
+      totalAmount,
+      paymentAmount: totalAmount,
+      totalDiscount,
+    };
+
+    setLocalCart(cart);
+    set({ cart });
+    toast.success("محصول با موفقیت به سبد خرید اضافه شد");
+  },
+
+  incItem: async (itemId) => {
+    const isAuthenticated = useAuthStore.getState().isAuthenticated;
+
+    if (isAuthenticated) {
+      // برای کاربران لاگین شده، عملیات در کامپوننت یا هوک API انجام می‌شود
+      return;
+    }
+
+    const prev = getLocalCart();
+    const item = prev.cartItems.find((i) => i.itemId === itemId);
+
+    if (!item) return;
+
+    const maxQty = typeof item.quantity === "number" ? item.quantity : 10;
+    if (item.count >= maxQty) {
+      toast.error(`حداکثر تعداد موجودی این محصول ${maxQty} عدد است`);
+      return;
+    }
+
+    const newCartItems = prev.cartItems.map((i) =>
+      i.itemId === itemId ? { ...i, count: i.count + 1 } : i
+    );
+
+    const totalAmount = newCartItems.reduce(
+      (sum, i) => sum + Number(i.finalPrice) * i.count,
+      0
+    );
+    const totalDiscount = newCartItems.reduce(
+      (sum, i) => sum + (Number(i.price) - Number(i.finalPrice)) * i.count,
+      0
+    );
+
+    const cart: CartApiResponse = {
+      ...prev,
+      cartItems: newCartItems,
+      totalAmount,
+      paymentAmount: totalAmount,
+      totalDiscount,
+    };
+
+    setLocalCart(cart);
+    set({ cart });
+    toast.success("تعداد محصول با موفقیت افزایش یافت");
+  },
+
+  decItem: async (itemId) => {
+    const isAuthenticated = useAuthStore.getState().isAuthenticated;
+
+    if (isAuthenticated) {
+      // برای کاربران لاگین شده، عملیات در کامپوننت یا هوک API انجام می‌شود
+      return;
+    }
+
+    const prev = getLocalCart();
+    const newCartItems = prev.cartItems
+      .map((i) => (i.itemId === itemId ? { ...i, count: i.count - 1 } : i))
+      .filter((i) => i.count > 0);
+
+    const totalAmount = newCartItems.reduce(
+      (sum, i) => sum + Number(i.finalPrice) * i.count,
+      0
+    );
+    const totalDiscount = newCartItems.reduce(
+      (sum, i) => sum + (Number(i.price) - Number(i.finalPrice)) * i.count,
+      0
+    );
+
+    const cart: CartApiResponse = {
+      ...prev,
+      cartItems: newCartItems,
+      totalAmount,
+      paymentAmount: totalAmount,
+      totalDiscount,
+    };
+
+    setLocalCart(cart);
+    set({ cart });
+    toast.success("تعداد محصول با موفقیت کاهش یافت");
+  },
+
+  removeItem: async (itemId) => {
+    const isAuthenticated = useAuthStore.getState().isAuthenticated;
+
+    if (isAuthenticated) {
+      // برای کاربران لاگین شده، عملیات در کامپوننت یا هوک API انجام می‌شود
+      return;
+    }
+
+    const prev = getLocalCart();
+    const newCartItems = prev.cartItems.filter((i) => i.itemId !== itemId);
+
+    const totalAmount = newCartItems.reduce(
+      (sum, i) => sum + Number(i.finalPrice) * i.count,
+      0
+    );
+    const totalDiscount = newCartItems.reduce(
+      (sum, i) => sum + (Number(i.price) - Number(i.finalPrice)) * i.count,
+      0
+    );
+
+    const cart: CartApiResponse = {
+      ...prev,
+      cartItems: newCartItems,
+      totalAmount,
+      paymentAmount: totalAmount,
+      totalDiscount,
+    };
+
+    setLocalCart(cart);
+    set({ cart });
+    toast.success("محصول با موفقیت از سبد خرید حذف شد");
+  },
+
+  clearCart: async () => {
+    const isAuthenticated = useAuthStore.getState().isAuthenticated;
+
+    if (isAuthenticated) {
+      // برای کاربران لاگین شده، عملیات در کامپوننت یا هوک API انجام می‌شود
+      return;
+    }
+
+    clearLocalCart();
+    const emptyCart = getDefaultCart();
+    set({ cart: emptyCart });
+    toast.success("سبد خرید با موفقیت پاک شد");
+  },
+
+  syncCart: () => {
+    const isAuthenticated = useAuthStore.getState().isAuthenticated;
+
+    if (isAuthenticated) {
+      // اگر لاگین است، از سرور داده بگیر
+      // این عملیات در useCart hook انجام می‌شود
+      return;
+    }
+
+    // برای مهمان‌ها، از localStorage بخوان
+    const localCart = getLocalCart();
+    if (JSON.stringify(get().cart) !== JSON.stringify(localCart)) {
+      set({ cart: localCart });
+    }
+  },
+
+  getCartItemCount: (itemId: string) => {
+    const isAuthenticated = useAuthStore.getState().isAuthenticated;
+
+    if (isAuthenticated) {
+      // برای کاربران لاگین شده، از سرور بخوان
+      // این عملیات در useCart hook انجام می‌شود
+      return 0;
+    }
+
+    // برای مهمان‌ها، از localStorage بخوان
+    const localCart = getLocalCart();
+    const item = localCart.cartItems.find((i) => i.itemId === itemId);
+    return item?.count || 0;
+  },
+}));
 
 // React Query Hooks for mutations (for authenticated users only)
 export const useCart = () => {
@@ -264,6 +299,7 @@ export const useCart = () => {
     staleTime: 0,
     enabled: isAuthenticated,
   });
+
   return { cart, isCartLoading, refetch, cartError, isAuthenticated };
 };
 
@@ -414,9 +450,46 @@ export const useRemoveDiscount = () => {
   return { mutate, isPending, error };
 };
 
-// Optional: preload cart on app start (client-side only)
-/*
-if (typeof window !== "undefined") {
-  // useCartStore.getState().refetchCart(); // Removed
+// React Query hook for add-multiple
+export const useAddToCartMultiple = () => {
+  const queryClient = useQueryClient();
+  return usePost<any, { items: { itemId: string; count: number }[] }>(
+    () => "/v1/cart/add-multiple",
+    undefined,
+    {
+      onSuccess: () => {
+        toast.success("سبد خرید با موفقیت منتقل شد");
+        queryClient.invalidateQueries({ queryKey: ["/v1/cart"] });
+        queryClient.refetchQueries({ queryKey: ["/v1/cart"] });
+      },
+      onError: () => {
+        toast.error("خطا در انتقال سبد خرید مهمان");
+      },
+    }
+  );
+};
+
+// Migration function: move guest cart to server after login
+export async function migrateGuestCartToServer(
+  addToCartMultipleApi: (data: {
+    items: { itemId: string; count: number }[];
+  }) => Promise<any>,
+  refetchCart: () => void
+) {
+  if (typeof window === "undefined") return;
+
+  const guestCart = getLocalCart();
+  if (guestCart?.cartItems?.length) {
+    const items = guestCart.cartItems.map((item) => ({
+      itemId: item.itemId,
+      count: item.count,
+    }));
+    try {
+      await addToCartMultipleApi({ items });
+    } catch (e) {
+      console.error("Error migrating guest cart (add-multiple):", e);
+    }
+    clearLocalCart();
+    setTimeout(() => refetchCart(), 1000);
+  }
 }
-*/

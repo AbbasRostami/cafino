@@ -3,19 +3,22 @@ import { Plus, Minus, Trash2, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAddToCartButtonLogic } from "./AddToCartButton";
+import { CartItem } from "@/store/cartStore";
 
 interface AddToCartButtonStyledProps {
   itemId: string;
+  itemData?: CartItem; // برای مهمان‌ها نیاز به item data داریم
   disabled?: boolean;
   className?: string;
 }
 
 export const AddToCartButtonStyled: React.FC<AddToCartButtonStyledProps> = ({
   itemId,
+  itemData,
   disabled = false,
   className = "",
 }) => {
-  const logic = useAddToCartButtonLogic({ itemId, disabled });
+  const logic = useAddToCartButtonLogic({ itemId, itemData, disabled });
   const {
     count,
     isCartLoading,
@@ -27,7 +30,21 @@ export const AddToCartButtonStyled: React.FC<AddToCartButtonStyledProps> = ({
     handleInc,
     handleDec,
     disabled: isDisabled,
+    isAuthenticated,
   } = logic;
+
+  // اگر کاربر مهمان است و itemData نداریم، دکمه را غیرفعال کن
+  if (!isAuthenticated && !itemData) {
+    return (
+      <Button
+        disabled={true}
+        className="w-full py-5 bg-gray-300 text-gray-500 cursor-not-allowed"
+      >
+        اطلاعات محصول در دسترس نیست
+      </Button>
+    );
+  }
+
   // دکمه افزودن اولیه
   if (count === 0) {
     return (

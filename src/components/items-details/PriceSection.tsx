@@ -7,6 +7,7 @@ import {
   LaptopMinimalCheck,
   ShoppingCart,
 } from "lucide-react";
+import { CartItem } from "@/store/cartStore";
 
 export const PriceSection = ({
   item,
@@ -14,6 +15,22 @@ export const PriceSection = ({
   originalPrice,
   discount,
 }: PriceSectionProps) => {
+  // تبدیل item به CartItem برای مهمان‌ها
+  const itemData: CartItem = {
+    itemId: item.id,
+    title: item.title,
+    description: item.description,
+    count: 0, // این مقدار در store تنظیم می‌شود
+    images: item.images.map((img) => img.imageUrl), // تبدیل به آرایه string
+    price: originalPrice.toString(),
+    discount: discount.toString(),
+    finalPrice: finalPrice,
+    category: {
+      title: item.category?.title || "",
+    },
+    quantity: item.quantity,
+  };
+
   return (
     <MotionDiv
       initial={{ opacity: 0, y: 20 }}
@@ -65,6 +82,7 @@ export const PriceSection = ({
         >
           <AddToCartButtonStyled
             itemId={item.id}
+            itemData={itemData}
             disabled={item.quantity === 0}
             className=""
           />
