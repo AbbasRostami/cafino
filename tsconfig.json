@@ -29,7 +29,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/common/formatters.tsx"
+    "src/utils/formatters.tsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -26,8 +26,11 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { phoneSchema, otpSchema } from "@/schemas/auth/login";
-// import { useAddToCart, migrateGuestCartToServer } from "@/store/cartStore";
-// import { useQueryClient } from "@tanstack/react-query";
+import {
+  migrateGuestCartToServer,
+  useAddToCartMultiple,
+} from "@/store/cartStore";
+import { useCart } from "@/store/cartStore";
 
 export const LoginForm: React.FC<{ onSuccess?: () => void }> = ({
   onSuccess,
@@ -37,10 +40,8 @@ export const LoginForm: React.FC<{ onSuccess?: () => void }> = ({
   const [phoneValue, setPhoneValue] = useState<string>("");
   const [resendTimer, setResendTimer] = useState(0);
   const { sendOTP, verifyOTP, resendOTP } = useAuthStore();
-  const getUserInfo = useAuthStore((state) => state.getUserInfo);
-  // const addToCartApi = useAddToCart();
-  // const queryClient = useQueryClient();
-
+  const { mutateAsync: addToCartMultiple } = useAddToCartMultiple();
+  const { refetch: refetchCart } = useCart();
   // phone form
   const {
     register: registerPhone,
@@ -84,15 +85,7 @@ export const LoginForm: React.FC<{ onSuccess?: () => void }> = ({
     setIsLoading(true);
     try {
       await verifyOTP(phoneValue, data.otp);
-      await getUserInfo();
-      // --- migration guest cart to server ---
-      // await migrateGuestCartToServer(
-      //   (itemId) => addToCartApi.mutateAsync({ itemId }),
-      //   async () => {
-      //     await queryClient.invalidateQueries({ queryKey: ["/v1/cart"] });
-      //     await queryClient.refetchQueries({ queryKey: ["/v1/cart"] });
-      //   }
-      // );
+      await migrateGuestCartToServer(addToCartMultiple, refetchCart);
       toast.success("با موفقیت وارد شدید!");
       if (onSuccess) onSuccess();
     } catch (err: any) {

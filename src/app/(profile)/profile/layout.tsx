@@ -1,6 +1,6 @@
-import Navbar from "@/components/common/Header/navbar-04";
+import Navbar from "@/components/common/Header/Navbar";
 import Sidebar from "@/components/profile/layout/sidebar";
-import { ConfirmModal } from "@/components/common/ConfirmModal";
+import { ConfirmModal } from "@/components/common/ConfirmModal/ConfirmModal";
 
 export default function ProfileLayout({
   children,
