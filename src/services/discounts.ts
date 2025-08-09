@@ -3,7 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { r } from "node_modules/framer-motion/dist/types.d-CtuPurYT";
 import { toast } from "sonner";
 
-export interface Discount {
+export interface Discounts {
   id: string;
   code: string;
   percent: number | null;
@@ -15,28 +15,44 @@ export interface Discount {
 }
 
 export interface GetDiscountsResponse {
-  data: Discount[];
+  data: Discounts[];
   statusCode: number;
+  total?: number;
+  page?: number;
+  limit?: number;
 }
 
-export const useGetDiscounts = () => {
-  const { data, isLoading, error } = useGet<GetDiscountsResponse>("/v1/discount", {
-    queryKey: ["discounts"],
-  });
+interface UseGetDiscountsProps {
+  page?: number;
+  limit?: number;
+}
+
+export const useGetDiscounts = ({
+  page = 1,
+  limit = 10,
+}: UseGetDiscountsProps = {}) => {
+  const { data, isLoading, error } = useGet<GetDiscountsResponse>(
+    `/v1/discount?page=${page}&limit=${limit}`,
+    {
+      queryKey: ["discounts", page, limit],
+    }
+  );
 
   return {
     discounts: data?.data || [],
+    total: data?.total || 0,
+    page: data?.page || page,
+    limit: data?.limit || limit,
     isLoading,
     error,
   };
 };
 
-
 // types/discount.ts
 export interface CreateDiscountRequest {
   code: string;
   percent?: number; // optional if `amount` is used
-  amount?: number;  // optional if `percent` is used
+  amount?: number; // optional if `percent` is used
   expires_in: number; // in days
   limit: number;
 }
@@ -44,7 +60,7 @@ export interface CreateDiscountRequest {
 export const useCreateDiscount = () => {
   const queryClient = useQueryClient();
 
-  const { mutate, isPending, error }= usePost<CreateDiscountRequest>(
+  const { mutate, isPending, error } = usePost<CreateDiscountRequest>(
     () => "/v1/discount",
     undefined,
     {
@@ -60,7 +76,6 @@ export const useCreateDiscount = () => {
 
   return { mutate, isPending, error };
 };
-
 
 export interface DeleteDiscountRequest {
   id: string;
@@ -81,5 +96,5 @@ export const useDeleteDiscount = () => {
       },
     }
   );
-      return { mutate, isPending, error }
+  return { mutate, isPending, error };
 };
