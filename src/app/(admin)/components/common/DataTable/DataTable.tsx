@@ -191,7 +191,7 @@ export function DataTable<TData, TValue>({
           <TableBody className="divide-y divide-gray-200 dark:divide-gray-700">
             {isLoading ? (
               <TableSkeletonRows columnCount={columnCount} />
-            ) : data.length === 0 && !isLoading ? (
+            ) : table.getRowModel().rows.length === 0 && !isLoading ? (
               <EmptyState
                 message={emptyStateMessage}
                 description={emptyStateDescription}

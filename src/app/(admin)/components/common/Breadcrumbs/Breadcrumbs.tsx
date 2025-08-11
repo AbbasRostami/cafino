@@ -19,7 +19,7 @@ const routeMap: { [key: string]: string } = {
   "booking-management": "رزروها",
   announcements: "اعلان‌ها",
   settings: "تنظیمات",
-  reports: "گزارشات",
+  comments: "کامنت ها",
 };
 
 export default function DashboardBreadcrumbs() {

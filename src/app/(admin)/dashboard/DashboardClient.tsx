@@ -6,12 +6,12 @@ import Backdrop from "../layout/Backdrop";
 import AppHeader from "../layout/AppHeader";
 import { useSidebar } from "../context/SidebarContext";
 import dynamic from "next/dynamic";
-import DashboardBreadcrumbs from "../components/Breadcrumbs";
+import DashboardBreadcrumbs from "../components/common/Breadcrumbs/Breadcrumbs";
 import { Toaster } from "sonner";
 
 const ConfirmModal = dynamic(
   () =>
-    import("@/components/common/ConfirmModal").then(
+    import("@/components/common/ConfirmModal/ConfirmModal").then(
       (mod) => mod.ConfirmModal
     ),
   { ssr: false }
