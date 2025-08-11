@@ -1,7 +1,7 @@
 import { useGet, usePut } from "@/hooks/useReactQueryHooks";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { User, UserResponse, UpdateProfileRequest } from "@/types/Profile";
+import { UserResponse, UpdateProfileRequest } from "@/types/Profile";
 import { useAuthStore } from "@/store/authStore";
 
 export const useUserProfile = () => {
@@ -25,7 +25,7 @@ export const useUpdateProfile = () => {
     mutate: updateProfile,
     isPending,
     error,
-  } = usePut<UpdateProfileRequest>((data) => `/v1/profile/update`, undefined, {
+  } = usePut<UpdateProfileRequest>(() => `/v1/profile/update`, undefined, {
     onSuccess: () => {
       toast.success("پروفایل با موفقیت ویرایش شد");
       queryClient.invalidateQueries({ queryKey: ["profile"] });

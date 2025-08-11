@@ -25,7 +25,7 @@ export const useGetAddresses = () => {
 export const useAddAddress = () => {
   const queryClient = useQueryClient();
 
-  return usePost<AddressRequest>((data) => `/v1/profile/address`, undefined, {
+  return usePost<AddressRequest>(() => `/v1/profile/address`, undefined, {
     onSuccess: () => {
       toast.success("آدرس با موفقیت اضافه شد");
       queryClient.invalidateQueries({ queryKey: ["addresses"] });

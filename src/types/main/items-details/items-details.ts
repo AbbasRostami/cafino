@@ -13,6 +13,7 @@ export interface ItemCategory {
 }
 
 export interface ItemUser {
+  username: any;
   id: string;
   first_name: string;
   last_name: string;
@@ -20,6 +21,7 @@ export interface ItemUser {
 
 // src/services/Comments.ts
 export interface Comment {
+  [x: string]: any;
   itemId: string;
   id: string;
   text: string;

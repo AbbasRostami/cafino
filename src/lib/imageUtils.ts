@@ -1,0 +1,91 @@
+// Browser-based image compression utilities
+export const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+
+export const validateImageFile = (file: File): string | null => {
+  // Check file type
+  if (!file.type.startsWith("image/")) {
+    return "فایل باید تصویر باشد";
+  }
+
+  // Check file size
+  if (file.size > MAX_FILE_SIZE) {
+    return `حجم فایل نباید بیش از ${formatFileSize(MAX_FILE_SIZE)} باشد`;
+  }
+
+  return null;
+};
+
+export const formatFileSize = (bytes: number): string => {
+  if (bytes === 0) return "0 Bytes";
+  const k = 1024;
+  const sizes = ["Bytes", "KB", "MB", "GB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+};
+
+// Browser-based image compression using Canvas API
+export const compressImage = async (
+  file: File,
+  maxWidth = 800,
+  maxHeight = 800,
+  quality = 0.8
+): Promise<File> => {
+  return new Promise((resolve, reject) => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    const img = new Image();
+
+    img.onload = () => {
+      // Calculate new dimensions
+      let { width, height } = img;
+
+      if (width > height) {
+        if (width > maxWidth) {
+          height = (height * maxWidth) / width;
+          width = maxWidth;
+        }
+      } else {
+        if (height > maxHeight) {
+          width = (width * maxHeight) / height;
+          height = maxHeight;
+        }
+      }
+
+      // Set canvas dimensions
+      canvas.width = width;
+      canvas.height = height;
+
+      // Draw and compress image
+      ctx?.drawImage(img, 0, 0, width, height);
+
+      // Convert to blob with compression
+      canvas.toBlob(
+        (blob) => {
+          if (blob) {
+            // Create new file with compressed data
+            const compressedFile = new File([blob], file.name, {
+              type: file.type,
+              lastModified: Date.now(),
+            });
+            resolve(compressedFile);
+          } else {
+            reject(new Error("خطا در فشرده‌سازی تصویر"));
+          }
+        },
+        file.type,
+        quality
+      );
+    };
+
+    img.onerror = () => {
+      reject(new Error("خطا در بارگذاری تصویر"));
+    };
+
+    // Load image from file
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      img.src = e.target?.result as string;
+    };
+    reader.readAsDataURL(file);
+  });
+};
