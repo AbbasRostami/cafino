@@ -20,22 +20,22 @@ export interface CategoryAdmin {
 }
 
 export interface GetCategoriesResponseAdmin {
-  data: CategoryAdmin[];
+  data: {
+    categories: CategoryAdmin[];
+    total: number;
+    page: number;
+    limit: number;
+  };
   total: number;
   page: number;
   limit: number;
   statusCode: number;
 }
 
-interface UseGetCategoriesAdminProps {
-  page: number;
-  limit: number;
-}
-
 export const useGetCategoriesAdmin = ({
   page,
   limit,
-}: UseGetCategoriesAdminProps) => {
+}: Pick<GetCategoriesResponseAdmin["data"], "page" | "limit">) => {
   const { data, isLoading, error } = useGet<GetCategoriesResponseAdmin>(
     `/v1/category/admin?limit=${limit}&page=${page}`,
     {
@@ -44,10 +44,10 @@ export const useGetCategoriesAdmin = ({
   );
 
   return {
-    categories: data?.data || [],
-    total: data?.total || 0,
-    page: data?.page || 1,
-    limit: data?.limit || limit,
+    categories: data?.data?.categories || [],
+    total: data?.data?.total || 0,
+    page: data?.data?.page || 1,
+    limit: data?.data?.limit || limit,
     isLoading,
     error,
   };

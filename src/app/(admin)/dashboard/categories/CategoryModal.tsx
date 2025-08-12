@@ -1,0 +1,71 @@
+"use client";
+
+import React, { useState } from "react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { Button } from "@/components/ui/button";
+import { BsPlusLg } from "react-icons/bs";
+import { useIsMobile } from "@/hooks/useMediaQuery";
+import { ModalContent, CategoryData } from "./ModalContent";
+
+type CategoryModalProps = {
+  initialData?: CategoryData | null;
+  trigger?: React.ReactNode;
+};
+
+export function CategoryModal({
+  initialData = null,
+  trigger,
+}: CategoryModalProps) {
+  const [open, setOpen] = useState(false);
+  const isMobile = useIsMobile();
+
+  const titleLabel = initialData ? "ویرایش دسته‌بندی" : "افزودن دسته‌بندی";
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const triggerButton = trigger || (
+    <Button
+      variant="outline"
+      className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 p-2 rounded-lg flex items-center gap-2"
+    >
+      <BsPlusLg size={16} />
+      {titleLabel}
+    </Button>
+  );
+
+  if (isMobile) {
+    return (
+      <Drawer open={open} onOpenChange={setOpen}>
+        <DrawerTrigger asChild>{triggerButton}</DrawerTrigger>
+        <DrawerContent className="max-h-[90vh]">
+          <DrawerHeader className="border-b border-gray-200 dark:border-gray-700">
+            <DrawerTitle className="text-center text-lg font-semibold">
+              {titleLabel}
+            </DrawerTitle>
+          </DrawerHeader>
+          <div className="p-6 overflow-y-auto">
+            <ModalContent initialData={initialData} onClose={handleClose} />
+          </div>
+        </DrawerContent>
+      </Drawer>
+    );
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>{triggerButton}</DialogTrigger>
+      <DialogContent className="max-w-2xl max-h-[90vh] scrollbar-hide overflow-y-auto bg-white dark:bg-gray-900 border-amber-200 dark:border-amber-800">
+        <ModalContent initialData={initialData} onClose={handleClose} />
+      </DialogContent>
+    </Dialog>
+  );
+}
