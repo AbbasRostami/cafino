@@ -19,14 +19,14 @@ export interface MenuItem {
   }[];
   isFav: boolean;
 }
-
 export interface MenuItemResponse {
-  data: MenuItem[];
-  total?: number;
-  page?: number;
-  limit?: number;
+  data: {
+    items: MenuItem[];
+    total: number;
+    page: number;
+    limit: number;
+  };
 }
-
 // Category Types
 export interface Category {
   id: string;
@@ -41,7 +41,6 @@ export interface CategoryResponse {
   data: Category[];
   totalCount: number;
 }
-
 
 // Component Props Types
 export interface MenusProps {
@@ -125,7 +124,6 @@ export interface MobileSheetProps {
   categories: any;
   FilterSectionHeader: React.FC<{ title: string }>;
 }
-
 
 export interface DesktopSidebarProps {
   className?: string;

@@ -1,5 +1,5 @@
 import { MenuItemDetails } from "@/app/(main)/menu/[id]/page";
-import { GetCommentsResponse, SortBy } from "@/services/Comments";
+import { GetCommentsResponse, SortBy } from "@/services";
 
 // Types for ItemsDetails component
 export interface ItemImage {
