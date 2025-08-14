@@ -1,4 +1,4 @@
-// User types
+
 export interface User {
   id?: string;
   username?: string;
@@ -17,7 +17,6 @@ export interface User {
   addressList?: string[];
 }
 
-// API Response types
 export interface UserResponse {
   data: User;
   statusCode: number;
@@ -31,7 +30,6 @@ export interface UpdateProfileRequest {
   email: string;
 }
 
-// Form types
 export interface ProfileFormData {
   username: string;
   first_name: string;
@@ -40,7 +38,6 @@ export interface ProfileFormData {
   email: string;
 }
 
-// Avatar types
 export interface AvatarProps {
   user: User | undefined;
   avatarPreview: string | null;
@@ -50,14 +47,12 @@ export interface AvatarProps {
   onRemoveImage: () => void;
 }
 
-// Profile info types
 export interface ProfileInfoProps {
   user: User | undefined;
   createdAt: string;
   updatedAt: string;
 }
 
-// Edit modal types
 export interface EditModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -66,11 +61,28 @@ export interface EditModalProps {
   user: User | undefined;
 }
 
-// Input block types
 export interface InputBlockProps {
   label: string;
   name: string;
   register: any;
   errors: any;
   type?: string;
+}
+
+export interface SettingsFormData {
+  username: string;
+  first_name: string;
+  last_name: string;
+  birthday: string;
+  phone: string;
+  email: string;
+}
+
+export interface UpdateSettingsRequest {
+  username?: string;
+  first_name?: string;
+  last_name?: string;
+  birthday?: string;
+  phone?: string;
+  email?: string;
 }

@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Star } from "lucide-react";
 import Link from "next/link";
 import { AddToCartButtonStyled } from "@/lib/AddToCartButtonStyled";
-import { FavoriteListResponse } from "@/types/Profile";
+import { FavoriteItem, FavoriteListResponse } from "@/types/Profile";
 
 export const PopularProducts = ({
   favoritesData,
@@ -33,7 +33,7 @@ export const PopularProducts = ({
       </CardHeader>
       <CardContent className="space-y-4 min-h-[100px]">
         {favoritesData?.data?.length > 0 ? (
-          favoritesData?.data?.slice(0, 3).map((fav: any) => (
+          favoritesData?.data?.slice(0, 3).map((fav: FavoriteItem) => (
             <div
               key={fav?.item?.id}
               className=" min-h-[100px] flex flex-col sm:flex-row items-center gap-4 py-2 px-4 bg-gray-100/50 dark:bg-gray-700/50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300"

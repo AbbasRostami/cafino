@@ -34,14 +34,8 @@ export interface AddressFormData {
 
 // API Request/Response types (from services/address.ts)
 export interface AddressResponse {
-  data: {
-    [x: string]: string | undefined;
-    id: string;
-    province: string;
-    city: string;
-    address: string;
-    created_at: string;
-  }[];
+  data: any[];
+  statusCode: number;
 }
 
 export interface AddressRequest {
@@ -56,9 +50,9 @@ export interface DeleteAddressRequest {
 
 export interface UpdateAddressRequest {
   id: string;
-  address: string;
   province: string;
   city: string;
+  address: string;
 }
 
 // Location types
