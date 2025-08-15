@@ -1,21 +1,8 @@
-import { useDelete, useGet, usePost } from "@/hooks/useReactQueryHooks";
+import { usePost } from "@/hooks/useReactQueryHooks";
+import { AddToFavoriteRequest } from "@/types/Profile/favorites";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import {
-  FavoriteListResponse,
-  AddToFavoriteRequest,
-  DeleteFromFavoriteRequest,
-} from "@/types/Profile";
 import { useAuthStore } from "@/store/authStore";
-
-export const useGetFavorites = (limit: number = 6, page: number = 1) => {
-  return useGet<FavoriteListResponse>(
-    `/v1/profile/favorites?limit=${limit}&page=${page}`,
-    {
-      queryKey: ["favorites", limit, page],
-    }
-  );
-};
 
 export const useAddToFavorite = () => {
   const queryClient = useQueryClient();
@@ -42,17 +29,4 @@ export const useAddToFavorite = () => {
       },
     }
   );
-};
-
-export const useDeleteFromFavorite = () => {
-  const queryClient = useQueryClient();
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-
-  return useDelete<DeleteFromFavoriteRequest>((data) => {
-    if (!isAuthenticated) {
-      toast.error("لطفاً ابتدا وارد حساب کاربری خود شوید.");
-      throw new Error("User is not authenticated");
-    }
-    return `/v1/profile/favorite?itemId=${data?.itemId}`;
-  });
 };

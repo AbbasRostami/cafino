@@ -16,11 +16,13 @@ export interface FavoriteItem {
 }
 
 export interface FavoriteListResponse {
+  slice(arg0: number, arg1: number): unknown;
+  length: number;
   data: FavoriteItem[];
-  total: number;
-  page: number;
-  limit: number;
-  statusCode: number;
+  total?: number;
+  page?: number;
+  limit?: number;
+  statusCode?: number;
 }
 
 export interface FavoriteCardProps {
