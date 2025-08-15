@@ -1,0 +1,17 @@
+import { useGet } from "@/hooks/useReactQueryHooks";
+import { AddressResponse } from "@/types/Profile";
+
+export const useGetAddresses = () => {
+  const { data, isLoading, isError, isPending } = useGet<AddressResponse>(
+    `/v1/profile/address`,
+    {
+      queryKey: ["addresses"],
+    }
+  );
+  return {
+    data,
+    isLoading,
+    isError,
+    isPending,
+  };
+};
