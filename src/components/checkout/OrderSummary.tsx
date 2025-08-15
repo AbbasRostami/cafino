@@ -108,7 +108,7 @@ export default function OrderSummary({
                     >
                       <CreditCard size={20} />
                     </MotionSpan>
-                    ادامه فرآیند خرید
+                    تایید و تکمیل سفارش
                   </Button>
                 </MotionDiv>
               </div>
@@ -205,7 +205,7 @@ export default function OrderSummary({
             >
               <CreditCard size={20} />
             </MotionSpan>
-            ادامه فرآیند خرید
+            تایید و تکمیل سفارش
           </Button>
         </MotionDiv>
       </div>

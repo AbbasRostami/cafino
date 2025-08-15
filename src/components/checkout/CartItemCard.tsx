@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import CheckoutItemControls from "@/lib/CheckoutItemControls";
-import { CartItemCardProps } from "@/types/main/checkout/checkout";
+import { CartItemCardProps } from "@/types/main";
 import { MotionDiv } from "@/utils/MotionWrapper";
 
 export default function CartItemCard({ item }: CartItemCardProps) {
@@ -19,7 +19,6 @@ export default function CartItemCard({ item }: CartItemCardProps) {
       <div className="overflow-hidden border border-amber-100 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow group rounded-2xl dark:bg-gray-800 hover:border-amber-200 dark:hover:border-amber-600">
         <div className="p-0">
           <div className="flex flex-col sm:flex-row">
-            {/* تصویر محصول */}
             <div className="sm:w-1/3 md:max-h-48 relative">
               <div className="aspect-square overflow-hidden bg-gradient-to-br from-amber-50/30 to-orange-50/30 dark:from-gray-800 dark:to-gray-900" />
               <Image
@@ -40,7 +39,6 @@ export default function CartItemCard({ item }: CartItemCardProps) {
               )}
             </div>
 
-            {/* اطلاعات محصول */}
             <div className="sm:w-2/3 p-5 flex justify-center gap-6 flex-col">
               <div className="flex justify-between items-start">
                 <div>
@@ -54,7 +52,6 @@ export default function CartItemCard({ item }: CartItemCardProps) {
               </div>
 
               <div className="mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                {/* قیمت‌ها */}
                 <div className="flex items-baseline gap-3">
                   <span className="text-xl font-bold text-amber-700 dark:text-amber-300">
                     {(item?.price * (1 - item?.discount / 100)).toLocaleString(

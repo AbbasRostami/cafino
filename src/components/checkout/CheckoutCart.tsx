@@ -28,7 +28,6 @@ export default function CheckoutCart({ cart }: CheckoutCartProps) {
 
   return (
     <div className="min-h-screen pt-36 py-8 px-4 relative ">
-      {/* افکت‌های پس‌زمینه */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute top-[10%] right-[15%] w-96 h-96 bg-amber-400/10 rounded-full blur-3xl animate-pulse-slow"></div>
         <div className="absolute bottom-[15%] left-[20%] w-80 h-80 bg-orange-500/10 rounded-full blur-3xl animate-pulse-slow animation-delay-2000"></div>

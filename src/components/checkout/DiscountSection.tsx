@@ -10,7 +10,6 @@ export default function DiscountSection({
   cart,
   onSubmit,
   onRemove,
-  isDiscountApplied,
   addDiscountLoading,
   removeDiscountLoading,
   errors,
