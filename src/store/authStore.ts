@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { getApiUrl } from "@/lib/config";
-import { fetchApi } from "@/hooks/useAuthToken";
 
 export interface User {
   id: string;
@@ -68,27 +67,30 @@ export const useAuthStore = create<AuthState>()(
         }
       },
 
-   verifyOTP: async (phone: string, otp: string): Promise<boolean> => {
-  try {
-    const response = await fetch(getApiUrl("/v1/auth/verfiy-otp"), {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify({ phone, otpCode: otp }),
-      credentials: "include",
-    });
-    if (response.ok) {
-      set({ isAuthenticated: true });
-      return true;
-    } else {
-      const error = await response.json();
-      throw new Error(error.message || "Invalid OTP");
-    }
-  } catch (error) {
-    console.error("Verify OTP error:", error);
-    set({ user: null, isAuthenticated: false });
-    throw error;
-  }
-},
+      verifyOTP: async (phone: string, otp: string): Promise<boolean> => {
+        try {
+          const response = await fetch(getApiUrl("/v1/auth/verfiy-otp"), {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify({ phone, otpCode: otp }),
+            credentials: "include",
+          });
+          if (response.ok) {
+            set({ isAuthenticated: true });
+            return true;
+          } else {
+            const error = await response.json();
+            throw new Error(error.message || "Invalid OTP");
+          }
+        } catch (error) {
+          console.error("Verify OTP error:", error);
+          set({ user: null, isAuthenticated: false });
+          throw error;
+        }
+      },
 
       resendOTP: async (phone: string): Promise<boolean> => {
         try {
@@ -124,8 +126,7 @@ export const useAuthStore = create<AuthState>()(
         }
       },
 
-
-     refreshToken: async (): Promise<boolean> => {
+      refreshToken: async (): Promise<boolean> => {
         if (refreshingTokenPromise) {
           return refreshingTokenPromise;
         }

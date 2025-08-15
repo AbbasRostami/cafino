@@ -74,6 +74,7 @@ export interface OrderProfile {
 }
 
 export interface GetOrdersResponse {
+  length: number;
   data: OrderProfile[];
   total: number;
   page: number;

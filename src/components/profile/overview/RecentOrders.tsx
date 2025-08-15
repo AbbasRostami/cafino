@@ -25,6 +25,8 @@ export const RecentOrders = ({
 }: {
   ordersData: GetOrdersResponse;
 }) => {
+  console.log(ordersData);
+
   return (
     <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-xl rounded-2xl border-none">
       <CardHeader className="flex flex-row items-center justify-between">
@@ -32,13 +34,13 @@ export const RecentOrders = ({
           <Clock size={18} />
           آخرین سفارش‌ها
         </CardTitle>
-        {ordersData?.data?.length === 0 && (
-        <Badge
-          variant="outline"
-          className="text-xs border-amber-300 text-amber-600 dark:text-amber-400"
-        >
-          {ordersData?.data?.length} سفارش
-        </Badge>
+        {ordersData?.data?.length > 0 && (
+          <Badge
+            variant="outline"
+            className="text-xs border-amber-300 text-amber-600 dark:text-amber-400"
+          >
+            {ordersData?.data?.length} سفارش
+          </Badge>
         )}
       </CardHeader>
       <CardContent className="space-y-4 min-h-[100px]">
@@ -153,16 +155,16 @@ export const RecentOrders = ({
           </MotionDiv>
         )}
       </CardContent>
-      {ordersData?.data?.length === 0 && (
-      <CardFooter>
-        <Button
-          variant="outline"
-          className="w-full text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-800 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded-lg text-sm sm:text-base"
-          asChild
-        >
-          <Link href="/profile/orders">مشاهده همه سفارش‌ها</Link>
-        </Button>
-      </CardFooter>
+      {ordersData?.data?.length > 0 && (
+        <CardFooter>
+          <Button
+            variant="outline"
+            className="w-full text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-800 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded-lg text-sm sm:text-base"
+            asChild
+          >
+            <Link href="/profile/orders">مشاهده همه سفارش‌ها</Link>
+          </Button>
+        </CardFooter>
       )}
     </Card>
   );

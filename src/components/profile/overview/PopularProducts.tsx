@@ -27,7 +27,7 @@ export const PopularProducts = ({
           <Star size={18} />
           محبوب‌ترین محصولات
         </CardTitle>
-        {favoritesData?.length === 0 && (
+        {favoritesData?.length > 0 && (
           <Badge
             variant="outline"
             className="text-xs border-rose-300 text-rose-600 dark:text-rose-400"
@@ -99,7 +99,7 @@ export const PopularProducts = ({
           </MotionDiv>
         )}
       </CardContent>
-      {favoritesData?.length === 0 && (
+      {favoritesData?.length > 0 && (
         <CardFooter>
           <Button
             variant="outline"
