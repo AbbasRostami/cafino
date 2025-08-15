@@ -1,6 +1,5 @@
 import { z } from "zod";
 
-// Profile form validation schema
 export const profileFormSchema = z.object({
   username: z
     .string()
@@ -28,5 +27,4 @@ export const profileFormSchema = z.object({
     }),
 });
 
-// Type exports for form data
 export type ProfileFormData = z.infer<typeof profileFormSchema>;
