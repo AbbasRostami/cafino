@@ -2,7 +2,7 @@
 import { DataTable } from "@/app/(admin)/components/common/DataTable";
 import { useMemo, useState } from "react";
 import { MessageCircleCode } from "lucide-react";
-import { useGetCommentsAdmin } from "@/services/Comments";
+import { useGetCommentsAdmin } from "@/services";
 import { columns } from "./columns";
 
 export default function Comments() {
@@ -14,7 +14,6 @@ export default function Comments() {
     page: currentPage,
     limit: currentLimit,
   });
-  console.log(comments);
 
   const headerProps = useMemo(
     () => ({
@@ -46,6 +45,7 @@ export default function Comments() {
         setCurrentPage(1);
       }}
       pageSizeOptions={[5, 10, 25, 50]}
+      enableSearch={true}
       searchValue={searchValue}
       onSearchChange={setSearchValue}
     />

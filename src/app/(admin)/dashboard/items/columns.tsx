@@ -1,0 +1,300 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { ColumnDef } from "@tanstack/react-table";
+import { Button } from "@/components/ui/button";
+import { LayoutList, Loader2, SquarePen, Trash2 } from "lucide-react";
+import { useDeleteItem } from "@/services";
+import { confirm } from "@/components/common/ConfirmModal/ConfirmModal";
+import {
+  TooltipContent,
+  TooltipProvider,
+  Tooltip,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import Image from "next/image";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { formatJalaliDate } from "@/utils/formatters";
+import { Badge } from "@/components/ui/badge";
+import { ItemDetailsModal } from "./Details/ItemDetailsModal";
+import { MenuItem } from "@/types/main/menu/menu";
+import { itemsColumnsProps } from "@/types/admin";
+
+export const columns = ({
+  currentPage,
+  currentLimit,
+  setEditingItem,
+  setIsModalOpen,
+}: itemsColumnsProps) =>
+  useMemo<ColumnDef<MenuItem>[]>(
+    () => [
+      {
+        accessorKey: "id",
+        header: "ردیف",
+        cell: (info) => (currentPage - 1) * currentLimit + info.row.index + 1,
+        enableSorting: false,
+      },
+      {
+        accessorKey: "images",
+        header: "تصویر",
+        cell: (info) => {
+          const [open, setOpen] = useState(false);
+          const images = info.getValue() as { imageUrl: string }[];
+          const url = images?.[0]?.imageUrl;
+
+          if (!url) return "-";
+
+          return (
+            <>
+              <div
+                className="flex justify-center cursor-pointer"
+                onClick={() => setOpen(true)}
+              >
+                <Image
+                  src={url}
+                  alt="تصویر محصول"
+                  className="w-16 h-16 rounded-md object-cover border hover:scale-105 transition"
+                  width={64}
+                  height={64}
+                  loading="lazy"
+                />
+              </div>
+
+              <Dialog open={open} onOpenChange={setOpen}>
+                <DialogContent className="max-w-5xl max-h-[80vh] overflow-y-auto p-0">
+                  <Image
+                    src={url}
+                    alt="تصویر محصول بزرگ"
+                    className="w-full h-auto rounded-md object-contain"
+                    width={800}
+                    height={800}
+                    loading="lazy"
+                    onClick={() => setOpen(false)}
+                  />
+                </DialogContent>
+              </Dialog>
+            </>
+          );
+        },
+        enableSorting: false,
+      },
+      {
+        accessorKey: "title",
+        header: "عنوان محصول",
+        cell: (info) => info.getValue() as string,
+        enableSorting: true,
+      },
+      {
+        accessorKey: "category.title",
+        header: "دسته‌بندی",
+        cell: (info) => info.getValue() || "-",
+        enableSorting: true,
+      },
+      {
+        accessorKey: "price",
+        header: "قیمت",
+        cell: (info) => {
+          const price = info.getValue() as number;
+          return price ? price.toLocaleString("fa-IR") + " تومان" : "-";
+        },
+        enableSorting: true,
+      },
+
+      {
+        accessorKey: "discount",
+        header: "تخفیف",
+        cell: (info) => {
+          const discount = info.getValue() as number;
+          return discount ? `${discount}%` : "-";
+        },
+        enableSorting: true,
+      },
+      {
+        accessorKey: "quantity",
+        header: "موجودی",
+        cell: (info) => info.getValue() ?? "-",
+        enableSorting: true,
+      },
+      {
+        accessorKey: "rate",
+        header: "امتیاز",
+        cell: (info) => {
+          const rate = info.getValue() as number;
+          return rate ? `${rate} ⭐` : "-";
+        },
+        enableSorting: true,
+      },
+      {
+        header: "مواد اولیه",
+        accessorKey: "ingredients",
+        cell: (info) => {
+          const ingredients = info.getValue() as any[];
+          if (ingredients === null) return "-";
+
+          return (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <p className="cursor-pointer underline  decoration-dotted">
+                    {ingredients.length} مواد اولیه
+                  </p>
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs">
+                  <ul className="space-y-1 text-sm leading-5">
+                    {ingredients.map((i, index) => (
+                      <li key={index}>{i + ","}</li>
+                    ))}
+                  </ul>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          );
+        },
+        enableSorting: false,
+      },
+      {
+        accessorKey: "rate_count",
+        header: "تعداد رای",
+        cell: (info) => info.getValue() ?? "-",
+        enableSorting: true,
+        size: 10, // عرض ستون به پیکسل
+        minSize: 20, // حداقل عرض
+        maxSize: 20, // حداکثر عرض
+      },
+      {
+        accessorKey: "show",
+        header: "نمایش",
+        cell: ({ row }) => {
+          const value = row.getValue("show");
+          const isActive = Boolean(value);
+
+          return (
+            <Badge variant={isActive ? "success" : "destructive"}>
+              {isActive ? "فعال" : "غیرفعال"}
+            </Badge>
+          );
+        },
+        enableSorting: true,
+      },
+      {
+        accessorKey: "createdAt",
+        header: "تاریخ ثبت",
+        cell: (info) => {
+          const date = new Date(info.getValue() as string);
+          return (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <p className="cursor-pointer  hover:underline">
+                    {formatJalaliDate(date, "jYYYY/jMM/jDD")}
+                  </p>
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs">
+                  <p className="text-sm leading-5">{formatJalaliDate(date)}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          );
+        },
+        enableSorting: true,
+      },
+      {
+        id: "actions",
+        header: "عملیات",
+        cell: ({ row }) => {
+          const { mutate, isPending } = useDeleteItem();
+          const item = row?.original;
+          const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+
+          return (
+            <>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setIsDetailsOpen(true)}
+                      className="h-8 w-8 rounded-full dark:bg-blue-900/30 dark:hover:bg-blue-900/50 transition-all duration-200 hover:scale-110"
+                    >
+                      <LayoutList
+                        className="text-blue-500"
+                        size={30}
+                        strokeWidth={2.2}
+                      />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>جزئیات محصول</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+
+              <ItemDetailsModal
+                isOpen={isDetailsOpen}
+                onClose={() => setIsDetailsOpen(false)}
+                item={item as any}
+              />
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 rounded-full dark:bg-blue-900/30 dark:hover:bg-blue-900/50 transition-all duration-200 hover:scale-110"
+                      onClick={() => {
+                        setEditingItem(item);
+                        setIsModalOpen(true);
+                      }}
+                    >
+                      <SquarePen size={30} strokeWidth={2.2} />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>ویرایش محصول</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 rounded-full dark:bg-red-900/30 dark:hover:bg-red-900/50 transition-all duration-200 hover:scale-110"
+                      onClick={async () => {
+                        const isConfirmed = await confirm({
+                          title: "حذف محصول",
+                          description: "آیا از حذف این محصول اطمینان دارید؟",
+                          confirmText: "حذف",
+                          cancelText: "انصراف",
+                        });
+                        if (isConfirmed) {
+                          mutate({ id: item.id });
+                        }
+                      }}
+                    >
+                      {isPending ? (
+                        <Loader2 className="animate-spin" size={30} />
+                      ) : (
+                        <Trash2
+                          className="text-red-600 dark:text-red-400"
+                          size={30}
+                          strokeWidth={2.2}
+                        />
+                      )}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>حذف محصول</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </>
+          );
+        },
+        enableSorting: false,
+      },
+    ],
+    [currentPage, currentLimit, setEditingItem, setIsModalOpen]
+  );

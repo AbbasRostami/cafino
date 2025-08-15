@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -9,42 +8,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
-import { useCreateCategory, useUpdateCategory } from "@/services/category";
+import { useCreateCategory, useUpdateCategory } from "@/services";
 import { compressImage, validateImageFile } from "@/lib/imageUtils";
 import { Upload, X, Image as ImageIcon } from "lucide-react";
 import Image from "next/image";
 import { MotionDiv, MotionP } from "@/utils/MotionWrapper";
-const categorySchema = z.object({
-  title: z
-    .string()
-    .min(1, "عنوان ضروری است")
-    .max(100, "عنوان نباید بیش از 100 کاراکتر باشد"),
-  slug: z
-    .string()
-    .min(1, "slug ضروری است")
-    .max(50, "slug نباید بیش از 50 کاراکتر باشد")
-    .regex(
-      /^[a-z0-9-]+$/,
-      "slug باید فقط حروف انگلیسی کوچک، اعداد و خط تیره باشد"
-    ),
-  image: z.instanceof(File).optional(),
-  show: z.boolean().optional(),
-});
-
-type CategoryForm = z.infer<typeof categorySchema>;
-
-export type CategoryData = {
-  id?: string;
-  title: string;
-  slug: string;
-  imageUrl?: string;
-  show: boolean;
-};
-
-interface ModalContentProps {
-  initialData?: CategoryData | null;
-  onClose: () => void;
-}
+import { CategoryForm, categorySchema } from "@/schemas/admin";
+import { ModalContentProps } from "@/types/admin";
 
 export function ModalContent({ initialData, onClose }: ModalContentProps) {
   const {
@@ -69,11 +39,11 @@ export function ModalContent({ initialData, onClose }: ModalContentProps) {
   useEffect(() => {
     if (initialData) {
       reset({
-        title: initialData.title,
-        slug: initialData.slug,
-        show: initialData.show,
+        title: initialData?.title,
+        slug: initialData?.slug,
+        show: initialData?.show,
       });
-      setPreview(initialData.imageUrl);
+      setPreview(initialData?.imageUrl);
     } else {
       reset({
         title: "",
@@ -95,7 +65,7 @@ export function ModalContent({ initialData, onClose }: ModalContentProps) {
   const onFileChange: React.ChangeEventHandler<HTMLInputElement> = async (
     e
   ) => {
-    const selectedFile = e.target.files?.[0];
+    const selectedFile = e?.target?.files?.[0];
     if (!selectedFile) return;
 
     const validationError = validateImageFile(selectedFile);
@@ -129,7 +99,8 @@ export function ModalContent({ initialData, onClose }: ModalContentProps) {
   const isEditMode = !!initialData;
   const isPending = isCreating || isUpdating;
 
-  const changedFieldsCount = Object.keys(dirtyFields).length + (file ? 1 : 0);
+  const changedFieldsCount =
+    Object.keys(dirtyFields || {})?.length + (file ? 1 : 0);
 
   const onSubmit = (data: CategoryForm) => {
     if (!isEditMode && !file) {
@@ -151,14 +122,14 @@ export function ModalContent({ initialData, onClose }: ModalContentProps) {
         formData?.append("image", file);
       }
       const hasChanges =
-        dirtyFields.title || dirtyFields?.slug || dirtyFields.show || file;
+        dirtyFields?.title || dirtyFields?.slug || dirtyFields?.show || file;
       if (!hasChanges) {
         toast.info("هیچ تغییری اعمال نشده است");
         return;
       }
 
       updateCategory(
-        { id: initialData.id, formData },
+        { id: initialData?.id, formData },
         {
           onSuccess: () => {
             onClose();
@@ -221,7 +192,7 @@ export function ModalContent({ initialData, onClose }: ModalContentProps) {
             className={`border-gray-300 dark:border-gray-600 focus:border-amber-500 dark:focus:border-amber-400 transition-colors ${
               errors.title ? "border-red-500 focus:border-red-500" : ""
             } ${
-              isEditMode && dirtyFields.title
+              isEditMode && dirtyFields?.title
                 ? "ring-2 ring-amber-200 dark:ring-amber-800"
                 : ""
             }`}
@@ -255,7 +226,7 @@ export function ModalContent({ initialData, onClose }: ModalContentProps) {
             className={`border-gray-300 dark:border-gray-600 focus:border-amber-500 dark:focus:border-amber-400 transition-colors ${
               errors.slug ? "border-red-500 focus:border-red-500" : ""
             } ${
-              isEditMode && dirtyFields.slug
+              isEditMode && dirtyFields?.slug
                 ? "ring-2 ring-amber-200 dark:ring-amber-800"
                 : ""
             }`}
@@ -333,7 +304,6 @@ export function ModalContent({ initialData, onClose }: ModalContentProps) {
             </Label>
           </div>
 
-          {/* Preview */}
           {preview && (
             <MotionDiv
               initial={{ opacity: 0, scale: 0.8 }}
@@ -363,7 +333,7 @@ export function ModalContent({ initialData, onClose }: ModalContentProps) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.4 }}
           className={`flex items-center justify-between p-4 rounded-lg border transition-all duration-200 ${
-            isEditMode && dirtyFields.show
+            isEditMode && dirtyFields?.show
               ? "bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border-amber-200 dark:border-amber-700 ring-2 ring-amber-200 dark:ring-amber-800"
               : "bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border-amber-200 dark:border-amber-700"
           }`}

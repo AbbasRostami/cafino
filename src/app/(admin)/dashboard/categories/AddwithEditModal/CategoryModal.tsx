@@ -12,12 +12,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { BsPlusLg } from "react-icons/bs";
 import { useIsMobile } from "@/hooks/useMediaQuery";
-import { ModalContent, CategoryData } from "./ModalContent";
-
-type CategoryModalProps = {
-  initialData?: CategoryData | null;
-  trigger?: React.ReactNode;
-};
+import { ModalContent } from "./ModalContent";
+import { CategoryModalProps } from "@/types/admin";
 
 export function CategoryModal({
   initialData = null,

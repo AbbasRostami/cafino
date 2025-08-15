@@ -98,6 +98,7 @@ export function DataTable<TData, TValue>({
     getFilteredRowModel: enableSearch ? getFilteredRowModel() : undefined,
     globalFilterFn: "includesString",
     getPaginationRowModel: getPaginationRowModel(),
+    enableColumnResizing: true,
   });
 
   const sortedRows = table.getRowModel().rows;
@@ -145,7 +146,7 @@ export function DataTable<TData, TValue>({
 
       {/* Search Bar */}
       {enableSearch && (
-        <div className="flex justify-end items-center gap-4">
+        <div className="flex justify-start items-center gap-4">
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <Input

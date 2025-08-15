@@ -2,10 +2,10 @@
 import { DataTable } from "@/app/(admin)/components/common/DataTable";
 import { useMemo, useState } from "react";
 import { ChartBarStacked } from "lucide-react";
-import { useGetCategoriesAdmin } from "@/services/category";
+import { useGetCategoriesAdmin } from "@/services";
 import { Button } from "@/components/ui/button";
 import { columns } from "./columns";
-import { CategoryModal } from "./CategoryModal";
+import { CategoryModal } from "./AddwithEditModal/CategoryModal";
 
 export default function Categories() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -16,9 +16,6 @@ export default function Categories() {
     page: currentPage,
     limit: currentLimit,
   });
-console.log(categories);
-console.log(currentLimit);
-
 
   const headerProps = useMemo(
     () => ({
@@ -50,7 +47,6 @@ console.log(currentLimit);
       enablePagination={true}
       page={currentPage}
       limit={currentLimit}
-
       totalCount={total}
       onPageChange={setCurrentPage}
       onLimitChange={(limit) => {

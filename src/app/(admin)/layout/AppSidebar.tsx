@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import logo from "./../../../assets/Logo/7.png";
 import { BiChevronDown } from "react-icons/bi";
-import { BsPcHorizontal } from "react-icons/bs";
 import { useSidebar } from "../context/SidebarContext";
 import {
   Tooltip,
@@ -19,6 +18,7 @@ import {
   CircleUserRound,
   ClipboardPlus,
   Hamburger,
+  MessageCircleCode,
   OctagonMinus,
 } from "lucide-react";
 type NavItem = {
@@ -58,6 +58,11 @@ const navItems: NavItem[] = [
     name: "مدیریت تخفیف‌ها",
     icon: <ClipboardPlus />,
     path: "/dashboard/discounts", // مدیریت تخفیف‌ها
+  },
+  {
+    name: "مدیریت کامنت ها",
+    icon: <MessageCircleCode />,
+    path: "/dashboard/comments", // مدیریت تخفیف‌ها
   },
   {
     name: "لیست سیاه",
@@ -314,7 +319,7 @@ const AppSidebar: React.FC = () => {
                 width={70}
                 height={70}
               />
-              
+
               <Image
                 className="hidden dark:block h-auto w-auto max-h-[70px]"
                 src={logo}
@@ -338,10 +343,7 @@ const AppSidebar: React.FC = () => {
       <div className="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
         <nav className="mb-6">
           <div className="flex flex-col gap-4">
-            <div>
-             
-              {renderMenuItems(navItems, "main")}
-            </div>
+            <div>{renderMenuItems(navItems, "main")}</div>
             <div className="">
               <h2
                 className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${

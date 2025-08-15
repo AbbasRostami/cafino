@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useUserProfile } from "@/services/update";
+import { useUserProfile } from "@/services";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Edit, LogOut } from "lucide-react";

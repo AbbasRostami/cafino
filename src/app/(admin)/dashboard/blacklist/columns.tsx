@@ -4,19 +4,20 @@ import { useMemo } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { CircleUserRound, Loader2, OctagonX, User } from "lucide-react";
+import { CircleUserRound, Loader2, OctagonX } from "lucide-react";
 import { Trash2 } from "lucide-react";
 import { formatJalaliDate } from "@/utils/formatters";
 import { confirm } from "@/components/common/ConfirmModal/ConfirmModal";
-import { useRemoveUserFromBlacklist } from "@/services/userlist";
 import {
   TooltipContent,
   Tooltip,
   TooltipTrigger,
   TooltipProvider,
 } from "@/components/ui/tooltip";
+import { useRemoveUserFromBlacklist } from "@/services";
+import { ColumnsBlackListProps } from "@/types/admin";
 
-export const columns = (currentPage: number, currentLimit: number) =>
+export const columns = ({ currentPage, currentLimit }: ColumnsBlackListProps) =>
   useMemo<ColumnDef<any>[]>(
     () => [
       {

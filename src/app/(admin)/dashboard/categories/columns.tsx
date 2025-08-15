@@ -5,9 +5,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Loader2, Pencil, Trash2 } from "lucide-react";
-import { useDeleteCategories } from "@/services/category";
+import { useDeleteCategories } from "@/services";
 import { confirm } from "@/components/common/ConfirmModal/ConfirmModal";
-import { CategoryModal } from "./CategoryModal";
+import { CategoryModal } from "./AddwithEditModal/CategoryModal";
 import { ImageDialog } from "../../components/common/ImageDialog";
 import Image from "next/image";
 import {
