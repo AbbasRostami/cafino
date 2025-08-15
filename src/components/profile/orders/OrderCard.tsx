@@ -8,9 +8,12 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "lucide-react";
-import moment from "moment-jalaali";
-import { OrderCardProps } from "@/types/Profile";
-import { formatCurrency, getStatusBadge } from "@/utils/formatters";
+import {
+  formatCurrency,
+  formatJalaliDate,
+  getStatusBadge,
+} from "@/utils/formatters";
+import { OrderCardProps, OrderProfile, OrderStatus } from "@/types/Profile";
 
 export const OrderCard = ({
   orders,
@@ -18,10 +21,9 @@ export const OrderCard = ({
   isPending,
   CancelOrder,
 }: OrderCardProps) => {
-  console.log(CancelOrder);
   return (
     <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-      {orders.map((order) => (
+      {orders.map((order: OrderProfile) => (
         <Card
           key={order.id}
           className="group hover:border border border-gray-200 dark:border-gray-700 hover:border-amber-600 hover:dark:border-amber-600 hover:shadow-lg"
@@ -37,66 +39,62 @@ export const OrderCard = ({
                     تاریخ سفارش
                   </span>
                   <span className="text-xs sm:text-base font-semibold group-hover:text-amber-600 group-hover:dark:text-amber-600 text-gray-700 dark:text-gray-200 group-hover/date:text-gray-900 transition-colors">
-                    {moment(order.payments[0].created_at).format(
-                      "jYYYY/jMM/jDD"
-                    )}
+                    {formatJalaliDate(order?.payments[0]?.created_at)}
                   </span>
                 </div>
               </div>
               <p className="text-sm font gap-2">
-                {getStatusBadge(order.status)}
+                {getStatusBadge(order?.status as OrderStatus)}
               </p>
             </CardTitle>
           </CardHeader>
 
           <CardContent className="relative z-10 pt-0">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* مبلغ پرداختی */}
               <div className="group flex flex-col gap-1 p-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:shadow-md transition-shadow">
                 <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
                   مبلغ پرداختی
                 </span>
                 <span className="text-lg font-bold text-gray-800 dark:text-gray-100 tracking-wide">
-                  {formatCurrency(order.payment_amount)}
+                  {formatCurrency(order?.payment_amount)}
                   <span className="text-sm font-normal text-gray-500 dark:text-gray-400 mr-1">
                     تومان
                   </span>
                 </span>
               </div>
 
-              {/* تعداد آیتم‌ها */}
               <div className="group flex flex-col gap-1 p-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:shadow-md transition-shadow">
                 <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
                   تعداد آیتم‌ها
                 </span>
                 <span className="text-lg font-bold text-gray-800 dark:text-gray-100">
-                  {order.items.length.toLocaleString("fa-IR")}
+                  {order?.items?.length?.toLocaleString("fa-IR")}
                 </span>
               </div>
 
-              {/* مکان تحویل */}
               <div className="group flex flex-col gap-1 p-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:shadow-md transition-shadow sm:col-span-2 lg:col-span-1">
                 <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
                   مکان تحویل
                 </span>
                 <span className="text-sm font-semibold text-gray-800 dark:text-gray-100">
-                  {order.address?.province}، {order.address?.city}
+                  {order?.address === null
+                    ? "مکان تحویل نامشخص"
+                    : `${order?.address?.province}، ${order?.address?.city}`}
                 </span>
               </div>
 
-              {/* وضعیت پرداخت */}
               <div className="group flex flex-col gap-1 p-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:shadow-md transition-shadow sm:col-span-2 lg:col-span-1">
                 <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
                   وضعیت پرداخت
                 </span>
                 <span
                   className={`text-sm font-semibold ${
-                    order.payments[0].status
+                    order?.payments[0]?.status
                       ? "text-emerald-600 dark:text-emerald-400"
                       : "text-rose-600 dark:text-rose-400"
                   }`}
                 >
-                  {order.payments[0].status ? "پرداخت شده" : "پرداخت نشده"}
+                  {order?.payments[0]?.status ? "پرداخت شده" : "پرداخت نشده"}
                 </span>
               </div>
             </div>
@@ -115,9 +113,9 @@ export const OrderCard = ({
               variant="destructive"
               className="w-full lg:w-auto  hover:text-white hover:transition-all hover:duration-300 shadow-md hover:scale-105"
               size="sm"
-              disabled={isPending || order.status === "canceled"}
+              disabled={isPending || order?.status === "canceled"}
               onClick={() => {
-                CancelOrder(order.id);
+                CancelOrder(order?.id);
               }}
             >
               {isPending ? "در حال لغو..." : "لغو سفارش"}

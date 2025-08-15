@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Trash2, Star } from "lucide-react";
+import { Trash2, Star, Loader2 } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -7,15 +7,14 @@ import {
 } from "@/components/ui/tooltip";
 import { confirm } from "@/components/common/ConfirmModal/ConfirmModal";
 import AddToCartButtonStyled from "@/lib/AddToCartButtonStyled";
-import { FavoriteItem } from "@/types/Profile";
+import { FavoriteCardProps } from "@/types/Profile";
 import { MotionDiv } from "@/utils/MotionWrapper";
 
-interface FavoriteCardProps {
-  favorite: FavoriteItem;
-  onDelete: (itemId: string) => void;
-}
-
-export const FavoriteCard = ({ favorite, onDelete }: FavoriteCardProps) => {
+export const FavoriteCard = ({
+  favorite,
+  onDelete,
+  isPending,
+}: FavoriteCardProps) => {
   const handleDelete = async () => {
     const isConfirmed = await confirm({
       title: "آیا از حذف از علاقه مندی مطمئن هستید؟",
@@ -50,7 +49,19 @@ export const FavoriteCard = ({ favorite, onDelete }: FavoriteCardProps) => {
         </div>
 
         <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 leading-relaxed">
-          {favorite?.item?.description}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <p className="text-sm leading-relaxed cursor-pointer">
+                {favorite?.item?.description.slice(0, 35)}
+                {favorite?.item?.description.length > 35 && "..."}
+              </p>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p className="text-sm leading-relaxed">
+                {favorite?.item?.description}
+              </p>
+            </TooltipContent>
+          </Tooltip>
         </p>
 
         <Tooltip>
@@ -141,9 +152,16 @@ export const FavoriteCard = ({ favorite, onDelete }: FavoriteCardProps) => {
             className="w-full rounded-lg bg-gradient-to-tr from-red-50 to-red-100 dark:from-red-900/30 dark:to-gray-800 py-2 px-4 shadow-md hover:shadow-lg text-red-600 dark:text-red-400 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
             variant="outline"
             onClick={handleDelete}
+            disabled={isPending}
           >
-            <Trash2 size={18} className="stroke-[1.5]" />
-            <span className="font-medium text-sm">حذف از علاقه‌مندی</span>
+            {isPending ? (
+              <Loader2 className="animate-spin" size={18} />
+            ) : (
+              <>
+                <Trash2 size={18} className="stroke-[1.5]" />
+                <span className="font-medium text-sm">حذف از علاقه‌مندی</span>
+              </>
+            )}
           </Button>
         </div>
         <div className="flex justify-center">

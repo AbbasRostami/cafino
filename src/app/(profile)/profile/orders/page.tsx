@@ -1,6 +1,6 @@
 "use client";
 
-import { useCancelOrder, useGetOrders } from "@/services/Orders";
+import { useCancelOrder, useGetOrders } from "@/services";
 import { OrderSkeleton } from "@/components/skeleton/Profile/order/OrderSkeleton";
 
 // Import modular components

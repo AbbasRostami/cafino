@@ -9,10 +9,9 @@ import {
   useGetCities,
   useGetProvinces,
   useUpdateAddress,
-} from "@/services/address";
+} from "@/services";
 import { AddressSkeleton } from "@/components/skeleton/Profile/address/AddressSkeleton";
 
-// Import modular components
 import {
   AddressCard,
   AddressForm,
@@ -20,18 +19,17 @@ import {
   EmptyState,
 } from "@/components/profile/addresses";
 
-// Import types and hooks
 import { useAddressForm } from "@/hooks/useAddressForm";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Address, City, Province } from "@/types/Profile";
-import { AddressFormData } from "@/schemas/profile/address/address";
+import { AddressFormData } from "@/schemas/profile";
+import { useIsMobile } from "@/hooks/useMediaQuery";
 
 export default function AddressesPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
-
-  // Data fetching
+  const isMobile = useIsMobile();
   const { data: addressesData, isLoading } = useGetAddresses();
   const { mutate: deleteAddress, isPending: isDeleting } = useDeleteAddress();
   const { mutate: updateAddress } = useUpdateAddress();
@@ -39,30 +37,42 @@ export default function AddressesPage() {
   const { data: provincesData } = useGetProvinces();
   const { data: citiesData } = useGetCities();
 
-  // Form management
   const { provinces, filteredCities, formData, updateFormData, resetFormData } =
     useAddressForm({
       provincesData: provincesData as Province[],
       citiesData: citiesData as City[],
     });
 
-  // Form submission handler
   const handleSubmit = (data: AddressFormData) => {
     const id = editingId;
 
     if (id) {
-      updateAddress({
-        id,
-        address: data.title,
-        province: data.province,
-        city: data.city,
-      });
+      updateAddress(
+        {
+          id,
+          address: data.title,
+          province: data.province,
+          city: data.city,
+        },
+        {
+          onSuccess: () => {
+            setOpen(false);
+          },
+        }
+      );
     } else {
-      addAddress({
-        address: data.title,
-        province: data.province,
-        city: data.city,
-      });
+      addAddress(
+        {
+          address: data.title,
+          province: data.province,
+          city: data.city,
+        },
+        {
+          onSuccess: () => {
+            setOpen(false);
+          },
+        }
+      );
     }
 
     resetFormData();
@@ -70,7 +80,6 @@ export default function AddressesPage() {
     setOpen(false);
   };
 
-  // Edit address handler
   const handleEdit = (address: Address) => {
     setEditingId(address.id);
     updateFormData({
@@ -81,12 +90,10 @@ export default function AddressesPage() {
     setOpen(true);
   };
 
-  // Delete address handler
   const handleDelete = (id: string) => {
     deleteAddress({ id });
   };
 
-  // Add address handler
   const handleAddAddress = () => {
     setEditingId(null);
     resetFormData();
@@ -99,10 +106,8 @@ export default function AddressesPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header Section */}
       <AddressHeader />
 
-      {/* Main Content */}
       <Card className="rounded-3xl shadow-md border border-muted bg-white/90 dark:bg-gray-900/90">
         <CardHeader className="flex justify-end">
           <Button
@@ -133,7 +138,6 @@ export default function AddressesPage() {
         </CardContent>
       </Card>
 
-      {/* Address Form Dialog */}
       <AddressForm
         open={open}
         onOpenChange={setOpen}
@@ -143,6 +147,7 @@ export default function AddressesPage() {
         filteredCities={filteredCities}
         formData={formData}
         onFormDataChange={updateFormData}
+        isMobile={isMobile}
       />
     </div>
   );

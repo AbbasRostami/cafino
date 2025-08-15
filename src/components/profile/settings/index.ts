@@ -1,4 +1,4 @@
-// Settings components
+
 export { SettingsHeader } from "./SettingsHeader";
 export { AvatarSection } from "./AvatarSection";
 export { ProfileInfo } from "./ProfileInfo";

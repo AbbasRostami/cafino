@@ -10,7 +10,7 @@ export const InputBlock = ({
   type = "text",
 }: InputBlockProps) => {
   return (
-    <div className="col-span-1 space-y-2">
+    <div className="space-y-2">
       <Label className="block text-sm font-medium text-gray-700 dark:text-gray-400">
         {label}
       </Label>

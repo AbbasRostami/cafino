@@ -13,7 +13,7 @@ export default function ProfileLayout({
       <Navbar />
 
       {/* محتوای اصلی */}
-      <div className="container mx-auto px-2 md:px-8 lg:px-28 pt-24 sm:pt-26">
+      <div className=" mx-auto px-2 md:px-8 lg:px-28 pt-24 sm:pt-26">
         <div className="flex flex-col md:flex-row gap-6">
           {/* سایدبار */}
           <Sidebar />

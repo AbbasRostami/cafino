@@ -4,10 +4,9 @@ import { Button } from "@/components/ui/button";
 import moment from "moment-jalaali";
 import "moment-timezone";
 import "moment/locale/fa";
-import { useUpdateProfile, useUserProfile } from "@/services/update";
+import { useUpdateProfile, useUserProfile } from "@/services";
 import ProfileSkeleton from "@/components/skeleton/Profile/settings/ProfileSkeleton";
 
-// Import modular components
 import {
   SettingsHeader,
   AvatarSection,
@@ -15,10 +14,7 @@ import {
   EditModal,
 } from "@/components/profile/settings";
 
-// Import custom hook
 import { useAvatar } from "@/hooks/useAvatar";
-
-// Import types
 import { ProfileFormData } from "@/types/Profile";
 
 moment.loadPersian({ dialect: "persian-modern", usePersianDigits: true });
@@ -27,7 +23,6 @@ export default function SettingsPage() {
   const { data: user, isLoading } = useUserProfile();
   const [isEditing, setIsEditing] = useState(false);
 
-  // Custom hook for avatar management
   const {
     avatarPreview,
     isUpdatingImage,
@@ -36,7 +31,6 @@ export default function SettingsPage() {
     handleRemoveImage,
   } = useAvatar();
 
-  // Format dates
   const createdAt = user?.created_at
     ? moment(user.created_at).tz("Asia/Tehran").format("jYYYY/jMM/jDD - HH:mm")
     : "---";
@@ -45,7 +39,6 @@ export default function SettingsPage() {
     ? moment(user.updated_at).tz("Asia/Tehran").format("jYYYY/jMM/jDD - HH:mm")
     : "---";
 
-  // Profile update
   const { updateProfile, isPending } = useUpdateProfile();
 
   const handleSubmit = (data: ProfileFormData) => {
@@ -60,12 +53,9 @@ export default function SettingsPage() {
 
   return (
     <div className="py-8">
-      {/* Header Section */}
       <SettingsHeader />
 
-      {/* Edit Button */}
-      <div className="bg-white/90 dark:bg-gray-900/90 border border-gray-200 dark:border-gray-800 mt-4 px-4 py-6 rounded-2xl space-y-4">
-        {/* Avatar Section */}
+      <div className="bg-white/90 dark:bg-gray-900/90 border border-gray-200 dark:border-gray-800 mt-4 px-4 py-6 rounded-2xl space-y-4 pb-16">
         <AvatarSection
           user={user}
           avatarPreview={avatarPreview}
@@ -75,17 +65,15 @@ export default function SettingsPage() {
           onRemoveImage={handleRemoveImage}
         />
 
-        {/* Profile Info Section */}
         <ProfileInfo user={user} createdAt={createdAt} updatedAt={updatedAt} />
         <Button
           onClick={() => setIsEditing(true)}
-          className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-gray-700 hover:bg-amber-600"
+          className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-gray-700 hover:bg-amber-700"
         >
           ویرایش
         </Button>
       </div>
 
-      {/* Edit Modal */}
       <EditModal
         isOpen={isEditing}
         onClose={() => setIsEditing(false)}

@@ -15,13 +15,11 @@ interface EmptyStateProps {
 export const EmptyState = ({ onAddAddress }: EmptyStateProps) => {
   return (
     <div className="flex flex-col items-center justify-center py-8 px-4 text-center">
-      {/* Illustration */}
       <div className="relative mb-10">
         <div className="w-32 h-32 mx-auto bg-gradient-to-br from-amber-100 to-amber-50 dark:from-amber-900/30 dark:to-amber-800/20 rounded-full flex items-center justify-center shadow-lg">
           <MapPin className="h-20 w-20 text-amber-500 dark:text-amber-400" />
         </div>
 
-        {/* Decorative elements */}
         <div className="absolute top-0 right-0 -mr-6 -mt-6">
           <div className="w-16 h-16 rounded-full bg-amber-200/50 dark:bg-amber-700/30 blur-xl"></div>
         </div>
@@ -48,7 +46,6 @@ export const EmptyState = ({ onAddAddress }: EmptyStateProps) => {
         افزودن اولین آدرس
       </Button>
 
-      {/* Benefits section */}
       <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700 w-full max-w-md mx-auto mb-14">
         <h3 className="font-medium text-gray-700 dark:text-gray-300 mb-4">
           مزایای افزودن آدرس:

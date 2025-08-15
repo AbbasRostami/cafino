@@ -15,8 +15,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { OrdersFilterProps } from "@/types/Profile";
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
+import { OrdersFilterProps } from "@/types/Profile/orders/order";
 
 export const OrdersFilter = ({
   selectedLimit,

@@ -1,10 +1,11 @@
 "use client";
 
-import { useUserProfile } from "@/services/update";
-import { useGetFavorites } from "@/services/Favorite";
-import { useGetOrders } from "@/services/Orders";
-import { useGetAddresses } from "@/services/address";
-import moment from "moment-jalaali";
+import {
+  useUserProfile,
+  useGetFavorites,
+  useGetOrders,
+  useGetAddresses,
+} from "@/services";
 import {
   Header,
   StatsCards,
@@ -21,19 +22,19 @@ import {
   PromotionalBannerSkeleton,
   QuickActionsSkeleton,
 } from "@/components/skeleton/Profile/overview";
-import { OrdersResponse, User } from "@/types/Profile";
-import { FavoriteListResponse } from "@/types/Profile/favorite";
-moment.loadPersian({ dialect: "persian-modern", usePersianDigits: true });
+import { GetOrdersResponse, User, FavoriteItem } from "@/types/Profile";
 
 export default function OverviewPage() {
   const { data: user, isLoading: userLoading } = useUserProfile();
   const { data: ordersData, isLoading: ordersLoading } = useGetOrders(100, 1);
-  const { data: favoritesData, isLoading: favoritesLoading } = useGetFavorites(
-    100,
-    1
-  );
+  const {
+    data: favoritesData,
+    isLoading: favoritesLoading,
+    total,
+  } = useGetFavorites(100, 1);
   const { data: addressesData, isLoading: addressesLoading } =
     useGetAddresses();
+  console.log(favoritesData);
 
   const activeOrders =
     ordersData?.data?.filter((order: any) => order.status === "processing")
@@ -45,7 +46,7 @@ export default function OverviewPage() {
       0
     ) || 0;
 
-  const favoriteItems = favoritesData?.data?.length || 0;
+  const favoriteItems = favoritesData?.length || 0;
   const savedAddresses = addressesData?.data?.length || 0;
 
   return (
@@ -67,14 +68,14 @@ export default function OverviewPage() {
         {ordersLoading ? (
           <RecentOrdersSkeleton />
         ) : (
-          <RecentOrders ordersData={ordersData as OrdersResponse} />
+          <RecentOrders ordersData={ordersData as GetOrdersResponse} />
         )}
 
         {favoritesLoading ? (
           <PopularProductsSkeleton />
         ) : (
           <PopularProducts
-            favoritesData={favoritesData as FavoriteListResponse}
+            favoritesData={favoritesData as unknown as FavoriteItem[]}
           />
         )}
       </div>

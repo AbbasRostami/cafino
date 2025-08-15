@@ -1,4 +1,3 @@
-// Orders components
 export { OrdersHeader } from "./OrdersHeader";
 export { EmptyState } from "./EmptyState";
 export { OrderCard } from "./OrderCard";

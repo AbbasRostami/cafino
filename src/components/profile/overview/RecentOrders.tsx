@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Clock } from "lucide-react";
+import { Clock, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import moment from "moment-jalaali";
 import { getStatusBadge } from "@/utils/formatters";
@@ -17,12 +17,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Order, OrdersResponse } from "@/types/Profile";
+import { GetOrdersResponse } from "@/types/Profile";
+import { MotionDiv } from "@/utils/MotionWrapper";
 
 export const RecentOrders = ({
   ordersData,
 }: {
-  ordersData: OrdersResponse;
+  ordersData: GetOrdersResponse;
 }) => {
   return (
     <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-xl rounded-2xl border-none">
@@ -31,16 +32,18 @@ export const RecentOrders = ({
           <Clock size={18} />
           آخرین سفارش‌ها
         </CardTitle>
+        {ordersData?.data?.length === 0 && (
         <Badge
           variant="outline"
           className="text-xs border-amber-300 text-amber-600 dark:text-amber-400"
         >
           {ordersData?.data?.length} سفارش
         </Badge>
+        )}
       </CardHeader>
       <CardContent className="space-y-4 min-h-[100px]">
         {ordersData?.data?.length > 0 ? (
-          ordersData?.data?.slice(0, 3).map((order: Order) => (
+          ordersData?.data?.slice(0, 3).map((order: any) => (
             <div
               key={order.id}
               className="min-h-[100px] flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-gray-100/50 dark:bg-gray-700/50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
@@ -108,11 +111,49 @@ export const RecentOrders = ({
             </div>
           ))
         ) : (
-          <div className="text-center py-8 text-gray-500 dark:text-gray-400 text-sm">
-            سفارشی یافت نشد
-          </div>
+          <MotionDiv
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-col items-center justify-center py-8 text-center"
+          >
+            <div className="relative mb-5">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900/30 animate-ping opacity-20" />
+              </div>
+              <Clock
+                className="relative w-16 h-16 text-blue-400/30 dark:text-blue-500/30"
+                strokeWidth={1}
+              />
+              <Clock
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 text-blue-500/60 dark:text-blue-400/60"
+                fill="none"
+              />
+            </div>
+
+            <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">
+              هنوز سفارشی ثبت نکرده‌اید
+            </h3>
+            <p className="text-gray-500 dark:text-gray-400 text-sm max-w-xs mb-4">
+              سفارش‌های شما اینجا نمایش داده خواهند شد
+            </p>
+
+            <MotionDiv whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                variant="outline"
+                className="border-blue-500 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded-full px-6 shadow-sm flex items-center"
+                asChild
+              >
+                <Link href="/menu">
+                  شروع خرید
+                  <ShoppingBag className="h-4 w-4 mr-2" />
+                </Link>
+              </Button>
+            </MotionDiv>
+          </MotionDiv>
         )}
       </CardContent>
+      {ordersData?.data?.length === 0 && (
       <CardFooter>
         <Button
           variant="outline"
@@ -122,6 +163,7 @@ export const RecentOrders = ({
           <Link href="/profile/orders">مشاهده همه سفارش‌ها</Link>
         </Button>
       </CardFooter>
+      )}
     </Card>
   );
 };

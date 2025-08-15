@@ -19,7 +19,7 @@ export const AvatarSection = ({
       transition={{ delay: 0.1 }}
     >
       <div className="h-full p-4">
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center ">
           <div className="relative">
             <Avatar className="w-32 h-32 border-2 border-amber-400 shadow-lg">
               <AvatarImage
@@ -27,7 +27,7 @@ export const AvatarSection = ({
                 className="object-cover"
               />
               <AvatarFallback className="bg-gradient-to-br from-amber-500 to-orange-500 text-white text-3xl">
-                {user?.first_name?.[0] || "U"}
+                {user?.username?.[0] || "U"}
               </AvatarFallback>
             </Avatar>
 
@@ -85,7 +85,7 @@ export const AvatarSection = ({
             </MotionButton>
           )}
         </div>
-        <CardFooter className="text-xs text-gray-500 dark:text-gray-400 justify-center">
+        <CardFooter className="text-xs text-gray-500 dark:text-gray-400 justify-center mt-4">
           فرمت‌های مجاز: JPG, PNG حداکثر 2MB
         </CardFooter>
       </div>

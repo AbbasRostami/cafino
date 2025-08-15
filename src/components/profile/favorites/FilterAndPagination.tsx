@@ -15,9 +15,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
-import { PaginationProps, FilterProps } from "@/types/Profile";
 
-interface FilterAndPaginationProps extends PaginationProps, FilterProps {}
+interface FilterAndPaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  selectedLimit: number;
+  onLimitChange: (limit: number) => void;
+  totalItems: number;
+}
 
 export const FilterAndPagination = ({
   currentPage,

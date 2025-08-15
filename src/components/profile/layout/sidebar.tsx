@@ -12,10 +12,17 @@ import {
   User,
   ChevronLeft,
 } from "lucide-react";
-import { motion } from "framer-motion";
-import { useUserProfile } from "@/services/update";
-import moment from "moment-jalaali";
-moment.loadPersian({ dialect: "persian-modern", usePersianDigits: true });
+import { useUserProfile } from "@/services";
+import {
+  MotionAside,
+  MotionButton,
+  MotionDiv,
+  MotionH3,
+  MotionNav,
+  MotionSpan,
+} from "@/utils/MotionWrapper";
+import { formatJalaliDate } from "@/utils/formatters";
+import Image from "next/image";
 
 const navItems = [
   {
@@ -50,8 +57,7 @@ export default function Sidebar() {
   const { data: user } = useUserProfile();
   return (
     <>
-      {/* دسکتاپ */}
-      <motion.aside
+      <MotionAside
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.4 }}
@@ -61,41 +67,49 @@ export default function Sidebar() {
             "0 10px 30px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.03)",
         }}
       >
-        {/* Header with decorative elements */}
         <div className="relative p-5 flex flex-col items-center gap-4 border-b border-gray-200 dark:border-gray-800">
-          {/* Decorative top bar */}
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 to-orange-500"></div>
 
-          {/* Floating elements */}
           <div className="absolute top-3 left-3 w-2 h-2 rounded-full bg-amber-400"></div>
           <div className="absolute top-3 right-3 w-2 h-2 rounded-full bg-amber-400"></div>
 
-          {/* User avatar with elegant frame */}
           <div className="relative">
-            <div className="relative w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 p-1">
+            <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 p-1">
               <div className="w-full h-full rounded-full bg-white dark:bg-gray-900 flex items-center justify-center overflow-hidden">
-                <User
-                  size={32}
-                  className="text-amber-600 dark:text-amber-400"
-                />
+                {user?.imageUrl ? (
+                  <Image
+                    src={user?.imageUrl}
+                    alt="User Avatar"
+                    className="w-full h-full object-cover rounded-full"
+                    width={128}
+                    height={128}
+                  />
+                ) : (
+                  <User
+                    size={64}
+                    className="text-amber-600 dark:text-amber-400"
+                  />
+                )}
               </div>
             </div>
           </div>
 
           <div className="text-center">
-            <motion.h3
+            <MotionH3
               className="font-bold text-xl text-gray-800 dark:text-gray-100 mb-1"
               whileHover={{ scale: 1.05 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
             >
               {user?.first_name} {user?.last_name}
-            </motion.h3>
+            </MotionH3>
             <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-              عضویت: {moment(user?.created_at).format("jYYYY/jMM/jDD")}
+              عضویت: {formatJalaliDate(user?.created_at as unknown as string)}
             </p>
           </div>
         </div>
 
-        {/* Navigation items with elegant styling */}
         <nav className="p-3">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
@@ -110,9 +124,8 @@ export default function Sidebar() {
                     : "text-gray-600 dark:text-gray-300 hover:bg-gray-50/80 dark:hover:bg-gray-800/50"
                 }`}
               >
-                {/* Active indicator */}
                 {isActive && (
-                  <motion.div
+                  <MotionDiv
                     className="absolute right-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-amber-500 to-orange-500 rounded-l-lg"
                     initial={{ height: 0 }}
                     animate={{ height: "100%" }}
@@ -132,22 +145,20 @@ export default function Sidebar() {
 
                 <span className="font-medium">{item.label}</span>
 
-                {/* Animated chevron for active item */}
                 {isActive && (
-                  <motion.div
+                  <MotionDiv
                     className="ml-auto"
                     animate={{ x: [0, -3, 0] }}
                     transition={{ repeat: Infinity, duration: 1.5 }}
                   >
                     <ChevronLeft size={16} className="text-amber-500" />
-                  </motion.div>
+                  </MotionDiv>
                 )}
               </Link>
             );
           })}
         </nav>
 
-        {/* Decorative separator */}
         <div className="relative px-5 py-2 flex justify-center">
           <div className="absolute inset-0 flex items-center">
             <div className="w-full border-t border-gray-200 dark:border-gray-800"></div>
@@ -157,9 +168,8 @@ export default function Sidebar() {
           </div>
         </div>
 
-        {/* Logout button with elegant styling */}
         <div className="p-3">
-          <motion.button
+          <MotionButton
             whileHover={{
               scale: 1.02,
               boxShadow: "0 4px 15px rgba(239, 68, 68, 0.2)",
@@ -167,8 +177,7 @@ export default function Sidebar() {
             whileTap={{ scale: 0.98 }}
             className="w-full flex items-center justify-center gap-2 p-3 text-gray-700 dark:text-gray-200 rounded-xl bg-gradient-to-r from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 hover:border-red-300 dark:hover:border-red-500 transition-all relative overflow-hidden"
           >
-            {/* Animated background on hover */}
-            <motion.div
+            <MotionDiv
               className="absolute inset-0 bg-gradient-to-r from-red-50/0 to-red-50/0"
               whileHover={{
                 background:
@@ -177,19 +186,17 @@ export default function Sidebar() {
               transition={{ duration: 0.3 }}
             />
 
-            {/* Main content */}
             <div className="relative z-10 flex items-center gap-2">
               <div className="p-1.5 rounded-full bg-red-100 dark:bg-red-900/30">
                 <LogOut size={16} className="text-red-500 dark:text-red-400" />
               </div>
               <span className="font-medium">خروج از حساب</span>
             </div>
-          </motion.button>
+          </MotionButton>
         </div>
-      </motion.aside>
+      </MotionAside>
 
-      {/* موبایل */}
-      <motion.nav
+      <MotionNav
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
@@ -205,7 +212,7 @@ export default function Sidebar() {
               className="relative flex flex-col items-center justify-center w-16 h-14 rounded-xl"
             >
               <div className="z-10 flex flex-col items-center">
-                <motion.div
+                <MotionDiv
                   className={`p-1.5 rounded-full ${
                     isActive
                       ? "text-amber-600 dark:text-amber-400"
@@ -218,9 +225,9 @@ export default function Sidebar() {
                   transition={{ duration: 0.3 }}
                 >
                   {item.icon}
-                </motion.div>
+                </MotionDiv>
 
-                <motion.span
+                <MotionSpan
                   className={`text-xs mt-0.5 font-medium ${
                     isActive
                       ? "text-amber-600 dark:text-amber-400"
@@ -233,12 +240,11 @@ export default function Sidebar() {
                   transition={{ duration: 0.2 }}
                 >
                   {item.label}
-                </motion.span>
+                </MotionSpan>
               </div>
 
-              {/* نشانگر متحرک بالای آیتم فعال */}
               {isActive && (
-                <motion.div
+                <MotionDiv
                   layoutId="activeIndicator"
                   className="absolute top-0 w-10 h-1 bg-amber-500 rounded-full"
                   initial={false}
@@ -248,7 +254,7 @@ export default function Sidebar() {
             </Link>
           );
         })}
-      </motion.nav>
+      </MotionNav>
     </>
   );
 }
