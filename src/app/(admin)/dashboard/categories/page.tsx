@@ -2,7 +2,7 @@
 import { DataTable } from "@/app/(admin)/components/common/DataTable";
 import { useMemo, useState } from "react";
 import { ChartBarStacked } from "lucide-react";
-import { useGetCategoriesAdmin } from "@/services";
+import { useDeleteCategories, useGetCategoriesAdmin } from "@/services";
 import { Button } from "@/components/ui/button";
 import { columns } from "./columns";
 import { CategoryModal } from "./AddwithEditModal/CategoryModal";
@@ -16,6 +16,11 @@ export default function Categories() {
     page: currentPage,
     limit: currentLimit,
   });
+  const {
+    mutate: deleteCategory,
+    isPending: isDeleting,
+    variables: deletingVars,
+  } = useDeleteCategories();
 
   const headerProps = useMemo(
     () => ({
@@ -39,7 +44,13 @@ export default function Categories() {
   return (
     <DataTable
       data={categories}
-      columns={columns(currentPage, currentLimit)}
+      columns={columns({
+        currentPage,
+        currentLimit,
+        deleteCategory,
+        isDeleting,
+        deletingVars,
+      })}
       isLoading={isLoading}
       headerProps={headerProps}
       emptyStateMessage="هیچ دسته‌بندی یافت نشد"

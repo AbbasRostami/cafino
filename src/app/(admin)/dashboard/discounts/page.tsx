@@ -1,5 +1,9 @@
 "use client";
-import { useGetDiscounts } from "@/services";
+import {
+  useDeleteDiscount,
+  useGetDiscounts,
+  useUpdateDiscountStatus,
+} from "@/services";
 import { DataTable } from "@/app/(admin)/components/common/DataTable";
 import { useState, useMemo } from "react";
 import { ClipboardPlus } from "lucide-react";
@@ -16,6 +20,16 @@ export default function Discounts() {
     limit: currentLimit,
   });
 
+  const {
+    mutate: deleteDiscount,
+    isPending: isPendingDiscount,
+    variables: deletingVars,
+  } = useDeleteDiscount();
+  const {
+    mutate: updateStatusDiscount,
+    isPending: isPendingStatusUpdate,
+    variables: updatingVars,
+  } = useUpdateDiscountStatus();
   const headerProps = useMemo(
     () => ({
       title: "لیست کد های تخفیف",
@@ -32,6 +46,12 @@ export default function Discounts() {
       columns={columns({
         currentPage,
         currentLimit,
+        deleteDiscount,
+        isPendingDiscount,
+        deletingVars,
+        updateStatusDiscount,
+        isPendingStatusUpdate,
+        updatingVars,
       })}
       isLoading={isLoading}
       headerProps={headerProps}

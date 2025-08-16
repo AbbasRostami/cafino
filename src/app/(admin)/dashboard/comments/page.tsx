@@ -2,7 +2,11 @@
 import { DataTable } from "@/app/(admin)/components/common/DataTable";
 import { useMemo, useState } from "react";
 import { MessageCircleCode } from "lucide-react";
-import { useGetCommentsAdmin } from "@/services";
+import {
+  useAcceptComment,
+  useGetCommentsAdmin,
+  useRejectComment,
+} from "@/services";
 import { columns } from "./columns";
 
 export default function Comments() {
@@ -15,6 +19,16 @@ export default function Comments() {
     limit: currentLimit,
   });
 
+  const {
+    mutate: acceptComment,
+    isPending: isAcceptingComment,
+    variables: acceptingVars,
+  } = useAcceptComment();
+  const {
+    mutate: rejectComment,
+    isPending: isRejectingComment,
+    variables: rejectingVars,
+  } = useRejectComment();
   const headerProps = useMemo(
     () => ({
       title: "لیست کامنت‌ها",
@@ -30,6 +44,12 @@ export default function Comments() {
       columns={columns({
         currentPage,
         currentLimit,
+        acceptComment,
+        isAcceptingComment,
+        acceptingVars,
+        rejectComment,
+        isRejectingComment,
+        rejectingVars,
       })}
       isLoading={isLoading}
       headerProps={headerProps}

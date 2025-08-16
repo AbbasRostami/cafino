@@ -14,10 +14,15 @@ import {
   TooltipTrigger,
   TooltipProvider,
 } from "@/components/ui/tooltip";
-import { useRemoveUserFromBlacklist } from "@/services";
 import { ColumnsBlackListProps } from "@/types/admin";
 
-export const columns = ({ currentPage, currentLimit }: ColumnsBlackListProps) =>
+export const columns = ({
+  currentPage,
+  currentLimit,
+  removeFromBlacklist,
+  isRemoving,
+  removingVars,
+}: ColumnsBlackListProps) =>
   useMemo<ColumnDef<any>[]>(
     () => [
       {
@@ -121,10 +126,7 @@ export const columns = ({ currentPage, currentLimit }: ColumnsBlackListProps) =>
         id: "actions",
         header: "عملیات",
         cell: ({ row }) => {
-          const { mutate: removeFromBlacklist, isPending: isRemoving } =
-            useRemoveUserFromBlacklist();
           const user = row?.original;
-
           return (
             <div className="flex justify-center items-center gap-2">
               <TooltipProvider>
@@ -133,7 +135,9 @@ export const columns = ({ currentPage, currentLimit }: ColumnsBlackListProps) =>
                     <Button
                       variant="ghost"
                       size="icon"
-                      disabled={isRemoving}
+                      disabled={
+                        removingVars?.phone === user?.phone && isRemoving
+                      }
                       className="h-8 w-8 rounded-full dark:bg-green-900/30 dark:hover:bg-green-900/50 transition-all duration-200 hover:scale-110"
                       onClick={async () => {
                         const isConfirmed = await confirm({
@@ -148,7 +152,7 @@ export const columns = ({ currentPage, currentLimit }: ColumnsBlackListProps) =>
                         }
                       }}
                     >
-                      {isRemoving ? (
+                      {removingVars?.phone === user?.phone && isRemoving ? (
                         <Loader2 className="animate-spin" size={20} />
                       ) : (
                         <Trash2
@@ -170,5 +174,5 @@ export const columns = ({ currentPage, currentLimit }: ColumnsBlackListProps) =>
         enableSorting: false,
       },
     ],
-    [currentPage, currentLimit]
+    [currentPage, currentLimit, removeFromBlacklist, isRemoving, removingVars]
   );

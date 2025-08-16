@@ -157,9 +157,6 @@ export const columns = ({
         header: "تعداد رای",
         cell: (info) => info.getValue() ?? "-",
         enableSorting: true,
-        size: 10, // عرض ستون به پیکسل
-        minSize: 20, // حداقل عرض
-        maxSize: 20, // حداکثر عرض
       },
       {
         accessorKey: "show",

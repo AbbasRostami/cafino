@@ -12,11 +12,19 @@ import {
   TooltipContent,
 } from "@/components/ui/tooltip";
 import { formatJalaliDate } from "@/utils/formatters";
-import { useAcceptComment, useRejectComment } from "@/services";
 import { ColumnsCommentsProps, CommentResponseAdmin } from "@/types/admin";
 import { AddCommentModal } from "./addComment/AddCommentModal";
 
-export const columns = ({ currentPage, currentLimit }: ColumnsCommentsProps) =>
+export const columns = ({
+  currentPage,
+  currentLimit,
+  acceptComment,
+  isAcceptingComment,
+  acceptingVars,
+  rejectComment,
+  isRejectingComment,
+  rejectingVars,
+}: ColumnsCommentsProps) =>
   useMemo<ColumnDef<CommentResponseAdmin>[]>(
     () => [
       {
@@ -40,9 +48,8 @@ export const columns = ({ currentPage, currentLimit }: ColumnsCommentsProps) =>
         header: "متن کامنت",
         cell: ({ row }) => {
           const value = row.getValue("text") as string;
-          const itemId = row.original.item.id; // id آیتم یا کامنت والد
-          console.log("itemId:", itemId);
-          const parent = row.original.id; // id آیتم یا کامنت والد
+          const itemId = row.original.item.id;
+          const parent = row.original.id;
           return (
             <div className="flex items-center justify-between gap-2">
               <Tooltip>
@@ -119,18 +126,17 @@ export const columns = ({ currentPage, currentLimit }: ColumnsCommentsProps) =>
         header: "تایید / رد",
         cell: ({ row }) => {
           const commentId = row?.original?.id;
-          const { mutate: acceptComment, isPending: isAcceptingComment } =
-            useAcceptComment();
-          const { mutate: rejectComment, isPending: isRejectingComment } =
-            useRejectComment();
           return (
             <>
               <Button
                 variant="ghost"
                 size="icon"
-                disabled={isAcceptingComment || row?.original?.accept === true}
+                disabled={
+                  (acceptingVars?.id === commentId && isAcceptingComment) ||
+                  row?.original?.accept === true
+                }
                 className={` rounded-full dark:bg-red-900/30 dark:hover:bg-red-900/50 transition-all duration-200 ${
-                  !isAcceptingComment
+                  acceptingVars?.id !== commentId && !isAcceptingComment
                     ? "hover:scale-110"
                     : "opacity-60 cursor-not-allowed"
                 }`}
@@ -144,7 +150,7 @@ export const columns = ({ currentPage, currentLimit }: ColumnsCommentsProps) =>
                   if (isConfirmed) acceptComment({ id: commentId });
                 }}
               >
-                {isAcceptingComment ? (
+                {acceptingVars?.id === commentId && isAcceptingComment ? (
                   <Loader2 className="!w-6 !h-6 animate-spin text-green-600 dark:text-green-400" />
                 ) : (
                   <SquareCheck
@@ -156,9 +162,12 @@ export const columns = ({ currentPage, currentLimit }: ColumnsCommentsProps) =>
               <Button
                 variant="ghost"
                 size="icon"
-                disabled={isRejectingComment || row?.original?.accept === false}
+                disabled={
+                  (rejectingVars?.id === commentId && isRejectingComment) ||
+                  row?.original?.accept === false
+                }
                 className={` rounded-full dark:bg-red-900/30 dark:hover:bg-red-900/50 transition-all duration-200 ${
-                  !isRejectingComment
+                  rejectingVars?.id !== commentId && !isRejectingComment
                     ? "hover:scale-110"
                     : "opacity-60 cursor-not-allowed"
                 }`}
@@ -172,7 +181,7 @@ export const columns = ({ currentPage, currentLimit }: ColumnsCommentsProps) =>
                   if (isConfirmed) rejectComment({ id: commentId });
                 }}
               >
-                {isRejectingComment ? (
+                {rejectingVars?.id === commentId && isRejectingComment ? (
                   <Loader2 className="!w-6 !h-6 animate-spin text-red-600 dark:text-red-400" />
                 ) : (
                   <SquareX
@@ -187,5 +196,14 @@ export const columns = ({ currentPage, currentLimit }: ColumnsCommentsProps) =>
         enableSorting: false,
       },
     ],
-    [currentPage, currentLimit]
+    [
+      currentPage,
+      currentLimit,
+      acceptComment,
+      isAcceptingComment,
+      acceptingVars,
+      rejectComment,
+      isRejectingComment,
+      rejectingVars,
+    ]
   );

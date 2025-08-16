@@ -13,11 +13,18 @@ import {
 import { Loader2, Trash2, Power, PowerOff } from "lucide-react";
 import { formatJalaliDate } from "@/utils/formatters";
 import { confirm } from "@/components/common/ConfirmModal/ConfirmModal";
-import { useDeleteDiscount } from "@/services";
-import { useUpdateDiscountStatus } from "@/services";
-import { ColumnsCommentsProps } from "@/types/admin";
+import { ColumnsDiscountsProps } from "@/types/admin";
 
-export const columns = ({ currentPage, currentLimit }: ColumnsCommentsProps) =>
+export const columns = ({
+  currentPage,
+  currentLimit,
+  deleteDiscount,
+  isPendingDiscount,
+  deletingVars,
+  updateStatusDiscount,
+  isPendingStatusUpdate,
+  updatingVars,
+}: ColumnsDiscountsProps) =>
   useMemo<ColumnDef<any>[]>(
     () => [
       {
@@ -87,13 +94,6 @@ export const columns = ({ currentPage, currentLimit }: ColumnsCommentsProps) =>
         cell: (info) => {
           const id = info.row.original.id;
           const isActive = info.row.original.active;
-
-          const { mutate: deleteDiscount, isPending: isPendingDiscount } =
-            useDeleteDiscount();
-          const {
-            mutate: updateStatusDiscount,
-            isPending: isPendingStatusUpdate,
-          } = useUpdateDiscountStatus();
           return (
             <TooltipProvider>
               <div className="flex justify-center items-center gap-2">
@@ -102,22 +102,19 @@ export const columns = ({ currentPage, currentLimit }: ColumnsCommentsProps) =>
                     <Button
                       variant="ghost"
                       size="icon"
-                      disabled={isPendingStatusUpdate}
+                      disabled={
+                        updatingVars?.id === id && isPendingStatusUpdate
+                      }
                       className={`
                         h-8 w-8 rounded-full
                         dark:bg-blue-900/30 dark:hover:bg-blue-900/50
                         transition-all duration-200
-                        ${
-                          !isPendingStatusUpdate
-                            ? "hover:scale-110"
-                            : "opacity-60 cursor-not-allowed"
-                        }
                       `}
                       onClick={() => {
                         updateStatusDiscount({ id, status: !isActive });
                       }}
                     >
-                      {isPendingStatusUpdate ? (
+                      {updatingVars?.id === id && isPendingStatusUpdate ? (
                         <Loader2
                           className="animate-spin text-blue-600 dark:text-blue-400"
                           size={20}
@@ -146,13 +143,13 @@ export const columns = ({ currentPage, currentLimit }: ColumnsCommentsProps) =>
                     <Button
                       variant="ghost"
                       size="icon"
-                      disabled={isPendingDiscount}
+                      disabled={deletingVars?.id === id && isPendingDiscount}
                       className={`
                         h-8 w-8 rounded-full
                         dark:bg-red-900/30 dark:hover:bg-red-900/50
                         transition-all duration-200
                         ${
-                          !isPendingDiscount
+                          deletingVars?.id !== id && !isPendingDiscount
                             ? "hover:scale-110"
                             : "opacity-60 cursor-not-allowed"
                         }
@@ -167,7 +164,7 @@ export const columns = ({ currentPage, currentLimit }: ColumnsCommentsProps) =>
                         if (isConfirmed) deleteDiscount({ id });
                       }}
                     >
-                      {isPendingDiscount ? (
+                      {deletingVars?.id === id && isPendingDiscount ? (
                         <Loader2
                           className="animate-spin text-red-600 dark:text-red-400"
                           size={20}
@@ -192,5 +189,14 @@ export const columns = ({ currentPage, currentLimit }: ColumnsCommentsProps) =>
         enableSorting: false,
       },
     ],
-    [currentPage, currentLimit]
+    [
+      currentPage,
+      currentLimit,
+      deleteDiscount,
+      isPendingDiscount,
+      deletingVars,
+      updateStatusDiscount,
+      isPendingStatusUpdate,
+      updatingVars,
+    ]
   );

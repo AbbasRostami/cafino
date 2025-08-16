@@ -3,7 +3,7 @@ import { DataTable } from "@/app/(admin)/components/common/DataTable";
 import { useMemo, useState } from "react";
 import { User } from "lucide-react";
 import { columns } from "./columns";
-import { useGetBlacklist } from "@/services";
+import { useGetBlacklist, useRemoveUserFromBlacklist } from "@/services";
 
 export default function Blacklist() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -14,7 +14,8 @@ export default function Blacklist() {
     page: currentPage,
     limit: currentLimit,
   });
-
+  const { mutate: removeFromBlacklist, isPending: isRemoving, variables: removingVars } =
+  useRemoveUserFromBlacklist();
   const headerProps = useMemo(
     () => ({
       title: "لیست سیاه",
@@ -27,7 +28,7 @@ export default function Blacklist() {
   return (
     <DataTable
       data={blacklist}
-      columns={columns({ currentPage, currentLimit })}
+      columns={columns({ currentPage, currentLimit, removeFromBlacklist, isRemoving, removingVars })}
       isLoading={isLoading}
       headerProps={headerProps}
       emptyStateMessage="هیچ کاربری در لیست سیاه یافت نشد"

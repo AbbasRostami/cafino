@@ -5,7 +5,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Loader2, Pencil, Trash2 } from "lucide-react";
-import { useDeleteCategories } from "@/services";
 import { confirm } from "@/components/common/ConfirmModal/ConfirmModal";
 import { CategoryModal } from "./AddwithEditModal/CategoryModal";
 import { ImageDialog } from "../../components/common/ImageDialog";
@@ -16,8 +15,15 @@ import {
   TooltipTrigger,
   TooltipProvider,
 } from "@/components/ui/tooltip";
+import { ColumnsCategoriesProps } from "@/types/admin";
 
-export const columns = (currentPage: number, currentLimit: number) => {
+export const columns = ({
+  currentPage,
+  currentLimit,
+  deleteCategory,
+  isDeleting,
+  deletingVars,
+}: ColumnsCategoriesProps) => {
   return useMemo<ColumnDef<any>[]>(
     () => [
       {
@@ -77,8 +83,6 @@ export const columns = (currentPage: number, currentLimit: number) => {
         header: "عملیات",
         cell: ({ row }) => {
           const category = row?.original;
-          const { mutate: deleteCategory, isPending: isDeleting } =
-            useDeleteCategories();
           return (
             <>
               <div className="flex gap-2 justify-center">
@@ -104,12 +108,14 @@ export const columns = (currentPage: number, currentLimit: number) => {
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button
-                        disabled={isDeleting}
+                        disabled={
+                          deletingVars?.id === category?.id && isDeleting
+                        }
                         className={`
                         h-10 w-10 flex items-center justify-center rounded-full
                         transition-all duration-200
                         ${
-                          isDeleting
+                          deletingVars?.id === category?.id && isDeleting
                             ? "opacity-60 cursor-not-allowed"
                             : "hover:scale-110"
                         }
@@ -129,7 +135,7 @@ export const columns = (currentPage: number, currentLimit: number) => {
                           }
                         }}
                       >
-                        {isDeleting ? (
+                        {deletingVars?.id === category?.id && isDeleting ? (
                           <Loader2 className="animate-spin" size={20} />
                         ) : (
                           <Trash2 size={20} strokeWidth={2.2} />
@@ -146,6 +152,6 @@ export const columns = (currentPage: number, currentLimit: number) => {
         enableSorting: false,
       },
     ],
-    [currentPage, currentLimit]
+    [currentPage, currentLimit, deleteCategory, isDeleting, deletingVars]
   );
 };
