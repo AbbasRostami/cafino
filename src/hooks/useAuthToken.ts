@@ -43,6 +43,8 @@ const onError = async (error: Response | Error) => {
     const customError = new Error(
       data?.message || error.statusText || "Server Error"
     );
+
+    (customError as any).status = error.status; // ✅ اضافه کردن status
     (customError as any).response = { data };
 
     throw customError;
@@ -58,7 +60,7 @@ export async function fetchWithAuth(url: string, options: RequestInit = {}) {
     if (response.status === 401) {
       const authState = useAuthStore.getState();
       if (!authState.isAuthenticated && !authState.user) {
-        throw new Error("کاربر لاگین نیست");
+        throw { status: 401, message: "کاربر لاگین نیست" };
       }
 
       console.log("🔄 Trying to refresh token...");
@@ -71,20 +73,27 @@ export async function fetchWithAuth(url: string, options: RequestInit = {}) {
       } else {
         await useAuthStore.getState().logout();
         toast.error("نشست شما منقضی شده، لطفاً دوباره وارد شوید.");
-        throw new Error("نشست منقضی شده");
+        throw { status: 401, message: "نشست منقضی شده" };
       }
     }
 
     if (response.status === 403) {
-      throw new Error("دسترسی غیرمجاز");
+      throw { status: 403, message: "دسترسی غیرمجاز" };
     }
 
-    return await onSuccess(response);
-  } catch (error) {
-    if (error instanceof Error && error.message === "کاربر لاگین نیست") {
-      throw error;
+    if (response.ok) {
+      return await response.json();
     }
-    return await onError(error as Response | Error);
+
+    let errorMessage = response.statusText;
+    try {
+      const data = await response.json();
+      errorMessage = data?.message || errorMessage;
+    } catch {}
+
+    throw { status: response.status, message: errorMessage };
+  } catch (error) {
+    throw error;
   }
 }
 

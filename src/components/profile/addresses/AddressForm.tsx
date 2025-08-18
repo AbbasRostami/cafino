@@ -28,6 +28,7 @@ import { X, MapPinHouse } from "lucide-react";
 import { AddressFormData, Province, AddressFormProps } from "@/types/Profile";
 import { addressFormSchema } from "@/schemas/profile";
 import { MotionForm } from "@/utils/MotionWrapper";
+import { useIsMobile } from "@/hooks/useMediaQuery";
 
 export const AddressForm = ({
   open,
@@ -38,8 +39,9 @@ export const AddressForm = ({
   filteredCities,
   formData,
   onFormDataChange,
-  isMobile,
-}: AddressFormProps & { isMobile: boolean }) => {
+}: AddressFormProps) => {
+  const isMobile = useIsMobile();
+
   const form = useForm<AddressFormData>({
     resolver: zodResolver(addressFormSchema),
     defaultValues: formData,
@@ -63,7 +65,7 @@ export const AddressForm = ({
 
   const handleCancel = () => {
     form.reset();
-    onFormDataChange({ title: "", province: "", city: "" });
+    onFormDataChange({ address: "", province: "", city: "" });
     onOpenChange(false);
   };
 
@@ -80,13 +82,13 @@ export const AddressForm = ({
         <Label htmlFor="title">عنوان آدرس</Label>
         <Input
           id="title"
-          {...form.register("title")}
+          {...form.register("address")}
           placeholder="مثال: مازندران، ساری، خیابان امام، کوچه"
           className="rounded-lg"
         />
-        {form?.formState?.errors?.title && (
+        {form?.formState?.errors?.address && (
           <p className="text-sm text-red-500">
-            {form?.formState?.errors?.title?.message}
+            {form?.formState?.errors?.address?.message}
           </p>
         )}
       </div>
@@ -151,7 +153,7 @@ export const AddressForm = ({
         </Button>
         <Button
           disabled={
-            !form.watch("title") ||
+              !form.watch("address") ||
             !form.watch("province") ||
             !form.watch("city") ||
             form?.formState?.isSubmitting

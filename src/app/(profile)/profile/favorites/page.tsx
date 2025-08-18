@@ -2,7 +2,7 @@
 
 import { AnimatePresence } from "framer-motion";
 import { useGetFavorites } from "@/services";
-import { FavoritesSkeleton } from "@/components/skeleton/Profile/favorite/FavoritesSkeleton";
+import { FavoritesSkeleton } from "@/components/skeleton/Profile/favorite";
 
 import {
   FavoriteCard,

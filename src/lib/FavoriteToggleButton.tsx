@@ -1,7 +1,7 @@
 "use client";
 
 import { Heart } from "lucide-react";
-import { useAddToFavorite, useDeleteFromFavorite } from "@/services/Favorite";
+import { useAddToFavorite, useDeleteFromFavorite } from "@/services";
 
 type Props = {
   itemId: string;

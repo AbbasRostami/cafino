@@ -5,7 +5,7 @@ import { toast } from "sonner";
 export const useAcceptComment = () => {
   const queryClient = useQueryClient();
 
-  const { mutate, isPending } = usePut<{ id: string }>(
+  const { mutate, isPending, variables } = usePut<{ id: string }>(
     (data) => `/v1/comment/accept/${data?.id}`,
     undefined,
     {
@@ -19,5 +19,5 @@ export const useAcceptComment = () => {
     }
   );
 
-  return { mutate, isPending };
+  return { mutate, isPending, variables };
 };

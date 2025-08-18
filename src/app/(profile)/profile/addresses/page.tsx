@@ -10,7 +10,6 @@ import {
   useGetProvinces,
   useUpdateAddress,
 } from "@/services";
-import { AddressSkeleton } from "@/components/skeleton/Profile/address/AddressSkeleton";
 
 import {
   AddressCard,
@@ -24,14 +23,17 @@ import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Address, City, Province } from "@/types/Profile";
 import { AddressFormData } from "@/schemas/profile";
-import { useIsMobile } from "@/hooks/useMediaQuery";
+import { AddressSkeleton } from "@/components/skeleton/Profile/address";
 
 export default function AddressesPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
-  const isMobile = useIsMobile();
   const { data: addressesData, isLoading } = useGetAddresses();
-  const { mutate: deleteAddress, isPending: isDeleting } = useDeleteAddress();
+  const {
+    mutate: deleteAddress,
+    isPending: isDeleting,
+    variables: deletingVars,
+  } = useDeleteAddress();
   const { mutate: updateAddress } = useUpdateAddress();
   const { mutate: addAddress } = useAddAddress();
   const { data: provincesData } = useGetProvinces();
@@ -50,9 +52,9 @@ export default function AddressesPage() {
       updateAddress(
         {
           id,
-          address: data.title,
-          province: data.province,
-          city: data.city,
+          address: data?.address,
+          province: data?.province,
+          city: data?.city,
         },
         {
           onSuccess: () => {
@@ -63,9 +65,9 @@ export default function AddressesPage() {
     } else {
       addAddress(
         {
-          address: data.title,
-          province: data.province,
-          city: data.city,
+          address: data?.address,
+          province: data?.province,
+          city: data?.city,
         },
         {
           onSuccess: () => {
@@ -81,11 +83,11 @@ export default function AddressesPage() {
   };
 
   const handleEdit = (address: Address) => {
-    setEditingId(address.id);
+    setEditingId(address?.id);
     updateFormData({
-      title: address.address,
-      province: address.province,
-      city: address.city,
+      address: address?.address,
+      province: address?.province,
+      city: address?.city,
     });
     setOpen(true);
   };
@@ -128,9 +130,9 @@ export default function AddressesPage() {
                 <AddressCard
                   key={address?.id}
                   address={address}
-                  onEdit={handleEdit}
-                  onDelete={handleDelete}
-                  isDeleting={isDeleting}
+                  onEdit={() => handleEdit(address)}
+                  onDelete={() => handleDelete(address?.id)}
+                  isDeleting={deletingVars?.id === address?.id && isDeleting}
                 />
               ))
             )}
@@ -147,7 +149,6 @@ export default function AddressesPage() {
         filteredCities={filteredCities}
         formData={formData}
         onFormDataChange={updateFormData}
-        isMobile={isMobile}
       />
     </div>
   );

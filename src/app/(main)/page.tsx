@@ -1,7 +1,7 @@
-import HeroSection from "@/components/Landing/HeroSection/HeroSection";
-import CategorySection from "@/components/Landing/Category/CategorySection";
-import StatsSection from "@/components/Landing/StatsSection/StatsSection";
-import ItemSection from "@/components/Landing/Items/ItemSection";
+import CategorySection from "@/components/main/Landing/Category/CategorySection";
+import HeroSection from "@/components/main/Landing/HeroSection/HeroSection";
+import ItemSection from "@/components/main/Landing/Items/ItemSection";
+import StatsSection from "@/components/main/Landing/StatsSection/StatsSection";
 
 export default function Home() {
   return (

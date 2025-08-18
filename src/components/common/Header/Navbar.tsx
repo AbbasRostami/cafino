@@ -14,7 +14,6 @@ import {
   LogOut,
 } from "lucide-react";
 
-import { LoginForm } from "@/components/auth/LoginForm";
 import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
 import React, { useState } from "react";
@@ -31,8 +30,9 @@ import CafeinLogoLight from "./../../../assets/Logo/9.png";
 import CafeinLogoDark from "./../../../assets/Logo/10.png";
 import Image from "next/image";
 import { ThemeSwitcher } from "../ThemeToggle/ThemeToggle";
-import CartSidebar from "../../CartSidebar";
-import { useUserProfile } from "@/services/update";
+import { useUserProfile } from "@/services";
+import CartSidebar from "@/components/main/CartSidebar";
+import { LoginForm } from "@/components/main/auth/LoginForm";
 const Navbar = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const logout = useAuthStore((state) => state.logout);

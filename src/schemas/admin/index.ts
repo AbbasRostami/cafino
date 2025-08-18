@@ -1,4 +1,4 @@
-export * from "./comment/comment";
-export * from "./discount/discount";
-export * from "./item/item";
+export * from "./comment";
+export * from "./discount";
+export * from "./item";
 export * from "./category";

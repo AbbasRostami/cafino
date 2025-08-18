@@ -39,10 +39,6 @@ export const useMenuFilters = ({
   );
 
   useEffect(() => {
-    setInput(searchParams.get("search") || "");
-  }, [searchParams]);
-
-  useEffect(() => {
     const currentSearch = searchParams.get("search") || "";
     const isSearchChanged =
       decodeURIComponent(currentSearch) !== debouncedInput;

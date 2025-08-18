@@ -14,9 +14,9 @@ export const useAddressForm = ({
   const [cities, setCities] = useState<City[]>([]);
   const [filteredCities, setFilteredCities] = useState<City[]>([]);
   const [formData, setFormData] = useState<AddressFormData>({
-    title: "",
     province: "",
     city: "",
+    address: "",
   });
 
   // Update provinces and cities when data changes
@@ -52,9 +52,9 @@ export const useAddressForm = ({
 
   const resetFormData = () => {
     setFormData({
-      title: "",
       province: "",
       city: "",
+      address: "",
     });
   };
 

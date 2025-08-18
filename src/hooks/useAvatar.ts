@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useUpdateImage, useRemoveImage } from "@/services/Images";
+import { useUpdateImage, useRemoveImage } from "@/services";
 import { toast } from "sonner";
 
 export const useAvatar = () => {

@@ -1,8 +1,8 @@
 // AddressCardProps
 export interface AddressCardProps {
   address: Address;
-  onEdit: (address: Address) => void;
-  onDelete: (id: string) => void;
+  onEdit: () => void;
+  onDelete: () => void;
   isDeleting: boolean;
 }
 
@@ -27,9 +27,9 @@ export interface Address {
 }
 
 export interface AddressFormData {
-  title: string;
   province: string;
   city: string;
+  address: string;
 }
 
 // API Request/Response types (from services/address.ts)

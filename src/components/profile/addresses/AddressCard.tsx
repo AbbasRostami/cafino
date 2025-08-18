@@ -20,7 +20,7 @@ export const AddressCard = ({
         <div className="flex gap-2 flex-wrap justify-end md:justify-start">
           <Button
             size="sm"
-            onClick={() => onEdit(address)}
+            onClick={() => onEdit()}
             className="rounded-lg bg-emerald-100 hover:bg-emerald-200 text-emerald-800 font-medium gap-1"
           >
             <Pencil size={16} />
@@ -30,7 +30,7 @@ export const AddressCard = ({
             size="sm"
             variant="destructive"
             disabled={isDeleting}
-            onClick={() => onDelete(address?.id)}
+            onClick={() => onDelete()}
             className="rounded-lg gap-1"
           >
             <Trash2 size={16} />

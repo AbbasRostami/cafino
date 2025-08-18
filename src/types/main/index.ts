@@ -1,7 +1,5 @@
-// Main app types barrel export
-export * from "./menu";
-export * from "./items";
+export * from "./menu/menu";
+export * from "./items-details";
 export * from "./cart";
-export * from "./checkout";
+export * from "./cartSidebar";
 export * from "./Landing";
-export * from "./comments";

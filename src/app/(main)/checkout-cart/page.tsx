@@ -1,7 +1,7 @@
 "use client";
 import { CartApiResponse, useCart } from "@/store/cartStore";
 import CheckoutCart from "@/components/checkout/CheckoutCart";
-import CheckoutSkeleton from "@/components/skeleton/main/checkout-cart/CheckoutSkeleton";
+import CheckoutSkeleton from "@/components/skeleton/main/checkout-cart";
 
 const CartPage = () => {
   const { cart, isCartLoading } = useCart();

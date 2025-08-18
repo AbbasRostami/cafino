@@ -5,7 +5,7 @@ import moment from "moment-jalaali";
 import "moment-timezone";
 import "moment/locale/fa";
 import { useUpdateProfile, useUserProfile } from "@/services";
-import ProfileSkeleton from "@/components/skeleton/Profile/settings/ProfileSkeleton";
+import ProfileSkeleton from "@/components/skeleton/Profile/settings";
 
 import {
   SettingsHeader,

@@ -25,7 +25,7 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { Pagination } from "./Pagination";
-import { TableSkeletonRows } from "@/components/skeleton/admin/TableSkeleton";
+import { TableSkeletonRows } from "@/components/skeleton/admin";
 import EmptyState from "@/app/(admin)/components/common/EmptyState/EmptyState";
 import { DataTableHeader, TableHeaderProps } from "./TableHeader";
 

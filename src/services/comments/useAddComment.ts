@@ -6,7 +6,7 @@ import { toast } from "sonner";
 export const useAddComment = () => {
   const queryClient = useQueryClient();
 
-  const { mutate, isPending } = usePost<AddCommentRequest>(
+  const { mutate: addComment, isPending } = usePost<AddCommentRequest>(
     () => `/v1/comment`,
     undefined,
     {
@@ -21,5 +21,5 @@ export const useAddComment = () => {
     }
   );
 
-  return { mutate, isPending };
+  return { mutate: addComment, isPending };
 };

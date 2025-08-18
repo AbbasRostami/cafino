@@ -27,11 +27,10 @@ import { GetOrdersResponse, User, FavoriteItem } from "@/types/Profile";
 export default function OverviewPage() {
   const { data: user, isLoading: userLoading } = useUserProfile();
   const { data: ordersData, isLoading: ordersLoading } = useGetOrders(100, 1);
-  const {
-    data: favoritesData,
-    isLoading: favoritesLoading,
-    total,
-  } = useGetFavorites(100, 1);
+  const { data: favoritesData, isLoading: favoritesLoading } = useGetFavorites(
+    100,
+    1
+  );
   const { data: addressesData, isLoading: addressesLoading } =
     useGetAddresses();
   console.log(favoritesData);

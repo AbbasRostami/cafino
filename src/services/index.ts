@@ -27,3 +27,6 @@ export * from "./addresses";
 
 // Image services
 export * from "./images";
+
+// Payment services
+export * from "./payment";

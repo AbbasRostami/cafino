@@ -1,5 +1,4 @@
 import { usePost } from "@/hooks/useReactQueryHooks";
-import { AddToFavoriteRequest } from "@/types/Profile/favorites";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useAuthStore } from "@/store/authStore";
@@ -21,6 +20,8 @@ export const useAddToFavorite = () => {
         toast.success("ایتم با موفقیت به علاقه مندی ها اضافه شد");
         queryClient.invalidateQueries({ queryKey: ["favorites"] });
         queryClient.invalidateQueries({ queryKey: ["items"] });
+        // Invalidate item-details queries to update UI immediately
+        queryClient.invalidateQueries({ queryKey: ["item-details"] });
       },
       onError: (error: any) => {
         if (error.message !== "User is not authenticated") {

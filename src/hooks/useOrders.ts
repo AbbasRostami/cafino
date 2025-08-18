@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Order } from "@/types/Profile";
+import { OrderAdmin } from "@/types";
 
 interface UseOrdersProps {
   initialLimit?: number;
 }
 
 export const useOrders = ({ initialLimit = 4 }: UseOrdersProps) => {
-  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [selectedOrder, setSelectedOrder] = useState<OrderAdmin | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -30,7 +30,7 @@ export const useOrders = ({ initialLimit = 4 }: UseOrdersProps) => {
     }
   };
 
-  const handleViewDetails = (order: Order) => {
+  const handleViewDetails = (order: OrderAdmin) => {
     setSelectedOrder(order);
     setIsModalOpen(true);
   };

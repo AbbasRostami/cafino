@@ -7,3 +7,4 @@ export { useAddCommentAdmin } from "./useAddCommentAdmin";
 // Main comment hooks
 export { useGetCommentsItems } from "./useGetCommentsItems";
 export { useAddComment } from "./useAddComment";
+export { useAddReply } from "./useAddReply";

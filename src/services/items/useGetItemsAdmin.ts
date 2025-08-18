@@ -1,6 +1,6 @@
 import { useGet } from "@/hooks/useReactQueryHooks";
-import { MenuItemResponse } from "@/types/main/menu/menu";
-import { UseGetItemsAdminProps } from "@/types/admin/items";
+import { MenuItemResponse } from "@/types/main";
+import { UseGetItemsAdminProps } from "@/types/admin";
 
 export const useGetItemsAdmin = ({
   page,
@@ -8,7 +8,7 @@ export const useGetItemsAdmin = ({
   search,
 }: UseGetItemsAdminProps) => {
   const { data, isLoading, error } = useGet<MenuItemResponse>(
-    `/v1/item/admin?page=${page}&limit=${limit}&search=${search}`,
+    `/v1/item/admin?page=${page}&limit=${limit}`,
     {
       queryKey: ["items-admin", page, limit, search],
     }

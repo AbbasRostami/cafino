@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useDeleteFromFavorite } from "@/services/Favorite";
+import { useDeleteFromFavorite } from "@/services";
 
 interface UseFavoritesProps {
   initialLimit?: number;
@@ -16,24 +16,22 @@ export const useFavorites = ({ initialLimit = 6 }: UseFavoritesProps) => {
     currentTotalItems: number;
   } | null>(null);
 
-  const { mutate: deleteFromFavorite } = useDeleteFromFavorite({
-    onSuccess: () => {
-      if (
-        pendingDeleteInfo &&
-        pendingDeleteInfo.currentTotalItems === 1 &&
-        pageParam > 1
-      ) {
-        const newPage = pageParam - 1;
-        const params = new URLSearchParams(searchParams.toString());
-        params.set("page", newPage.toString());
-        router.push(`?${params.toString()}`);
-      }
-    },
-  });
-
-  const handleDeleteFavorite = (itemId: string, currentTotalItems?: number) => {
-    setPendingDeleteInfo({ itemId, currentTotalItems: currentTotalItems || 0 });
-    deleteFromFavorite({ itemId });
+  const { deleteFromFavorite, isPending } = useDeleteFromFavorite();
+  const handleDeleteFavorite = (data: { itemId: string }) => {
+    deleteFromFavorite(data, {
+      onSuccess: () => {
+        if (
+          pendingDeleteInfo &&
+          pendingDeleteInfo.currentTotalItems === 1 &&
+          pageParam > 1
+        ) {
+          const newPage = pageParam - 1;
+          const params = new URLSearchParams(searchParams.toString());
+          params.set("page", newPage.toString());
+          router.push(`?${params.toString()}`);
+        }
+      },
+    });
   };
 
   const limitParam = Number(searchParams.get("limit")) || selectedLimit;
@@ -68,5 +66,6 @@ export const useFavorites = ({ initialLimit = 6 }: UseFavoritesProps) => {
     goToPage,
     handleDeleteFavorite,
     handleViewProducts,
+    isPending,
   };
 };

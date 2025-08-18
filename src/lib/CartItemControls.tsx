@@ -1,7 +1,6 @@
 import React from "react";
 import { Plus, Minus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
 import { useAddToCartButtonLogic } from "./AddToCartButton";
 
 interface CartItemControlsProps {
