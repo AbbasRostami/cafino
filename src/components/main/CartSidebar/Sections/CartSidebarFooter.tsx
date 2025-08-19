@@ -16,15 +16,29 @@ export const CartSidebarFooter: React.FC<CartSidebarFooterProps> = ({
   }
 
   return (
-    <div className="border-t border-gray-200 dark:border-neutral-700 p-6 bg-white/90 dark:bg-neutral-800/90 backdrop-blur-sm">
+    <div className="border-t border-gray-200 dark:border-neutral-700 p-4 bg-white/90 dark:bg-neutral-800/90 backdrop-blur-sm">
       <div className="space-y-4">
         <div className="space-y-2">
+          <div className="flex justify-between items-center">
+            <span className="text-sm text-gray-600 dark:text-gray-200">
+              مجموع قیمت:
+            </span>
+            <span className="font-bold text-xl text-gray-600 dark:text-gray-200">
+              {Math.floor(cartData.totalAmount).toLocaleString("fa-IR")}{" "}
+              <span className="text-sm text-gray-600 dark:text-gray-400">
+                تومان
+              </span>
+            </span>
+          </div>
           <div className="flex justify-between items-center">
             <span className="text-sm text-gray-600 dark:text-gray-200">
               مجموع پرداختی:
             </span>
             <span className="font-bold text-xl bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
-              {cartData.paymentAmount?.toLocaleString("fa-IR")} تومان
+              {Math.floor(cartData.paymentAmount).toLocaleString("fa-IR")}{" "}
+              <span className="text-sm text-amber-600 dark:text-amber-400">
+                تومان
+              </span>
             </span>
           </div>
           {cartData.totalDiscount > 0 && (
@@ -33,7 +47,10 @@ export const CartSidebarFooter: React.FC<CartSidebarFooterProps> = ({
                 تخفیف:
               </span>
               <span className="text-green-600 dark:text-green-400 font-bold">
-                -{cartData.totalDiscount?.toLocaleString("fa-IR")} تومان
+                {Math.floor(cartData.totalDiscount).toLocaleString("fa-IR")}{" "}
+                <span className="text-sm text-green-600 dark:text-green-400">
+                  تومان
+                </span>
               </span>
             </div>
           )}
@@ -41,7 +58,7 @@ export const CartSidebarFooter: React.FC<CartSidebarFooterProps> = ({
         {isAuthenticated ? (
           <Link href="/checkout-cart">
             <Button
-              className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+              className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
               onClick={onClose}
             >
               <ShoppingCart className="w-5 h-5 mr-2" />
@@ -50,7 +67,7 @@ export const CartSidebarFooter: React.FC<CartSidebarFooterProps> = ({
           </Link>
         ) : (
           <Button
-            className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+            className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
             onClick={() => {
               toast.error("برای ثبت سفارش ابتدا وارد حساب کاربری شوید.");
             }}

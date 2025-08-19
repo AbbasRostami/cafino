@@ -1,8 +1,8 @@
 "use client";
 
 import { CartSidebarItemsProps } from "@/types";
-import { CartItemCard } from "./CartItemCard";
-import { CartSidebarLoading } from "./CartSidebarLoading";
+import { CartItemCard } from "./Sections/CartItemCard";
+import { CartSidebarLoading } from "../../skeleton/main/cartSidebar";
 import { CartSidebarEmpty } from "./EmptyStates";
 
 export const CartSidebarItems: React.FC<CartSidebarItemsProps> = ({

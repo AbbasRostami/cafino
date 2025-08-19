@@ -1,7 +1,3 @@
-export interface CartSidebarProps {
-  // cartItems is now handled internally from cart store
-}
-
 export interface CartItemData {
   itemId: string;
   title: string;
@@ -35,7 +31,6 @@ export interface CartSidebarState {
   cartError: any;
 }
 
-
 export interface CartSidebarItemsProps {
   cartData: CartApiResponse | null;
   isCartLoading: boolean;
@@ -46,7 +41,6 @@ export interface CartSidebarHeaderProps {
   onClearCart: () => void;
   isClearLoading: boolean;
 }
-
 
 export interface CartSidebarFooterProps {
   cartData: CartApiResponse | null;
