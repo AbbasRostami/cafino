@@ -12,7 +12,6 @@ export const SearchBar = ({ input, setInput }: SearchBarProps) => {
       <Input
         value={input}
         onChange={(e) => {
-          console.log("[SearchBar] input changed:", e.target.value);
           setInput(e.target.value);
         }}
         type="text"

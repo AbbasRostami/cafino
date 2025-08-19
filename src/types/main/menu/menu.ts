@@ -123,11 +123,15 @@ export interface MobileSheetProps {
   setIsOpen: (open: boolean) => void;
   categories: any;
   FilterSectionHeader: React.FC<{ title: string }>;
+  handleMinPriceInputChange: (value: number) => void;
+  handleMaxPriceInputChange: (value: number) => void;
+  DEFAULT_MIN: number;
+  DEFAULT_MAX: number;
 }
 
 export interface DesktopSidebarProps {
   className?: string;
-  categories: any[];
+  categories: any;
   filters: any;
   updateFilter: (
     updates: Record<string, string | number | boolean | null>
@@ -137,4 +141,18 @@ export interface DesktopSidebarProps {
   FilterSectionHeader: React.FC<{ title: string }>;
   DEFAULT_MIN: number;
   DEFAULT_MAX: number;
+  handleMinPriceInputChange: (value: number) => void;
+  handleMaxPriceInputChange: (value: number) => void;
+}
+
+
+// Price Inputs Types
+export interface PriceInputsProps {
+  minPrice: number;
+  maxPrice: number;
+  onMinPriceChange: (value: number) => void;
+  onMaxPriceChange: (value: number) => void;
+  defaultMin: number;
+  defaultMax: number;
+  className?: string;
 }

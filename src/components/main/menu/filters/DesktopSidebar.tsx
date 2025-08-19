@@ -2,9 +2,10 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { SlidersHorizontal, Sparkles, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Slider } from "@/components/ui/slider";
 import { DesktopSidebarProps } from "@/types/main";
+import { PriceInputs } from "./PriceInputs";
 
 const DesktopSidebar = ({
   className,
@@ -21,24 +22,53 @@ const DesktopSidebar = ({
     filters.maxPrice,
   ]);
 
+  useEffect(() => {
+    setLocalPriceRange([filters.minPrice, filters.maxPrice]);
+  }, [filters.minPrice, filters.maxPrice]);
+
   const handlePriceRangeChange = (val: [number, number]) => {
     setLocalPriceRange(val);
   };
+
   const handlePriceRangeCommit = (val: [number, number]) => {
     updateFilter({ minPrice: val[0], maxPrice: val[1] });
   };
-  console.log("lskjfhud", categories);
+
+  const handleLocalMinPriceChange = (value: number) => {
+    const newRange: [number, number] = [value, localPriceRange[1]];
+    setLocalPriceRange(newRange);
+  };
+
+  const handleLocalMaxPriceChange = (value: number) => {
+    const newRange: [number, number] = [localPriceRange[0], value];
+    setLocalPriceRange(newRange);
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (
+        localPriceRange[0] !== filters.minPrice ||
+        localPriceRange[1] !== filters.maxPrice
+      ) {
+        updateFilter({
+          minPrice: localPriceRange[0],
+          maxPrice: localPriceRange[1],
+        });
+      }
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [localPriceRange, filters.minPrice, filters.maxPrice, updateFilter]);
 
   return (
     <aside
       className={cn(
-        "hidden lg:block w-80 h-full  bg-white/80 dark:bg-gray-800/50 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl",
+        "hidden xl:block w-80 h-full  bg-white/80 dark:bg-gray-800/50 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl",
         className
       )}
     >
       <ScrollArea className="h-full " dir="rtl">
         <div className="p-6 space-y-8  ">
-          {/* Header */}
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-bold  dark:text-white bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent flex items-center gap-2">
               <div className="p-2 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 text-white">
@@ -104,6 +134,7 @@ const DesktopSidebar = ({
           </div>
 
           <div className="bg-gradient-to-r from-amber-500 to-orange-500 h-0.5 w-full rounded-full"></div>
+
           <div>
             <div className="flex items-center gap-3 mb-4">
               <div className="p-2 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 text-white">
@@ -127,10 +158,20 @@ const DesktopSidebar = ({
                 <span>{localPriceRange[1]?.toLocaleString("fa-IR")} تومان</span>
                 <span>{localPriceRange[0]?.toLocaleString("fa-IR")} تومان</span>
               </div>
+
+              <PriceInputs
+                minPrice={localPriceRange[0]}
+                maxPrice={localPriceRange[1]}
+                onMinPriceChange={handleLocalMinPriceChange}
+                onMaxPriceChange={handleLocalMaxPriceChange}
+                defaultMin={DEFAULT_MIN}
+                defaultMax={DEFAULT_MAX}
+              />
             </div>
           </div>
 
           <div className="bg-gradient-to-r from-amber-500 to-orange-500 h-0.5 w-full rounded-full"></div>
+
           <div className="space-y-4">
             <div className="flex items-center gap-3 mb-4">
               <div className="p-2 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 text-white">

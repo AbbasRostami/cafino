@@ -7,17 +7,18 @@ import { Slider } from "@/components/ui/slider";
 import React, { useState, useEffect } from "react";
 import { useMenuFilters } from "@/hooks/useMenuFilters";
 import { MobileSheetProps } from "@/types";
+import { PriceInputs } from "./PriceInputs";
 
 const MobileSheet = ({
   isOpen,
   setIsOpen,
   categories,
   FilterSectionHeader,
+  DEFAULT_MIN,
+  DEFAULT_MAX,
 }: MobileSheetProps) => {
-  const { filters, updateFilter, resetFilters, DEFAULT_MIN, DEFAULT_MAX } =
-    useMenuFilters();
+  const { filters, updateFilter, resetFilters } = useMenuFilters();
 
-  // Local state for temporary filters
   const [tempCategoryId, setTempCategoryId] = useState(filters.categoryId);
   const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([
     filters.minPrice,
@@ -27,7 +28,6 @@ const MobileSheet = ({
     filters.availableOnly
   );
 
-  // Update local state when filters change
   useEffect(() => {
     setTempCategoryId(filters.categoryId);
     setTempPriceRange([filters.minPrice, filters.maxPrice]);
@@ -53,13 +53,23 @@ const MobileSheet = ({
     setIsOpen(false);
   };
 
+  const handleLocalMinPriceChange = (value: number) => {
+    const newRange: [number, number] = [value, tempPriceRange[1]];
+    setTempPriceRange(newRange);
+  };
+
+  const handleLocalMaxPriceChange = (value: number) => {
+    const newRange: [number, number] = [tempPriceRange[0], value];
+    setTempPriceRange(newRange);
+  };
+
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger onClick={(e) => e.stopPropagation()} asChild>
         <Button
           variant="outline"
           size="lg"
-          className="lg:hidden w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg hover:from-amber-600 hover:to-orange-600 p-0 rounded-xl"
+          className="xl:hidden w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg hover:from-amber-600 hover:to-orange-600 p-0 rounded-xl"
         >
           فیلتر
           <Filter className="w-6 h-6" />
@@ -87,9 +97,7 @@ const MobileSheet = ({
                 <X size={20} />
               </Button>
             </div>
-            {/* محتوای سایدبار موبایل */}
             <div className="space-y-8">
-              {/* دسته‌بندی */}
               <div>
                 <div className="grid grid-cols-2 gap-3">
                   {categories?.categories?.map((category: any) => {
@@ -132,7 +140,7 @@ const MobileSheet = ({
                 </div>
               </div>
               <div className="bg-gradient-to-r from-amber-500 to-orange-500 h-1 w-full rounded-full"></div>
-              {/* محدوده قیمت */}
+
               <div>
                 <FilterSectionHeader title="محدوده قیمت" />
                 <div className="space-y-4">
@@ -153,10 +161,20 @@ const MobileSheet = ({
                       {tempPriceRange[0]?.toLocaleString("fa-IR")} تومان
                     </span>
                   </div>
+
+                  <PriceInputs
+                    minPrice={tempPriceRange[0]}
+                    maxPrice={tempPriceRange[1]}
+                    onMinPriceChange={handleLocalMinPriceChange}
+                    onMaxPriceChange={handleLocalMaxPriceChange}
+                    defaultMin={DEFAULT_MIN}
+                    defaultMax={DEFAULT_MAX}
+                  />
                 </div>
               </div>
+
               <div className="bg-gradient-to-r from-amber-500 to-orange-500 h-1 w-full rounded-full"></div>
-              {/* وضعیت موجودی */}
+
               <div>
                 <FilterSectionHeader title="وضعیت موجودی" />
                 <div className="grid grid-cols-1 gap-3">
@@ -205,7 +223,6 @@ const MobileSheet = ({
                 </div>
               </div>
             </div>
-            {/* دکمه‌های پایین */}
             <div className="mt-8 flex gap-3">
               <Button
                 variant="outline"

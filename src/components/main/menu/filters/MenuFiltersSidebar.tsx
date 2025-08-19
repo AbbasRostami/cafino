@@ -7,7 +7,6 @@ import MobileSheet from "./MobileSheet";
 import { useMenuFilters } from "@/hooks/useMenuFilters";
 
 const MenuFiltersSidebar = () => {
-  // Data fetching
   const { data: categories } = useGetCategories();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -18,6 +17,8 @@ const MenuFiltersSidebar = () => {
     hasActiveFilters,
     DEFAULT_MIN,
     DEFAULT_MAX,
+    handleMinPriceInputChange,
+    handleMaxPriceInputChange,
   } = useMenuFilters();
 
   const FilterSectionHeader = ({ title }: { title: string }) => (
@@ -42,12 +43,18 @@ const MenuFiltersSidebar = () => {
         FilterSectionHeader={FilterSectionHeader}
         DEFAULT_MIN={DEFAULT_MIN || 0}
         DEFAULT_MAX={DEFAULT_MAX || 200000}
+        handleMinPriceInputChange={handleMinPriceInputChange}
+        handleMaxPriceInputChange={handleMaxPriceInputChange}
       />
       <MobileSheet
         categories={categories?.data || []}
         FilterSectionHeader={FilterSectionHeader}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
+        handleMinPriceInputChange={handleMinPriceInputChange}
+        handleMaxPriceInputChange={handleMaxPriceInputChange}
+        DEFAULT_MIN={DEFAULT_MIN || 0}
+        DEFAULT_MAX={DEFAULT_MAX || 200000}
       />
     </>
   );
