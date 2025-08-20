@@ -1,12 +1,13 @@
 export interface CartItemData {
+  image: string;
   itemId: string;
   title: string;
   description: string;
-  count: number; // این همون تعداده (نه quantity)
+  count: number;
   images: string[];
-  price: number; // عددیه
-  discount: number; // درصد یا مبلغ تخفیف، عددیه
-  finalPrice: number; // گاهی اعشاری هم داره → number
+  price: number;
+  discount: number; 
+  finalPrice: number; 
   category: {
     title: string;
   };

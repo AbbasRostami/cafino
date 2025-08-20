@@ -11,5 +11,4 @@ export const discountSchemaCheckout = z.object({
     }),
 });
 
-// Type inference
 export type DiscountFormValues = z.infer<typeof discountSchemaCheckout>;

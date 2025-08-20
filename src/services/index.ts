@@ -30,3 +30,6 @@ export * from "./images";
 
 // Payment services
 export * from "./payment";
+
+// Cart services
+export * from "./cart";

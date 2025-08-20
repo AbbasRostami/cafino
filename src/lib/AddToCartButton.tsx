@@ -2,15 +2,14 @@
 
 import {
   useAddToCart,
-  useIncItem,
-  useDecItem,
-  useRemoveItem,
-  useClearCart,
   useCart,
-  useCartStore,
-  CartItem,
-} from "@/store/cartStore";
+  useClearCart,
+  useDecItem,
+  useIncItem,
+  useRemoveItem,
+} from "@/services";
 import { useAuthStore } from "@/store/authStore";
+import { CartItem, useCartStore } from "@/store/cartStore";
 
 interface AddToCartButtonLogicProps {
   itemId: string;
