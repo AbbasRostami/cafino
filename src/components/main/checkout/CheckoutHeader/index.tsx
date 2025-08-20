@@ -17,7 +17,6 @@ export default function CheckoutHeader({
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
-      {/* Back Button */}
       <MotionButton
         whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.95 }}
@@ -36,7 +35,6 @@ export default function CheckoutHeader({
         بازگشت به منو
       </MotionButton>
 
-      {/* Title */}
       <MotionH1
         className="text-3xl sm:text-4xl font-extrabold text-center text-gray-900 dark:text-white"
         initial={{ scale: 0.9, opacity: 0 }}
@@ -55,7 +53,6 @@ export default function CheckoutHeader({
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.35, duration: 0.5 }}
       >
-        {/* دکمه حذف همه آیتم‌ها */}
         {cart?.cartItems?.length && cart?.cartItems?.length > 0 && (
           <MotionButton
             whileHover={{ scale: 1.05, rotate: [-1, 1, -1, 0] }}
@@ -79,7 +76,6 @@ export default function CheckoutHeader({
             )}
           </MotionButton>
         )}
-        {/* تعداد آیتم‌ها */}
         <MotionDiv
           whileHover={{ scale: 1.07 }}
           transition={{ type: "spring", stiffness: 250 }}
@@ -88,7 +84,10 @@ export default function CheckoutHeader({
              border border-gray-300 dark:border-gray-600 font-medium text-sm tracking-tight"
         >
           <ShoppingCart size={20} />
-          {cart?.cartItems?.length.toLocaleString("fa-IR")} آیتم
+          {cart?.cartItems
+            ?.reduce((total, item) => total + (item.count || 1), 0)
+            ?.toLocaleString("fa-IR")}
+          آیتم
         </MotionDiv>
       </MotionDiv>
     </MotionDiv>

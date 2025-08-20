@@ -9,7 +9,7 @@ import {
   SheetTrigger,
   SheetClose,
 } from "@/components/ui/sheet";
-import { OrderSummaryProps } from "@/types/main/checkout";
+import { OrderSummaryProps } from "@/types/main";
 import { MotionDiv, MotionSpan } from "@/utils/MotionWrapper";
 
 interface OrderSummaryPropsExtended extends OrderSummaryProps {
@@ -98,7 +98,8 @@ export default function OrderSummary({
                   مبلغ قابل پرداخت
                 </p>
                 <p className="text-xl font-bold text-amber-700 dark:text-amber-300">
-                  {cart?.paymentAmount?.toLocaleString("fa-IR")} تومان
+                  {Math.floor(cart?.paymentAmount ?? 0).toLocaleString("fa-IR")}{" "}
+                  تومان
                 </p>
               </div>
               <Button
@@ -167,7 +168,10 @@ export default function OrderSummary({
                 <div className="flex justify-between text-lg font-bold">
                   <span>مبلغ قابل پرداخت</span>
                   <span className="text-amber-700 dark:text-amber-300">
-                    {cart?.paymentAmount?.toLocaleString("fa-IR")} تومان
+                    {Math.floor(cart?.paymentAmount ?? 0).toLocaleString(
+                      "fa-IR"
+                    )}{" "}
+                    تومان
                   </span>
                 </div>
 
@@ -214,9 +218,9 @@ export default function OrderSummary({
         {cart?.generalDiscount && cart?.generalDiscount?.discountAmount > 0 ? (
           <>
             <div className="flex justify-between font-bold text-emerald-600 dark:text-emerald-400">
-              <span>کد تخفیف: {cart.generalDiscount.code}</span>
+              <span>کد تخفیف: {cart?.generalDiscount?.code}</span>
               <span>
-                {Number(cart.generalDiscount.discountAmount).toLocaleString(
+                {Number(cart?.generalDiscount?.discountAmount).toLocaleString(
                   "fa-IR"
                 )}{" "}
                 تومان
@@ -227,15 +231,15 @@ export default function OrderSummary({
                 مجموع تخفیف آیتم ها
               </span>
               <span className="font-bold">
-                {Math.round(cart?.totalDiscount)?.toLocaleString("fa-IR")} تومان
+                {Math.floor(cart?.totalDiscount)?.toLocaleString("fa-IR")} تومان
               </span>
             </div>
             <div className="text-xs text-gray-500 dark:text-gray-400 text-left mt-1">
-              {cart.generalDiscount.percent
-                ? `${Number(cart.generalDiscount.percent).toLocaleString(
+              {cart?.generalDiscount?.percent
+                ? `${Number(cart?.generalDiscount?.percent).toLocaleString(
                     "fa-IR"
                   )}% تخفیف روی کل سبد خرید`
-                : `${Number(cart.generalDiscount.amount).toLocaleString(
+                : `${Number(cart?.generalDiscount?.amount).toLocaleString(
                     "fa-IR"
                   )} تومان تخفیف ثابت`}
             </div>
@@ -246,7 +250,8 @@ export default function OrderSummary({
               مجموع تخفیف
             </span>
             <span className="font-bold">
-              {Math.round(cart?.totalDiscount)?.toLocaleString("fa-IR")} تومان
+              {Math.floor(cart?.paymentAmount ?? 0).toLocaleString("fa-IR")}{" "}
+              تومان
             </span>
           </div>
         )}
@@ -256,7 +261,7 @@ export default function OrderSummary({
         <div className="flex flex-col xl:flex-row justify-center md:justify-between items-center gap-3 mt-5 text-lg font-bold">
           <span>مبلغ قابل پرداخت</span>
           <span className="text-amber-700 dark:text-amber-300 ">
-            {cart?.paymentAmount?.toLocaleString("fa-IR")} تومان
+            {Math.floor(cart?.paymentAmount ?? 0).toLocaleString("fa-IR")} تومان
           </span>
         </div>
 

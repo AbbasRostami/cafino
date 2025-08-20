@@ -6,14 +6,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { confirm } from "@/components/common/ConfirmModal/ConfirmModal";
-import { useAddDiscount, useRemoveDiscount, useCart } from "@/store/cartStore";
+import { useAddDiscount, useCart } from "@/services/cart";
 import { useAddToCartButtonLogic } from "@/lib/AddToCartButton";
 import { useGetAddresses, usePaymentGateway } from "@/services";
 import { Address } from "@/types/Profile";
 import {
-  discountSchema,
+  discountSchemaCheckout,
   DiscountFormValues,
 } from "@/schemas/main/checkout";
+import { useRemoveDiscount } from "@/services";
 
 export const useCheckout = () => {
   const { cart } = useCart();
@@ -43,7 +44,7 @@ export const useCheckout = () => {
     reset,
     formState: { errors },
   } = useForm<DiscountFormValues>({
-    resolver: zodResolver(discountSchema),
+    resolver: zodResolver(discountSchemaCheckout),
   });
 
   const onSubmit = (data: DiscountFormValues) => {
@@ -51,7 +52,6 @@ export const useCheckout = () => {
       { code: data?.code },
       {
         onSuccess: () => {
-          toast.success("کد تخفیف اعمال شد");
           setIsDiscountApplied(true);
         },
       }
@@ -63,7 +63,6 @@ export const useCheckout = () => {
       { code: cart?.generalDiscount?.code },
       {
         onSuccess: () => {
-          toast.success("کد تخفیف حذف شد");
           setIsDiscountApplied(false);
           reset();
         },
@@ -93,40 +92,19 @@ export const useCheckout = () => {
   };
 
   const handleEditAddress = () => {
-    // This will be handled by the AddressSelector component
-    // to show the address selection again
     setSelectedAddressId(null);
   };
 
   const handleAddressAdded = () => {
-    // Refresh addresses and select the newly added one if it's the first
-    if (addressesData?.data && addressesData.data.length === 1) {
-      setSelectedAddressId(addressesData.data[0].id);
+    if (addressesData?.data && addressesData?.data?.length === 1) {
+      setSelectedAddressId(addressesData?.data[0].id);
     }
   };
 
-  // Complete order handler - redirect directly to payment gateway
-  // Complete order handler - redirect directly to payment gateway
   const handleCompleteOrder = async () => {
-    console.log("🛒 [Checkout] شروع فرآیند تکمیل سفارش...");
-
-    if (!selectedAddressId) {
-      toast.error("لطفاً ابتدا آدرس تحویل را انتخاب کنید");
-      console.warn("⚠️ [Checkout] آدرس انتخاب نشده است");
-      return;
-    }
-
-    if (!cart?.cartItems || cart.cartItems.length === 0) {
-      toast.error("سبد خرید شما خالی است");
-      console.warn("⚠️ [Checkout] سبد خرید خالی است");
-      return;
-    }
-
     try {
-      console.log("⏳ [Checkout] در حال ساخت درگاه پرداخت...");
       setIsCheckoutLoading(true);
 
-      // Create payment gateway data
       const paymentData = {
         addressId: selectedAddressId,
         description: `سفارش از کافی‌نو - مبلغ: ${cart.paymentAmount?.toLocaleString(
@@ -134,16 +112,11 @@ export const useCheckout = () => {
         )} تومان`,
       };
 
-      console.log("📦 [Checkout] دیتا برای ارسال به API:", paymentData);
-
       paymentGatewayMutation.mutate(paymentData, {
         onSuccess: (response: any) => {
-          console.log("✅ [Checkout] درگاه پرداخت ساخته شد:", response);
           toast.success("درگاه پرداخت با موفقیت ایجاد شد");
 
           if (response?.gatewayURL) {
-            console.log("🔗 [Checkout] آدرس درگاه:", response.gatewayURL);
-
             // Store order info in localStorage
             const orderInfo = {
               addressId: selectedAddressId,
@@ -151,37 +124,22 @@ export const useCheckout = () => {
               timestamp: new Date().toISOString(),
             };
             localStorage.setItem("pendingOrder", JSON.stringify(orderInfo));
-            console.log(
-              "💾 [Checkout] اطلاعات سفارش در localStorage ذخیره شد:",
-              orderInfo
-            );
-
             // Redirect to payment gateway
-            console.log("➡️ [Checkout] ریدایرکت کاربر به درگاه پرداخت...");
             window.location.href = response.gatewayURL;
           } else {
             toast.error("خطا در دریافت آدرس درگاه پرداخت");
-            console.error(
-              "❌ [Checkout] gatewayURL در پاسخ وجود ندارد:",
-              response
-            );
           }
         },
         onError: (error: any) => {
           toast.error("خطا در ایجاد درگاه پرداخت. لطفاً دوباره تلاش کنید");
-          console.error("❌ [Checkout] خطا در ساخت درگاه:", error);
         },
         onSettled: () => {
           setIsCheckoutLoading(false);
-          console.log(
-            "🔚 [Checkout] فرآیند ساخت درگاه (موفق یا ناموفق) به پایان رسید"
-          );
         },
       });
     } catch (error) {
       setIsCheckoutLoading(false);
       toast.error("خطا در تکمیل سفارش. لطفاً دوباره تلاش کنید");
-      console.error("💥 [Checkout] خطای غیرمنتظره:", error);
     }
   };
 

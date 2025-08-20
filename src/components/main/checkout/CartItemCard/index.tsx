@@ -9,12 +9,6 @@ import { MotionDiv } from "@/utils/MotionWrapper";
 export default function CartItemCard({ item }: CartItemCardProps) {
   return (
     <>
-      <div className="flex items-center gap-3 ">
-        <h3 className="text-lg font-bold text-gray-800 dark:text-white">
-          لیست سبد خرید
-        </h3>
-        <div className="flex-1 rounded-2xl h-0.5 bg-gradient-to-r from-amber-700 to-transparent"></div>
-      </div>
       <MotionDiv
         layout
         initial={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -69,7 +63,7 @@ export default function CartItemCard({ item }: CartItemCardProps) {
                     </span>
                     {item?.discount > 0 && (
                       <span className="text-gray-500 dark:text-gray-400 line-through">
-                        {Number(item.price).toLocaleString("fa-IR", {
+                        {Number(item?.price).toLocaleString("fa-IR", {
                           maximumFractionDigits: 0,
                         })}
                       </span>

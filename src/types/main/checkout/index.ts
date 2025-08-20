@@ -1,5 +1,10 @@
 import { CartApiResponse } from "@/store/cartStore";
 import { Address } from "@/types/Profile";
+import {
+  FieldErrors,
+  UseFormHandleSubmit,
+  UseFormRegister,
+} from "react-hook-form";
 
 // Cart Item Types
 export interface CartItem {
@@ -31,30 +36,14 @@ export interface CheckoutCartProps {
 }
 
 export interface CheckoutHeaderProps {
-  cart: CartApiResponse;
+  cart: CartApiResponse | null;
   onBackClick: () => void;
   onClearCart: () => void;
   clearLoading: boolean;
 }
 
-export interface CartItemCardProps {
-  item: CartItem;
-}
-
-export interface DiscountSectionProps {
-  cart: CartApiResponse;
-  onSubmit: (data: DiscountFormValues) => void;
-  onRemove: () => void;
-  isDiscountApplied: boolean;
-  addDiscountLoading: boolean;
-  removeDiscountLoading: boolean;
-  errors: any;
-  register: any;
-  handleSubmit: any;
-}
-
 export interface OrderSummaryProps {
-  cart: CartApiResponse;
+  cart: CartApiResponse | null;
   isMobile?: boolean;
   selectedAddress?: Address | null;
   isAddressSelected?: boolean;
@@ -74,4 +63,37 @@ export interface DiscountResponse {
 export interface RemoveDiscountResponse {
   success: boolean;
   message: string;
+}
+
+export interface DiscountSectionProps {
+  cart: CartApiResponse;
+  onSubmit: (data: DiscountFormValues) => void;
+  onRemove: () => void;
+  isDiscountApplied: boolean;
+  addDiscountLoading: boolean;
+  removeDiscountLoading: boolean;
+  errors: FieldErrors<DiscountFormValues>;
+  register: UseFormRegister<DiscountFormValues>;
+  handleSubmit: UseFormHandleSubmit<DiscountFormValues>;
+}
+
+// Address Section
+
+export interface SelectedAddressDisplayProps {
+  selectedAddress: Address | null;
+  onEditAddress: () => void;
+}
+
+export interface AddAddressModalProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onSuccess: () => void;
+}
+
+export interface AddressSelectorProps {
+  addresses: Address[] | undefined;
+  selectedAddressId: string | null;
+  onAddressSelect: (addressId: string) => void;
+  isLoading: boolean;
+  onAddressAdded?: () => void;
 }

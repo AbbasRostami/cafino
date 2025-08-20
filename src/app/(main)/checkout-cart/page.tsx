@@ -1,20 +1,12 @@
 "use client";
-import { CartApiResponse, useCart } from "@/store/cartStore";
-import CheckoutCart from "@/components/checkout/CheckoutCart";
+import { useCart } from "@/services/cart";
 import CheckoutSkeleton from "@/components/skeleton/main/checkout-cart";
+import CheckoutCart from "@/components/main/checkout/CheckoutCart";
 
 const CartPage = () => {
   const { cart, isCartLoading } = useCart();
-  console.log("cart: ", cart);
-
   return (
-    <>
-      {isCartLoading ? (
-        <CheckoutSkeleton />
-      ) : (
-        <CheckoutCart cart={cart as CartApiResponse} />
-      )}
-    </>
+    <>{isCartLoading ? <CheckoutSkeleton /> : <CheckoutCart cart={cart} />}</>
   );
 };
 

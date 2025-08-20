@@ -4,12 +4,12 @@ import { AnimatePresence } from "framer-motion";
 import { CheckoutCartProps } from "@/types/main/checkout";
 import { useCheckout } from "@/hooks/useCheckout";
 import {
-  CheckoutHeader,
-  CartItemCard,
-  DiscountSection,
-  OrderSummary,
-  EmptyCart,
   AddressSelector,
+  CartItemCard,
+  CheckoutHeader,
+  DiscountSection,
+  EmptyCart,
+  OrderSummary,
   SelectedAddressDisplay,
 } from "./index";
 
@@ -26,6 +26,7 @@ export default function CheckoutCart({ cart }: CheckoutCartProps) {
     handleBackClick,
     handleClearCartClick,
     clearLoading,
+
     // Address related
     addresses,
     addressesLoading,
@@ -34,6 +35,7 @@ export default function CheckoutCart({ cart }: CheckoutCartProps) {
     handleAddressSelect,
     handleEditAddress,
     handleAddressAdded,
+
     // Checkout related
     isCheckoutLoading,
     handleCompleteOrder,
@@ -49,7 +51,6 @@ export default function CheckoutCart({ cart }: CheckoutCartProps) {
       </div>
 
       <div className="container mx-auto px-2 md:px-8 lg:px-16">
-        {/* هدر صفحه */}
         <CheckoutHeader
           cart={cart}
           onBackClick={handleBackClick}
@@ -57,15 +58,12 @@ export default function CheckoutCart({ cart }: CheckoutCartProps) {
           clearLoading={clearLoading}
         />
 
-        {/* حالت سبد خالی */}
         {cart?.cartItems?.length === 0 ||
         cart?.cartItems?.length === undefined ? (
           <EmptyCart onBackToMenu={handleBackClick} />
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* بخش آیتم‌های سبد خرید */}
             <div className="lg:col-span-2 space-y-6">
-              {/* بخش انتخاب آدرس */}
               {selectedAddress ? (
                 <SelectedAddressDisplay
                   selectedAddress={selectedAddress}
@@ -82,12 +80,17 @@ export default function CheckoutCart({ cart }: CheckoutCartProps) {
               )}
 
               <AnimatePresence mode="popLayout">
+                <div className="flex items-center gap-3 ">
+                  <h3 className="text-lg font-bold text-gray-800 dark:text-white">
+                    لیست سبد خرید
+                  </h3>
+                  <div className="flex-1 rounded-2xl h-0.5 bg-gradient-to-r from-amber-700 to-transparent"></div>
+                </div>
                 {cart?.cartItems?.map((item: any) => (
                   <CartItemCard key={item?.itemId} item={item} />
                 ))}
               </AnimatePresence>
 
-              {/* بخش کد تخفیف */}
               <DiscountSection
                 cart={cart}
                 onSubmit={onSubmit}
@@ -101,7 +104,6 @@ export default function CheckoutCart({ cart }: CheckoutCartProps) {
               />
             </div>
 
-            {/* بخش خلاصه سفارش (دسکتاپ) */}
             <OrderSummary
               cart={cart}
               selectedAddress={selectedAddress}
@@ -112,7 +114,6 @@ export default function CheckoutCart({ cart }: CheckoutCartProps) {
           </div>
         )}
 
-        {/* بخش خلاصه سفارش (موبایل) */}
         {cart?.cartItems?.length && cart?.cartItems?.length > 0 && (
           <OrderSummary
             cart={cart}
