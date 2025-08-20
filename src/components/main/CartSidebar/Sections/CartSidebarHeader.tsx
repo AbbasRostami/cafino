@@ -19,7 +19,7 @@ export const CartSidebarHeader: React.FC<CartSidebarHeaderProps> = ({
           سبد خرید شما
         </h2>
       </div>
-      {cartData?.cartItems && cartData.cartItems.length > 0 && (
+      {cartData?.cartItems && cartData?.cartItems?.length > 0 && (
         <Button
           variant="outline"
           size="sm"

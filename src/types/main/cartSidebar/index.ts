@@ -2,15 +2,15 @@ export interface CartItemData {
   itemId: string;
   title: string;
   description: string;
-  count: number;
+  count: number; // این همون تعداده (نه quantity)
   images: string[];
-  price: string;
-  discount: string;
-  finalPrice: number;
+  price: number; // عددیه
+  discount: number; // درصد یا مبلغ تخفیف، عددیه
+  finalPrice: number; // گاهی اعشاری هم داره → number
   category: {
     title: string;
   };
-  quantity?: number;
+  quantity: any;
   isFav?: boolean;
 }
 
@@ -19,7 +19,10 @@ export interface CartApiResponse {
   totalDiscount: number;
   paymentAmount: number;
   cartItems: CartItemData[];
-  generalDiscount?: any;
+  generalDiscount?: {
+    title: string;
+    amount: number;
+  };
   statusCode?: number;
 }
 

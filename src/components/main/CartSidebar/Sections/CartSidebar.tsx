@@ -9,11 +9,10 @@ import {
   CartSidebarItems,
   CartSidebarTrigger,
 } from "..";
-import { CartSidebarProps } from "@/types";
 import { useAddToCartButtonLogic } from "@/lib/AddToCartButton";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
-const CartSidebar: React.FC<CartSidebarProps> = () => {
+const CartSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const cartLogic = useAddToCartButtonLogic({
