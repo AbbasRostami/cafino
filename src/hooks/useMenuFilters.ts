@@ -1,10 +1,9 @@
-// hooks/useMenuFilters.ts
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState, useEffect } from "react";
 import { useDebounce } from "use-debounce";
 
 const DEFAULT_MIN = 0;
-const DEFAULT_MAX = 200000;
+const DEFAULT_MAX = 10000000;
 
 interface UseMenuFiltersProps {
   initialViewMode?: "grid" | "list";
@@ -16,14 +15,12 @@ export const useMenuFilters = ({
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // View mode state
   const [viewMode, setViewMode] = useState<"grid" | "list">(initialViewMode);
 
-  // Search state with debounce
-  const [input, setInput] = useState("");
+  const initialSearch = decodeURIComponent(searchParams.get("search") || "");
+  const [input, setInput] = useState(initialSearch);
   const [debouncedInput] = useDebounce(input, 500);
 
-  // استخراج پارامترهای فیلتر از URL
   const filters = useMemo(
     () => ({
       categoryId: searchParams.get("categoryId") || null,
@@ -40,24 +37,30 @@ export const useMenuFilters = ({
 
   useEffect(() => {
     const currentSearch = searchParams.get("search") || "";
-    const isSearchChanged =
-      decodeURIComponent(currentSearch) !== debouncedInput;
+    const decodedCurrentSearch = decodeURIComponent(currentSearch);
 
-    if (!isSearchChanged) return;
+    if (debouncedInput.trim() !== decodedCurrentSearch.trim()) {
+      const params = new URLSearchParams(searchParams.toString());
+      if (debouncedInput.trim() === "") {
+        params.delete("search");
+      } else {
+        params.set("search", debouncedInput.trim());
+      }
+      params.set("page", "1");
 
-    const params = new URLSearchParams(searchParams.toString());
-
-    if (debouncedInput.trim() === "") {
-      params.delete("search");
-    } else {
-      params.set("search", debouncedInput);
+      router.push(`?${params.toString()}`);
     }
+  }, [debouncedInput, router]);
 
-    params.set("page", "1");
-    router.push(`?${params.toString()}`);
-  }, [debouncedInput, searchParams, router]);
+  useEffect(() => {
+    const currentSearch = searchParams.get("search") || "";
+    const decodedCurrentSearch = decodeURIComponent(currentSearch);
 
-  // Sort handling
+    if (decodedCurrentSearch !== input) {
+      setInput(decodedCurrentSearch);
+    }
+  }, [searchParams]);
+
   const handleSortChange = (value: string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("sortBy", value);
@@ -65,12 +68,10 @@ export const useMenuFilters = ({
     router.push(`?${params.toString()}`);
   };
 
-  // View mode handling
   const handleViewModeChange = (mode: "grid" | "list") => {
     setViewMode(mode);
   };
 
-  // Pagination handling
   const goToPage = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", String(page));
@@ -80,7 +81,6 @@ export const useMenuFilters = ({
     }
   };
 
-  // به‌روزرسانی یک فیلتر
   const updateFilter = useCallback(
     (updates: Record<string, string | number | boolean | null>) => {
       const params = new URLSearchParams(searchParams.toString());
@@ -105,14 +105,21 @@ export const useMenuFilters = ({
     [searchParams, router]
   );
 
-  // بازنشانی همه فیلترها
   const resetFilters = useCallback(() => {
-    setInput(""); // این خط اضافه شه تا state سرچ پاک شه
+    setInput("");
     const params = new URLSearchParams();
     params.set("page", "1");
     params.set("limit", "6");
     router.push(`?${params.toString()}`);
   }, [router]);
+
+  const handleMinPriceInputChange = useCallback((value: number) => {
+    return value;
+  }, []);
+
+  const handleMaxPriceInputChange = useCallback((value: number) => {
+    return value;
+  }, []);
 
   return {
     DEFAULT_MIN,
@@ -130,7 +137,6 @@ export const useMenuFilters = ({
         filters.maxPrice !== DEFAULT_MAX ||
         filters.availableOnly
     ),
-    // Additional menu functionality
     viewMode,
     search: filters.search,
     selectedSortBy: filters.sortBy,
@@ -140,5 +146,7 @@ export const useMenuFilters = ({
     handleViewModeChange,
     goToPage,
     clearFilters: resetFilters,
+    handleMinPriceInputChange,
+    handleMaxPriceInputChange,
   };
 };
