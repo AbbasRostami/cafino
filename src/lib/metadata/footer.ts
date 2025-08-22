@@ -1,0 +1,35 @@
+export const footerStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  name: "کافینو",
+  alternateName: "Cafino",
+  description: "برند متفاوت در دنیای کافه و رستوران با کیفیت، طعم و طراحی مدرن",
+  url: "https://cafinoo.vercel.app",
+  telephone: "+98-21-12345678",
+  email: "info@cafino.ir",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "خیابان ولیعصر، پلاک ۱۲۳",
+    addressLocality: "تهران",
+    addressCountry: "IR",
+    postalCode: "12345",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 35.6892,
+    longitude: 51.389,
+  },
+  openingHours: ["Mo-Su 09:00-18:00", "Tu 10:00-17:00", "Th-Fr 09:00-17:00"],
+
+  servesCuisine: ["کافه", "رستوران", "فست فود"],
+  priceRange: "$$",
+  acceptsReservations: true,
+  hasMenu: "https://cafinoo.vercel.app/menu",
+  sameAs: [
+    "https://facebook.com/cafino",
+    "https://instagram.com/cafino",
+    "https://twitter.com/cafino",
+    "https://youtube.com/cafino",
+    "https://t.me/cafino",
+  ],
+};

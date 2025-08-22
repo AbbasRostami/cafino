@@ -40,6 +40,8 @@ const Navbar = () => {
   const [openMobileLoginDialog, setOpenMobileLoginDialog] = useState(false);
   const { data: userProfile } = useUserProfile();
   const user = userProfile;
+  console.log(user);
+
   return (
     <div className="bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 dark:from-[#18181c] dark:via-[#23232a] dark:to-[#18181c]">
       <nav className="fixed top-6 inset-x-4 h-16 bg-white/80 dark:bg-[#23232a]/80 backdrop-blur-sm border border-white/20 dark:border-[#23232a]/60 max-w-screen-xl mx-auto rounded-full shadow-lg z-50">
@@ -79,11 +81,18 @@ const Navbar = () => {
               منو
             </Link>
             <Link
-              href="#"
+              href="/about-us"
               className="flex items-center gap-2 hover:text-primary transition-colors"
             >
               <Users className="w-4 h-4" />
               درباره ما
+            </Link>
+            <Link
+              href="/contact-us"
+              className="flex items-center gap-2 hover:text-primary transition-colors"
+            >
+              <Users className="w-4 h-4" />
+              ارتباط با ما
             </Link>
           </div>
 
