@@ -1,9 +1,14 @@
+"use client";
+
+import { useState } from "react";
 import { gallerySectionStructuredData } from "@/lib/metadata/gallerySection";
 import GalleryMainSection from "./GalleryMainSection";
 import GalleryTextSection from "./GalleryTextSection";
 import GalleryImagesSection from "./GalleryImagesSection";
 
 const GallerySection = () => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
   return (
     <>
       {/* SEO Structured Data */}
@@ -19,9 +24,14 @@ const GallerySection = () => {
           <GalleryMainSection />
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <GalleryTextSection />
-
-            <GalleryImagesSection />
+            <GalleryTextSection
+              hoveredIndex={hoveredIndex}
+              setHoveredIndex={setHoveredIndex}
+            />
+            <GalleryImagesSection
+              hoveredIndex={hoveredIndex}
+              setHoveredIndex={setHoveredIndex}
+            />
           </div>
         </div>
       </div>

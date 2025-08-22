@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
 import { Coffee, ChefHat, Camera, MapPin } from "lucide-react";
 import { MotionDiv, MotionP, MotionSpan } from "@/utils/MotionWrapper";
 
-const GalleryTextSection = () => {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
+const GalleryTextSection = ({
+  hoveredIndex,
+  setHoveredIndex,
+}: {
+  hoveredIndex: number | null;
+  setHoveredIndex: (index: number | null) => void;
+}) => {
   const galleryItems = [
     {
       id: 1,
@@ -128,6 +131,8 @@ const GalleryTextSection = () => {
               }}
               whileHover={{ y: -8, scale: 1.02 }}
               className="flex flex-col p-5 rounded-2xl bg-gradient-to-br from-amber-50/80 to-orange-50/60 dark:from-gray-800/90 dark:to-amber-900/20 hover:from-amber-100/90 hover:to-orange-100/70 dark:hover:from-amber-800/40 dark:hover:to-orange-800/20 transition-all duration-500 cursor-pointer group border border-amber-200/40 dark:border-amber-700/30 shadow-md hover:shadow-lg"
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
             >
               <div className="flex items-center gap-4 mb-4">
                 <MotionDiv

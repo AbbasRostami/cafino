@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { Coffee, ChefHat, Camera, MapPin } from "lucide-react";
 import Gallery1 from "./../../../../assets/Gallery/Gallery1.avif";
 import Gallery2 from "./../../../../assets/Gallery/Gallery2.avif";
@@ -9,8 +9,13 @@ import Gallery4 from "./../../../../assets/Gallery/Gallery4.avif";
 import Image from "next/image";
 import { MotionDiv, MotionP } from "@/utils/MotionWrapper";
 
-const GalleryImagesSection = () => {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+const GalleryImagesSection = ({
+  hoveredIndex,
+  setHoveredIndex,
+}: {
+  hoveredIndex: number | null;
+  setHoveredIndex: (index: number | null) => void;
+}) => {
   const containerRef = useRef(null);
 
   const galleryItems = [
@@ -20,7 +25,7 @@ const GalleryImagesSection = () => {
       description: "فضای آرامش‌بخش با طراحی مدرن و دکوراسیون چشم‌نواز",
       category: "interior",
       icon: <MapPin className="w-5 h-5" />,
-      image: Gallery4,
+      image: Gallery2,
     },
     {
       id: 2,
@@ -36,7 +41,7 @@ const GalleryImagesSection = () => {
       description: "صبحانه‌های متنوع و سالم با مواد اولیه تازه",
       category: "menu",
       icon: <ChefHat className="w-5 h-5" />,
-      image: Gallery2,
+      image: Gallery4,
     },
     {
       id: 4,
