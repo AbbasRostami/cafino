@@ -19,16 +19,16 @@ const FooterBrand = () => {
           alt="کافینو - لوگو روشن | کافه و رستوران مدرن"
           className="block dark:hidden object-contain relative z-10"
           width={300}
-          height={300}
           priority
+          style={{ height: "auto" }}
         />
         <Image
           src={CafeinLogoDark}
           alt="کافینو - لوگو تیره | کافه و رستوران مدرن"
           className="hidden dark:block object-contain relative z-10"
           width={300}
-          height={300}
           priority
+          style={{ height: "auto" }}
         />
       </MotionDiv>
 

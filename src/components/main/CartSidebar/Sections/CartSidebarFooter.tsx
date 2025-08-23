@@ -20,33 +20,35 @@ export const CartSidebarFooter: React.FC<CartSidebarFooterProps> = ({
       <div className="space-y-4">
         <div className="space-y-2">
           <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600 dark:text-gray-200">
+            <span className="text-sm text-gray-600 dark:text-gray-300">
               مجموع قیمت:
             </span>
-            <span className="font-bold text-xl text-gray-600 dark:text-gray-200">
+            <span className="font-bold text-xl text-gray-800 dark:text-gray-100">
               {Math.floor(cartData.totalAmount).toLocaleString("fa-IR")}{" "}
-              <span className="text-sm text-gray-600 dark:text-gray-400">
+              <span className="text-sm text-gray-500 dark:text-gray-400">
                 تومان
               </span>
             </span>
           </div>
+
           <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600 dark:text-gray-200">
+            <span className="text-sm text-gray-600 dark:text-gray-300">
               مجموع پرداختی:
             </span>
-            <span className="font-bold text-xl bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
+            <span className="font-bold text-xl text-amber-600 dark:text-amber-400">
               {Math.floor(cartData.paymentAmount).toLocaleString("fa-IR")}{" "}
               <span className="text-sm text-amber-600 dark:text-amber-400">
                 تومان
               </span>
             </span>
           </div>
+
           {cartData.totalDiscount > 0 && (
             <div className="flex justify-between items-center text-sm">
               <span className="text-green-600 dark:text-green-400 font-medium">
                 تخفیف:
               </span>
-              <span className="text-green-600 dark:text-green-400 font-bold">
+              <span className="font-bold text-green-700 dark:text-green-300">
                 {Math.floor(cartData.totalDiscount).toLocaleString("fa-IR")}{" "}
                 <span className="text-sm text-green-600 dark:text-green-400">
                   تومان
@@ -55,6 +57,7 @@ export const CartSidebarFooter: React.FC<CartSidebarFooterProps> = ({
             </div>
           )}
         </div>
+
         {isAuthenticated ? (
           <Link href="/checkout-cart">
             <Button

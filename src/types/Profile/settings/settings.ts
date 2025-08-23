@@ -1,4 +1,3 @@
-
 export interface User {
   id?: string;
   username?: string;
@@ -18,8 +17,10 @@ export interface User {
 }
 
 export interface UserResponse {
-  data: User;
-  statusCode: number;
+  data: {
+    user: User;
+    statusCode: number;
+  };
 }
 
 export interface UpdateProfileRequest {

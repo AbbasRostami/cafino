@@ -6,7 +6,7 @@ import CartItemControls from "@/lib/CartItemControls";
 
 export const CartItemCard: React.FC<CartItemCardProps> = ({ item }) => {
   return (
-    <div className="group relative bg-white/60 dark:bg-neutral-900/70 rounded-xl overflow-hidden border border-gray-100 dark:border-neutral-800 shadow-lg transition-all duration-300">
+    <div className="group relative bg-white/60 dark:bg-neutral-900/70 rounded-xl overflow-hidden  border border-gray-100 dark:border-neutral-800 shadow-lg transition-all duration-300">
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 to-orange-500"></div>
 
       <div className="p-4">

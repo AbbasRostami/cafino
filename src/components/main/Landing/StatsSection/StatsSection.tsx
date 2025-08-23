@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Logo from "./../../../../assets/Stattis.webp";
 import Image from "next/image";
 import { useInView, useMotionValue, animate } from "framer-motion";
@@ -39,11 +39,11 @@ const StatItem = ({
   subtitle?: string;
 }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+  const isInView = useInView(ref, { once: false });
   const motionValue = useMotionValue(0);
-  const [displayValue, setDisplayValue] = React.useState("۰");
+  const [displayValue, setDisplayValue] = useState("۰");
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isInView) {
       const controls = animate(motionValue, value, {
         duration: 2,

@@ -10,7 +10,14 @@ import {
   CartSidebarTrigger,
 } from "..";
 import { useAddToCartButtonLogic } from "@/lib/AddToCartButton";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { DialogDescription } from "@/components/ui/dialog";
 
 const CartSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,15 +66,22 @@ const CartSidebar = () => {
       </SheetTrigger>
       <SheetContent
         side="right"
-        className="w-[300px] sm:w-[400px] flex flex-col bg-white dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 border-l border-gray-200 dark:border-neutral-700 "
+        className="w-[300px] sm:w-[400px] flex flex-col bg-white dark:bg-gray-900 border-l border-gray-200 dark:border-neutral-700 "
       >
+        <VisuallyHidden>
+          <SheetTitle>سبد خرید</SheetTitle>
+          <DialogDescription>
+            اینجا توضیح کوتاه در مورد دیالوگ یا Sheet
+          </DialogDescription>
+        </VisuallyHidden>
+
         <CartSidebarHeader
           cartData={cartData}
           onClearCart={handleClearCartAndClose}
           isClearLoading={false}
         />
 
-        <div className="flex-1 overflow-y-auto p-6 ">
+        <div className="flex-1 overflow-y-auto p-6 scrollbar-hide">
           <CartSidebarItems cartData={cartData} isCartLoading={isCartLoading} />
         </div>
 
