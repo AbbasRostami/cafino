@@ -5,6 +5,7 @@ import ContactInfo from "../../main/Footer/ContactInfo";
 import FooterBottom from "../../main/Footer/FooterBottom";
 import FooterBackground from "../../main/Footer/FooterBackground";
 import { footerStructuredData } from "@/lib/metadata/footer";
+import Script from "next/script";
 
 const footerData = {
   workingHours: [
@@ -54,7 +55,7 @@ const Footer = () => {
     <footer className="relative overflow-hidden bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 dark:from-[#0a0a0a] dark:via-[#1a1a1a] dark:to-[#0a0a0a]">
       <FooterBackground />
 
-      <script
+      <Script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(footerStructuredData),

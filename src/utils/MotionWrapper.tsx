@@ -44,3 +44,4 @@ export const MotionAside = createMotion(motion.aside);
 export const MotionMain = createMotion(motion.main);
 export const MotionFooter = createMotion(motion.footer);
 export const MotionNav = createMotion(motion.nav);
+export const MotionA = createMotion(motion.a);
