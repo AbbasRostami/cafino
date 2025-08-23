@@ -16,8 +16,8 @@ export const SkeletonItemSection = () => {
           <Skeleton className="h-6 w-12 rounded-full" />
         </div>
 
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-4 w-[80%]" />
+        <Skeleton className="h-4 w-full bg-gray-200 dark:bg-gray-800" />
+        <Skeleton className="h-4 w-[80%] bg-gray-200 dark:bg-gray-800" />
 
         <div className="flex gap-2 mt-2">
           <Skeleton className="h-6 w-16 rounded-full bg-gray-200 dark:bg-gray-800" />

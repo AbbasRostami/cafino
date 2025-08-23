@@ -1,4 +1,4 @@
-export interface Item {
+export type Item = {
   id: string;
   title: string;
   ingredients: string[];
@@ -9,19 +9,20 @@ export interface Item {
   rate: number;
   rate_count: number;
   createdAt: string | Date;
-  category: {
-    title: string;
-  };
-  images: {
-    image: string;
-    imageUrl: string;
-  }[];
+  category: Record<"title", string>;
+  images: Record<"id" | "image" | "imageUrl", string>[];
   isFav: boolean;
-}
+};
 
-export interface ItemResponse {
-  data: Item[];
-  total?: number;
-  page?: number;
-  limit?: number;
+export type ItemResponse = {
+  data: {
+    items: Item[];
+    total?: number;
+    page?: number;
+    limit?: number;
+  };
+};
+
+export interface ItemSectionClientProps {
+  items: Item[];
 }
