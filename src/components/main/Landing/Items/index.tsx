@@ -68,14 +68,17 @@ export default function ItemSection() {
         id="items-section-structured-data"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(itemsStructuredData),
+          __html: JSON.stringify(itemsStructuredData).replace(/</g, "\u003c"),
         }}
       />
       <Script
         id="restaurant-structured-data"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(restaurantStructuredData),
+          __html: JSON.stringify(restaurantStructuredData).replace(
+            /</g,
+            "\u003c"
+          ),
         }}
       />
       <ItemSectionClient items={items} />

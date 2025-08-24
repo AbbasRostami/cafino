@@ -106,7 +106,6 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
                   viewport={{ once: false, amount: 0.2 }}
                 >
                   <div className="relative rounded-t-2xl aspect-[4/3] w-full overflow-hidden">
-                    {/* تصویر محصول */}
                     <div className="relative rounded-t-2xl aspect-[4/3] w-full overflow-hidden group">
                       <Swiper
                         modules={[Pagination, EffectFade]}
@@ -123,7 +122,7 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
                               `;
                           },
                         }}
-                        loop
+                        loop={item?.images?.length > 1}
                         className="h-full w-full"
                       >
                         {item?.images?.length > 0 ? (
@@ -150,7 +149,6 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
                           </SwiperSlide>
                         )}
                       </Swiper>
-                      {/* دکمه علاقه‌مندی */}
                       <FavoriteToggleButton
                         itemId={item?.id}
                         isFavorite={isFavorite}
@@ -162,7 +160,6 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
                         }`}
                       />
 
-                      {/* برچسب تخفیف */}
                       {discount > 0 && (
                         <div className="absolute top-4 right-4 bg-gradient-to-tr from-red-500 to-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-20">
                           {Math.round(discount)}% تخفیف
@@ -181,7 +178,6 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
                       }`}
                     />
 
-                    {/* برچسب تخفیف */}
                     {discount > 0 && (
                       <div className="absolute top-4 right-4 bg-gradient-to-tr from-red-500 to-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-20">
                         {Math.round(discount)}% تخفیف
@@ -200,7 +196,6 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
                         </span>
                       </div>
 
-                      {/* امتیاز */}
                       <div className="flex items-center gap-1 bg-amber-100 dark:bg-amber-900/30 px-2 py-1 rounded-full">
                         <Star className="text-yellow-400 fill-current" />
                         <span className="text-xs font-medium text-amber-800 dark:text-amber-200">
@@ -226,7 +221,6 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
                       </Tooltip>
                     </TooltipProvider>
 
-                    {/* مواد تشکیل دهنده */}
                     <div className="flex flex-wrap items-center gap-1 mt-1 min-h-[50px] max-h-[50px]">
                       {item?.ingredients
                         ?.slice(0, 2)
@@ -238,25 +232,27 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
                             {ingredient}
                           </span>
                         ))}
-                      {item?.ingredients && item.ingredients.length > 2 && (
+                      {item?.ingredients && item?.ingredients?.length > 2 && (
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger asChild>
                               <span className="text-xs bg-amber-100 dark:bg-amber-900/20 text-amber-800 dark:text-amber-200 px-2 py-1 rounded-full cursor-help">
-                                +{item.ingredients.length - 2} بیشتر
+                                +{item?.ingredients?.length - 2} بیشتر
                               </span>
                             </TooltipTrigger>
                             <TooltipContent side="top" className="max-w-xs">
                               <div className="space-y-2">
                                 <div className="flex flex-wrap gap-1">
-                                  {item.ingredients.map((ingredient, index) => (
-                                    <span
-                                      key={index}
-                                      className="text-xs rounded-full"
-                                    >
-                                      {ingredient + "،"}
-                                    </span>
-                                  ))}
+                                  {item?.ingredients?.map(
+                                    (ingredient, index) => (
+                                      <span
+                                        key={index}
+                                        className="text-xs rounded-full"
+                                      >
+                                        {ingredient + "،"}
+                                      </span>
+                                    )
+                                  )}
                                 </div>
                               </div>
                             </TooltipContent>
@@ -265,7 +261,6 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
                       )}
                     </div>
 
-                    {/* موجودی */}
                     <div className="mt-2">
                       <div className="relative flex items-center">
                         <div className="flex-1">
@@ -275,11 +270,11 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
                             </span>
                             <span
                               className={`font-bold ${
-                                stockStatus.isOutOfStock
+                                stockStatus?.isOutOfStock
                                   ? "text-red-500"
-                                  : stockStatus.isLowStock
+                                  : stockStatus?.isLowStock
                                   ? "text-amber-500"
-                                  : stockStatus.isMediumStock
+                                  : stockStatus?.isMediumStock
                                   ? "text-yellow-500"
                                   : "text-green-500"
                               }`}
@@ -292,22 +287,20 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
                             <div
                               className={`absolute top-0 left-0 h-2 rounded-full ${stockStatus.progressColor}`}
                               style={{
-                                width: stockStatus.progressWidth,
+                                width: stockStatus?.progressWidth,
                               }}
                             ></div>
                           </div>
                         </div>
                       </div>
 
-                      {/* پیام وضعیت موجودی */}
                       <div
                         className={`mt-2 hidden sm:block text-xs px-3 py-1.5 rounded-full text-center ${stockStatus.stockColor}`}
                       >
-                        <span>{stockStatus.stockMessage}</span>
+                        <span>{stockStatus?.stockMessage}</span>
                       </div>
                     </div>
 
-                    {/* قیمت و دکمه‌ها */}
                     <div className="mt-2 flex flex-col  justify-between items-center gap-2">
                       <div className="flex sm:flex-col xl:flex-row items-center justify-between gap-3 md:gap-1 min-h-[44px]">
                         <span className="text-lg font-bold text-amber-600 dark:text-amber-400">
