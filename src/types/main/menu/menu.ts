@@ -37,7 +37,7 @@ export interface Category {
   show: boolean;
 }
 
-export interface CategoryResponse {
+export interface CategoryResponseMenu {
   data: Category[];
   totalCount: number;
 }

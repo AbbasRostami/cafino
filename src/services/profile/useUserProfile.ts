@@ -12,5 +12,5 @@ export const useUserProfile = () => {
     queryKey: ["user-profile"],
     enabled: isAuthenticated,
   });
-  return { data: user?.data, isLoading, error };
+  return { data: user?.data?.user, isLoading, error };
 };

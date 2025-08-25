@@ -27,7 +27,7 @@ import "swiper/css/effect-fade";
 
 const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
   return (
-    <section className="container mx-auto px-2 py-12 pb-16" dir="rtl">
+    <>
       <div className="max-w-4xl mx-auto text-center mb-8">
         <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 relative inline-block">
           <span className="bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent dark:from-amber-400 dark:to-orange-500 relative z-10">
@@ -340,7 +340,7 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
           />
         </button>
       </Link>
-    </section>
+    </>
   );
 };
 

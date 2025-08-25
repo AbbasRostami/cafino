@@ -1,2 +1,2 @@
-// Landing types
-export * from "./landing";
+export * from "./Category";
+export * from "./itemsSection";

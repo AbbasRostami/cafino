@@ -1,8 +1,8 @@
 import { useGet } from "@/hooks/useReactQueryHooks";
-import { CategoryResponse } from "@/types/main/menu/menu";
+import { CategoryResponseMenu } from "@/types/main/menu/menu";
 
 export const useGetCategories = () => {
-  return useGet<CategoryResponse>("/v1/category", {
+  return useGet<CategoryResponseMenu>("/v1/category", {
     queryKey: ["categories"],
     staleTime: 0,
   });
