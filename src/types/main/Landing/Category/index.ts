@@ -1,4 +1,4 @@
-export interface Category {
+export interface Categorys {
   id: string;
   title: string;
   slug: string;
@@ -6,8 +6,11 @@ export interface Category {
   imageUrl: string;
   show: boolean;
 }
+
 export interface CategorySectionClientProps {
-  items: Category[];
-  itemsPerSlide?: number;
-  onItemClick?: (item: Category, index: number) => void;
+  categories: Categorys[];
+}
+
+export interface CategoryResponse {
+  categories: Categorys[];
 }
