@@ -1,12 +1,5 @@
 import { create } from "zustand";
-import {
-  usePost,
-  useDelete,
-  usePatch,
-  useGet,
-} from "@/hooks/useReactQueryHooks";
 import { useAuthStore } from "@/store/authStore";
-import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export interface CartItem {
@@ -87,7 +80,6 @@ export const useCartStore = create<CartState>((set, get) => ({
   cart: getLocalCart(),
 
   addToCart: async (item) => {
-    // مهمان: کار با localStorage
     const prev = getLocalCart();
     const existing = prev.cartItems.find((i) => i.itemId === item.itemId);
     let newCartItems;
@@ -131,7 +123,6 @@ export const useCartStore = create<CartState>((set, get) => ({
     const isAuthenticated = useAuthStore.getState().isAuthenticated;
 
     if (isAuthenticated) {
-      // برای کاربران لاگین شده، عملیات در کامپوننت یا هوک API انجام می‌شود
       return;
     }
 
@@ -176,7 +167,6 @@ export const useCartStore = create<CartState>((set, get) => ({
     const isAuthenticated = useAuthStore.getState().isAuthenticated;
 
     if (isAuthenticated) {
-      // برای کاربران لاگین شده، عملیات در کامپوننت یا هوک API انجام می‌شود
       return;
     }
 
@@ -211,7 +201,6 @@ export const useCartStore = create<CartState>((set, get) => ({
     const isAuthenticated = useAuthStore.getState().isAuthenticated;
 
     if (isAuthenticated) {
-      // برای کاربران لاگین شده، عملیات در کامپوننت یا هوک API انجام می‌شود
       return;
     }
 
@@ -244,7 +233,6 @@ export const useCartStore = create<CartState>((set, get) => ({
     const isAuthenticated = useAuthStore.getState().isAuthenticated;
 
     if (isAuthenticated) {
-      // برای کاربران لاگین شده، عملیات در کامپوننت یا هوک API انجام می‌شود
       return;
     }
 
@@ -258,12 +246,8 @@ export const useCartStore = create<CartState>((set, get) => ({
     const isAuthenticated = useAuthStore.getState().isAuthenticated;
 
     if (isAuthenticated) {
-      // اگر لاگین است، از سرور داده بگیر
-      // این عملیات در useCart hook انجام می‌شود
       return;
     }
-
-    // برای مهمان‌ها، از localStorage بخوان
     const localCart = getLocalCart();
     if (JSON.stringify(get().cart) !== JSON.stringify(localCart)) {
       set({ cart: localCart });
@@ -272,202 +256,16 @@ export const useCartStore = create<CartState>((set, get) => ({
 
   getCartItemCount: (itemId: string) => {
     const isAuthenticated = useAuthStore.getState().isAuthenticated;
-
     if (isAuthenticated) {
-      // برای کاربران لاگین شده، از سرور بخوان
-      // این عملیات در useCart hook انجام می‌شود
       return 0;
     }
-
-    // برای مهمان‌ها، از localStorage بخوان
     const localCart = getLocalCart();
     const item = localCart.cartItems.find((i) => i.itemId === itemId);
     return item?.count || 0;
   },
 }));
 
-// React Query Hooks for mutations (for authenticated users only)
-export const useCart = () => {
-  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-  const {
-    data: cart,
-    isLoading: isCartLoading,
-    refetch,
-    error: cartError,
-  } = useGet<any>("/v1/cart", {
-    queryKey: ["/v1/cart"],
-    staleTime: 0,
-    enabled: isAuthenticated,
-  });
-
-  return { cart, isCartLoading, refetch, cartError, isAuthenticated };
-};
-
-export const useAddToCart = () => {
-  const queryClient = useQueryClient();
-  const { mutate, isPending, error } = usePost<any, { itemId: string }>(
-    () => "/v1/cart/add",
-    undefined,
-    {
-      onSuccess: () => {
-        toast.success("محصول با موفقیت به سبد خرید اضافه شد");
-        queryClient.invalidateQueries({ queryKey: ["/v1/cart"] });
-        queryClient.refetchQueries({ queryKey: ["/v1/cart"] });
-      },
-      onError: (error) => {
-        const errorMessage = error?.message;
-        if (errorMessage === "item is already in your cart") {
-          toast.error("محصول قبلاً در سبد خرید شما وجود دارد");
-        } else {
-          toast.error("خطا در اضافه کردن محصول به سبد خرید");
-        }
-      },
-    }
-  );
-  return { mutate, isPending, error };
-};
-
-export const useIncItem = () => {
-  const queryClient = useQueryClient();
-  const { mutate, isPending, error } = usePatch<any, { itemId: string }>(
-    "/v1/cart/inc-item",
-    undefined,
-    {
-      onSuccess: () => {
-        toast.success("تعداد محصول با موفقیت افزایش یافت");
-        queryClient.invalidateQueries({ queryKey: ["/v1/cart"] });
-      },
-      onError: (error: any) => {
-        if (error?.response?.data?.available_qunatity) {
-          toast.error(
-            `موجودی فعلی این محصول: ${error?.response?.data?.available_qunatity} عدد است.`
-          );
-        } else {
-          toast.error("خطا در افزایش تعداد محصول");
-        }
-      },
-    }
-  );
-  return { mutate, isPending, error };
-};
-
-export const useDecItem = () => {
-  const queryClient = useQueryClient();
-  const { mutate, isPending, error } = usePatch<any, { itemId: string }>(
-    "/v1/cart/dec-item",
-    undefined,
-    {
-      onSuccess: () => {
-        toast.success("تعداد محصول با موفقیت کاهش یافت");
-        queryClient.invalidateQueries({ queryKey: ["/v1/cart"] });
-        queryClient.refetchQueries({ queryKey: ["/v1/cart"] });
-      },
-      onError: (error) => {
-        toast.error("خطا در کاهش تعداد محصول");
-      },
-    }
-  );
-
-  return { mutate, isPending, error };
-};
-
-export const useRemoveItem = () => {
-  const queryClient = useQueryClient();
-  const { mutate, isPending, error } = useDelete<any, { itemId: string }>(
-    () => "/v1/cart/remove",
-    {
-      onSuccess: () => {
-        toast.success("محصول با موفقیت از سبد خرید حذف شد");
-        queryClient.invalidateQueries({ queryKey: ["/v1/cart"] });
-        queryClient.refetchQueries({ queryKey: ["/v1/cart"] });
-      },
-
-      onError: (error) => {
-        toast.error("خطا در حذف محصول");
-      },
-    }
-  );
-  return { mutate, isPending, error };
-};
-
-export const useClearCart = () => {
-  const queryClient = useQueryClient();
-  const { mutate, isPending, error } = useDelete<any, void>(() => "/v1/cart", {
-    onSuccess: () => {
-      toast.success("سبد خرید با موفقیت پاک شد");
-      queryClient.invalidateQueries({ queryKey: ["/v1/cart"] });
-      queryClient.refetchQueries({ queryKey: ["/v1/cart"] });
-    },
-
-    onError: (error) => {
-      toast.error("خطا در پاک کردن سبد خرید");
-    },
-  });
-  return { mutate, isPending, error };
-};
-
-export const useAddDiscount = () => {
-  const queryClient = useQueryClient();
-  const { mutate, isPending, error } = usePost<{ code: string }>(
-    () => "/v1/cart/add-discount",
-    undefined,
-    {
-      onSuccess: () => {
-        toast.success("کد تخفیف با موفقیت اضافه شد");
-        queryClient.invalidateQueries({ queryKey: ["/v1/cart"] });
-        queryClient.refetchQueries({ queryKey: ["/v1/cart"] });
-      },
-
-      onError: (error: any) => {
-        const errorMessage = error?.message;
-
-        if (errorMessage === "Already Used Discount") {
-          toast.error("شما قبلاً از این کد تخفیف استفاده کرده‌اید");
-        } else {
-          toast.error("خطا در اضافه کردن کد تخفیف");
-        }
-      },
-    }
-  );
-  return { mutate, isPending, error };
-};
-
-export const useRemoveDiscount = () => {
-  const queryClient = useQueryClient();
-  const { mutate, isPending, error } = useDelete<{ code: string }>(
-    () => "/v1/cart/remove-discount/",
-    {
-      onSuccess: () => {
-        toast.success("کد تخفیف با موفقیت حذف شد");
-        queryClient.invalidateQueries({ queryKey: ["/v1/cart"] });
-        queryClient.refetchQueries({ queryKey: ["/v1/cart"] });
-      },
-      onError: (error) => {
-        toast.error("خطا در حذف کد تخفیف");
-      },
-    }
-  );
-  return { mutate, isPending, error };
-};
-
-// React Query hook for add-multiple
-export const useAddToCartMultiple = () => {
-  const queryClient = useQueryClient();
-  return usePost<any, { items: { itemId: string; count: number }[] }>(
-    () => "/v1/cart/add-multiple",
-    undefined,
-    {
-      onSuccess: () => {
-        toast.success("سبد خرید با موفقیت منتقل شد");
-        queryClient.invalidateQueries({ queryKey: ["/v1/cart"] });
-        queryClient.refetchQueries({ queryKey: ["/v1/cart"] });
-      },
-      onError: () => {
-        toast.error("خطا در انتقال سبد خرید مهمان");
-      },
-    }
-  );
-};
+// Note: React Query hooks have been moved to src/services/cart/
 
 // Migration function: move guest cart to server after login
 export async function migrateGuestCartToServer(
