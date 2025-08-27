@@ -48,7 +48,10 @@ export const formatDate = (dateString: string) => {
   });
 };
 
-export const formatJalaliDate = (dateString: string | Date, format = "jYYYY/jMM/jDD - HH:mm") => {
+export const formatJalaliDate = (
+  dateString: string | Date,
+  format = "jYYYY/jMM/jDD - HH:mm"
+) => {
   if (!dateString) return "-";
   return moment(dateString).format(format);
 };
