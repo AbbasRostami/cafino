@@ -4,3 +4,4 @@ export * from "./cartSidebar";
 export * from "./Landing";
 export * from "./checkout";
 export * from "./Footer";
+export * from "./Header";

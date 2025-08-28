@@ -180,14 +180,14 @@ const HeroContent = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 1.3 }}
       >
-        {contactInfo.map((item, index) => (
+        {contactInfo?.map((item, index) => (
           <MotionDiv
             key={index}
             className="flex items-center gap-2 p-2 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm"
             whileHover={{ x: 5 }}
           >
-            <item.icon className={`w-4 h-4 ${item.color}`} />
-            <span className="dark:text-gray-200 font-bold">{item.text}</span>
+            <item.icon className={`w-4 h-4 ${item?.color}`} />
+            <span className="dark:text-gray-200 font-bold">{item?.text}</span>
           </MotionDiv>
         ))}
       </MotionDiv>

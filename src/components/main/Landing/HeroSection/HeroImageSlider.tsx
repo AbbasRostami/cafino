@@ -25,24 +25,23 @@ const HeroImageSlider = () => {
         spaceBetween={10}
         slidesPerView={1}
         loop
-        // autoplay={{
-        //   delay: 4000,
-        //   disableOnInteraction: false,
-        // }}
+        autoplay={{
+          delay: 4000,
+          disableOnInteraction: false,
+        }}
         effect="fade"
         speed={1500}
         fadeEffect={{ crossFade: true }}
-        modules={[EffectFade]}
+        modules={[Autoplay, EffectFade]}
         className="h-full"
       >
         {photos.map((photo, idx) => (
           <SwiperSlide key={idx} className="!flex !justify-center">
             <Image
-            width={500}
-            height={600}
+              width={500}
               src={photo}
               alt={`Slide ${idx + 1}`}
-              className="object-cover "
+              className="object-cover h-auto"
               priority={idx === 0}
             />
           </SwiperSlide>
