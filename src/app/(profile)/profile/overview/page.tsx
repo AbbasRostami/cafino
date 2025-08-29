@@ -33,7 +33,7 @@ export default function OverviewPage() {
   );
   const { data: addressesData, isLoading: addressesLoading } =
     useGetAddresses();
-  console.log(favoritesData);
+  console.log("lksdoajiuhyugjhk", ordersData?.data);
 
   const activeOrders =
     ordersData?.data?.filter((order: any) => order.status === "processing")
@@ -41,7 +41,7 @@ export default function OverviewPage() {
 
   const totalPayments =
     ordersData?.data?.reduce(
-      (sum: number, order: any) => sum + order.payment_amount,
+      (sum: number, orders: any) => sum + orders.payment_amount,
       0
     ) || 0;
 
