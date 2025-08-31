@@ -1,21 +1,8 @@
 import CategorySectionClient from "./CategorySectionClient";
-import { cookies } from "next/headers";
-import { fetchApiWithCookies } from "@/hooks/fetchApiWithCookies";
-import { CategoryResponse } from "@/types/main/Landing";
+import { getCategories } from "@/services/server/useGetCategoriesServer";
 
 const CategorySection = async () => {
-  const cookieStore = await cookies();
-  const allCookies = cookieStore.getAll();
-  console.log("🍪 All cookies:", allCookies);
-  let categories: CategoryResponse = { categories: [] };
-  try {
-    const res = await fetchApiWithCookies("/v1/category");
-    const data = await res.json();
-    categories = data.data;
-  } catch (error) {
-    console.error("❌ Error fetching categories:", error);
-  }
-
+  const categories = await getCategories();
   return (
     <section className="pt-10 mb-10">
       <CategorySectionClient categories={categories?.categories} />

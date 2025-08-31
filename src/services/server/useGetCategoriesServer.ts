@@ -1,0 +1,13 @@
+import { fetchWithServer } from "@/hooks/fetchApiWithCookies";
+import { CategoryResponse } from "@/types/main";
+
+export const getCategories = async (): Promise<CategoryResponse> => {
+  try {
+    const res = await fetchWithServer("/v1/category");
+    const data = await res.json();
+    return data.data as CategoryResponse;
+  } catch (error) {
+    console.error("❌ Error fetching categories:", error);
+    return { categories: [] };
+  }
+};

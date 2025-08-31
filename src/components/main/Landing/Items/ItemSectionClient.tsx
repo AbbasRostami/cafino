@@ -24,8 +24,45 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
+import { SkeletonItemSection } from "@/components/skeleton";
+import { useGetItemsLanding } from "@/services/items/useGetItems";
 
 const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
+  const { data: itemsResponse, isLoading } = useGetItemsLanding(
+    1,
+    15,
+    "topRated",
+    items
+  );
+
+  if (isLoading || !itemsResponse?.data?.items?.length) {
+    return (
+      <section className="container mx-auto px-2 py-12 pb-16">
+        <div className="max-w-4xl mx-auto text-center mb-8">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 relative inline-block">
+            <span className="bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-sparent dark:frark:to-orange-500 relative z-10">
+              منوی محبوب
+            </span>
+            <span className="absolute -top-3 -right-4 text-amber-400 dark:text-amber-500 text-9xl opacity-20">
+              ✨
+            </span>
+          </h2>
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            بهترین انتخاب‌های ما از میان صدها غذای خوشمزه
+          </p>
+        </div>
+        <div className="overflow-hidden pt-2 px-2 rounded-2xl">
+          <div className="flex gap-6 flex-nowrap">
+            {Array.from({ length: 5 }).map((_, index) => (
+              <div key={index} className="flex-shrink-0">
+                <SkeletonItemSection />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
   return (
     <>
       <div className="max-w-4xl mx-auto text-center mb-8">
@@ -72,7 +109,7 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
           className="items-slider "
           style={{ direction: "rtl" }}
         >
-          {items?.map((item: Item, index: number) => {
+          {itemsResponse?.data?.items?.map((item: Item, index: number) => {
             const discount = Number(item?.discount || 0);
             const originalPrice = Number(item?.price);
             const finalPrice = discount

@@ -16,7 +16,6 @@ const CategorySectionClient: React.FC<CategorySectionClientProps> = ({
   categories,
 }) => {
   const router = useRouter();
-console.log(categories);
 
   return (
     <>
