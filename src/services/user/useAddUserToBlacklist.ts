@@ -6,7 +6,7 @@ import { toast } from "sonner";
 export const useAddUserToBlacklist = () => {
   const queryClient = useQueryClient();
 
-  const { mutate, isPending, error } = usePost<AddUserToBlacklistRequest>(
+  const { mutate, isPending, variables } = usePost<AddUserToBlacklistRequest>(
     "/v1/user/blacklist",
     undefined,
     {
@@ -20,5 +20,5 @@ export const useAddUserToBlacklist = () => {
       },
     }
   );
-  return { mutate, isPending, error };
+  return { mutate, isPending, variables };
 };

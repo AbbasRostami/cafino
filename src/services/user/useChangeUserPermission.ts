@@ -6,10 +6,8 @@ import { toast } from "sonner";
 export const useChangeUserPermission = () => {
   const queryClient = useQueryClient();
 
-  const { mutate, isPending, error } = usePatch<ChangeUserPermissionRequest>(
-    "/v1/user/permission",
-    undefined,
-    {
+  const { mutate, isPending, variables } =
+    usePatch<ChangeUserPermissionRequest>("/v1/user/permission", undefined, {
       onSuccess: () => {
         toast.success("نقش کاربر با موفقیت تغییر کرد.");
         queryClient.invalidateQueries({ queryKey: ["user-list-admin"] });
@@ -17,7 +15,6 @@ export const useChangeUserPermission = () => {
       onError: () => {
         toast.error("خطا در تغییر نقش کاربر");
       },
-    }
-  );
-  return { mutate, isPending, error };
+    });
+  return { mutate, isPending, variables };
 };

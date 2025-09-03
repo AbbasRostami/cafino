@@ -1,17 +1,18 @@
 import { usePost } from "@/hooks/useReactQueryHooks";
-import { ChangeOrderStatusRequest } from "@/types/Profile/orders";
+import { ChangeOrderStatusRequest } from "@/types/Profile";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export const useChangeOrderStatus = () => {
   const queryClient = useQueryClient();
 
-  const { mutate, isPending, error } = usePost(
+  const { mutate, isPending, variables } = usePost(
     ({ id }) => `/v1/order/status?id=${id}`,
     ({ status }: ChangeOrderStatusRequest) => ({ status }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["orders-admin"] });
+        queryClient.invalidateQueries({ queryKey: ["admin-overview"] });
         toast.success("وضعیت سفارش با موفقیت تغییر کرد");
       },
       onError: () => {
@@ -23,6 +24,6 @@ export const useChangeOrderStatus = () => {
   return {
     mutate,
     isPending,
-    error,
+    variables,
   };
 };

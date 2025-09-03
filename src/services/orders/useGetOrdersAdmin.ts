@@ -2,24 +2,27 @@ import { useGet } from "@/hooks/useReactQueryHooks";
 import { GetOrdersResponse } from "@/types/admin";
 
 export const useGetOrdersAdmin = ({
-  limit = 4,
-  page = 1,
+  limit,
+  page,
+  status,
 }: {
   limit?: number;
   page?: number;
+  status?: string;
 }) => {
-  const { data, isLoading, error } = useGet<GetOrdersResponse>(
-    `/v1/order?limit=${limit}&page=${page}`,
-    {
-      queryKey: ["orders-admin", limit, page],
-    }
-  );
+  let url = `/v1/order?limit=${limit}&page=${page}`;
+  if (status) {
+    url += `&status=${status}`;
+  }
+  const { data, isLoading, error } = useGet<GetOrdersResponse>(url, {
+    queryKey: ["orders-admin", limit, page, status],
+  });
 
   return {
-    orders: data?.data || [],
-    total: data?.total || 0,
-    page: data?.page || 1,
-    limit: data?.limit || limit,
+    orders: data?.data?.orders || [],
+    total: data?.data?.total || 0,
+    page: data?.data?.page || 1,
+    limit: data?.data?.limit || 10,
     isLoading,
     error,
   };

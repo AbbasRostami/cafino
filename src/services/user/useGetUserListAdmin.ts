@@ -16,10 +16,10 @@ export const useGetUserListAdmin = ({
   );
 
   return {
-    users: data?.data || [],
-    total: data?.total || 0,
-    page: data?.page || 1,
-    limit: data?.limit || limit,
+    users: data?.data?.users || [],
+    total: data?.data?.total || 0,
+    page: data?.data?.page || 1,
+    limit: data?.data?.limit || limit,
     isLoading,
     error,
   };

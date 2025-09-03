@@ -1,8 +1,5 @@
 import { useGet } from "@/hooks/useReactQueryHooks";
-import {
-  BlacklistResponse,
-  UseGetBlacklistProps,
-} from "@/types/admin/user/user.types";
+import { BlacklistResponse, UseGetBlacklistProps } from "@/types/admin";
 
 export const useGetBlacklist = ({ page, limit }: UseGetBlacklistProps) => {
   const { data, isLoading, error } = useGet<BlacklistResponse>(
@@ -13,10 +10,10 @@ export const useGetBlacklist = ({ page, limit }: UseGetBlacklistProps) => {
   );
 
   return {
-    blacklist: data?.data || [],
-    total: data?.total || 0,
-    page: data?.page || 1,
-    limit: data?.limit || limit,
+    blacklist: data?.data?.users || [],
+    total: data?.data?.total || 0,
+    page: data?.data?.page || 1,
+    limit: data?.data?.limit || limit,
     isLoading,
     error,
   };
