@@ -10,9 +10,7 @@ import DashboardBreadcrumbs from "../components/common/Breadcrumbs/Breadcrumbs";
 
 const ConfirmModal = dynamic(
   () =>
-    import("@/components/common/ConfirmModal/ConfirmModal").then(
-      (mod) => mod.ConfirmModal
-    ),
+    import("@/components/common/ConfirmModal").then((mod) => mod.ConfirmModal),
   { ssr: false }
 );
 

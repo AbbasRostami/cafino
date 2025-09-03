@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Loader2, Trash2, Power, PowerOff } from "lucide-react";
 import { formatJalaliDate } from "@/utils/formatters";
-import { confirm } from "@/components/common/ConfirmModal/ConfirmModal";
+import { confirm } from "@/components/common/ConfirmModal";
 import { ColumnsDiscountsProps } from "@/types/admin";
 
 export const columns = ({

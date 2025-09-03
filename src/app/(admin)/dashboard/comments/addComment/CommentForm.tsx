@@ -7,13 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useAddCommentAdmin } from "@/services";
 import { CommentSchema, FormValues } from "@/schemas/admin";
-import { CommentFormProps } from "@/types/admin";
+import { CommentFormAdminProps } from "@/types/admin";
 
 export function CommentForm({
   itemId,
   parentId,
   closeModal,
-}: CommentFormProps) {
+}: CommentFormAdminProps) {
   const { mutate: addComment, isPending } = useAddCommentAdmin();
 
   const {

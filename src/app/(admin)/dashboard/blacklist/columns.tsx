@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { CircleUserRound, Loader2, OctagonX } from "lucide-react";
 import { Trash2 } from "lucide-react";
 import { formatJalaliDate } from "@/utils/formatters";
-import { confirm } from "@/components/common/ConfirmModal/ConfirmModal";
+import { confirm } from "@/components/common/ConfirmModal";
 import {
   TooltipContent,
   Tooltip,

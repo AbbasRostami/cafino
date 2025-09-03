@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Repeat1, SquareCheck, SquareX } from "lucide-react";
-import { confirm } from "@/components/common/ConfirmModal/ConfirmModal";
+import { confirm } from "@/components/common/ConfirmModal";
 import { Button } from "@/components/ui/button";
 import {
   Tooltip,

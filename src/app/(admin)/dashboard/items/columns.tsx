@@ -5,7 +5,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { LayoutList, Loader2, SquarePen, Trash2 } from "lucide-react";
 import { useDeleteItem } from "@/services";
-import { confirm } from "@/components/common/ConfirmModal/ConfirmModal";
+import { confirm } from "@/components/common/ConfirmModal";
 import {
   TooltipContent,
   TooltipProvider,
