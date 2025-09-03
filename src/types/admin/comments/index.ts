@@ -30,6 +30,8 @@ export type GetCommentsAdminApiResponse = {
   };
 };
 
+// Props
+
 export type ColumnsCommentsProps = {
   currentPage: number;
   currentLimit: number;
@@ -40,14 +42,13 @@ export type ColumnsCommentsProps = {
   isRejectingComment: boolean;
   rejectingVars: { id: string };
 };
-
 export interface AddCommentModalProps {
   itemId: string;
   parentId?: string;
   trigger?: React.ReactNode;
 }
 
-export interface CommentFormProps {
+export interface CommentFormAdminProps {
   itemId: string;
   parentId?: string;
   closeModal: () => void;

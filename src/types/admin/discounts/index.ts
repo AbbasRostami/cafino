@@ -21,11 +21,6 @@ export interface GetDiscountsResponse {
   };
 }
 
-export interface UseGetDiscountsProps {
-  page?: number;
-  limit?: number;
-}
-
 export interface CreateDiscountRequest {
   code: string;
   percent?: number;
@@ -43,6 +38,7 @@ export interface UpdateDiscountStatusRequest {
   status: boolean;
 }
 
+// Props
 export interface ModalContentDiscountProps {
   onSubmit: (data: DiscountFormType) => void;
   isPending: boolean;
@@ -58,3 +54,8 @@ export type ColumnsDiscountsProps = {
   isPendingStatusUpdate: boolean;
   updatingVars: UpdateDiscountStatusRequest;
 };
+
+export interface UseGetDiscountsProps {
+  page?: number;
+  limit?: number;
+}

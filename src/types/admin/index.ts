@@ -4,3 +4,4 @@ export * from "./categories";
 export * from "./comments";
 export * from "./orders";
 export * from "./discounts";
+export * from "./overview";

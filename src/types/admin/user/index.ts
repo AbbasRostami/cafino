@@ -24,11 +24,14 @@ export interface UserAdmin {
 }
 
 export interface GetUserListAdminResponse {
-  data: UserAdmin[];
-  total: number;
-  page: number;
-  limit: number;
   statusCode: number;
+  message: string;
+  data: {
+    total: number;
+    page: number;
+    limit: number;
+    users: UserAdmin[];
+  };
 }
 
 export interface DeleteUserRequest {
@@ -39,6 +42,26 @@ export interface ChangeUserPermissionRequest {
   phone: string;
   role: string;
 }
+
+// Props
+
+export interface UserColumnsProps {
+  currentPage: number;
+  currentLimit: number;
+  deleteUser: (data: { phone: string }) => void;
+  isDeleting: boolean;
+  deleteVars?: { phone: string };
+  changePermission: (data: { phone: string; role: string }) => void;
+  isChangingPermission: boolean;
+  changePermissionVars?: { phone: string; role: string };
+  addToBlacklist: (data: { phone: string }) => void;
+  isAddingToBlacklist: boolean;
+  addToBlacklistVars?: { phone: string };
+}
+
+
+
+// BlackList Types
 
 export type ColumnsBlackListProps = {
   currentPage: number;
@@ -77,12 +100,17 @@ export interface UserBlacklist {
   updated_at: string;
 }
 
-export interface BlacklistResponse {
-  data: UserBlacklist[];
+export interface BlacklistData {
   total: number;
   page: number;
   limit: number;
+  users: UserBlacklist[];
+}
+
+export interface BlacklistResponse {
   statusCode: number;
+  message: string;
+  data: BlacklistData;
 }
 
 export interface RemoveUserFromBlacklistRequest {

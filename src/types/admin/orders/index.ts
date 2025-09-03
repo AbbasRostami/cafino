@@ -1,9 +1,11 @@
+import { OrderStatus } from "@/types/Profile";
+
 export interface OrderAdmin {
   id: string;
   payment_amount: number;
   discount_amount: number;
   total_amount: number;
-  status: "pending" | "failed" | "success" | string;
+  status: OrderStatus;
   description: string;
   user: {
     id: string;
@@ -63,19 +65,36 @@ export interface OrderAdmin {
 }
 
 export interface GetOrdersResponse {
-  data: OrderAdmin[];
-  total: number;
-  page: number;
-  limit: number;
+  statusCode: number;
+  message: string;
+  data: {
+    total: number;
+    limit: number;
+    page: number;
+    orders: OrderAdmin[];
+  };
 }
 
-export interface ChangeOrderStatusRequest {
-  id: string;
-  status: string;
-}
-
+// Props
 
 export interface OrderContentProps {
   order: OrderAdmin;
   isMobile: boolean;
+}
+export interface OrderColumnsProps {
+  currentPage: number;
+  currentLimit: number;
+  orders: OrderAdmin[];
+  setSelectedOrder: (order: OrderAdmin) => void;
+  changeStatus: (data: { id: string; status: OrderStatus }) => void;
+  isChangingStatus: boolean;
+  changeVars?: {
+    id: string;
+    status: string;
+  } | null;
+}
+
+export interface OrderDetailsProps {
+  order: any;
+  setSelectedOrder: (order: any) => void;
 }

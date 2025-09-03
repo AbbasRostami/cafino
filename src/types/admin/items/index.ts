@@ -1,5 +1,5 @@
 import { ItemFormData } from "@/schemas/admin/item";
-import { MenuItem } from "@/types/main/menu/menu";
+import { MenuItem } from "@/types/main";
 import {
   Control,
   UseFormSetValue,
@@ -27,7 +27,7 @@ export interface CategoryInfo {
   title: string;
 }
 
-export interface ItemResponse {
+export interface ItemsResponse {
   id: string;
   title: string;
   ingredients: string[];
@@ -64,20 +64,7 @@ export interface UpdateItemFormData {
   formData: FormData;
 }
 
-export interface ItemDetailsModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  item: ItemResponse;
-}
-
-export interface itemsColumnsProps {
-  currentPage: number;
-  currentLimit: number;
-  setEditingItem: (item: MenuItem) => void;
-  setIsModalOpen: (open: boolean) => void;
-}
-
-//add and edit modal
+//add and edit modal - Props
 export interface FormActionsProps {
   isEditing: boolean;
   isSubmitting: boolean;
@@ -109,5 +96,18 @@ export interface FormSectionsProps {
 export interface UseItemFormProps {
   isOpen: boolean;
   onClose: () => void;
-  item: ItemResponse | null;
+  item: ItemsResponse | null;
+}
+
+export interface ItemDetailsModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  item: ItemsResponse;
+}
+
+export interface itemsColumnsProps {
+  currentPage: number;
+  currentLimit: number;
+  setEditingItem: (item: MenuItem) => void;
+  setIsModalOpen: (open: boolean) => void;
 }

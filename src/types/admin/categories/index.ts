@@ -44,6 +44,8 @@ export type CategoryData = {
   show: boolean;
 };
 
+
+// Props
 export interface ModalContentProps {
   initialData?: CategoryData | null;
   onClose: () => void;
