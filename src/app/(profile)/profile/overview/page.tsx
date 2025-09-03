@@ -1,12 +1,6 @@
 "use client";
 
 import {
-  useUserProfile,
-  useGetFavorites,
-  useGetOrders,
-  useGetAddresses,
-} from "@/services";
-import {
   Header,
   StatsCards,
   RecentOrders,
@@ -21,8 +15,14 @@ import {
   PopularProductsSkeleton,
   PromotionalBannerSkeleton,
   QuickActionsSkeleton,
-} from "@/components/skeleton/Profile/overview";
-import { GetOrdersResponse, User, FavoriteItem } from "@/types/Profile";
+} from "@/components/skeleton";
+
+import {
+  useUserProfile,
+  useGetFavorites,
+  useGetOrders,
+  useProfileOverview,
+} from "@/services";
 
 export default function OverviewPage() {
   const { data: user, isLoading: userLoading } = useUserProfile();
@@ -31,51 +31,29 @@ export default function OverviewPage() {
     100,
     1
   );
-  const { data: addressesData, isLoading: addressesLoading } =
-    useGetAddresses();
-  console.log("lksdoajiuhyugjhk", ordersData?.data);
-
-  const activeOrders =
-    ordersData?.data?.filter((order: any) => order.status === "processing")
-      .length || 0;
-
-  const totalPayments =
-    ordersData?.data?.reduce(
-      (sum: number, orders: any) => sum + orders.payment_amount,
-      0
-    ) || 0;
-
-  const favoriteItems = favoritesData?.length || 0;
-  const savedAddresses = addressesData?.data?.length || 0;
-
+  const { data: overviewData, isLoading: overviewLoading } =
+    useProfileOverview();
   return (
     <div className="space-y-8 p-4 sm:p-6 lg:p-4 bg-gradient-to-br from-rose-50/50 to-amber-50/50 dark:from-gray-900 dark:to-gray-800 min-h-screen">
-      {userLoading ? <HeaderSkeleton /> : <Header user={user as User} />}
+      {userLoading ? <HeaderSkeleton /> : <Header user={user} />}
 
-      {userLoading || ordersLoading || favoritesLoading || addressesLoading ? (
+      {userLoading || ordersLoading || favoritesLoading || overviewLoading ? (
         <StatsCardsSkeleton />
       ) : (
-        <StatsCards
-          activeOrders={activeOrders}
-          totalPayments={totalPayments}
-          favoriteItems={favoriteItems}
-          savedAddresses={savedAddresses}
-        />
+        <StatsCards data={overviewData?.data} />
       )}
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         {ordersLoading ? (
           <RecentOrdersSkeleton />
         ) : (
-          <RecentOrders ordersData={ordersData as GetOrdersResponse} />
+          <RecentOrders ordersData={ordersData} />
         )}
 
         {favoritesLoading ? (
           <PopularProductsSkeleton />
         ) : (
-          <PopularProducts
-            favoritesData={favoritesData as unknown as FavoriteItem[]}
-          />
+          <PopularProducts favoritesData={favoritesData?.items} />
         )}
       </div>
 

@@ -3,7 +3,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card } from "@/components/ui/card";
 
-export default function ProfileSkeleton() {
+export function ProfileSkeleton() {
   return (
     <Card className="rounded-xl p-4 shadow-sm space-y-6 animate-pulse">
       <div className="flex justify-center">

@@ -1,6 +1,9 @@
 import { Heart, X, Plus } from "lucide-react";
-import { EmptyStateProps } from "@/types/Profile";
 import { MotionButton, MotionDiv } from "@/utils/MotionWrapper";
+
+interface EmptyStateProps {
+  onViewProducts: () => void;
+}
 
 export const EmptyState = ({ onViewProducts }: EmptyStateProps) => {
   return (

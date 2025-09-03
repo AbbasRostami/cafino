@@ -23,17 +23,19 @@ import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Address, City, Province } from "@/types/Profile";
 import { AddressFormData } from "@/schemas/profile";
-import { AddressSkeleton } from "@/components/skeleton/Profile/address";
+import { AddressSkeleton } from "@/components/skeleton";
 
 export default function AddressesPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const { data: addressesData, isLoading } = useGetAddresses();
+
   const {
     mutate: deleteAddress,
     isPending: isDeleting,
     variables: deletingVars,
   } = useDeleteAddress();
+
   const { mutate: updateAddress } = useUpdateAddress();
   const { mutate: addAddress } = useAddAddress();
   const { data: provincesData } = useGetProvinces();
@@ -76,10 +78,8 @@ export default function AddressesPage() {
         }
       );
     }
-
     resetFormData();
     setEditingId(null);
-    setOpen(false);
   };
 
   const handleEdit = (address: Address) => {
@@ -106,6 +106,8 @@ export default function AddressesPage() {
     return <AddressSkeleton />;
   }
 
+  console.log(addressesData);
+
   return (
     <div className="space-y-6">
       <AddressHeader />
@@ -123,10 +125,10 @@ export default function AddressesPage() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4 md:pb-8 pb-16">
-            {addressesData?.data?.length === 0 ? (
+            {addressesData?.length === 0 ? (
               <EmptyState onAddAddress={handleAddAddress} />
             ) : (
-              addressesData?.data?.map((address: any) => (
+              addressesData?.map((address: any) => (
                 <AddressCard
                   key={address?.id}
                   address={address}

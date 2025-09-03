@@ -1,15 +1,11 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { StatsCardsProps } from "@/types/Profile";
-import { ShoppingBag, Star, Heart, MapPin } from "lucide-react";
-export const StatsCards = ({
-  activeOrders,
-  totalPayments,
-  favoriteItems,
-  savedAddresses,
-}: StatsCardsProps) => {
+import { ProfileOverview } from "@/types/Profile";
+import { ShoppingBag, Heart, MapPin, ShoppingCart } from "lucide-react";
+
+export const StatsCards = ({ data }: { data: ProfileOverview | undefined }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
-      <Card className="border-l-4 border-l-amber-500 shadow-sm hover:shadow-md transition-shadow">
+      <Card className="border-0 border-l-4 border-l-amber-500 shadow-sm hover:shadow-md transition-shadow">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="text-sm font-medium text-gray-500 dark:text-gray-400">
@@ -20,9 +16,9 @@ export const StatsCards = ({
             </div>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="">
           <div className="text-2xl font-bold text-gray-900 dark:text-white">
-            {activeOrders}
+            {data?.order?.active}
           </div>
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
             در حال پردازش
@@ -30,28 +26,28 @@ export const StatsCards = ({
         </CardContent>
       </Card>
 
-      <Card className="border-l-4 border-l-emerald-500 shadow-sm hover:shadow-md transition-shadow">
+      <Card className="border-0 border-l-4 border-l-emerald-500 shadow-sm hover:shadow-md transition-shadow">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="text-sm font-medium text-gray-500 dark:text-gray-400">
-              مجموع پرداختی‌ها
+              مجموع سفارش‌ها
             </CardTitle>
             <div className="p-2 rounded-full bg-emerald-100 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400">
-              <Star size={20} />
+              <ShoppingCart size={20} />
             </div>
           </div>
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-gray-900 dark:text-white">
-            {totalPayments?.toLocaleString("fa-IR") || 0} تومان
+            {data?.order?.total}
           </div>
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-            از تمام سفارش‌ها
+            تمام سفارشات ارسال شده
           </p>
         </CardContent>
       </Card>
 
-      <Card className="border-l-4 border-l-rose-500 shadow-sm hover:shadow-md transition-shadow">
+      <Card className="border-0 border-l-4 border-l-rose-500 shadow-sm hover:shadow-md transition-shadow">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="text-sm font-medium text-gray-500 dark:text-gray-400">
@@ -64,7 +60,7 @@ export const StatsCards = ({
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-gray-900 dark:text-white">
-            {favoriteItems || 0}
+            {data?.favorite?.total}
           </div>
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
             محصول مورد علاقه
@@ -72,7 +68,7 @@ export const StatsCards = ({
         </CardContent>
       </Card>
 
-      <Card className="border-l-4 border-l-blue-500 shadow-sm hover:shadow-md transition-shadow">
+      <Card className="border-0 border-l-4 border-l-blue-500 shadow-sm hover:shadow-md transition-shadow">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="text-sm font-medium text-gray-500 dark:text-gray-400">
@@ -85,7 +81,7 @@ export const StatsCards = ({
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-gray-900 dark:text-white">
-            {savedAddresses || 0}
+            {data?.address?.total}
           </div>
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
             آدرس ذخیره شده

@@ -6,27 +6,27 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Clock, ShoppingBag } from "lucide-react";
 import Link from "next/link";
-import moment from "moment-jalaali";
-import { getStatusBadge } from "@/utils/formatters";
+import {
+  formatCurrency,
+  formatJalaliDate,
+  getStatusBadge,
+} from "@/utils/formatters";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { GetOrdersResponse } from "@/types/Profile";
+import { GetOrdersResponseProfile } from "@/types/Profile";
 import { MotionDiv } from "@/utils/MotionWrapper";
 
 export const RecentOrders = ({
   ordersData,
 }: {
-  ordersData: GetOrdersResponse;
+  ordersData?: GetOrdersResponseProfile;
 }) => {
-  console.log(ordersData);
-
   return (
     <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-xl rounded-2xl border-none">
       <CardHeader className="flex flex-row items-center justify-between">
@@ -34,20 +34,12 @@ export const RecentOrders = ({
           <Clock size={18} />
           آخرین سفارش‌ها
         </CardTitle>
-        {ordersData?.data?.length > 0 && (
-          <Badge
-            variant="outline"
-            className="text-xs border-amber-300 text-amber-600 dark:text-amber-400"
-          >
-            {ordersData?.data?.length} سفارش
-          </Badge>
-        )}
       </CardHeader>
       <CardContent className="space-y-4 min-h-[100px]">
-        {ordersData?.data?.length > 0 ? (
-          ordersData?.data?.slice(0, 3).map((order: any) => (
+        {ordersData?.orders?.length ? (
+          ordersData?.orders?.slice(0, 3).map((order: any) => (
             <div
-              key={order.id}
+              key={order?.id}
               className="min-h-[100px] flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-gray-100/50 dark:bg-gray-700/50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
             >
               <div className="mb-3 sm:mb-0 flex flex-col gap-2 w-full">
@@ -56,7 +48,8 @@ export const RecentOrders = ({
                     تاریخ سفارش:
                   </span>
                   <span className="text-sm text-gray-800 dark:text-gray-200">
-                    {moment(order.payments[0].created_at).format(
+                    {formatJalaliDate(
+                      order?.payments[0].created_at,
                       "jYYYY/jMM/jDD"
                     )}
                   </span>
@@ -101,10 +94,10 @@ export const RecentOrders = ({
               </div>
               <div className="text-left sm:text-right flex flex-col gap-2">
                 <div className="text-sm text-gray-600 dark:text-gray-300">
-                  {getStatusBadge(order.status)}
+                  {getStatusBadge(order?.status)}
                 </div>
                 <div className="font-medium text-gray-800 dark:text-white text-sm sm:text-base flex items-center gap-1">
-                  {order.payment_amount.toLocaleString("fa-IR")}
+                  {formatCurrency(order?.payment_amount)}
                   <span className="text-xs text-gray-500 dark:text-gray-400">
                     تومان
                   </span>
@@ -155,7 +148,7 @@ export const RecentOrders = ({
           </MotionDiv>
         )}
       </CardContent>
-      {ordersData?.data?.length > 0 && (
+      {ordersData?.orders?.length && (
         <CardFooter>
           <Button
             variant="outline"

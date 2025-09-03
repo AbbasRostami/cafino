@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
-import { OrdersFilterProps } from "@/types/Profile/orders/order";
+import { OrdersFilterProps } from "@/types/Profile";
 
 export const OrdersFilter = ({
   selectedLimit,
@@ -29,8 +29,8 @@ export const OrdersFilter = ({
   return (
     <div className="flex flex-col sm:flex-row justify-between items-center mt-0 sm:mt-10 gap-4 p-2 sm:p-0 pb-14">
       <div className="text-sm text-gray-500 dark:text-gray-400">
-        نمایش {selectedLimit?.toLocaleString("fa-IR")} از
-        {totalItems?.toLocaleString("fa-IR")}
+        نمایش {selectedLimit} از
+        {totalItems}
       </div>
 
       <div className="flex flex-col sm:flex-row items-center gap-5">
@@ -41,7 +41,7 @@ export const OrdersFilter = ({
           >
             <SelectTrigger className="w-[120px]">
               <SelectValue placeholder="تعداد آیتم‌ها">
-                {selectedLimit?.toLocaleString("fa-IR")} نمایش
+                {selectedLimit} نمایش
               </SelectValue>
             </SelectTrigger>
             <SelectContent>

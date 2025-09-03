@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Card,
   CardHeader,
@@ -13,7 +14,7 @@ import {
   formatJalaliDate,
   getStatusBadge,
 } from "@/utils/formatters";
-import { OrderCardProps, OrderProfile, OrderStatus } from "@/types/Profile";
+import { OrderCardProps, OrderProfile } from "@/types/Profile";
 
 export const OrderCard = ({
   orders,
@@ -23,9 +24,9 @@ export const OrderCard = ({
 }: OrderCardProps) => {
   return (
     <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-      {orders.map((order: OrderProfile) => (
+      {orders?.map((order: OrderProfile) => (
         <Card
-          key={order.id}
+          key={order?.id}
           className="group hover:border border border-gray-200 dark:border-gray-700 hover:border-amber-600 hover:dark:border-amber-600 hover:shadow-lg"
         >
           <CardHeader className="relative z-10 pb-4">
@@ -44,7 +45,7 @@ export const OrderCard = ({
                 </div>
               </div>
               <p className="text-sm font gap-2">
-                {getStatusBadge(order?.status as OrderStatus)}
+                {getStatusBadge(order?.status)}
               </p>
             </CardTitle>
           </CardHeader>
@@ -68,7 +69,7 @@ export const OrderCard = ({
                   تعداد آیتم‌ها
                 </span>
                 <span className="text-lg font-bold text-gray-800 dark:text-gray-100">
-                  {order?.items?.length?.toLocaleString("fa-IR")}
+                  {order?.items?.length}
                 </span>
               </div>
 

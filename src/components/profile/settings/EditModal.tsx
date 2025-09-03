@@ -30,6 +30,7 @@ import {
 import { MotionForm } from "@/utils/MotionWrapper";
 import { profileFormSchema } from "@/schemas/profile";
 import { useIsMobile } from "@/hooks/useMediaQuery";
+import { DialogDescription } from "@radix-ui/react-dialog";
 
 export const EditModal = ({
   isOpen,
@@ -201,6 +202,9 @@ export const EditModal = ({
             <UserPen className="text-amber-700" size={28} />
             ویرایش پروفایل
           </DialogTitle>
+          <DialogDescription className="text-right flex items-center gap-2 text-xs">
+            ویرایش پروفایل خود را انجام دهید
+          </DialogDescription>
         </DialogHeader>
         {FormContent}
       </DialogContent>

@@ -24,7 +24,6 @@ import { Package, CreditCard, MapPin, Download, Truck, X } from "lucide-react";
 import { formatCurrency } from "@/utils/formatters";
 import { OrderDetailsModalProps } from "@/types/Profile";
 import { useIsMobile } from "@/hooks/useMediaQuery";
-
 import { DrawerContent } from "@/components/ui/drawer";
 
 export const OrderDetailsModal = ({
@@ -76,7 +75,7 @@ export const OrderDetailsModal = ({
                             {formatCurrency(
                               item?.item?.price *
                                 (1 - item?.item?.discount / 100)
-                            )}{" "}
+                            )}
                             تومان
                           </div>
                         </div>
@@ -176,7 +175,7 @@ export const OrderDetailsModal = ({
                       شماره کارت:
                     </span>
                     <span className="font-mono font-medium text-gray-800 dark:text-white bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
-                      {order?.payments[0]?.card_pan}
+                      {order?.payments[0]?.card_pan || "نامشخص"}
                     </span>
                   </div>
                 </div>
@@ -205,7 +204,7 @@ export const OrderDetailsModal = ({
                       استان
                     </p>
                     <p className="font-medium text-gray-800 dark:text-white">
-                      {order?.address?.province}
+                      {order?.address?.province || "نامشخص"}
                     </p>
                   </div>
                 </div>
@@ -224,7 +223,7 @@ export const OrderDetailsModal = ({
                       شهر
                     </p>
                     <p className="font-medium text-gray-800 dark:text-white">
-                      {order?.address?.city}
+                      {order?.address?.city || "نامشخص"}
                     </p>
                   </div>
                 </div>
@@ -237,7 +236,7 @@ export const OrderDetailsModal = ({
                       آدرس دقیق
                     </p>
                     <p className="font-medium text-gray-800 dark:text-white">
-                      {order?.address?.address}
+                      {order?.address?.address || "نامشخص"}
                     </p>
                   </div>
                 </div>

@@ -12,7 +12,7 @@ import {
   User,
   ChevronLeft,
 } from "lucide-react";
-import { useUserProfile } from "@/services";
+import { useLogout, useUserProfile } from "@/services";
 import {
   MotionAside,
   MotionButton,
@@ -55,6 +55,7 @@ const navItems = [
 export default function Sidebar() {
   const pathname = usePathname();
   const { data: user } = useUserProfile();
+  const { logout, isPending } = useLogout();
   return (
     <>
       <MotionAside
@@ -176,6 +177,8 @@ export default function Sidebar() {
             }}
             whileTap={{ scale: 0.98 }}
             className="w-full flex items-center justify-center gap-2 p-3 text-gray-700 dark:text-gray-200 rounded-xl bg-gradient-to-r from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 hover:border-red-300 dark:hover:border-red-500 transition-all relative overflow-hidden"
+            onClick={() => logout()}
+            disabled={isPending}
           >
             <MotionDiv
               className="absolute inset-0 bg-gradient-to-r from-red-50/0 to-red-50/0"
@@ -190,7 +193,9 @@ export default function Sidebar() {
               <div className="p-1.5 rounded-full bg-red-100 dark:bg-red-900/30">
                 <LogOut size={16} className="text-red-500 dark:text-red-400" />
               </div>
-              <span className="font-medium">خروج از حساب</span>
+              <span className="font-medium">
+                {isPending ? "در حال خروج..." : "خروج از حساب"}
+              </span>
             </div>
           </MotionButton>
         </div>

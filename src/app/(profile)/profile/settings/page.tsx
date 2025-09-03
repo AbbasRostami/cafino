@@ -1,11 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import moment from "moment-jalaali";
-import "moment-timezone";
-import "moment/locale/fa";
 import { useUpdateProfile, useUserProfile } from "@/services";
-import ProfileSkeleton from "@/components/skeleton/Profile/settings";
 
 import {
   SettingsHeader,
@@ -16,8 +12,7 @@ import {
 
 import { useAvatar } from "@/hooks/useAvatar";
 import { ProfileFormData } from "@/types/Profile";
-
-moment.loadPersian({ dialect: "persian-modern", usePersianDigits: true });
+import { ProfileSkeleton } from "@/components/skeleton";
 
 export default function SettingsPage() {
   const { data: user, isLoading } = useUserProfile();
@@ -30,14 +25,6 @@ export default function SettingsPage() {
     handleAvatarChange,
     handleRemoveImage,
   } = useAvatar();
-
-  const createdAt = user?.created_at
-    ? moment(user.created_at).tz("Asia/Tehran").format("jYYYY/jMM/jDD - HH:mm")
-    : "---";
-
-  const updatedAt = user?.updated_at
-    ? moment(user.updated_at).tz("Asia/Tehran").format("jYYYY/jMM/jDD - HH:mm")
-    : "---";
 
   const { updateProfile, isPending } = useUpdateProfile();
 
@@ -65,7 +52,7 @@ export default function SettingsPage() {
           onRemoveImage={handleRemoveImage}
         />
 
-        <ProfileInfo user={user} createdAt={createdAt} updatedAt={updatedAt} />
+        <ProfileInfo user={user} />
         <Button
           onClick={() => setIsEditing(true)}
           className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-gray-700 hover:bg-amber-700"

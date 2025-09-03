@@ -1,11 +1,7 @@
 import { ProfileInfoProps } from "@/types/Profile";
-import moment from "moment-jalaali";
+import { formatJalaliDate } from "@/utils/formatters";
 
-export const ProfileInfo = ({
-  user,
-  createdAt,
-  updatedAt,
-}: ProfileInfoProps) => {
+export const ProfileInfo = ({ user }: ProfileInfoProps) => {
   const profileItems = [
     { label: "نام", value: user?.first_name, icon: "🧑" },
     { label: "نام خانوادگی", value: user?.last_name, icon: "🧑‍🦱" },
@@ -15,7 +11,7 @@ export const ProfileInfo = ({
     {
       label: "تاریخ تولد",
       value: user?.birthday
-        ? moment(user.birthday).locale("fa-IR").format("jYYYY/jMM/jDD")
+        ? formatJalaliDate(user.birthday, "jYYYY/jMM/jDD")
         : "---",
       icon: "🎂",
     },
@@ -31,19 +27,23 @@ export const ProfileInfo = ({
     },
     {
       label: "تاریخ ثبت نام",
-      value: createdAt,
+      value: user?.created_at
+        ? formatJalaliDate(user.created_at, "jYYYY/jMM/jDD - HH:mm")
+        : "---",
       icon: "🗓️",
     },
     {
       label: "تاریخ بروزرسانی",
-      value: updatedAt,
+      value: user?.updated_at
+        ? formatJalaliDate(user.updated_at, "jYYYY/jMM/jDD - HH:mm")
+        : "---",
       icon: "🕒",
     },
   ];
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:gap-5">
-      {profileItems.map((item, index) => (
+      {profileItems?.map((item, index) => (
         <div
           key={index}
           className="relative overflow-hidden rounded-xl border border-gray-100 bg-gray-50 p-5 transition-all hover:-translate-y-1 hover:border-indigo-100 hover:shadow-lg dark:border-gray-700/60 dark:bg-gray-800/50 dark:hover:border-indigo-900/50"

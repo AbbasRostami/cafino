@@ -5,10 +5,11 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { confirm } from "@/components/common/ConfirmModal/ConfirmModal";
+import { confirm } from "@/components/common/ConfirmModal";
 import AddToCartButtonStyled from "@/lib/AddToCartButtonStyled";
 import { FavoriteCardProps } from "@/types/Profile";
 import { MotionDiv } from "@/utils/MotionWrapper";
+import { formatCurrency } from "@/utils/formatters";
 
 export const FavoriteCard = ({
   favorite,
@@ -95,7 +96,7 @@ export const FavoriteCard = ({
 
         <div className="flex flex-col items-start pt-3 border-t border-gray-200 dark:border-gray-700 gap-2">
           <span className="w-full text-lg font-extrabold text-amber-600 dark:text-amber-400">
-            {favorite?.item?.price?.toLocaleString("fa-IR")} تومان
+            {formatCurrency(favorite?.item?.price)} تومان
           </span>
 
           <div className="w-full">

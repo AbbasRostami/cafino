@@ -1,6 +1,17 @@
+import type { Metadata } from "next";
 import Sidebar from "@/components/profile/layout/sidebar";
-import { ConfirmModal } from "@/components/common/ConfirmModal/ConfirmModal";
+import { ConfirmModal } from "@/components/common/ConfirmModal";
 import Navbar from "@/components/common/Header";
+
+export const metadata: Metadata = {
+  title: "پنل کاربری | Cafino",
+  description:
+    "مدیریت حساب کاربری، سفارش‌ها، آدرس‌ها و تنظیمات در کافه رستوران کافینو.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function ProfileLayout({
   children,
@@ -9,16 +20,11 @@ export default function ProfileLayout({
 }) {
   return (
     <div className="min-h-screen">
-      {/* نوبار */}
       <Navbar />
 
-      {/* محتوای اصلی */}
-      <div className=" mx-auto px-2 md:px-8 lg:px-28 pt-24 sm:pt-26">
+      <div className="mx-auto px-2 md:px-8 lg:px-28 pt-24 sm:pt-26">
         <div className="flex flex-col md:flex-row gap-6">
-          {/* سایدبار */}
           <Sidebar />
-
-          {/* محتوای صفحه */}
           <main className="flex-1 min-w-0">
             <ConfirmModal />
             {children}

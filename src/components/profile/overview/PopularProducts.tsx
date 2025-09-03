@@ -6,20 +6,18 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Heart, Star } from "lucide-react";
 import Link from "next/link";
 import { AddToCartButtonStyled } from "@/lib/AddToCartButtonStyled";
-import { FavoriteItem, FavoriteListResponse } from "@/types/Profile";
+import { FavoriteItem } from "@/types/Profile";
 import { MotionDiv } from "@/utils/MotionWrapper";
+import { formatCurrency } from "@/utils/formatters";
 
 export const PopularProducts = ({
   favoritesData,
 }: {
   favoritesData: FavoriteItem[];
 }) => {
-  console.log("favoritesData", favoritesData);
-
   return (
     <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-xl rounded-2xl border-none">
       <CardHeader className="flex flex-row items-center justify-between">
@@ -27,14 +25,6 @@ export const PopularProducts = ({
           <Star size={18} />
           محبوب‌ترین محصولات
         </CardTitle>
-        {favoritesData?.length > 0 && (
-          <Badge
-            variant="outline"
-            className="text-xs border-rose-300 text-rose-600 dark:text-rose-400"
-          >
-            {favoritesData?.length} مورد
-          </Badge>
-        )}
       </CardHeader>
       <CardContent className="space-y-4 min-h-[100px]">
         {favoritesData?.length > 0 ? (
@@ -48,7 +38,7 @@ export const PopularProducts = ({
                   {fav?.item?.title}
                 </div>
                 <div className="text-rose-600 dark:text-rose-400 font-medium text-md sm:text-base">
-                  {fav?.item?.price?.toLocaleString("fa-IR")} تومان
+                  {formatCurrency(fav?.item?.price)} تومان
                 </div>
                 <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                   امتیاز: {fav?.item?.rate || "5"}

@@ -14,16 +14,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { FilterAndPaginationProps } from "@/types/Profile";
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
-
-interface FilterAndPaginationProps {
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
-  selectedLimit: number;
-  onLimitChange: (limit: number) => void;
-  totalItems: number;
-}
 
 export const FilterAndPagination = ({
   currentPage,
@@ -36,8 +28,8 @@ export const FilterAndPagination = ({
   return (
     <div className="flex flex-col lg:flex-row justify-between items-center mt-5 sm:mt-10 gap-4 p-2 sm:p-4 pb-8">
       <div className="text-sm text-gray-500 dark:text-gray-400">
-        نمایش {selectedLimit?.toLocaleString("fa-IR")} از
-        {totalItems?.toLocaleString("fa-IR")}
+        نمایش {selectedLimit} از
+        {totalItems}
       </div>
       <div className="flex flex-col sm:flex-row items-center gap-4">
         <Select
@@ -46,7 +38,7 @@ export const FilterAndPagination = ({
         >
           <SelectTrigger className="w-[120px]">
             <SelectValue placeholder="تعداد آیتم‌ها">
-              {selectedLimit?.toLocaleString("fa-IR")} نمایش
+              {selectedLimit} نمایش
             </SelectValue>
           </SelectTrigger>
           <SelectContent>
