@@ -14,11 +14,7 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { Eye } from "lucide-react";
 import { OrderContent } from "./OrderContent";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-
-interface OrderDetailsProps {
-  order: any;
-  setSelectedOrder: (order: any) => void;
-}
+import { OrderDetailsProps } from "@/types/admin";
 
 export default function OrderDetails({
   order,

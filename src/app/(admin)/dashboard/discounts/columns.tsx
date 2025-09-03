@@ -48,7 +48,7 @@ export const columns = ({
             return `${row.percent}%`;
           }
           if (row.amount) {
-            return `${row.amount.toLocaleString("fa-IR")} تومان`;
+            return `${row.amount} تومان`;
           }
           return "-";
         },

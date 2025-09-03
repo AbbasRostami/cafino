@@ -5,6 +5,11 @@ import { Users as UsersIcon } from "lucide-react";
 
 import { columns } from "./columns";
 import { useGetUserListAdmin } from "@/services/user/useGetUserListAdmin";
+import {
+  useAddUserToBlacklist,
+  useChangeUserPermission,
+  useDeleteUser,
+} from "@/services";
 
 export default function Users() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,6 +20,24 @@ export default function Users() {
     page: currentPage,
     limit: currentLimit,
   });
+  const {
+    mutate: deleteUser,
+    isPending: isDeleting,
+    variables: deleteVars,
+  } = useDeleteUser();
+
+  const {
+    mutate: changePermission,
+    isPending: isChangingPermission,
+    variables: changePermissionVars,
+  } = useChangeUserPermission();
+
+  const {
+    mutate: addToBlacklist,
+    isPending: isAddingToBlacklist,
+    variables: addToBlacklistVars,
+  } = useAddUserToBlacklist();
+  console.log(users);
 
   const headerProps = useMemo(
     () => ({
@@ -31,6 +54,15 @@ export default function Users() {
       columns={columns({
         currentPage,
         currentLimit,
+        deleteUser,
+        isDeleting,
+        deleteVars,
+        changePermission,
+        isChangingPermission,
+        changePermissionVars,
+        addToBlacklist,
+        isAddingToBlacklist,
+        addToBlacklistVars,
       })}
       isLoading={isLoading}
       headerProps={headerProps}

@@ -29,7 +29,7 @@ export default function Comments() {
     isPending: isRejectingComment,
     variables: rejectingVars,
   } = useRejectComment();
-  
+
   const headerProps = useMemo(
     () => ({
       title: "لیست کامنت‌ها",

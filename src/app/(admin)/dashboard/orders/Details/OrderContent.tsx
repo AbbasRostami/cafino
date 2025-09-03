@@ -154,13 +154,13 @@ export const OrderContent = ({ order, isMobile }: OrderContentProps) => (
         </div>
         <div className="space-y-3">
           <InfoItem
-            label="نام کاربری"
-            value={order?.user?.username}
+            label="نام"
+            value={order?.user?.first_name}
             icon={<UserCircle className="w-4 h-4" />}
           />
           <InfoItem
-            label="ایمیل"
-            value={order?.user?.email}
+            label="نام خانوادگی"
+            value={order?.user?.last_name}
             icon={<Mail className="w-4 h-4" />}
           />
           <InfoItem
@@ -336,7 +336,7 @@ export const OrderContent = ({ order, isMobile }: OrderContentProps) => (
                   </span>
                 </div>
                 <span className="font-mono text-cyan-800 dark:text-cyan-200">
-                  {payment?.ref_id}
+                  {payment?.ref_id || "نامشخص"}
                 </span>
               </div>
               <div className="flex flex-col md:flex-row justify-between items-start gap-2">
@@ -352,7 +352,7 @@ export const OrderContent = ({ order, isMobile }: OrderContentProps) => (
                   </span>
                 </div>
                 <span className="text-cyan-800 dark:text-cyan-200">
-                  {formatJalaliDate(payment?.created_at)}
+                  {formatJalaliDate(payment?.created_at || "نامشخص")}
                 </span>
               </div>
               <div className="flex flex-col md:flex-row justify-between items-start gap-2">
@@ -368,7 +368,7 @@ export const OrderContent = ({ order, isMobile }: OrderContentProps) => (
                   </span>
                 </div>
                 <span className="font-mono text-cyan-800 dark:text-cyan-200">
-                  {payment?.card_pan}
+                  {payment?.card_pan || "نامشخص"}
                 </span>
               </div>
               <div className="flex flex-col md:flex-row justify-between items-start gap-2">

@@ -1,8 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Drawer, DrawerContent } from "@/components/ui/drawer";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerTitle,
+} from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -25,6 +35,7 @@ import {
 import Image from "next/image";
 import { formatJalaliDate } from "@/utils/formatters";
 import { ItemDetailsModalProps } from "@/types/admin";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 export function ItemDetailsModal({
   isOpen,
@@ -193,7 +204,7 @@ export function ItemDetailsModal({
                 قیمت اصلی:
               </span>
               <span className="text-lg font-medium text-gray-900 dark:text-white">
-                {price.toLocaleString("fa-IR")} تومان
+                {price} تومان
               </span>
             </div>
 
@@ -205,7 +216,7 @@ export function ItemDetailsModal({
                     تخفیف ({discount}%):
                   </span>
                   <span className="text-lg font-medium text-red-600">
-                    -{((price * discount) / 100).toLocaleString("fa-IR")} تومان
+                    -{(price * discount) / 100} تومان
                   </span>
                 </div>
 
@@ -216,7 +227,7 @@ export function ItemDetailsModal({
                     قیمت نهایی:
                   </span>
                   <span className="text-2xl font-bold text-green-600">
-                    {discountedPrice.toLocaleString("fa-IR")} تومان
+                    {discountedPrice} تومان
                   </span>
                 </div>
               </>
@@ -226,7 +237,7 @@ export function ItemDetailsModal({
                   قیمت نهایی:
                 </span>
                 <span className="text-2xl font-bold text-green-600">
-                  {price.toLocaleString("fa-IR")} تومان
+                  {price} تومان
                 </span>
               </div>
             )}
@@ -346,6 +357,10 @@ export function ItemDetailsModal({
     return (
       <Drawer open={isOpen} onOpenChange={onClose}>
         <DrawerContent className="max-h-[95vh]">
+          <VisuallyHidden>
+            <DrawerTitle>جزئیات ایتم </DrawerTitle>
+            <DrawerDescription>توضیحات و جزئیات کامل ایتم ها</DrawerDescription>
+          </VisuallyHidden>
           <div className="overflow-y-auto p-4">
             <ModalContent />
           </div>
@@ -360,6 +375,10 @@ export function ItemDetailsModal({
         showCloseButton={false}
         className="max-w-4xl max-h-[95vh] scrollbar-hide overflow-y-auto p-6"
       >
+        <VisuallyHidden>
+          <DialogTitle>جزئیات ایتم </DialogTitle>
+          <DialogDescription>توضیحات و جزئیات کامل ایتم ها</DialogDescription>
+        </VisuallyHidden>
         <ModalContent />
       </DialogContent>
     </Dialog>

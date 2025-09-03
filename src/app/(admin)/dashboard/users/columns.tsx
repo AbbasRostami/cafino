@@ -8,25 +8,27 @@ import { Loader2, Trash2, ShieldUser, OctagonX } from "lucide-react";
 import { formatJalaliDate } from "@/utils/formatters";
 import { confirm } from "@/components/common/ConfirmModal/ConfirmModal";
 import {
-  useChangeUserPermission,
-  useDeleteUser,
-  useAddUserToBlacklist,
-} from "@/services";
-import {
   TooltipContent,
   Tooltip,
   TooltipTrigger,
   TooltipProvider,
 } from "@/components/ui/tooltip";
+import { AddressAdmin, UserAdmin, UserColumnsProps } from "@/types/admin";
 
 export const columns = ({
   currentPage,
   currentLimit,
-}: {
-  currentPage: number;
-  currentLimit: number;
-}) =>
-  useMemo<ColumnDef<any>[]>(
+  deleteUser,
+  isDeleting,
+  deleteVars,
+  changePermission,
+  isChangingPermission,
+  changePermissionVars,
+  addToBlacklist,
+  isAddingToBlacklist,
+  addToBlacklistVars,
+}: UserColumnsProps) =>
+  useMemo<ColumnDef<UserAdmin>[]>(
     () => [
       {
         accessorKey: "id",
@@ -54,6 +56,33 @@ export const columns = ({
         accessorKey: "email",
         cell: (info) => info.getValue() || "-",
         enableSorting: true,
+      },
+      {
+        header: "آدرس",
+        accessorKey: "addressList",
+        cell: ({ row }) => {
+          const addresses = row?.original?.addressList || [];
+          if (!addresses?.length) return "-";
+          return (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger className="cursor-pointer underline decoration-dotted">
+                  {addresses?.length} آدرس
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs text-sm">
+                  <ul className="list-disc ps-4 space-y-1">
+                    {addresses?.map((addr: AddressAdmin) => (
+                      <li key={addr?.id}>
+                        {addr?.province}، {addr?.city} - {addr?.address}
+                      </li>
+                    ))}
+                  </ul>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          );
+        },
+        enableSorting: false,
       },
       {
         header: "تلفن همراه",
@@ -114,11 +143,15 @@ export const columns = ({
         header: "عملیات",
         cell: ({ row }) => {
           const user = row?.original;
-          const { mutate: deleteUser, isPending: isDeleting } = useDeleteUser();
-          const { mutate: changePermission, isPending: isChangingPermission } =
-            useChangeUserPermission();
-          const { mutate: addToBlacklist, isPending: isAddingToBlacklist } =
-            useAddUserToBlacklist();
+          const userPhone = user?.phone;
+
+          const isCurrentUserChangingPermission =
+            changePermissionVars?.phone === userPhone && isChangingPermission;
+          const isCurrentUserAddingToBlacklist =
+            addToBlacklistVars?.phone === userPhone && isAddingToBlacklist;
+          const isCurrentUserDeleting =
+            deleteVars?.phone === userPhone && isDeleting;
+
           return (
             <div className="flex items-center gap-2">
               <TooltipProvider>
@@ -135,7 +168,7 @@ export const columns = ({
                         changePermission({ phone: user?.phone, role: newRole });
                       }}
                     >
-                      {isChangingPermission ? (
+                      {isCurrentUserChangingPermission ? (
                         <Loader2 className="animate-spin" size={20} />
                       ) : (
                         <ShieldUser
@@ -177,7 +210,7 @@ export const columns = ({
                         }
                       }}
                     >
-                      {isAddingToBlacklist ? (
+                      {isCurrentUserAddingToBlacklist ? (
                         <Loader2 className="animate-spin" size={20} />
                       ) : (
                         <OctagonX
@@ -214,7 +247,7 @@ export const columns = ({
                         }
                       }}
                     >
-                      {isDeleting ? (
+                      {isCurrentUserDeleting ? (
                         <Loader2 className="animate-spin" size={20} />
                       ) : (
                         <Trash2
@@ -236,5 +269,14 @@ export const columns = ({
         enableSorting: false,
       },
     ],
-    [currentPage, currentLimit]
+    [
+      currentPage,
+      currentLimit,
+      changePermissionVars,
+      isChangingPermission,
+      addToBlacklistVars,
+      isAddingToBlacklist,
+      deleteVars,
+      isDeleting,
+    ]
   );

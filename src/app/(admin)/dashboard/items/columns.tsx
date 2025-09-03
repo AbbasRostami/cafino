@@ -95,7 +95,7 @@ export const columns = ({
         header: "قیمت",
         cell: (info) => {
           const price = info.getValue() as number;
-          return price ? price.toLocaleString("fa-IR") + " تومان" : "-";
+          return price ? price + " تومان" : "-";
         },
         enableSorting: true,
       },

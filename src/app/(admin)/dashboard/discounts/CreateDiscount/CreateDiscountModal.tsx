@@ -2,12 +2,12 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { SubmitHandler } from "react-hook-form";
 import { useState } from "react";
-import { BsPlusLg } from "react-icons/bs";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { ModalContentDiscount } from "./ModalContent";
 import { DiscountFormType } from "@/schemas/admin";
 import { useCreateDiscount } from "@/services";
+import { PlusSquare } from "lucide-react";
 
 export function CreateDiscountModal() {
   const [open, setOpen] = useState(false);
@@ -37,7 +37,7 @@ export function CreateDiscountModal() {
               variant="outline"
               className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 p-2 rounded-lg flex items-center gap-2"
             >
-              <BsPlusLg size={16} />
+              <PlusSquare size={16} />
               افزودن کد تخفیف
             </Button>
           </DrawerTrigger>
@@ -52,7 +52,7 @@ export function CreateDiscountModal() {
               variant="outline"
               className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 p-2 rounded-lg flex items-center gap-2"
             >
-              <BsPlusLg size={16} />
+              <PlusSquare size={16} />
               افزودن کد تخفیف
             </Button>
           </DialogTrigger>

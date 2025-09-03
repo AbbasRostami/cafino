@@ -114,8 +114,7 @@ export function Pagination({
     >
       {showInfo && (
         <div className="text-sm text-gray-500 dark:text-gray-400">
-          نمایش {limit.toLocaleString("fa-IR")} از{" "}
-          {totalCount.toLocaleString("fa-IR")}
+          نمایش {limit} از {totalCount}
         </div>
       )}
 
@@ -136,7 +135,7 @@ export function Pagination({
               <SelectGroup>
                 {pageSizeOptions.map((option) => (
                   <SelectItem key={option} value={option.toString()}>
-                    {option.toLocaleString("fa-IR")}
+                    {option}
                   </SelectItem>
                 ))}
               </SelectGroup>

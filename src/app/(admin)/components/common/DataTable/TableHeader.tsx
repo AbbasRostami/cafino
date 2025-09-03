@@ -17,7 +17,6 @@ export interface TableHeaderProps {
   icon?: React.ReactNode;
   actions?: React.ReactNode;
   showColumnVisibility?: boolean;
-  
 }
 
 export function DataTableHeader({
@@ -38,8 +37,6 @@ export function DataTableHeader({
         )}
       </div>
       <div className="flex flex-col md:flex-row-reverse justify-start items-center w-full md:w-2/3 gap-2">
-        {actions}
-
         {showColumnVisibility && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -59,7 +56,7 @@ export function DataTableHeader({
             >
               <div className="max-h-60 overflow-y-auto scrollbar-hide">
                 {table
-                  .getAllColumns() 
+                  .getAllColumns()
                   .filter((column) => column.getCanHide())
                   .map((column) => (
                     <DropdownMenuCheckboxItem
@@ -105,6 +102,8 @@ export function DataTableHeader({
             </DropdownMenuContent>
           </DropdownMenu>
         )}
+
+        {actions}
       </div>
     </div>
   );

@@ -7,7 +7,6 @@ import AppHeader from "../layout/AppHeader";
 import { useSidebar } from "../context/SidebarContext";
 import dynamic from "next/dynamic";
 import DashboardBreadcrumbs from "../components/common/Breadcrumbs/Breadcrumbs";
-import { Toaster } from "sonner";
 
 const ConfirmModal = dynamic(
   () =>

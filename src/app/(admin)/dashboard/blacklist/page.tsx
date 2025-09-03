@@ -14,8 +14,13 @@ export default function Blacklist() {
     page: currentPage,
     limit: currentLimit,
   });
-  const { mutate: removeFromBlacklist, isPending: isRemoving, variables: removingVars } =
-  useRemoveUserFromBlacklist();
+  console.log(blacklist);
+
+  const {
+    mutate: removeFromBlacklist,
+    isPending: isRemoving,
+    variables: removingVars,
+  } = useRemoveUserFromBlacklist();
   const headerProps = useMemo(
     () => ({
       title: "لیست سیاه",
@@ -28,7 +33,13 @@ export default function Blacklist() {
   return (
     <DataTable
       data={blacklist}
-      columns={columns({ currentPage, currentLimit, removeFromBlacklist, isRemoving, removingVars })}
+      columns={columns({
+        currentPage,
+        currentLimit,
+        removeFromBlacklist,
+        isRemoving,
+        removingVars,
+      })}
       isLoading={isLoading}
       headerProps={headerProps}
       emptyStateMessage="هیچ کاربری در لیست سیاه یافت نشد"

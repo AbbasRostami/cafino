@@ -9,11 +9,9 @@ import {
   SortingState,
   VisibilityState,
   useReactTable,
-  getPaginationRowModel,
 } from "@tanstack/react-table";
 import React, { useState } from "react";
-import { BsArrowDown, BsArrowUp } from "react-icons/bs";
-import { Search } from "lucide-react";
+import { MoveDown, MoveUp, Search } from "lucide-react";
 import {
   Table,
   TableRow,
@@ -44,8 +42,8 @@ export interface DataTableProps<TData, TValue> {
   onLimitChange?: (limit: number) => void;
   pageSizeOptions?: number[];
   enableSearch?: boolean;
-  searchValue: string; // ❗ الزامیه
-  onSearchChange: (value: string) => void; // ❗ الزامیه
+  searchValue: string;
+  onSearchChange: (value: string) => void;
   searchPlaceholder?: string;
   className?: string;
 }
@@ -72,13 +70,10 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [internalSearchValue, setInternalSearchValue] = useState(searchValue);
 
-  // Internal state management for pagination
   const [internalPage, setInternalPage] = useState(1);
   const [internalLimit, setInternalLimit] = useState(10);
 
-  // Use external values if provided, otherwise use internal state
   const currentPage = externalPage ?? internalPage;
   const selectedLimit = externalLimit ?? internalLimit;
   const totalItems = externalTotalCount ?? data.length;
@@ -97,19 +92,11 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: enableSearch ? getFilteredRowModel() : undefined,
     globalFilterFn: "includesString",
-    getPaginationRowModel: getPaginationRowModel(),
     enableColumnResizing: true,
   });
 
   const sortedRows = table.getRowModel().rows;
-  const paginatedRows =
-    enablePagination &&
-    (externalPage !== undefined || externalLimit !== undefined)
-      ? sortedRows
-      : sortedRows.slice(
-          (currentPage - 1) * selectedLimit,
-          currentPage * selectedLimit
-        );
+  const paginatedRows = sortedRows;
 
   const columnCount = table.getAllColumns().length;
 
@@ -126,14 +113,7 @@ export function DataTable<TData, TValue>({
       onLimitChange(limit);
     } else {
       setInternalLimit(limit);
-      setInternalPage(1); // Reset to first page when changing limit
-    }
-  };
-
-  const handleSearchChange = (value: string) => {
-    setInternalSearchValue(value);
-    if (onSearchChange) {
-      onSearchChange(value);
+      setInternalPage(1);
     }
   };
 
@@ -178,10 +158,10 @@ export function DataTable<TData, TValue>({
                       header.getContext()
                     )}
                     {header.column.getIsSorted() === "asc" && (
-                      <BsArrowUp className="inline w-4 h-4 ml-1" />
+                      <MoveUp className="inline w-4 h-4 ml-1" />
                     )}
                     {header.column.getIsSorted() === "desc" && (
-                      <BsArrowDown className="inline w-4 h-4 ml-1" />
+                      <MoveDown className="inline w-4 h-4 ml-1" />
                     )}
                   </TableHead>
                 ))}

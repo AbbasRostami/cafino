@@ -1,7 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import {
   Drawer,
   DrawerContent,
@@ -10,10 +16,10 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
-import { BsPlusLg } from "react-icons/bs";
 import { useIsMobile } from "@/hooks/useMediaQuery";
 import { ModalContent } from "./ModalContent";
 import { CategoryModalProps } from "@/types/admin";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 export function CategoryModal({
   initialData = null,
@@ -33,7 +39,6 @@ export function CategoryModal({
       variant="outline"
       className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 p-2 rounded-lg flex items-center gap-2"
     >
-      <BsPlusLg size={16} />
       {titleLabel}
     </Button>
   );
@@ -60,6 +65,12 @@ export function CategoryModal({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{triggerButton}</DialogTrigger>
       <DialogContent className="max-w-2xl max-h-[90vh] scrollbar-hide overflow-y-auto bg-white dark:bg-gray-900 border-amber-200 dark:border-amber-800">
+        <VisuallyHidden>
+          <DialogTitle>افزدون و ویرایش دسته بندی </DialogTitle>
+          <DialogDescription>
+            ویرایش و افزدون کامل دسته بندی ها
+          </DialogDescription>
+        </VisuallyHidden>
         <ModalContent initialData={initialData} onClose={handleClose} />
       </DialogContent>
     </Dialog>

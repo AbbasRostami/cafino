@@ -4,15 +4,15 @@ import { SidebarProvider } from "../context/SidebarContext";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "پنل کاربری  مدیریت",
-  description: "مدیریت حساب کاربری  مدیریت در سامانه Cafino.پنل مدیریت",
+  title: "پنل مدیریت کافینو | Cafino",
+  description: "مدیریت حساب  مدیریت در سامانه Cafino.پنل مدیریت",
   openGraph: {
-    title: "پنل کاربری  مدیریت | Cafino",
-    description: "مدیریت حساب کاربری  مدیریت در سامانه Cafino .پنل مدیریت",
+    title: "پنل مدیریت کافینو | Cafino",
+    description: "مدیریت حساب  مدیریت در سامانه Cafino .پنل مدیریت",
   },
   twitter: {
-    title: "پنل کاربری  مدیریت | Cafino",
-    description: "مدیریت حساب کاربری  مدیریت در سامانه Cafino.پنل مدیریت",
+    title: "پنل مدیریت کافینو | Cafino",
+    description: "مدیریت حساب  مدیریت در سامانه Cafino.پنل مدیریت",
   },
   authors: [{ name: "Cafino" }],
 };

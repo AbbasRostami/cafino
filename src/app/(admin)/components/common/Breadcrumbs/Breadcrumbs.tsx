@@ -2,23 +2,17 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { HomeIcon, ChevronRightIcon, DotIcon } from "lucide-react";
+import { HomeIcon, ChevronRightIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const routeMap: { [key: string]: string } = {
-  dashboard: "داشبورد",
+  overview: "داشبورد",
   users: "مدیریت کاربران",
   categories: "دسته‌بندی‌ها",
   items: "مدیریت منو",
   orders: "سفارشات",
   discounts: "تخفیف‌ها",
   blacklist: "لیست سیاه",
-  profile: "پروفایل",
-  payments: "پرداخت‌ها",
-  favorites: "علاقه‌مندی‌ها",
-  "booking-management": "رزروها",
-  announcements: "اعلان‌ها",
-  settings: "تنظیمات",
   comments: "کامنت ها",
 };
 
@@ -34,7 +28,6 @@ export default function DashboardBreadcrumbs() {
   return (
     <div className="w-full mb-6">
       <div className="flex items-center gap-2 text-sm">
-        {/* آیکون خانه */}
         <Link
           href="/dashboard"
           className={cn(
@@ -46,7 +39,6 @@ export default function DashboardBreadcrumbs() {
           <HomeIcon size={16} />
         </Link>
 
-        {/* مسیرها */}
         {paths.map((path, index) => {
           const href = `/${paths.slice(0, index + 1).join("/")}`;
           const label = routeMap[path] || path;
@@ -59,8 +51,6 @@ export default function DashboardBreadcrumbs() {
                 size={16}
                 className={cn("mx-1 text-gray-400", "dark:text-gray-500")}
               />
-
-              {/* لینک یا متن نهایی */}
               {isLast ? (
                 <span
                   className={cn(

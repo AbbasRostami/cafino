@@ -12,10 +12,15 @@ import { useUserProfile } from "@/services";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Edit, LogOut } from "lucide-react";
-import { useAuthStore } from "@/store/authStore";
+import { useLogout } from "@/services/auth";
 export default function UserDropdown() {
-  const { data: user, isLoading } = useUserProfile();
-  const logout = useAuthStore((state) => state.logout);
+  const { data: user } = useUserProfile();
+  const { logout, isPending } = useLogout();
+
+  const handleLogout = async () => {
+    await logout();
+  };
+
   return (
     <>
       <DropdownMenu dir="rtl">
@@ -33,7 +38,7 @@ export default function UserDropdown() {
                 {user?.first_name?.[0] || user?.username?.[0]}
               </AvatarFallback>
             </Avatar>
-            <span className="max-w-[100px] truncate">
+            <span className="max-w-[100px] truncate font-semibold">
               {user?.first_name || user?.username}
             </span>
           </Button>
@@ -47,22 +52,21 @@ export default function UserDropdown() {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild className="cursor-pointer">
-            <Link href="/dashboard/profile" className="font-bold">
+            <Link href="/dashboard/orders" className="font-bold">
               <Edit className="w-4 h-4" />
-              ویرایش اطلاعات
+              مدیریت سفارشات
             </Link>
           </DropdownMenuItem>
 
           <DropdownMenuSeparator />
           <DropdownMenuItem
             className="cursor-pointer font-bold"
-            onClick={async () => {
-              await logout();
-            }}
+            onClick={handleLogout}
+            disabled={isPending}
             variant="destructive"
           >
             <LogOut className="w-4 h-4" />
-            خروج از حساب کاربری
+            {isPending ? "در حال خروج..." : "خروج از پنل"}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

@@ -25,11 +25,13 @@ export default function Discounts() {
     isPending: isPendingDiscount,
     variables: deletingVars,
   } = useDeleteDiscount();
+
   const {
     mutate: updateStatusDiscount,
     isPending: isPendingStatusUpdate,
     variables: updatingVars,
   } = useUpdateDiscountStatus();
+
   const headerProps = useMemo(
     () => ({
       title: "لیست کد های تخفیف",
