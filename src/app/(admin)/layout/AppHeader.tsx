@@ -1,20 +1,22 @@
 "use client";
+
 import { useEffect, useRef, useState } from "react";
-import { HiOutlineBellAlert } from "react-icons/hi2";
 import { useSidebar } from "../context/SidebarContext";
 import UserDropdown from "../components/Header/UserDropdown";
-import {
-  TbLayoutSidebarLeftCollapseFilled,
-  TbLayoutSidebarLeftExpandFilled,
-  TbLayoutSidebarRightExpandFilled,
-} from "react-icons/tb";
-import { ThemeSwitcher } from "@/components/common/ThemeToggle/ThemeToggle";
+import Messages from "../components/Header/Messages";
+
+import { ThemeSwitcher } from "@/components/common/ThemeToggle";
+import { PanelLeftOpen, PanelRightOpen } from "lucide-react";
+import { useUserProfile } from "@/services";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const AppHeader: React.FC = () => {
   const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
   const { isMobileOpen, toggleSidebar, toggleMobileSidebar, isExpanded } =
     useSidebar();
+  const { isLoading: userLoading } = useUserProfile();
+
   useEffect(() => {
     setWindowWidth(window.innerWidth);
     const handleResize = () => {
@@ -23,6 +25,7 @@ const AppHeader: React.FC = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
   const handleToggle = () => {
     if (windowWidth !== null && windowWidth >= 1024) {
       toggleSidebar();
@@ -62,24 +65,24 @@ const AppHeader: React.FC = () => {
             aria-label="Toggle Sidebar"
           >
             {isMobileOpen ? (
-              <TbLayoutSidebarLeftCollapseFilled
+              <PanelLeftOpen
                 size={28}
                 className="text-gray-800 dark:text-amber-50"
               />
             ) : windowWidth >= 1024 ? (
               isExpanded ? (
-                <TbLayoutSidebarLeftCollapseFilled
+                <PanelLeftOpen
                   size={28}
                   className="text-gray-800 dark:text-amber-50"
                 />
               ) : (
-                <TbLayoutSidebarLeftExpandFilled
+                <PanelRightOpen
                   size={28}
                   className="text-gray-800 dark:text-amber-50"
                 />
               )
             ) : (
-              <TbLayoutSidebarRightExpandFilled
+              <PanelRightOpen
                 size={28}
                 className="text-gray-800 dark:text-amber-50"
               />
@@ -112,9 +115,16 @@ const AppHeader: React.FC = () => {
           } items-center justify-between w-full gap-4 px-5 py-4 lg:flex shadow-theme-md lg:justify-end lg:px-0 lg:shadow-none`}
         >
           <div className="flex items-center gap-2 2xsm:gap-3 border-l-2 border-gray-300 dark:border-gray-800 pl-4">
-            <ThemeSwitcher />
+            {userLoading ? (
+              <Skeleton className="h-10 w-28 rounded-full" />
+            ) : (
+              <>
+                <ThemeSwitcher />
+                <Messages />
+              </>
+            )}
           </div>
-            <UserDropdown />
+          <UserDropdown />
         </div>
       </div>
     </header>

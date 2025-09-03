@@ -1,10 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { TbHomeFilled } from "react-icons/tb";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import logo from "./../../../assets/Logo/7.png";
-import { BiChevronDown } from "react-icons/bi";
 import { useSidebar } from "../context/SidebarContext";
 import {
   Tooltip,
@@ -15,9 +13,11 @@ import {
 import {
   BadgeDollarSign,
   ChartBarStacked,
+  ChevronDown,
   CircleUserRound,
   ClipboardPlus,
   Hamburger,
+  House,
   MessageCircleCode,
   OctagonMinus,
 } from "lucide-react";
@@ -30,44 +30,44 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   {
-    icon: <TbHomeFilled />,
+    icon: <House />,
     name: "داشبورد",
-    path: "/dashboard/dashboard", // صفحه اصلی داشبورد
+    path: "/dashboard/overview",
   },
   {
     name: "مدیریت کاربران",
     icon: <CircleUserRound />,
-    path: "/dashboard/users", // مدیریت کاربران
+    path: "/dashboard/users",
   },
   {
     name: "مدیریت دسته‌بندی",
     icon: <ChartBarStacked />,
-    path: "/dashboard/categories", // مدیریت دسته‌بندی‌ها
+    path: "/dashboard/categories",
   },
   {
     name: "مدیریت آیتم‌ها",
     icon: <Hamburger />,
-    path: "/dashboard/items", // مدیریت آیتم‌ها یا محصولات
+    path: "/dashboard/items",
   },
   {
     name: "مدیریت سفارشات",
     icon: <BadgeDollarSign />,
-    path: "/dashboard/orders", // مدیریت سفارشات
+    path: "/dashboard/orders",
   },
   {
     name: "مدیریت تخفیف‌ها",
     icon: <ClipboardPlus />,
-    path: "/dashboard/discounts", // مدیریت تخفیف‌ها
+    path: "/dashboard/discounts",
   },
   {
     name: "مدیریت کامنت ها",
     icon: <MessageCircleCode />,
-    path: "/dashboard/comments", // مدیریت تخفیف‌ها
+    path: "/dashboard/comments",
   },
   {
     name: "لیست سیاه",
     icon: <OctagonMinus />,
-    path: "/dashboard/blacklist", // لیست سیاه
+    path: "/dashboard/blacklist",
   },
 ];
 
@@ -90,7 +90,7 @@ const AppSidebar: React.FC = () => {
     let submenuMatched = false;
     ["main"].forEach((menuType) => {
       const items = menuType === "main" ? navItems : [];
-      items.forEach((nav: NavItem, index: number) => {
+      items?.forEach((nav: NavItem, index: number) => {
         if (nav.subItems) {
           nav.subItems.forEach((subItem) => {
             if (isActive(subItem.path)) {
@@ -170,7 +170,7 @@ const AppSidebar: React.FC = () => {
                       </span>
                     )}
                     {(isExpanded || isMobileOpen) && (
-                      <BiChevronDown
+                      <ChevronDown
                         className={`mr-auto w-6 h-6 transition-transform duration-200 ${
                           openSubmenu?.type === menuType &&
                           openSubmenu?.index === index
@@ -213,7 +213,7 @@ const AppSidebar: React.FC = () => {
                         {nav.icon}
                       </span>
                       {(isExpanded || isMobileOpen) && (
-                        <span className="menu-item-text text-medium mr-3">
+                        <span className="menu-item-text text-medium mr-3 font-bold">
                           {nav.name}
                         </span>
                       )}
@@ -326,14 +326,14 @@ const AppSidebar: React.FC = () => {
                 alt="Logo"
                 width={70}
               />
-              <h1 className="text-4xl font-extrabold mt-1 text-neutral-900 tracking-tight leading-none">
-                <span className="dark:text-emerald-400 bg-gradient-to-r from-neutral-900 via-neutral-700 to-neutral-900 bg-clip-text text-black drop-shadow-sm">
+              <p className="text-4xl font-extrabold mt-1 leading-none">
+                <span className="text-amber-600 dark:text-amber-400 drop-shadow-sm">
                   Caf
                 </span>
-                <span className="text-[#fca804] dark:text-amber-400 drop-shadow-sm">
+                <span className="text-amber-600 dark:text-amber-400 drop-shadow-sm">
                   ino
                 </span>
-              </h1>
+              </p>
             </>
           ) : (
             <Image src={logo} alt="Logo" className="h-auto w-auto" width={32} />

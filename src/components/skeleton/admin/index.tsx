@@ -34,3 +34,13 @@ export function TableSkeletonRows({
     </>
   );
 }
+
+export {
+  StatisticsSkeleton,
+  UsersMetricsSkeleton,
+  OrderMetricsSkeleton,
+  RevenueMetricsSkeleton,
+  ItemsMetricsSkeleton,
+  CommentsMetricsSkeleton,
+  LatestCommentsSkeleton,
+} from "./overview";
