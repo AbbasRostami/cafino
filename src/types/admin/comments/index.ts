@@ -1,4 +1,4 @@
-export type CommentResponseAdmin = {
+export interface CommentResponseAdmin {
   id: string;
   text: string;
   accept: boolean;
@@ -17,9 +17,9 @@ export type CommentResponseAdmin = {
     title: string;
   };
   is_reply: boolean;
-};
+}
 
-export type GetCommentsAdminApiResponse = {
+export interface GetCommentsAdminApiResponse {
   statusCode: number;
   message: string;
   data: {
@@ -28,11 +28,11 @@ export type GetCommentsAdminApiResponse = {
     limit: number;
     comments: CommentResponseAdmin[];
   };
-};
+}
 
 // Props
 
-export type ColumnsCommentsProps = {
+export interface ColumnsCommentsProps {
   currentPage: number;
   currentLimit: number;
   acceptComment: (data: { id: string }) => void;
@@ -41,7 +41,7 @@ export type ColumnsCommentsProps = {
   rejectComment: (data: { id: string }) => void;
   isRejectingComment: boolean;
   rejectingVars: { id: string };
-};
+}
 export interface AddCommentModalProps {
   itemId: string;
   parentId?: string;

@@ -1,5 +1,5 @@
 import { useGet } from "@/hooks/useReactQueryHooks";
-import { FavoriteListResponse } from "@/types/Profile/favorites";
+import { FavoriteListResponse } from "@/types/Profile";
 
 export const useGetFavorites = (limit: number, page: number) => {
   const { data, isLoading, isError, isPending } = useGet<FavoriteListResponse>(
@@ -9,7 +9,7 @@ export const useGetFavorites = (limit: number, page: number) => {
     }
   );
   return {
-    data: data?.data || [],
+    data: data?.data?.items || [],
     total: data?.total || 0,
     page: data?.page || page,
     limit: data?.limit || limit,

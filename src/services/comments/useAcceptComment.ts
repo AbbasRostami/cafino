@@ -12,6 +12,7 @@ export const useAcceptComment = () => {
       onSuccess: () => {
         toast.success("نظر با موفقیت قبول شد");
         queryClient.invalidateQueries({ queryKey: ["comments-admin"] });
+        queryClient.invalidateQueries({ queryKey: ["admin-overview"] });
       },
       onError: () => {
         toast.error("خطا در قبول نظر");

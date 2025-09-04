@@ -7,7 +7,7 @@ export const useAddToFavorite = () => {
   const queryClient = useQueryClient();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
-  return usePost<AddToFavoriteRequest>(
+  return usePost<any, { itemId: string }>(
     (data) => {
       if (!isAuthenticated) {
         toast.error("لطفاً ابتدا وارد حساب کاربری خود شوید.");
@@ -20,8 +20,8 @@ export const useAddToFavorite = () => {
         toast.success("ایتم با موفقیت به علاقه مندی ها اضافه شد");
         queryClient.invalidateQueries({ queryKey: ["favorites"] });
         queryClient.invalidateQueries({ queryKey: ["items"] });
-        // Invalidate item-details queries to update UI immediately
         queryClient.invalidateQueries({ queryKey: ["item-details"] });
+        queryClient.invalidateQueries({ queryKey: ["items-landing"] });
       },
       onError: (error: any) => {
         if (error.message !== "User is not authenticated") {

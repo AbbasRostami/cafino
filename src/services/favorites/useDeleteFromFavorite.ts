@@ -11,7 +11,7 @@ export const useDeleteFromFavorite = () => {
         queryClient.invalidateQueries({ queryKey: ["favorites"] });
         queryClient.invalidateQueries({ queryKey: ["item-details", itemId] });
         queryClient.invalidateQueries({ queryKey: ["items"] });
-        // Invalidate all item-details queries to update UI immediately
+        queryClient.invalidateQueries({ queryKey: ["items-landing"] });
         queryClient.invalidateQueries({ queryKey: ["item-details"] });
       },
       onError: () => {

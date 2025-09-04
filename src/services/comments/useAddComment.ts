@@ -1,7 +1,12 @@
 import { usePost } from "@/hooks/useReactQueryHooks";
-import { AddCommentRequest } from "@/types/main/comments";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+
+interface AddCommentRequest {
+  itemId: string;
+  rating: number;
+  comment: string;
+}
 
 export const useAddComment = () => {
   const queryClient = useQueryClient();

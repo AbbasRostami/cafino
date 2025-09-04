@@ -15,7 +15,7 @@ export const useUpdateDiscountStatus = () => {
           queryClient.invalidateQueries({ queryKey: ["discounts"] });
         },
         onError: (error: any) => {
-          switch (error?.status) {
+          switch (error?.statusCode) {
             case 400:
               toast.error("کد تخفیف منقضی شده است");
               break;
@@ -33,4 +33,3 @@ export const useUpdateDiscountStatus = () => {
     );
   return { mutate, isPending, error, variables };
 };
-message: "Discount code expired.";

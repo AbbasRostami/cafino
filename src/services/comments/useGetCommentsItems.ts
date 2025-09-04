@@ -1,8 +1,5 @@
 import { useGet } from "@/hooks/useReactQueryHooks";
-import {
-  GetCommentsResponse,
-  UseGetCommentsItemsProps,
-} from "@/types/main/comments";
+import { CommentsResponse, UseGetCommentsItemsProps } from "@/types/main";
 
 export const useGetCommentsItems = ({
   itemId,
@@ -10,7 +7,7 @@ export const useGetCommentsItems = ({
   limit = 10,
   sortBy = "newest",
 }: UseGetCommentsItemsProps) => {
-  const { data, isLoading, error } = useGet<GetCommentsResponse>(
+  const { data, isLoading, error } = useGet<CommentsResponse>(
     `/v1/comment/${itemId}/comments?limit=${limit}&page=${page}&sortBy=${sortBy}`,
     {
       queryKey: ["comments", itemId, page, limit, sortBy],

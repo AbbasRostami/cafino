@@ -13,6 +13,7 @@ export const useCreateItem = () => {
       onSuccess: () => {
         toast.success("محصول با موفقیت ایجاد شد");
         queryClient.invalidateQueries({ queryKey: ["items-admin"] });
+        queryClient.invalidateQueries({ queryKey: ["admin-overview"] });
       },
       onError: () => {
         toast.error("خطا در ایجاد محصول");

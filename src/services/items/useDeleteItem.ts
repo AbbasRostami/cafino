@@ -12,6 +12,7 @@ export const useDeleteItem = () => {
       onSuccess: () => {
         toast.success("محصول حذف شد");
         queryClient.invalidateQueries({ queryKey: ["items-admin"] });
+        queryClient.invalidateQueries({ queryKey: ["admin-overview"] });
       },
       onError: () => {
         toast.error("خطا در حذف محصول");

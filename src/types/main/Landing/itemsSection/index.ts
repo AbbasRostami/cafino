@@ -1,4 +1,4 @@
-export type Item = {
+export interface Item  {
   id: string;
   title: string;
   ingredients: string[];
@@ -14,14 +14,14 @@ export type Item = {
   isFav: boolean;
 };
 
-export type ItemResponse = {
+export interface ItemResponse {
   data: {
     items: Item[];
     total?: number;
     page?: number;
     limit?: number;
   };
-};
+}
 
 export interface ItemSectionClientProps {
   items: Item[];
