@@ -39,7 +39,7 @@ export const PriceInputs = ({
               type="number"
               value={maxPrice === defaultMax ? "" : maxPrice}
               onChange={handleMaxPriceChange}
-              placeholder={defaultMax.toLocaleString("fa-IR")}
+              placeholder={String(defaultMax)}
               className="pr-8 text-sm [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               min={minPrice}
               max={defaultMax}
@@ -63,7 +63,7 @@ export const PriceInputs = ({
               type="number"
               value={minPrice === defaultMin ? "" : minPrice}
               onChange={handleMinPriceChange}
-              placeholder={defaultMin.toLocaleString("fa-IR")}
+              placeholder={String(defaultMin)}
               className="pr-8 text-sm [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               min={defaultMin}
               max={maxPrice}

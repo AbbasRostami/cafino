@@ -75,7 +75,7 @@ export const MenuItemSkeleton = ({
 
 export const SkeletonSidebar = () => {
   return (
-    <aside className="hidden lg:block w-80 h-full bg-white/80 dark:bg-gray-800/50 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl">
+    <aside className="hidden xl:block w-80 h-full bg-white/80 dark:bg-gray-800/50 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl">
       <ScrollArea className="h-full" dir="rtl">
         <div className="p-6 space-y-8 animate-pulse">
           <div className="flex items-center justify-between mb-4">

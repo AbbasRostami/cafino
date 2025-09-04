@@ -4,10 +4,12 @@ import {
   generateItemsSectionStructuredData,
   generateRestaurantStructuredData,
 } from "@/lib/metadata/itemsSection";
-import { useGetItemsServer } from "@/services/server/useGetItemsServer";
+import { getItemsServer } from "@/services/server/useGetItemsServer";
 
 export default async function ItemSection() {
-  const itemsResponse = await useGetItemsServer();
+  const itemsResponse = await getItemsServer({
+    queryString: "page=2&limit=20&sortBy=newest",
+  });
 
   const items = itemsResponse?.data?.items || [];
 

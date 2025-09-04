@@ -5,3 +5,4 @@ export * from "./Landing";
 export * from "./checkout";
 export * from "./Footer";
 export * from "./Header";
+export * from "./auth";

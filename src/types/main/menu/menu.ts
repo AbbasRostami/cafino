@@ -87,7 +87,7 @@ export interface FilterSidebarProps {
   selectedCategoryId: string | null;
   priceRange: [number, number];
   isAvailableOnly: boolean;
-  onCategoryChange: (categoryId: string | null) => void;
+  onCategoryChange: (category: string | null) => void;
   onPriceRangeChange: (range: [number, number]) => void;
   onAvailableOnlyChange: (value: boolean) => void;
   onClearFilters: () => void;
@@ -145,7 +145,6 @@ export interface DesktopSidebarProps {
   handleMaxPriceInputChange: (value: number) => void;
 }
 
-
 // Price Inputs Types
 export interface PriceInputsProps {
   minPrice: number;
@@ -155,4 +154,22 @@ export interface PriceInputsProps {
   defaultMin: number;
   defaultMax: number;
   className?: string;
+}
+
+// Metadata
+
+export type GenerateProps = {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+export type MenuPageProps = {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+export interface MenusWrapperProps {
+  initialData?: MenuItemResponse;
+  query: {
+    page: number;
+    limit: number;
+  };
 }

@@ -71,7 +71,7 @@ const CategorySectionClient: React.FC<CategorySectionClientProps> = ({
                 <div className="bg-[#18181c] dark:bg-[#18181c] bg-gradient-to-r from-amber-500 to-amber-700 dark:bg-none w-full h-72 rounded-xl relative flex flex-col justify-center items-center">
                   <div
                     onClick={() => {
-                      router.push(`/menu?categoryId=${item?.id}`);
+                      router.push(`/menu?category=${item?.title}`);
                     }}
                     className="top-radius absolute top-0 -right-0.5 w-auto px-3 h-14 bg-orange-50 dark:bg-[#23232a] rounded-bl-2xl rounded-tr-2xl flex justify-center items-center "
                   >

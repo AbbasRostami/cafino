@@ -1,12 +1,16 @@
 "use client";
 import dynamic from "next/dynamic";
-import { MenusProps } from "@/types/main/menu/menu";
+import { useSearchParams } from "next/navigation";
+import { useGetItems } from "@/services";
+import { getMenuQueryParams } from "@/lib/query";
+import { MenusWrapperProps } from "@/types/main/menu/menu";
 import { MenuHeader } from "./layout/MenuHeader";
 import { SearchBar } from "./filters/SearchBar";
 import { MenuControls } from "./filters/MenuControls";
 import { EmptyState, MenuGrid, MenuPagination } from ".";
 import { MenuItemSkeleton, SkeletonSidebar } from "@/components/skeleton";
 import { useMenuFilters } from "@/hooks/useMenuFilters";
+
 const MenuFiltersSidebar = dynamic(
   () => import("./filters/MenuFiltersSidebar"),
   {
@@ -14,7 +18,11 @@ const MenuFiltersSidebar = dynamic(
   }
 );
 
-export default function Menus({ items, isLoading, total }: MenusProps) {
+export default function Menus({ initialData }: MenusWrapperProps) {
+  const searchParams = useSearchParams();
+  const { queryString } = getMenuQueryParams(searchParams);
+
+  const { data: items, isLoading } = useGetItems(queryString, initialData);
   const {
     viewMode,
     input,
@@ -28,7 +36,8 @@ export default function Menus({ items, isLoading, total }: MenusProps) {
     clearFilters,
   } = useMenuFilters();
 
-  const totalParam = Number(total) || 0;
+  const itemsList = items?.data?.items || [];
+  const totalParam = Number(items?.data?.total || 0);
   const totalPages = Math.max(1, Math.ceil(totalParam / limitParam));
   const currentPage = pageParam;
 
@@ -54,15 +63,15 @@ export default function Menus({ items, isLoading, total }: MenusProps) {
 
           {isLoading ? (
             <MenuItemSkeleton viewMode={viewMode} />
-          ) : items && items.length > 0 ? (
-            <MenuGrid items={items} viewMode={viewMode} />
+          ) : itemsList && itemsList.length > 0 ? (
+            <MenuGrid items={itemsList} viewMode={viewMode} />
           ) : (
             <EmptyState />
           )}
         </div>
       </div>
 
-      {!isLoading && items && items.length > 0 && (
+      {!isLoading && itemsList && itemsList.length > 0 && (
         <MenuPagination
           currentPage={currentPage}
           totalPages={totalPages}

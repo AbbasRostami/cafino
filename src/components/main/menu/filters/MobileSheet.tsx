@@ -19,7 +19,7 @@ const MobileSheet = ({
 }: MobileSheetProps) => {
   const { filters, updateFilter, resetFilters } = useMenuFilters();
 
-  const [tempCategoryId, setTempCategoryId] = useState(filters.categoryId);
+  const [tempCategoryId, setTempCategoryId] = useState(filters.category);
   const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([
     filters.minPrice,
     filters.maxPrice,
@@ -29,14 +29,14 @@ const MobileSheet = ({
   );
 
   useEffect(() => {
-    setTempCategoryId(filters.categoryId);
+    setTempCategoryId(filters.category);
     setTempPriceRange([filters.minPrice, filters.maxPrice]);
     setTempAvailableOnly(filters.availableOnly);
   }, [filters]);
 
   const handleApplyFilters = () => {
     updateFilter({
-      categoryId: tempCategoryId,
+      category: tempCategoryId,
       minPrice: tempPriceRange[0],
       maxPrice: tempPriceRange[1],
       availableOnly: tempAvailableOnly,
@@ -101,7 +101,7 @@ const MobileSheet = ({
               <div>
                 <div className="grid grid-cols-2 gap-3">
                   {categories?.categories?.map((category: any) => {
-                    const isSelected = tempCategoryId === category.id;
+                    const isSelected = tempCategoryId === category?.id;
                     return (
                       <div
                         key={category.id}
@@ -140,7 +140,6 @@ const MobileSheet = ({
                 </div>
               </div>
               <div className="bg-gradient-to-r from-amber-500 to-orange-500 h-1 w-full rounded-full"></div>
-
               <div>
                 <FilterSectionHeader title="محدوده قیمت" />
                 <div className="space-y-4">
@@ -154,14 +153,9 @@ const MobileSheet = ({
                     }
                   />
                   <div className="flex justify-between text-sm font-medium text-gray-700 dark:text-gray-300">
-                    <span>
-                      {tempPriceRange[1]?.toLocaleString("fa-IR")} تومان
-                    </span>
-                    <span>
-                      {tempPriceRange[0]?.toLocaleString("fa-IR")} تومان
-                    </span>
+                    <span>{tempPriceRange[1]} تومان</span>
+                    <span>{tempPriceRange[0]} تومان</span>
                   </div>
-
                   <PriceInputs
                     minPrice={tempPriceRange[0]}
                     maxPrice={tempPriceRange[1]}

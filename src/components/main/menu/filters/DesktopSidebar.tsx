@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import { Slider } from "@/components/ui/slider";
 import { DesktopSidebarProps } from "@/types/main";
 import { PriceInputs } from "./PriceInputs";
+import { formatCurrency } from "@/utils/formatters";
 
 const DesktopSidebar = ({
   className,
@@ -18,13 +19,13 @@ const DesktopSidebar = ({
   DEFAULT_MAX,
 }: DesktopSidebarProps) => {
   const [localPriceRange, setLocalPriceRange] = useState<[number, number]>([
-    filters.minPrice,
-    filters.maxPrice,
+    filters?.minPrice,
+    filters?.maxPrice,
   ]);
 
   useEffect(() => {
-    setLocalPriceRange([filters.minPrice, filters.maxPrice]);
-  }, [filters.minPrice, filters.maxPrice]);
+    setLocalPriceRange([filters?.minPrice, filters?.maxPrice]);
+  }, [filters?.minPrice, filters?.maxPrice]);
 
   const handlePriceRangeChange = (val: [number, number]) => {
     setLocalPriceRange(val);
@@ -97,16 +98,16 @@ const DesktopSidebar = ({
                 key={category?.id}
                 onClick={() => {
                   updateFilter({
-                    categoryId:
-                      filters?.categoryId === category?.id
+                    category:
+                      filters?.category === category?.title
                         ? null
-                        : category?.id,
+                        : category?.title,
                   });
                 }}
                 className={cn(
                   "cursor-pointer rounded-3xl border shadow-md overflow-hidden transition-all duration-300 group",
                   "flex flex-col items-center justify-center p-2 min-h-[80px] text-center backdrop-blur-lg",
-                  filters?.categoryId === category?.id
+                  filters?.category === category?.title
                     ? "bg-gradient-to-br from-[#fef3c7] to-[#fcd34d] dark:from-amber-900/30 dark:to-orange-900/30 border-amber-300 dark:border-amber-600 ring-2 ring-amber-300 dark:ring-amber-700 shadow-lg"
                     : "bg-white/50 dark:bg-gray-800/30 border-gray-200 dark:border-gray-700 hover:shadow-xl hover:scale-[1.025] hover:ring-1 hover:ring-orange-300"
                 )}
@@ -114,7 +115,7 @@ const DesktopSidebar = ({
                 <Sparkles
                   className={cn(
                     "w-6 h-6 mb-2 transition-all duration-300",
-                    filters?.categoryId === category?.id
+                    filters?.category === category?.title
                       ? "text-orange-600 dark:text-amber-400"
                       : "text-orange-400 group-hover:text-orange-500"
                   )}
@@ -122,7 +123,7 @@ const DesktopSidebar = ({
                 <span
                   className={cn(
                     "text-sm font-bold leading-snug transition-colors break-words",
-                    filters?.categoryId === category?.id
+                    filters?.category === category?.title
                       ? "text-orange-800 dark:text-amber-100"
                       : "text-gray-800 dark:text-gray-200 group-hover:text-orange-700"
                   )}
@@ -155,8 +156,8 @@ const DesktopSidebar = ({
                 onValueCommit={handlePriceRangeCommit}
               />
               <div className="flex justify-between text-sm font-medium text-gray-700 dark:text-gray-300">
-                <span>{localPriceRange[1]?.toLocaleString("fa-IR")} تومان</span>
-                <span>{localPriceRange[0]?.toLocaleString("fa-IR")} تومان</span>
+                <span>{formatCurrency(localPriceRange[1])} تومان</span>
+                <span>{formatCurrency(localPriceRange[0])} تومان</span>
               </div>
 
               <PriceInputs
@@ -185,12 +186,12 @@ const DesktopSidebar = ({
               {[
                 { label: "همه محصولات", value: false },
                 { label: "فقط موجودی‌ها", value: true },
-              ].map((option) => (
+              ]?.map((option) => (
                 <div
                   key={option?.label}
                   className={cn(
                     "p-3 rounded-xl border transition-all duration-300 cursor-pointer flex items-center gap-3",
-                    filters.availableOnly === option?.value
+                    filters?.availableOnly === option?.value
                       ? option?.value
                         ? "bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 border-green-300 dark:border-green-700 shadow-inner"
                         : "bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/30 dark:to-cyan-900/30 border-blue-300 dark:border-blue-700 shadow-inner"

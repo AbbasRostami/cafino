@@ -7,7 +7,7 @@ import { FavoriteToggleButton } from "@/lib/FavoriteToggleButton";
 import { AddToCartButtonStyled } from "@/lib/AddToCartButtonStyled";
 import { MenuItemCardProps, PriceInfo } from "@/types/main";
 import { cn } from "@/lib/utils";
-import { getStockStatus } from "@/utils/formatters";
+import { formatCurrency, getStockStatus } from "@/utils/formatters";
 import { CartItem } from "@/store/cartStore";
 import {
   Tooltip,
@@ -35,28 +35,28 @@ const calculatePrice = (item: any): PriceInfo => {
 
 export const MenuItemCard = ({ item, viewMode }: MenuItemCardProps) => {
   const router = useRouter();
-  const stockStatus = getStockStatus(item.quantity);
+  const stockStatus = getStockStatus(item?.quantity);
   const priceInfo = calculatePrice(item);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const itemData: CartItem = {
-    itemId: item.id,
-    title: item.title,
-    description: item.description,
+    itemId: item?.id,
+    title: item?.title,
+    description: item?.description,
     count: 0,
-    images: item.images.map((img) => img.imageUrl),
-    price: priceInfo.originalPrice.toString(),
-    discount: priceInfo.discount.toString(),
-    finalPrice: priceInfo.finalPrice,
+    images: item?.images?.map((img) => img?.imageUrl),
+    price: priceInfo?.originalPrice.toString(),
+    discount: priceInfo?.discount.toString(),
+    finalPrice: priceInfo?.finalPrice,
     category: {
-      title: item.category?.title || "",
+      title: item?.category?.title || "",
     },
-    quantity: item.quantity,
+    quantity: item?.quantity,
   };
 
   const handleImageClick = () => {
-    if (item.images.length > 1) {
-      setCurrentImageIndex((prev) => (prev + 1) % item.images.length);
+    if (item?.images?.length > 1) {
+      setCurrentImageIndex((prev) => (prev + 1) % item?.images?.length);
     }
   };
 
@@ -84,15 +84,15 @@ export const MenuItemCard = ({ item, viewMode }: MenuItemCardProps) => {
           priority
         />
 
-        {item.images.length > 1 && (
+        {item?.images?.length > 1 && (
           <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-black/50 text-white text-xs px-2 py-1 rounded-full">
-            {currentImageIndex + 1} / {item.images.length}
+            {currentImageIndex + 1} / {item?.images?.length}
           </div>
         )}
 
-        {priceInfo.hasDiscount && (
+        {priceInfo?.hasDiscount && (
           <div className="absolute bottom-4 left-4 bg-gradient-to-tr from-red-500 to-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-20">
-            {Math.round(priceInfo.discount)}%
+            {Math.round(priceInfo?.discount)}%
           </div>
         )}
         <FavoriteToggleButton
@@ -127,7 +127,7 @@ export const MenuItemCard = ({ item, viewMode }: MenuItemCardProps) => {
           <div className="flex items-center gap-1 bg-amber-100 dark:bg-amber-900/30 px-2 py-1 rounded-full shrink-0">
             <Star className="text-yellow-400 fill-current w-3 h-3 sm:w-4 sm:h-4" />
             <span className="text-xs font-medium text-amber-800 dark:text-amber-200">
-              {item?.rate.toFixed(1)}
+              {item?.rate}
             </span>
           </div>
         </div>
@@ -136,12 +136,12 @@ export const MenuItemCard = ({ item, viewMode }: MenuItemCardProps) => {
           <Tooltip>
             <TooltipTrigger asChild>
               <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-2 text-justify cursor-help">
-                {item?.description.length > 45
+                {item?.description?.length > 45
                   ? `${item?.description.slice(0, 45)}...`
                   : item?.description}
               </p>
             </TooltipTrigger>
-            {item?.description.length > 45 && (
+            {item?.description?.length > 45 && (
               <TooltipContent side="top" className="max-w-xs">
                 <p className="text-sm">{item?.description}</p>
               </TooltipContent>
@@ -160,18 +160,18 @@ export const MenuItemCard = ({ item, viewMode }: MenuItemCardProps) => {
                 {ingredient}
               </span>
             ))}
-          {item?.ingredients && item.ingredients.length > 2 && (
+          {item?.ingredients && item?.ingredients?.length > 2 && (
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <span className="text-xs bg-amber-100 dark:bg-amber-900/20 text-amber-800 dark:text-amber-200 px-2 py-1 rounded-full cursor-help">
-                    +{item.ingredients.length - 2} بیشتر
+                    +{item?.ingredients.length - 2} بیشتر
                   </span>
                 </TooltipTrigger>
                 <TooltipContent side="top" className="max-w-xs">
                   <div className="space-y-2">
                     <div className="flex flex-wrap gap-1">
-                      {item.ingredients.map((ingredient, index) => (
+                      {item?.ingredients?.map((ingredient, index) => (
                         <span key={index} className="text-xs rounded-full">
                           {ingredient + "،"}
                         </span>
@@ -194,11 +194,11 @@ export const MenuItemCard = ({ item, viewMode }: MenuItemCardProps) => {
                 <span
                   className={cn(
                     "font-bold",
-                    stockStatus.isOutOfStock
+                    stockStatus?.isOutOfStock
                       ? "text-red-500"
-                      : stockStatus.isLowStock
+                      : stockStatus?.isLowStock
                       ? "text-amber-500"
-                      : stockStatus.isMediumStock
+                      : stockStatus?.isMediumStock
                       ? "text-yellow-500"
                       : "text-green-500"
                   )}
@@ -213,7 +213,7 @@ export const MenuItemCard = ({ item, viewMode }: MenuItemCardProps) => {
                     "absolute top-0 left-0 h-2 rounded-full",
                     stockStatus.progressColor
                   )}
-                  style={{ width: stockStatus.progressWidth }}
+                  style={{ width: stockStatus?.progressWidth }}
                 />
               </div>
             </div>
@@ -222,11 +222,11 @@ export const MenuItemCard = ({ item, viewMode }: MenuItemCardProps) => {
 
         <div className="flex flex-col sm:flex-row justify-center items-center gap-2">
           <span className="text-base sm:text-lg font-bold text-amber-600 dark:text-amber-400">
-            {Math.round(priceInfo.finalPrice).toLocaleString("fa-IR")} تومان
+            {formatCurrency(priceInfo?.finalPrice)} تومان
           </span>
           {priceInfo.hasDiscount && (
             <span className="text-sm text-gray-400 line-through">
-              {Math.round(priceInfo.originalPrice).toLocaleString("fa-IR")}
+              {formatCurrency(priceInfo?.originalPrice)}
             </span>
           )}
         </div>
