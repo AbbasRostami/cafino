@@ -1,28 +1,41 @@
 "use client";
 import { useState } from "react";
+import { ItemDetailsSkeleton } from "@/components/skeleton";
+import { useGetItemDetails } from "@/services/items";
 import { useGetCommentsItems } from "@/services";
 import { ImageGallery, ItemInfo, PriceSection, CommentsSection } from "./index";
 import { Item, SortBy } from "@/types/main";
 
-export default function ItemsDetails({ data }: { data: Item }) {
+export default function ItemsDetails({
+  id,
+  initialItem,
+}: {
+  id: string;
+  initialItem?: Item;
+}) {
   const [activeImage, setActiveImage] = useState(0);
   const [limit, setLimit] = useState(2);
   const [sortBy, setSortBy] = useState<SortBy>("newest");
   const [activeReplyId, setActiveReplyId] = useState<string | null>(null);
 
-  const originalPrice = data?.item?.price;
-  const discount = data?.item?.discount;
+  const { data, isLoading } = useGetItemDetails(id, initialItem);
+
+  const { data: CommentsItems, isLoading: isLoadingComments } =
+    useGetCommentsItems({
+      itemId: id,
+      page: 1,
+      limit,
+      sortBy,
+    });
+
+  if (isLoading || !data) return <ItemDetailsSkeleton />;
+
+  const originalPrice = data?.price;
+  const discount = data?.discount;
   const finalPrice =
     discount > 0
       ? originalPrice - (originalPrice * discount) / 100
       : originalPrice;
-
-  const { data: CommentsItems, isLoading: isLoadingComments } =
-    useGetCommentsItems({
-      itemId: data?.item?.id,
-      limit,
-      sortBy,
-    });
 
   return (
     <div className="container mx-auto px-4 md:px-8 lg:px-28">
@@ -35,7 +48,7 @@ export default function ItemsDetails({ data }: { data: Item }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         <div className="space-y-8">
           <ImageGallery
-            images={data?.item?.images}
+            images={data?.images}
             activeImage={activeImage}
             onImageChange={setActiveImage}
             discount={discount}
@@ -44,21 +57,21 @@ export default function ItemsDetails({ data }: { data: Item }) {
 
         <div className="space-y-8">
           <ItemInfo
-            item={data?.item}
+            item={data as any}
             finalPrice={finalPrice}
             originalPrice={originalPrice}
             discount={discount}
           />
 
           <PriceSection
-            item={data?.item}
+            item={data as any}
             finalPrice={finalPrice}
             originalPrice={originalPrice}
             discount={discount}
           />
 
           <CommentsSection
-            itemId={data?.item?.id}
+            itemId={id}
             comments={CommentsItems}
             isLoading={isLoadingComments}
             limit={limit}

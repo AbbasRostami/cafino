@@ -8,6 +8,7 @@ import {
   ShoppingCart,
 } from "lucide-react";
 import { CartItem } from "@/store/cartStore";
+import { formatCurrency } from "@/utils/formatters";
 
 export const PriceSection = ({
   item,
@@ -16,18 +17,18 @@ export const PriceSection = ({
   discount,
 }: PriceSectionProps) => {
   const itemData: CartItem = {
-    itemId: item.id,
-    title: item.title,
-    description: item.description,
+    itemId: item?.id,
+    title: item?.title,
+    description: item?.description,
     count: 0,
-    images: item.images.map((img) => img.imageUrl),
-    price: originalPrice.toString(),
-    discount: discount.toString(),
+    images: item?.images?.map((img) => img?.imageUrl),
+    price: originalPrice?.toString(),
+    discount: discount?.toString(),
     finalPrice: finalPrice,
     category: {
-      title: item.category?.title || "",
+      title: item?.category?.title || "",
     },
-    quantity: item.quantity,
+    quantity: item?.quantity,
   };
 
   return (
@@ -43,11 +44,11 @@ export const PriceSection = ({
             <div className="flex flex-col">
               <div className="flex items-baseline gap-2">
                 <span className="text-xl font-bold text-amber-700 dark:text-amber-300">
-                  {finalPrice?.toLocaleString("fa-IR")} تومان
+                  {formatCurrency(finalPrice)} تومان
                 </span>
                 {discount > 0 && (
                   <span className="text-sm text-gray-500 dark:text-gray-400 line-through">
-                    {originalPrice?.toLocaleString("fa-IR")}
+                    {formatCurrency(originalPrice)}
                   </span>
                 )}
               </div>
@@ -65,12 +66,6 @@ export const PriceSection = ({
                 </span>
               </div>
             </div>
-
-            {discount > 0 && (
-              <div className="px-2.5 py-1 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-bold rounded-full">
-                {discount}% تخفیف
-              </div>
-            )}
           </div>
         </div>
 
@@ -80,9 +75,9 @@ export const PriceSection = ({
           className="flex-shrink-0"
         >
           <AddToCartButtonStyled
-            itemId={item.id}
+            itemId={item?.id}
             itemData={itemData}
-            disabled={item.quantity === 0}
+            disabled={item?.quantity === 0}
             className=""
           />
         </MotionDiv>

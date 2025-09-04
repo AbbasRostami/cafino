@@ -9,7 +9,7 @@ export const useGetAddresses = () => {
     }
   );
   return {
-    data,
+    data: data?.data?.addresses,
     isLoading,
     isError,
     isPending,

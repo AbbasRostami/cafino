@@ -64,7 +64,7 @@ export const CommentForm = ({
               />
               <div className="flex items-center justify-between text-sm">
                 <span className="text-gray-600 dark:text-gray-300">
-                  امتیاز انتخاب‌شده: {field.value.toLocaleString("fa-IR")}
+                  امتیاز انتخاب‌شده: {field.value}
                 </span>
                 <div className="flex items-center gap-1">
                   {[1, 2, 3, 4, 5].map((star) => (

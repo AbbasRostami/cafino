@@ -2,8 +2,8 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { RiComputerFill, RiSunLine } from "react-icons/ri";
-import { IoMoon } from "react-icons/io5";
+
+import { Laptop, MoonStar, Sun } from "lucide-react";
 
 export function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
@@ -39,11 +39,11 @@ export function ThemeSwitcher() {
         className="p-2 rounded-full border transition-all cursor-pointer duration-300 border-gray-300 dark:border-gray-600 bg-white dark:bg-neutral-800 shadow-sm hover:shadow-lg hover:scale-110"
       >
         {theme === "light" ? (
-          <IoMoon className="w-6 h-6 text-yellow-500 group-hover:text-yellow-400 transition duration-300" />
+          <MoonStar className="w-6 h-6 text-yellow-500 group-hover:text-yellow-400 transition duration-300" />
         ) : theme === "dark" ? (
-          <RiSunLine className="w-6 h-6 text-gray-300 group-hover:text-orange-300 transition duration-300" />
+          <Sun className="w-6 h-6 text-gray-300 group-hover:text-orange-300 transition duration-300" />
         ) : (
-          <RiComputerFill className="w-6 h-6 text-blue-500 group-hover:text-blue-400 transition duration-300" />
+          <Laptop className="w-6 h-6 text-blue-500 group-hover:text-blue-400 transition duration-300" />
         )}
       </button>
 
@@ -75,11 +75,9 @@ export function ThemeSwitcher() {
             }}
             className="p-2 rounded-full transition-all duration-300 cursor-pointer hover:bg-gray-200 dark:hover:bg-neutral-700"
           >
-            {t === "light" && <IoMoon className="w-6 h-6 text-yellow-500" />}
-            {t === "dark" && <RiSunLine className="w-6 h-6 text-gray-400" />}
-            {t === "system" && (
-              <RiComputerFill className="w-6 h-6 text-blue-500" />
-            )}
+            {t === "light" && <MoonStar className="w-6 h-6 text-yellow-500" />}
+            {t === "dark" && <Sun className="w-6 h-6 text-gray-400" />}
+            {t === "system" && <Laptop className="w-6 h-6 text-blue-500" />}
           </button>
         ))}
       </div>

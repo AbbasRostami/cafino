@@ -341,7 +341,7 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
                     <div className="mt-2 flex flex-col  justify-between items-center gap-2">
                       <div className="flex sm:flex-col xl:flex-row items-center justify-between gap-3 md:gap-1 min-h-[44px]">
                         <span className="text-lg font-bold text-amber-600 dark:text-amber-400">
-                          {finalPrice?.toLocaleString()} تومان
+                          {finalPrice} تومان
                         </span>
 
                         <span
@@ -349,7 +349,7 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
                             discount === 0 ? "invisible" : ""
                           }`}
                         >
-                          {originalPrice?.toLocaleString()}
+                          {originalPrice}
                         </span>
                       </div>
                       <div className="flex justify-end">

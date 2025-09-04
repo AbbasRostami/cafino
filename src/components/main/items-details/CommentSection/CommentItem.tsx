@@ -6,7 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { formatDate } from "@/utils/formatters";
+import { formatJalaliDate } from "@/utils/formatters";
 import { CommentItemProps } from "@/types/main";
 import { ReplyForm } from "./ReplyForm";
 import { useState } from "react";
@@ -89,7 +89,7 @@ export const CommentItem = ({
                   {comment?.user?.username}
                 </p>
                 <span className="text-sm text-gray-700 dark:text-gray-300">
-                  {formatDate(comment?.created_at)}
+                  {formatJalaliDate(comment?.created_at)}
                 </span>
               </div>
             </div>
@@ -127,18 +127,18 @@ export const CommentItem = ({
                   <div className="flex justify-between items-start">
                     <div className="flex items-center gap-3">
                       {renderUserAvatar(
-                        reply.user.username ||
-                          `${reply.user.first_name || ""} ${
-                            reply.user.last_name || ""
+                        reply?.user?.username ||
+                          `${reply?.user?.first_name || ""} ${
+                            reply?.user?.last_name || ""
                           }`.trim() ||
                           "کاربر",
                         "sm"
                       )}
                       <div>
                         <p className="font-medium text-gray-800 dark:text-white text-sm">
-                          {reply.user.username ||
-                            `${reply.user.first_name || ""} ${
-                              reply.user.last_name || ""
+                          {reply?.user?.username ||
+                            `${reply?.user?.first_name || ""} ${
+                              reply?.user?.last_name || ""
                             }`.trim() ||
                             "کاربر"}
                         </p>
@@ -147,7 +147,7 @@ export const CommentItem = ({
                     {renderReplyButton(reply?.id, activeReplyId === reply?.id)}
                   </div>
                   <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {reply.text}
+                    {reply?.text}
                   </p>
                   {activeReplyId === reply?.id && (
                     <ReplyForm

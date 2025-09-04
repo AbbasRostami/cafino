@@ -17,7 +17,7 @@ export const ImageGallery = ({
   );
 
   useEffect(() => {
-    if (images && images.length > 0 && activeImage >= images.length) {
+    if (images && images?.length > 0 && activeImage >= images?.length) {
       onImageChange(0);
     }
   }, [images, activeImage, onImageChange]);
@@ -40,11 +40,11 @@ export const ImageGallery = ({
     if (Math.abs(deltaX) > 50) {
       if (deltaX > 0) {
         const newIndex =
-          safeActiveImage > 0 ? safeActiveImage - 1 : images.length - 1;
+          safeActiveImage > 0 ? safeActiveImage - 1 : images?.length - 1;
         onImageChange(newIndex);
       } else {
         const newIndex =
-          safeActiveImage < images.length - 1 ? safeActiveImage + 1 : 0;
+          safeActiveImage < images?.length - 1 ? safeActiveImage + 1 : 0;
         onImageChange(newIndex);
       }
       setIsDragging(false);
@@ -59,16 +59,16 @@ export const ImageGallery = ({
     e.preventDefault();
     if (e.deltaY > 0) {
       const newIndex =
-        safeActiveImage < images.length - 1 ? safeActiveImage + 1 : 0;
+        safeActiveImage < images?.length - 1 ? safeActiveImage + 1 : 0;
       onImageChange(newIndex);
     } else {
       const newIndex =
-        safeActiveImage > 0 ? safeActiveImage - 1 : images.length - 1;
+        safeActiveImage > 0 ? safeActiveImage - 1 : images?.length - 1;
       onImageChange(newIndex);
     }
   };
 
-  if (!images || images.length === 0) {
+  if (!images || images?.length === 0) {
     return (
       <div className="space-y-8">
         <div className="rounded-3xl overflow-hidden shadow-2xl h-[250px] sm:h-[420px] border-4 border-white dark:border-gray-800 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
@@ -97,6 +97,7 @@ export const ImageGallery = ({
           alt="Product image"
           width={800}
           height={800}
+          priority
           className="w-full h-full sm:object-cover"
         />
 
@@ -109,7 +110,7 @@ export const ImageGallery = ({
         <button
           onClick={() => {
             const newIndex =
-              safeActiveImage > 0 ? safeActiveImage - 1 : images.length - 1;
+              safeActiveImage > 0 ? safeActiveImage - 1 : images?.length - 1;
             onImageChange(newIndex);
           }}
           className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-700 p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-110 z-10"
@@ -131,7 +132,7 @@ export const ImageGallery = ({
         <button
           onClick={() => {
             const newIndex =
-              safeActiveImage < images.length - 1 ? safeActiveImage + 1 : 0;
+              safeActiveImage < images?.length - 1 ? safeActiveImage + 1 : 0;
             onImageChange(newIndex);
           }}
           className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-700 p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-110 z-10"
@@ -182,6 +183,7 @@ export const ImageGallery = ({
                 className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
                 width={100}
                 height={100}
+                priority
               />
               {index === safeActiveImage && (
                 <div className="absolute inset-0 bg-amber-500/20 border-2 border-amber-500 rounded-2xl" />

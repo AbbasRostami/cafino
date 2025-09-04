@@ -38,13 +38,11 @@ export const CommentsSection = ({
       toast.error("برای ثبت نظر ابتدا وارد حساب کاربری خود شوید");
       return;
     }
-
     const payload = {
       text: data?.text,
       itemId: data?.itemId,
       star: data?.star,
     };
-
     addComment(payload);
   };
 
@@ -53,13 +51,11 @@ export const CommentsSection = ({
       toast.error("برای ثبت پاسخ ابتدا وارد حساب کاربری خود شوید");
       return;
     }
-
     const payload = {
       text: data?.text,
       itemId: data?.itemId,
       parentId: data?.parentId,
     };
-
     addReply(payload);
   };
 
@@ -70,7 +66,7 @@ export const CommentsSection = ({
       return <CommentSectionSkeleton />;
     }
 
-    if (!comments?.data?.comments || comments.data.comments.length === 0) {
+    if (!comments?.data?.comments || comments?.data?.comments?.length === 0) {
       return (
         <div className="text-center py-8 text-gray-500 dark:text-gray-400">
           <MessageCircle
@@ -92,7 +88,7 @@ export const CommentsSection = ({
         >
           {comments?.data?.comments?.map((comment) => (
             <CommentItem
-              key={comment.id}
+              key={comment?.id}
               comment={comment}
               onReplyClick={onReplyClick}
               activeReplyId={activeReplyId}
@@ -103,7 +99,6 @@ export const CommentsSection = ({
           ))}
         </Accordion>
 
-        {/* Load More Button */}
         {hasMoreComments && (
           <div className="flex justify-center mt-6">
             <Button
