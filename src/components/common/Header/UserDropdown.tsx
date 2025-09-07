@@ -10,17 +10,15 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { LogIn, User, LogOut } from "lucide-react";
 import Link from "next/link";
-import { useAuthStore } from "@/store/authStore";
 import { UserDropdownProps } from "@/types/main";
-
-
+import { useLogout } from "@/services/auth";
 
 const UserDropdown: React.FC<UserDropdownProps> = ({
   user,
   isAuthenticated,
   onLoginClick,
 }) => {
-  const logout = useAuthStore((state) => state.logout);
+  const { logout, isPending } = useLogout();
 
   if (isAuthenticated && user) {
     return (
@@ -39,7 +37,7 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
                 {user?.first_name?.[0] || user?.username?.[0]}
               </AvatarFallback>
             </Avatar>
-            <span className="max-w-[100px] truncate">
+            <span className="max-w-[100px] truncate font-semibold">
               {user?.first_name || user?.username}
             </span>
           </Button>
@@ -47,7 +45,7 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
         <DropdownMenuContent side="bottom" align="end">
           <DropdownMenuLabel className="font-bold">
             {user?.first_name} {user?.last_name}
-            <div className="text-xs text-muted-foreground font-bold">
+            <div className="text-sm text-muted-foreground font-bold">
               {user?.phone}
             </div>
           </DropdownMenuLabel>
@@ -68,13 +66,12 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
           <DropdownMenuSeparator />
           <DropdownMenuItem
             className="cursor-pointer font-bold"
-            onClick={async () => {
-              await logout();
-            }}
+            onClick={() => logout()}
+            disabled={isPending}
             variant="destructive"
           >
             <LogOut className="w-4 h-4" />
-            خروج از حساب کاربری
+            {isPending ? "در حال خروج..." : "خروج از حساب کاربری"}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -92,5 +89,4 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
     </Button>
   );
 };
-
 export default UserDropdown;

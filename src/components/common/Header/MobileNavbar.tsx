@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -23,23 +24,25 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
-import { ThemeSwitcher } from "../ThemeToggle/ThemeToggle";
-import { LoginForm } from "@/components/main/auth/LoginForm";
+import { ThemeSwitcher } from "../ThemeToggle";
+import { LoginForm } from "@/components/main/auth";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import Logo from "./Logo";
 import { MotionDiv } from "@/utils/MotionWrapper";
 import { MobileNavbarProps } from "@/types/main";
+import { useLogout } from "@/services/auth";
 
 const MobileNavbar: React.FC<MobileNavbarProps> = ({
   isAuthenticated,
   user,
   pathname,
-  onLogout,
   openMobileMenu,
   setOpenMobileMenu,
   openMobileLoginDialog,
   setOpenMobileLoginDialog,
 }) => {
+  const { logout, isPending } = useLogout();
+
   return (
     <div className="lg:hidden">
       <Sheet open={openMobileMenu} onOpenChange={setOpenMobileMenu}>
@@ -121,13 +124,12 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
                     <span> ورود به پنل کاربری</span>
                   </Link>
                   <button
-                    onClick={async () => {
-                      await onLogout();
-                    }}
-                    className="flex items-center gap-3 p-4 rounded-xl border border-transparent hover:bg-red-50 dark:hover:bg-red-900/20 hover:border-red-200 dark:hover:border-red-800 text-red-600 dark:text-red-400 transition-all w-full"
+                    onClick={() => logout()}
+                    disabled={isPending}
+                    className="flex items-center gap-3 p-4 rounded-xl border border-transparent hover:bg-red-50 dark:hover:bg-red-900/20 hover:border-red-200 dark:hover:border-red-800 text-red-600 dark:text-red-400 transition-all w-full disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <LogOut className="w-5 h-5" />
-                    <span>خروج</span>
+                    <span>{isPending ? "در حال خروج..." : "خروج"}</span>
                   </button>
                 </>
               )}
@@ -135,25 +137,20 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
 
             <div className="border-t border-amber-100/60 dark:border-zinc-800/60 pt-6 pb-6 px-4 space-y-4">
               {!isAuthenticated && (
-                <Dialog
-                  open={openMobileLoginDialog}
-                  onOpenChange={setOpenMobileLoginDialog}
-                >
-                  <DialogTrigger asChild>
-                    <Button
-                      className="w-full gap-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl shadow-lg transition-all"
-                      onClick={() => setOpenMobileLoginDialog(true)}
-                    >
-                      <LogIn className="w-4 h-4" />
-                      ورود / ثبت نام
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="sm:max-w-md p-0">
-                    <LoginForm
-                      onSuccess={() => setOpenMobileLoginDialog(false)}
-                    />
-                  </DialogContent>
-                </Dialog>
+                <>
+                  <Button
+                    className="w-full gap-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl shadow-lg transition-all"
+                    onClick={() => setOpenMobileLoginDialog(true)}
+                  >
+                    <LogIn className="w-4 h-4" />
+                    ورود / ثبت نام
+                  </Button>
+                  <LoginForm
+                    open={openMobileLoginDialog}
+                    onOpenChange={setOpenMobileLoginDialog}
+                    onSuccess={() => setOpenMobileLoginDialog(false)}
+                  />
+                </>
               )}
             </div>
           </div>

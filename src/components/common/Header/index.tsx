@@ -11,7 +11,6 @@ import MobileNavbar from "./MobileNavbar";
 const Navbar = () => {
   // Auth and user data
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const logout = useAuthStore((state) => state.logout);
   const { data: userProfile } = useUserProfile();
   const user = userProfile;
   const pathname = usePathname();
@@ -26,7 +25,6 @@ const Navbar = () => {
     isAuthenticated,
     user,
     pathname,
-    onLogout: logout,
   };
 
   return (
