@@ -61,7 +61,6 @@ export function buildItemMetadata(
     title,
     ...(item.ingredients || []),
     item.category?.title || "",
-    "کافه",
     "کافینو",
   ].filter(Boolean) as string[];
 
