@@ -1,36 +1,54 @@
-"use client";
-import { useSearchParams } from "next/navigation";
-import { getMenuQueryParams } from "@/lib/query";
-import { useGetItems } from "@/services";
+import {
+  getMenuQueryParams,
+  convertSearchParamsToURLSearchParams,
+} from "@/lib/query";
+import { getItemsServer } from "@/services/server/useGetItemsServer";
 import { Suspense } from "react";
 import Menus from "@/components/main/menu/Menus";
+import type { Metadata, ResolvingMetadata } from "next";
+import { buildMenuMetadata } from "@/lib/metadata/buildMenuMetadata";
+import { GenerateProps, MenuPageProps } from "@/types/main";
 
-const MenuContent = () => {
-  const searchParams = useSearchParams();
+async function fetchMenuData(searchParams: URLSearchParams) {
   const { queryString, query } = getMenuQueryParams(searchParams);
+  const serverData = await getItemsServer({ queryString });
+  return { serverData, query };
+}
 
-  const { data: items, isLoading } = useGetItems(queryString);
+export default async function MenuPage({ searchParams }: MenuPageProps) {
+  const resolvedSearchParams = await searchParams;
+  const urlSearchParams =
+    convertSearchParamsToURLSearchParams(resolvedSearchParams);
 
-  const pageNum = Number(items?.data?.page ?? query.page);
-  const limitNum = Number(items?.data?.limit ?? query.limit);
-  const totalNum = Number(items?.data?.total || 0);
+  const { serverData, query } = await fetchMenuData(urlSearchParams);
 
   return (
     <div className="min-h-screen pt-20 md:pt-32 px-4 text-gray-800 dark:text-gray-200">
-      <Menus
-        items={items?.data?.items || []}
-        isLoading={isLoading}
-        page={pageNum}
-        limit={limitNum}
-        total={totalNum}
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Menus initialData={serverData} query={query} />
+      </Suspense>
     </div>
   );
-};
+}
 
-const MenuPage = () => (
-  <Suspense fallback={<div>Loading...</div>}>
-    <MenuContent />
-  </Suspense>
-);
-export default MenuPage;
+// SEO - Metadata
+export async function generateMetadata(
+  { searchParams }: GenerateProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const resolvedSearchParams = await searchParams;
+  const urlSearchParams =
+    convertSearchParamsToURLSearchParams(resolvedSearchParams);
+
+  const { queryString } = getMenuQueryParams(urlSearchParams);
+
+  const menuData = await getItemsServer({ queryString });
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return buildMenuMetadata(menuData, {
+    parent: parent,
+    parentImages: previousImages as any,
+    baseUrl: process.env.NEXT_PUBLIC_SITE_URL,
+    searchParams: resolvedSearchParams,
+  });
+}

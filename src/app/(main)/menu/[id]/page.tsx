@@ -1,22 +1,38 @@
-"use client";
-
-import { useGetItemDetails } from "@/services/items";
-import { use } from "react";
-import { MenuItemClientProps } from "@/types/main";
-import { ItemDetailsSkeleton } from "@/components/skeleton";
 import { ItemsDetails } from "@/components/main/items-details";
+import { useGetItemsDetailsServer } from "@/services/server/useGetItemsDetailsServer";
+import { GenerateProps, MenuItemClientProps, Item } from "@/types/main";
+import React from "react";
+import type { Metadata, ResolvingMetadata } from "next";
+import { buildItemMetadata } from "@/lib/metadata/buildItemMetadata";
 
-const MenuItemClient = ({ params }: MenuItemClientProps) => {
-  const { id } = use(params);
-  const { data: item, isLoading } = useGetItemDetails(id);
+async function fetchItem(id: string) {
+  const serverData = await useGetItemsDetailsServer(id);
+  return serverData?.item as Item | undefined;
+}
 
-  if (isLoading || !item?.data) return <ItemDetailsSkeleton />;
+export default async function MenuItemPage({ params }: MenuItemClientProps) {
+  const { id } = await params;
+  const initialItem = await fetchItem(id);
 
   return (
     <div className="min-h-screen pt-28 pb-10">
-      <ItemsDetails data={item?.data} />
+      <ItemsDetails id={id} initialItem={initialItem} />
     </div>
   );
-};
+}
 
-export default MenuItemClient;
+export async function generateMetadata(
+  { params }: GenerateProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { id } = await params;
+  const item = await fetchItem(id);
+
+  const previousImages = (await parent).openGraph?.images || [];
+  return buildItemMetadata(item, {
+    id,
+    parent: parent,
+    parentImages: previousImages as any,
+    baseUrl: process.env.NEXT_PUBLIC_SITE_URL,
+  });
+}

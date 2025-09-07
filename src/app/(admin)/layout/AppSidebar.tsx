@@ -20,6 +20,7 @@ import {
   House,
   MessageCircleCode,
   OctagonMinus,
+  Send,
 } from "lucide-react";
 type NavItem = {
   name: string;
@@ -63,6 +64,11 @@ const navItems: NavItem[] = [
     name: "مدیریت کامنت ها",
     icon: <MessageCircleCode />,
     path: "/dashboard/comments",
+  },
+  {
+    name: "مدیریت پیام کاربران",
+    icon: <Send />,
+    path: "/dashboard/messages",
   },
   {
     name: "لیست سیاه",

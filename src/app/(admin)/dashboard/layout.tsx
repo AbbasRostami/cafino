@@ -6,18 +6,10 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "پنل مدیریت کافینو | Cafino",
   description: "مدیریت حساب  مدیریت در سامانه Cafino.پنل مدیریت",
-  openGraph: {
-    title: "پنل مدیریت کافینو | Cafino",
-    description: "مدیریت حساب  مدیریت در سامانه Cafino .پنل مدیریت",
-  },
-  twitter: {
-    title: "پنل مدیریت کافینو | Cafino",
-    description: "مدیریت حساب  مدیریت در سامانه Cafino.پنل مدیریت",
-  },
   authors: [{ name: "Cafino" }],
 };
 
-export default function BuyerLayout({
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
