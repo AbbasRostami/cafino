@@ -16,6 +16,7 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -34,6 +35,7 @@ import { useIsMobile } from "@/hooks/useMediaQuery";
 import { useAddressForm } from "@/hooks/useAddressForm";
 import { toast } from "sonner";
 import { AddAddressModalProps } from "@/types/main";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 export default function AddAddressModal({
   open,
@@ -219,6 +221,9 @@ export default function AddAddressModal({
             <MapPin className="text-amber-600 dark:text-amber-400" size={20} />
             افزودن آدرس جدید
           </DialogTitle>
+          <VisuallyHidden asChild>
+            <DialogDescription>افزدون آدرس</DialogDescription>
+          </VisuallyHidden>
           <DialogClose asChild>
             <Button
               variant="ghost"

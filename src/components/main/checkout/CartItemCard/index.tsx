@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import CheckoutItemControls from "@/lib/CheckoutItemControls";
 import { CartItemCardProps } from "@/types/main";
 import { MotionDiv } from "@/utils/MotionWrapper";
+import { formatCurrency } from "@/utils/formatters";
 
 export default function CartItemCard({ item }: CartItemCardProps) {
   return (
@@ -34,8 +35,8 @@ export default function CartItemCard({ item }: CartItemCardProps) {
                   className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-all duration-300"
                 />
                 {item?.discount > 0 && (
-                  <Badge className="absolute top-3 left-3 bg-gradient-to-r from-red-500 to-red-600 text-white shadow-md">
-                    {Math.round(item?.discount)}% تخفیف
+                  <Badge className="absolute top-3 left-3 bg-gradient-to-r from-red-500 to-red-600 text-white shadow-md text-sm font-medium">
+                    {item?.discount}% تخفیف
                   </Badge>
                 )}
               </div>
@@ -46,7 +47,7 @@ export default function CartItemCard({ item }: CartItemCardProps) {
                     <h3 className="text-xl font-bold text-gray-800 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
                       {item?.title}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-400 mt-2">
+                    <p className="text-gray-600 dark:text-gray-300 mt-2">
                       {item?.description}
                     </p>
                   </div>
@@ -54,18 +55,19 @@ export default function CartItemCard({ item }: CartItemCardProps) {
 
                 <div className="mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div className="flex items-baseline gap-3">
-                    <span className="text-xl font-bold text-amber-700 dark:text-amber-300">
-                      {(
-                        item?.price *
-                        (1 - item?.discount / 100)
-                      ).toLocaleString("fa-IR")}{" "}
-                      تومان
-                    </span>
+                    <p className="flex items-center gap-1">
+                      <span className="text-amber-600 dark:text-amber-300 text-xl font-bold">
+                        {formatCurrency(
+                          item?.price * (1 - item?.discount / 100)
+                        )}
+                      </span>
+                      <span className="text-gray-500 dark:text-gray-400 text-medium font-medium">
+                        تومان
+                      </span>
+                    </p>
                     {item?.discount > 0 && (
-                      <span className="text-gray-500 dark:text-gray-400 line-through">
-                        {Number(item?.price).toLocaleString("fa-IR", {
-                          maximumFractionDigits: 0,
-                        })}
+                      <span className="text-gray-500 dark:text-gray-300 line-through text-sm font-medium">
+                        {formatCurrency(item?.price)}
                       </span>
                     )}
                   </div>

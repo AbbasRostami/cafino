@@ -19,8 +19,8 @@ export const CartSidebarItems: React.FC<CartSidebarItemsProps> = ({
 
   return (
     <div className="space-y-4">
-      {cartData?.cartItems.map((item) => (
-        <CartItemCard key={item.itemId} item={item} />
+      {cartData?.cartItems?.map((item) => (
+        <CartItemCard key={item?.itemId} item={item} />
       ))}
     </div>
   );

@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { CartSidebarFooterProps } from "@/types/main/cartSidebar";
+import { formatCurrency } from "@/utils/formatters";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -20,40 +21,46 @@ export const CartSidebarFooter: React.FC<CartSidebarFooterProps> = ({
       <div className="space-y-4">
         <div className="space-y-2">
           <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600 dark:text-gray-300">
+            <span className="text-sm text-gray-600 dark:text-gray-200">
               مجموع قیمت:
             </span>
-            <span className="font-bold text-xl text-gray-800 dark:text-gray-100">
-              {Math.floor(cartData.totalAmount).toLocaleString("fa-IR")}{" "}
+            <p className="font-bold text-xl space-x-1">
+              <span className="text-gray-800 dark:text-gray-100">
+                {formatCurrency(cartData?.totalAmount)}
+              </span>
               <span className="text-sm text-gray-500 dark:text-gray-400">
                 تومان
               </span>
-            </span>
+            </p>
           </div>
 
           <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600 dark:text-gray-300">
+            <span className="text-sm text-gray-600 dark:text-gray-200">
               مجموع پرداختی:
             </span>
-            <span className="font-bold text-xl text-amber-600 dark:text-amber-400">
-              {Math.floor(cartData.paymentAmount).toLocaleString("fa-IR")}{" "}
+            <p className="font-bold text-xl text-amber-600 dark:text-amber-400 space-x-1">
+              <span className="text-amber-600 dark:text-amber-400">
+                {formatCurrency(cartData?.paymentAmount)}
+              </span>
               <span className="text-sm text-amber-600 dark:text-amber-400">
                 تومان
               </span>
-            </span>
+            </p>
           </div>
 
-          {cartData.totalDiscount > 0 && (
+          {cartData?.totalDiscount > 0 && (
             <div className="flex justify-between items-center text-sm">
               <span className="text-green-600 dark:text-green-400 font-medium">
                 تخفیف:
               </span>
-              <span className="font-bold text-green-700 dark:text-green-300">
-                {Math.floor(cartData.totalDiscount).toLocaleString("fa-IR")}{" "}
+              <p className="font-bold  space-x-1">
+                <span className="text-green-600 dark:text-green-400">
+                  {formatCurrency(cartData?.totalDiscount)}
+                </span>
                 <span className="text-sm text-green-600 dark:text-green-400">
                   تومان
                 </span>
-              </span>
+              </p>
             </div>
           )}
         </div>

@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { Home, FileText, Phone, Info } from "lucide-react";
 import { MotionSpan } from "@/utils/MotionWrapper";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { ThemeSwitcher } from "../ThemeToggle/ThemeToggle";
+import { ThemeSwitcher } from "../ThemeToggle";
 import CartSidebar from "@/components/main/CartSidebar";
-import { LoginForm } from "@/components/main/auth/LoginForm";
+import { LoginForm } from "@/components/main/auth";
 import UserDropdown from "./UserDropdown";
 import { DesktopNavbarProps } from "@/types/main";
 
@@ -60,18 +59,16 @@ const DesktopNavbar: React.FC<DesktopNavbarProps> = ({
           <ThemeSwitcher />
         </div>
         <CartSidebar />
-        <Dialog open={openLoginDialog} onOpenChange={setOpenLoginDialog}>
-          <DialogTrigger asChild>
-            <UserDropdown
-              user={user}
-              isAuthenticated={isAuthenticated}
-              onLoginClick={() => setOpenLoginDialog(true)}
-            />
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-md p-0">
-            <LoginForm onSuccess={() => setOpenLoginDialog(false)} />
-          </DialogContent>
-        </Dialog>
+        <UserDropdown
+          user={user}
+          isAuthenticated={isAuthenticated}
+          onLoginClick={() => setOpenLoginDialog(true)}
+        />
+        <LoginForm
+          open={openLoginDialog}
+          onOpenChange={setOpenLoginDialog}
+          onSuccess={() => setOpenLoginDialog(false)}
+        />
       </div>
     </>
   );

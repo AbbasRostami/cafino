@@ -13,11 +13,11 @@ import { useAddToCartButtonLogic } from "@/lib/AddToCartButton";
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { DialogDescription } from "@/components/ui/dialog";
 
 const CartSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,7 +35,7 @@ const CartSidebar = () => {
   } = cartLogic;
 
   useEffect(() => {
-    if (cartData && cartData.cartItems.length === 0) {
+    if (cartData && cartData?.cartItems?.length === 0) {
       setIsOpen(false);
     }
   }, [cartData]);
@@ -70,9 +70,9 @@ const CartSidebar = () => {
       >
         <VisuallyHidden>
           <SheetTitle>سبد خرید</SheetTitle>
-          <DialogDescription>
+          <SheetDescription>
             اینجا توضیح کوتاه در مورد دیالوگ یا Sheet
-          </DialogDescription>
+          </SheetDescription>
         </VisuallyHidden>
 
         <CartSidebarHeader

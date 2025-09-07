@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { CartItemCardProps } from "@/types/main";
 import CartItemControls from "@/lib/CartItemControls";
+import { formatCurrency } from "@/utils/formatters";
 
 export const CartItemCard: React.FC<CartItemCardProps> = ({ item }) => {
   return (
@@ -33,7 +34,7 @@ export const CartItemCard: React.FC<CartItemCardProps> = ({ item }) => {
               </h3>
               <div className="flex flex-col items-end">
                 <span className="text-base font-semibold text-amber-700 dark:text-amber-400">
-                  {Math.round(Number(item?.price)).toLocaleString("fa-IR")}
+                  {formatCurrency(Number(item?.price))}
                 </span>
                 <span className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">
                   تومان
@@ -44,7 +45,7 @@ export const CartItemCard: React.FC<CartItemCardProps> = ({ item }) => {
             {Number(item?.discount) > 0 && (
               <div className="mb-2">
                 <span className="inline-flex items-center text-xs font-bold px-2 py-0.5 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-full">
-                  <span className="ml-1">%{Number(item?.discount)}</span>
+                  <span className="ml-1">{Number(item?.discount)}%</span>
                   تخفیف
                 </span>
               </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowLeft, ShoppingCart, Trash2, Loader2 } from "lucide-react";
-import { CheckoutHeaderProps } from "@/types/main/checkout";
+import { CheckoutHeaderProps } from "@/types/main";
 import { MotionButton, MotionDiv, MotionH1 } from "@/utils/MotionWrapper";
 
 export default function CheckoutHeader({
@@ -46,7 +46,6 @@ export default function CheckoutHeader({
         </span>
       </MotionH1>
 
-      {/* Cart Info */}
       <MotionDiv
         className="flex items-center gap-2"
         initial={{ scale: 0.95, opacity: 0 }}
@@ -84,10 +83,11 @@ export default function CheckoutHeader({
              border border-gray-300 dark:border-gray-600 font-medium text-sm tracking-tight"
         >
           <ShoppingCart size={20} />
-          {cart?.cartItems
-            ?.reduce((total, item) => total + (item.count || 1), 0)
-            ?.toLocaleString("fa-IR")}
-          آیتم
+          {cart?.cartItems?.reduce(
+            (sum: number, i: { count: number }) => sum + i?.count,
+            0
+          )}
+          <span className="text-gray-500 dark:text-gray-200">آیتم</span>
         </MotionDiv>
       </MotionDiv>
     </MotionDiv>

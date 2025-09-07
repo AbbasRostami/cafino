@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence } from "framer-motion";
-import { CheckoutCartProps } from "@/types/main/checkout";
+import { CheckoutCartProps } from "@/types/main";
 import { useCheckout } from "@/hooks/useCheckout";
 import {
   AddressSelector,
@@ -112,17 +112,6 @@ export default function CheckoutCart({ cart }: CheckoutCartProps) {
               isCheckoutLoading={isCheckoutLoading}
             />
           </div>
-        )}
-
-        {cart?.cartItems?.length && cart?.cartItems?.length > 0 && (
-          <OrderSummary
-            cart={cart}
-            isMobile={true}
-            selectedAddress={selectedAddress}
-            isAddressSelected={!!selectedAddressId}
-            onCompleteOrder={handleCompleteOrder}
-            isCheckoutLoading={isCheckoutLoading}
-          />
         )}
       </div>
     </div>

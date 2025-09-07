@@ -4,7 +4,7 @@ import { Gift, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MotionDiv, MotionSpan } from "@/utils/MotionWrapper";
-import { DiscountSectionProps } from "@/types";
+import { DiscountSectionProps } from "@/types/main";
 
 export default function DiscountSection({
   cart,
@@ -62,12 +62,10 @@ export default function DiscountSection({
           {cart?.generalDiscount?.discountAmount > 0 && (
             <p className="text-xs text-emerald-700 dark:text-emerald-300 mt-2">
               {cart?.generalDiscount?.percent
-                ? `${Number(cart?.generalDiscount?.percent).toLocaleString(
-                    "fa-IR"
+                ? `${Number(
+                    cart?.generalDiscount?.percent
                   )}% تخفیف روی کل سبد خرید`
-                : `${Number(cart?.generalDiscount?.amount).toLocaleString(
-                    "fa-IR"
-                  )} تومان تخفیف ثابت`}
+                : `${Number(cart?.generalDiscount?.amount)} تومان تخفیف ثابت`}
             </p>
           )}
         </div>
@@ -96,7 +94,7 @@ export default function DiscountSection({
               )}
             </Button>
           </div>
-          {errors.code && (
+          {errors?.code && (
             <p className="text-sm text-red-600 dark:text-red-400">
               {errors?.code?.message}
             </p>
