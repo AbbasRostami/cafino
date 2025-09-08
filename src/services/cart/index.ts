@@ -4,5 +4,4 @@ export { useIncItem } from "./useIncItem";
 export { useDecItem } from "./useDecItem";
 export { useRemoveItem } from "./useRemoveItem";
 export { useClearCart } from "./useClearCart";
-export { useAddDiscount } from "./useAddDiscount";
 export { useAddToCartMultiple } from "./useAddToCartMultiple";

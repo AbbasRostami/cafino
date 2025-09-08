@@ -1,6 +1,9 @@
 // User services
 export * from "./user";
 
+// Contact services
+export * from "./contact";
+
 // Discount services
 export * from "./discounts";
 
