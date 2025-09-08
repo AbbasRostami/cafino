@@ -1,6 +1,19 @@
-import { getApiUrl } from "@/lib/config";
 import { useAuthStore } from "@/store/authStore";
 import { toast } from "sonner";
+
+// const getApiUrl = (endpoint: string) => {
+//   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+//   if (!baseUrl) {
+//     throw new Error("NEXT_PUBLIC_API_URL is not defined");
+//   }
+//   return baseUrl.endsWith("/")
+//     ? `${baseUrl}${endpoint.startsWith("/") ? endpoint.slice(1) : endpoint}`
+//     : `${baseUrl}${endpoint}`;
+// };
+
+export const getApiUrl = (endpoint: string) => {
+  return endpoint.startsWith("/api") ? endpoint : `/api${endpoint}`;
+};
 
 const makeRequest = (url: string, options: RequestInit) => {
   const fullUrl = getApiUrl(url);
@@ -19,38 +32,28 @@ const makeRequest = (url: string, options: RequestInit) => {
   });
 };
 
-const onSuccess = async (response: Response) => {
-  if (response.ok) return await response.json();
-  throw response;
-};
+const onError = async (response: Response, url: string) => {
+  let errorData: any = {};
 
-const handleErrorStatus = (status: number) => {
-  switch (status) {
-    case 401:
-      toast.error("نشست شما منقضی شده است");
-      break;
-    case 403:
-      toast.error("شما مجوز دسترسی ندارید");
-      break;
-  }
-};
-
-const onError = async (error: Response | Error) => {
-  if (error instanceof Response) {
-    handleErrorStatus(error.status);
-    const data = await error.json().catch(() => null);
-
-    const customError = new Error(
-      data?.message || error.statusText || "Server Error"
-    );
-
-    (customError as any).status = error.status; // ✅ اضافه کردن status
-    (customError as any).response = { data };
-
-    throw customError;
+  try {
+    errorData = await response.json();
+  } catch {
+    errorData = {
+      statusCode: response.status,
+      message: response.statusText || "Server Error",
+      timestamp: new Date().toISOString(),
+      path: url,
+    };
   }
 
-  throw error;
+  const customError = new Error(errorData.message || "Server Error");
+  (customError as any).statusCode = errorData.statusCode || response.status;
+  (customError as any).message = errorData.message || response.statusText;
+  (customError as any).timestamp = errorData.timestamp;
+  (customError as any).path = errorData.path || url;
+  (customError as any).response = { data: errorData };
+
+  throw customError;
 };
 
 export async function fetchWithAuth(url: string, options: RequestInit = {}) {
@@ -64,36 +67,34 @@ export async function fetchWithAuth(url: string, options: RequestInit = {}) {
       }
 
       console.log("🔄 Trying to refresh token...");
-      const refreshed = await useAuthStore.getState().refreshToken();
 
-      if (refreshed) {
+      // Use the refreshToken function directly from the auth service
+      const refreshResponse = await fetch(getApiUrl("/v1/auth/refresh"), {
+        method: "GET",
+        credentials: "include",
+      });
+
+      if (refreshResponse.ok) {
         console.log("✅ Token refreshed. Retrying original request...");
+        useAuthStore.getState().setAuthenticated(true);
         const retry = await makeRequest(url, options);
-        return await onSuccess(retry);
+        return await retry.json();
       } else {
-        await useAuthStore.getState().logout();
+        useAuthStore.getState().resetAuth();
         toast.error("نشست شما منقضی شده، لطفاً دوباره وارد شوید.");
         throw { status: 401, message: "نشست منقضی شده" };
       }
-    }
-
-    if (response.status === 403) {
-      throw { status: 403, message: "دسترسی غیرمجاز" };
     }
 
     if (response.ok) {
       return await response.json();
     }
 
-    let errorMessage = response.statusText;
-    try {
-      const data = await response.json();
-      errorMessage = data?.message || errorMessage;
-    } catch {}
-
-    throw { status: response.status, message: errorMessage };
+    await onError(response, url);
   } catch (error) {
-    throw error;
+    if (error instanceof Error && (error as any).statusCode) {
+      throw error;
+    }
   }
 }
 
@@ -170,7 +171,6 @@ export const fetchApi = {
       body: isFormData ? data : data ? JSON.stringify(data) : undefined,
       headers: {
         ...(options.headers || {}),
-        // Don't set Content-Type for FormData - let browser set it with boundary
         ...(isFormData ? {} : { "Content-Type": "application/json" }),
       },
     }) as Promise<T>;

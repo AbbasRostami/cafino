@@ -16,9 +16,9 @@ export const useFavorites = ({ initialLimit = 6 }: UseFavoritesProps) => {
     currentTotalItems: number;
   } | null>(null);
 
-  const { deleteFromFavorite, isPending } = useDeleteFromFavorite();
+  const deleteFromFavoriteApi = useDeleteFromFavorite();
   const handleDeleteFavorite = (data: { itemId: string }) => {
-    deleteFromFavorite(data, {
+    deleteFromFavoriteApi.mutate(data, {
       onSuccess: () => {
         if (
           pendingDeleteInfo &&
@@ -66,6 +66,6 @@ export const useFavorites = ({ initialLimit = 6 }: UseFavoritesProps) => {
     goToPage,
     handleDeleteFavorite,
     handleViewProducts,
-    isPending,
+    isPending: deleteFromFavoriteApi.isPending,
   };
 };

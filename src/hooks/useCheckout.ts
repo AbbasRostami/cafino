@@ -5,16 +5,17 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { confirm } from "@/components/common/ConfirmModal/ConfirmModal";
-import { useAddDiscount, useCart } from "@/services/cart";
+import { confirm } from "@/components/common/ConfirmModal";
 import { useAddToCartButtonLogic } from "@/lib/AddToCartButton";
-import { useGetAddresses, usePaymentGateway } from "@/services";
 import { Address } from "@/types/Profile";
+import { discountSchemaCheckout, DiscountFormValues } from "@/schemas/main";
 import {
-  discountSchemaCheckout,
-  DiscountFormValues,
-} from "@/schemas/main/checkout";
-import { useRemoveDiscount } from "@/services";
+  useRemoveDiscount,
+  useAddDiscount,
+  useGetAddresses,
+  usePaymentGateway,
+  useCart,
+} from "@/services";
 
 export const useCheckout = () => {
   const { cart } = useCart();
@@ -96,8 +97,8 @@ export const useCheckout = () => {
   };
 
   const handleAddressAdded = () => {
-    if (addressesData?.data && addressesData?.data?.length === 1) {
-      setSelectedAddressId(addressesData?.data[0].id);
+    if (addressesData && addressesData?.length === 1) {
+      setSelectedAddressId(addressesData[0].id);
     }
   };
 
@@ -107,26 +108,28 @@ export const useCheckout = () => {
 
       const paymentData = {
         addressId: selectedAddressId,
-        description: `سفارش از کافی‌نو - مبلغ: ${cart.paymentAmount?.toLocaleString(
-          "fa-IR"
-        )} تومان`,
+        description: `سفارش از کافی‌نو - مبلغ: ${cart.paymentAmount} تومان`,
       };
 
       paymentGatewayMutation.mutate(paymentData, {
         onSuccess: (response: any) => {
-          toast.success("درگاه پرداخت با موفقیت ایجاد شد");
+          console.log("Payment gateway response:", response);
 
-          if (response?.gatewayURL) {
-            // Store order info in localStorage
+          if (response?.data?.gatewayURL) {
+            toast.success("در حال انتقال به درگاه پرداخت...");
+
             const orderInfo = {
               addressId: selectedAddressId,
-              cartTotal: cart.paymentAmount,
+              cartTotal: cart?.paymentAmount,
               timestamp: new Date().toISOString(),
             };
             localStorage.setItem("pendingOrder", JSON.stringify(orderInfo));
-            // Redirect to payment gateway
-            window.location.href = response.gatewayURL;
+
+            setTimeout(() => {
+              window.location.href = response?.data?.gatewayURL;
+            }, 1000);
           } else {
+            console.error("No gateway URL in response:", response);
             toast.error("خطا در دریافت آدرس درگاه پرداخت");
           }
         },
@@ -145,9 +148,8 @@ export const useCheckout = () => {
 
   // Get selected address object
   const selectedAddress =
-    addressesData?.data?.find(
-      (addr: Address) => addr.id === selectedAddressId
-    ) || null;
+    addressesData?.find((addr: Address) => addr?.id === selectedAddressId) ||
+    null;
 
   return {
     // Form
@@ -168,7 +170,7 @@ export const useCheckout = () => {
     clearLoading,
 
     // Address
-    addresses: addressesData?.data,
+    addresses: addressesData,
     addressesLoading,
     selectedAddressId,
     selectedAddress,

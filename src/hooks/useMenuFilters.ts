@@ -23,7 +23,7 @@ export const useMenuFilters = ({
 
   const filters = useMemo(
     () => ({
-      categoryId: searchParams.get("categoryId") || null,
+      category: searchParams.get("category") || null,
       page: Number(searchParams.get("page") || 1),
       limit: Number(searchParams.get("limit") || 6),
       minPrice: Number(searchParams.get("minPrice") || DEFAULT_MIN),
@@ -130,18 +130,18 @@ export const useMenuFilters = ({
     updateFilter,
     resetFilters,
     hasActiveFilters: Boolean(
-      filters.categoryId ||
-        filters.search ||
-        filters.sortBy !== "" ||
-        filters.minPrice !== DEFAULT_MIN ||
-        filters.maxPrice !== DEFAULT_MAX ||
-        filters.availableOnly
+      filters?.category ||
+        filters?.search ||
+        filters?.sortBy !== "" ||
+        filters?.minPrice !== DEFAULT_MIN ||
+        filters?.maxPrice !== DEFAULT_MAX ||
+        filters?.availableOnly
     ),
     viewMode,
-    search: filters.search,
-    selectedSortBy: filters.sortBy,
-    pageParam: filters.page,
-    limitParam: filters.limit,
+    search: filters?.search,
+    selectedSortBy: filters?.sortBy,
+    pageParam: filters?.page,
+    limitParam: filters?.limit,
     handleSortChange,
     handleViewModeChange,
     goToPage,
