@@ -1,0 +1,10 @@
+export { HeroSection } from "./HeroSection";
+export { StatsSection } from "./StatsSection";
+export { StorySection } from "./StorySection";
+export { GallerySection } from "./GallerySection";
+export { TimelineSection } from "./TimelineSection";
+export { AwardsSection } from "./AwardsSection";
+export { ValuesSection } from "./ValuesSection";
+export { TeamSection } from "./TeamSection";
+export { TestimonialsSection } from "./TestimonialsSection";
+export { CTASection } from "./CTASection";
