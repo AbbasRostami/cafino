@@ -4,9 +4,16 @@ import { useState, useMemo } from "react";
 import { ShoppingBag, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useGetItemsAdmin } from "@/services";
-import { ItemFormModal } from "@/app/(admin)/dashboard/items/AddandEditModal/ItemFormModal";
+import { ItemFormModal } from "@/app/(admin)/dashboard/items/AddandEditModal";
 import { useDebounce } from "use-debounce";
 import { columns } from "./columns";
+import {
+  Select,
+  SelectContent,
+  SelectValue,
+  SelectTrigger,
+  SelectItem,
+} from "@/components/ui/select";
 
 export default function Items() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,31 +22,50 @@ export default function Items() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<any>(null);
   const [debouncedSearch] = useDebounce(search, 500);
+
+  const [sortBy, setSortBy] = useState<string>("newest");
   const { items, isLoading, total } = useGetItemsAdmin({
     page: currentPage,
     limit: currentLimit,
     search: debouncedSearch,
+    sortBy: sortBy,
   });
 
   const headerProps = useMemo(
     () => ({
-      title: "لیست محصولات",
+      title: "مدیریت محصولات",
       icon: <ShoppingBag size={30} />,
       showColumnVisibility: true,
       actions: (
-        <Button
-          onClick={() => {
-            setEditingItem(null);
-            setIsModalOpen(true);
-          }}
-          className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 shadow-lg hover:shadow-xl transition-all duration-300"
-        >
-          <Plus size={20} className="ml-2" />
-          افزودن محصول
-        </Button>
+        <>
+          <div className="flex items-center gap-2">
+            <Select value={sortBy} onValueChange={(value) => setSortBy(value)}>
+              <SelectTrigger className="w-48">
+                <SelectValue placeholder="مرتب‌سازی" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="newest">جدیدترین</SelectItem>
+                <SelectItem value="lowestPrice">قیمت پایین‌ترین</SelectItem>
+                <SelectItem value="highestPrice">قیمت بالاترین</SelectItem>
+                <SelectItem value="highestDiscount">تخفیف بالاترین</SelectItem>
+                <SelectItem value="topRated">امتیاز بالاترین</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <Button
+            onClick={() => {
+              setEditingItem(null);
+              setIsModalOpen(true);
+            }}
+            className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            <Plus size={20} className="ml-2" />
+            افزودن محصول
+          </Button>
+        </>
       ),
     }),
-    []
+    [sortBy]
   );
 
   const handleCloseModal = () => {

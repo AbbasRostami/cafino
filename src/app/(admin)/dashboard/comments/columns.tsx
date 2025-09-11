@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/tooltip";
 import { formatJalaliDate } from "@/utils/formatters";
 import { ColumnsCommentsProps, CommentResponseAdmin } from "@/types/admin";
-import { AddCommentModal } from "./addComment/AddCommentModal";
+import { AddCommentModal } from "./addComment";
 
 export const columns = ({
   currentPage,
@@ -105,6 +105,14 @@ export const columns = ({
         cell: (info) => {
           const date = new Date(info.getValue() as string);
           return formatJalaliDate(date, "jYYYY/jMM/jDD");
+        },
+        enableSorting: true,
+      },
+      {
+        accessorKey: "star",
+        header: "امتیاز",
+        cell: (info) => {
+          return (info.getValue() as number) || "-";
         },
         enableSorting: true,
       },

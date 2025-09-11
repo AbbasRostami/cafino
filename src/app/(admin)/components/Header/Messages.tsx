@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
 import { useAdminOverview } from "@/services";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/utils";
 import { useRouter } from "next/navigation";
 
 export default function Messages() {

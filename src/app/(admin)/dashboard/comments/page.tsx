@@ -1,4 +1,5 @@
 "use client";
+
 import { DataTable } from "@/app/(admin)/components/common/DataTable";
 import { useMemo, useState } from "react";
 import { MessageCircleCode } from "lucide-react";
@@ -7,16 +8,32 @@ import {
   useGetCommentsAdmin,
   useRejectComment,
 } from "@/services";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { columns } from "./columns";
 
 export default function Comments() {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentLimit, setCurrentLimit] = useState(10);
   const [searchValue, setSearchValue] = useState("");
+  const [acceptFilter, setAcceptFilter] = useState<string>("");
+  const [sortBy, setSortBy] = useState<string>("newest");
 
   const { comments, isLoading, total } = useGetCommentsAdmin({
     page: currentPage,
     limit: currentLimit,
+    accept:
+      acceptFilter === "true"
+        ? true
+        : acceptFilter === "false"
+        ? false
+        : undefined,
+    sortBy: sortBy || undefined,
   });
 
   const {
@@ -30,13 +47,54 @@ export default function Comments() {
     variables: rejectingVars,
   } = useRejectComment();
 
+  const handleAcceptFilterChange = (newAccept: string) => {
+    setAcceptFilter(newAccept);
+    setCurrentPage(1);
+  };
+
+  const handleSortByChange = (newSortBy: string) => {
+    setSortBy(newSortBy);
+    setCurrentPage(1);
+  };
+
   const headerProps = useMemo(
     () => ({
       title: "لیست کامنت‌ها",
       icon: <MessageCircleCode size={30} />,
       showColumnVisibility: true,
+      actions: (
+        <div className="flex flex-col md:flex-row mt-2 md:mt-0 items-center gap-4">
+          <div className="flex items-center gap-2">
+            <Select value={sortBy} onValueChange={handleSortByChange}>
+              <SelectTrigger className="w-48">
+                <SelectValue placeholder="مرتب‌سازی" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="newest">جدیدترین</SelectItem>
+                <SelectItem value="oldest">قدیمی‌ترین</SelectItem>
+                <SelectItem value="highestRated">بالاترین امتیاز</SelectItem>
+                <SelectItem value="lowestRated">پایین‌ترین امتیاز</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex items-center gap-2">
+            <Select
+              value={acceptFilter}
+              onValueChange={handleAcceptFilterChange}
+            >
+              <SelectTrigger className="w-48">
+                <SelectValue placeholder="وضعیت تایید" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="true">تایید شده</SelectItem>
+                <SelectItem value="false">تایید نشده</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+      ),
     }),
-    []
+    [sortBy, handleSortByChange, acceptFilter, handleAcceptFilterChange]
   );
 
   return (

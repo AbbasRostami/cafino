@@ -6,12 +6,12 @@ import { useItemForm } from "./useItemForm";
 import { FormHeader } from "./FormHeader";
 import { FormSections } from "./FormSections";
 import { FormActions } from "./FormActions";
-import { ItemResponse } from "@/types/admin";
+import { ItemsResponse } from "@/types/admin";
 
 interface ItemFormModalContentProps {
   isOpen: boolean;
   onClose: () => void;
-  item: ItemResponse;
+  item: ItemsResponse;
 }
 
 export function ItemFormModalContent({
@@ -20,7 +20,6 @@ export function ItemFormModalContent({
   item,
 }: ItemFormModalContentProps) {
   const {
-    // Form state
     register,
     handleSubmit,
     control,
@@ -30,24 +29,20 @@ export function ItemFormModalContent({
     isSubmitting,
     isEditing,
 
-    // Form arrays
     ingredientFields,
     appendIngredient,
     removeIngredient,
 
-    // Image handling
     imagePreview,
     imageFiles,
     isCompressing,
     handleImageChange,
     removeImage,
 
-    // Actions
     onSubmit,
     onError,
     handleClose,
 
-    // Data
     categories,
   } = useItemForm({ isOpen, onClose, item });
 

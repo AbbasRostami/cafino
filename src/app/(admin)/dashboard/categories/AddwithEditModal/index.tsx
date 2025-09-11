@@ -11,6 +11,7 @@ import {
 import {
   Drawer,
   DrawerContent,
+  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -30,10 +31,6 @@ export function CategoryModal({
 
   const titleLabel = initialData ? "ویرایش دسته‌بندی" : "افزودن دسته‌بندی";
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const triggerButton = trigger || (
     <Button
       variant="outline"
@@ -47,14 +44,20 @@ export function CategoryModal({
     return (
       <Drawer open={open} onOpenChange={setOpen}>
         <DrawerTrigger asChild>{triggerButton}</DrawerTrigger>
-        <DrawerContent className="max-h-[90vh]">
-          <DrawerHeader className="border-b border-gray-200 dark:border-gray-700">
-            <DrawerTitle className="text-center text-lg font-semibold">
-              {titleLabel}
-            </DrawerTitle>
+        <DrawerContent className="max-h-[90vh] border-none">
+          <DrawerHeader>
+            <VisuallyHidden>
+              <DrawerTitle>{titleLabel}</DrawerTitle>
+              <DrawerDescription>
+                ویرایش و افزدون کامل دسته بندی ها
+              </DrawerDescription>
+            </VisuallyHidden>
           </DrawerHeader>
           <div className="p-6 overflow-y-auto">
-            <ModalContent initialData={initialData} onClose={handleClose} />
+            <ModalContent
+              initialData={initialData}
+              onClose={() => setOpen(false)}
+            />
           </div>
         </DrawerContent>
       </Drawer>
@@ -71,7 +74,10 @@ export function CategoryModal({
             ویرایش و افزدون کامل دسته بندی ها
           </DialogDescription>
         </VisuallyHidden>
-        <ModalContent initialData={initialData} onClose={handleClose} />
+        <ModalContent
+          initialData={initialData}
+          onClose={() => setOpen(false)}
+        />
       </DialogContent>
     </Dialog>
   );

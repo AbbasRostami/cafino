@@ -11,8 +11,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useUserProfile } from "@/services";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Edit, LogOut } from "lucide-react";
-import { useLogout } from "@/services/auth";
+import { Home, LogOut,User, ShoppingBag } from "lucide-react";
+import { useLogout } from "@/services";
+
 export default function UserDropdown() {
   const { data: user } = useUserProfile();
   const { logout, isPending } = useLogout();
@@ -53,11 +54,24 @@ export default function UserDropdown() {
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild className="cursor-pointer">
             <Link href="/dashboard/orders" className="font-bold">
-              <Edit className="w-4 h-4" />
+              <ShoppingBag size={16} />
               مدیریت سفارشات
             </Link>
           </DropdownMenuItem>
-
+          <DropdownMenuSeparator />
+          <DropdownMenuItem asChild className="cursor-pointer">
+            <Link href="/" className="font-bold">
+              <Home size={16} />
+              صفحه اصلی
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem asChild className="cursor-pointer">
+            <Link href="/profile/overview" className="font-bold">
+              <User size={16} />
+              پروفایل
+            </Link>
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             className="cursor-pointer font-bold"
@@ -65,7 +79,7 @@ export default function UserDropdown() {
             disabled={isPending}
             variant="destructive"
           >
-            <LogOut className="w-4 h-4" />
+            <LogOut size={16} />
             {isPending ? "در حال خروج..." : "خروج از پنل"}
           </DropdownMenuItem>
         </DropdownMenuContent>

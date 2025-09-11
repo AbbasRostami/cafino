@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { HomeIcon, ChevronRightIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/utils";
 
 const routeMap: { [key: string]: string } = {
   overview: "داشبورد",
@@ -14,6 +14,7 @@ const routeMap: { [key: string]: string } = {
   discounts: "تخفیف‌ها",
   blacklist: "لیست سیاه",
   comments: "کامنت ها",
+  messages: "مدیریت پیام کاربران",
 };
 
 export default function DashboardBreadcrumbs() {
@@ -46,7 +47,6 @@ export default function DashboardBreadcrumbs() {
 
           return (
             <div key={path} className="flex items-center">
-              {/* جداکننده */}
               <ChevronRightIcon
                 size={16}
                 className={cn("mx-1 text-gray-400", "dark:text-gray-500")}

@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Loader2, Pencil, Trash2 } from "lucide-react";
 import { confirm } from "@/components/common/ConfirmModal";
-import { CategoryModal } from "./AddwithEditModal/CategoryModal";
+import { CategoryModal } from "./AddwithEditModal";
 import { ImageDialog } from "../../components/common/ImageDialog";
 import Image from "next/image";
 import {
@@ -29,14 +29,14 @@ export const columns = ({
       {
         accessorKey: "id",
         header: "ردیف",
-        cell: (info) => (currentPage - 1) * currentLimit + info.row.index + 1,
+        cell: (info) => (currentPage - 1) * currentLimit + info?.row?.index + 1,
         enableSorting: false,
       },
       {
         accessorKey: "imageUrl",
         header: "تصویر",
         cell: (info) => {
-          const url = info.getValue() as string;
+          const url = info?.getValue() as string;
           return (
             <div className="flex justify-center">
               <ImageDialog src={url} alt="تصویر دسته‌بندی">
@@ -56,20 +56,20 @@ export const columns = ({
       {
         accessorKey: "title",
         header: "عنوان دسته‌بندی",
-        cell: (info) => info.getValue() as string,
+        cell: (info) => info?.getValue() as string,
         enableSorting: true,
       },
       {
         accessorKey: "slug",
         header: "اسلاگ",
-        cell: (info) => info.getValue() as string,
+        cell: (info) => info?.getValue() as string,
         enableSorting: true,
       },
       {
         accessorKey: "show",
         header: "نمایش",
         cell: (info) => {
-          const show = info.getValue() as boolean;
+          const show = info?.getValue() as boolean;
           return (
             <Badge variant={show ? "success" : "destructive"}>
               {show ? "قابل نمایش" : "مخفی"}
@@ -131,7 +131,7 @@ export const columns = ({
                             cancelText: "انصراف",
                           });
                           if (isConfirmed) {
-                            deleteCategory({ id: category.id });
+                            deleteCategory({ id: category?.id });
                           }
                         }}
                       >

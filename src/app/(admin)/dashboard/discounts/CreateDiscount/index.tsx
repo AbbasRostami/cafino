@@ -41,7 +41,7 @@ export function CreateDiscountModal() {
               افزودن کد تخفیف
             </Button>
           </DrawerTrigger>
-          <DrawerContent className="p-4">
+          <DrawerContent className="p-4 border-none">
             <ModalContentDiscount onSubmit={onSubmit} isPending={isPending} />
           </DrawerContent>
         </Drawer>

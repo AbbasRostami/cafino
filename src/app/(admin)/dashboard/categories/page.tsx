@@ -5,7 +5,7 @@ import { ChartBarStacked } from "lucide-react";
 import { useDeleteCategories, useGetCategoriesAdmin } from "@/services";
 import { Button } from "@/components/ui/button";
 import { columns } from "./columns";
-import { CategoryModal } from "./AddwithEditModal/CategoryModal";
+import { CategoryModal } from "./AddwithEditModal";
 
 export default function Categories() {
   const [currentPage, setCurrentPage] = useState(1);

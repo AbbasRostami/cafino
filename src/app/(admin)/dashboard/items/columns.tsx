@@ -13,12 +13,12 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Image from "next/image";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { formatJalaliDate } from "@/utils/formatters";
 import { Badge } from "@/components/ui/badge";
-import { ItemDetailsModal } from "./Details/ItemDetailsModal";
-import { MenuItem } from "@/types/main/menu/menu";
-import { itemsColumnsProps } from "@/types/admin";
+import { ItemDetailsModal } from "./Details";
+import { MenuItem } from "@/types/main";
+import { itemsColumnsProps, ItemsResponse } from "@/types/admin";
+import { ImageDialog } from "../../components/common/ImageDialog";
 
 export const columns = ({
   currentPage,
@@ -31,48 +31,32 @@ export const columns = ({
       {
         accessorKey: "id",
         header: "ردیف",
-        cell: (info) => (currentPage - 1) * currentLimit + info.row.index + 1,
+        cell: (info) => (currentPage - 1) * currentLimit + info?.row?.index + 1,
         enableSorting: false,
       },
       {
         accessorKey: "images",
         header: "تصویر",
         cell: (info) => {
-          const [open, setOpen] = useState(false);
           const images = info.getValue() as { imageUrl: string }[];
-          const url = images?.[0]?.imageUrl;
+          const url = images?.[0]?.imageUrl || "";
 
           if (!url) return "-";
 
           return (
             <>
-              <div
-                className="flex justify-center cursor-pointer"
-                onClick={() => setOpen(true)}
-              >
-                <Image
-                  src={url}
-                  alt="تصویر محصول"
-                  className="w-16 h-16 rounded-md object-cover border hover:scale-105 transition"
-                  width={64}
-                  height={64}
-                  loading="lazy"
-                />
-              </div>
-
-              <Dialog open={open} onOpenChange={setOpen}>
-                <DialogContent className="max-w-5xl max-h-[80vh] overflow-y-auto p-0">
+              <div className="flex justify-center cursor-pointer">
+                <ImageDialog src={url} alt="تصویر دسته‌بندی">
                   <Image
                     src={url}
-                    alt="تصویر محصول بزرگ"
-                    className="w-full h-auto rounded-md object-contain"
-                    width={800}
-                    height={800}
+                    alt="تصویر محصول"
+                    className="w-16 h-16 rounded-md object-cover border hover:scale-105 transition"
+                    width={64}
+                    height={64}
                     loading="lazy"
-                    onClick={() => setOpen(false)}
                   />
-                </DialogContent>
-              </Dialog>
+                </ImageDialog>
+              </div>
             </>
           );
         },
@@ -81,20 +65,20 @@ export const columns = ({
       {
         accessorKey: "title",
         header: "عنوان محصول",
-        cell: (info) => info.getValue() as string,
+        cell: (info) => info?.getValue() as string,
         enableSorting: true,
       },
       {
         accessorKey: "category.title",
         header: "دسته‌بندی",
-        cell: (info) => info.getValue() || "-",
+        cell: (info) => info?.getValue() || "-",
         enableSorting: true,
       },
       {
         accessorKey: "price",
         header: "قیمت",
         cell: (info) => {
-          const price = info.getValue() as number;
+          const price = info?.getValue() as number;
           return price ? price + " تومان" : "-";
         },
         enableSorting: true,
@@ -104,7 +88,7 @@ export const columns = ({
         accessorKey: "discount",
         header: "تخفیف",
         cell: (info) => {
-          const discount = info.getValue() as number;
+          const discount = info?.getValue() as number;
           return discount ? `${discount}%` : "-";
         },
         enableSorting: true,
@@ -112,14 +96,14 @@ export const columns = ({
       {
         accessorKey: "quantity",
         header: "موجودی",
-        cell: (info) => info.getValue() ?? "-",
+        cell: (info) => info?.getValue() ?? "-",
         enableSorting: true,
       },
       {
         accessorKey: "rate",
         header: "امتیاز",
         cell: (info) => {
-          const rate = info.getValue() as number;
+          const rate = info?.getValue() as number;
           return rate ? `${rate} ⭐` : "-";
         },
         enableSorting: true,
@@ -128,7 +112,7 @@ export const columns = ({
         header: "مواد اولیه",
         accessorKey: "ingredients",
         cell: (info) => {
-          const ingredients = info.getValue() as any[];
+          const ingredients = info?.getValue() as any[];
           if (ingredients === null) return "-";
 
           return (
@@ -155,7 +139,7 @@ export const columns = ({
       {
         accessorKey: "rate_count",
         header: "تعداد رای",
-        cell: (info) => info.getValue() ?? "-",
+        cell: (info) => info?.getValue() ?? "-",
         enableSorting: true,
       },
       {
@@ -177,7 +161,7 @@ export const columns = ({
         accessorKey: "createdAt",
         header: "تاریخ ثبت",
         cell: (info) => {
-          const date = new Date(info.getValue() as string);
+          const date = info?.getValue() as string;
           return (
             <TooltipProvider>
               <Tooltip>
@@ -200,7 +184,7 @@ export const columns = ({
         header: "عملیات",
         cell: ({ row }) => {
           const { mutate, isPending } = useDeleteItem();
-          const item = row?.original;
+          const item = row?.original || {};
           const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
           return (
@@ -230,7 +214,7 @@ export const columns = ({
               <ItemDetailsModal
                 isOpen={isDetailsOpen}
                 onClose={() => setIsDetailsOpen(false)}
-                item={item as any}
+                item={item as ItemsResponse}
               />
               <TooltipProvider>
                 <Tooltip>
@@ -293,5 +277,5 @@ export const columns = ({
         enableSorting: false,
       },
     ],
-    [currentPage, currentLimit, setEditingItem, setIsModalOpen]
+    [currentPage, currentLimit]
   );

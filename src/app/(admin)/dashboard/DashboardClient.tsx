@@ -1,12 +1,9 @@
 "use client";
 
-import React from "react";
-import AppSidebar from "../layout/AppSidebar";
-import Backdrop from "../layout/Backdrop";
-import AppHeader from "../layout/AppHeader";
 import { useSidebar } from "../context/SidebarContext";
 import dynamic from "next/dynamic";
-import DashboardBreadcrumbs from "../components/common/Breadcrumbs/Breadcrumbs";
+import DashboardBreadcrumbs from "../components/common/Breadcrumbs";
+import { AppHeader, AppSidebar, Backdrop } from "../layout";
 
 const ConfirmModal = dynamic(
   () =>
@@ -33,7 +30,7 @@ export default function DashboardClient({
         className={`flex-1 transition-all duration-300 ease-in-out ${mainContentMargin}`}
       >
         <AppHeader />
-        <div className="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
+        <div className="p-4 mx-auto max-w-7xl md:p-6">
           <ConfirmModal />
           <DashboardBreadcrumbs />
           {children}

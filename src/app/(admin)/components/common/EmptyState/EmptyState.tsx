@@ -1,4 +1,3 @@
-import React from "react";
 import { MotionDiv, MotionH3, MotionP } from "@/utils/MotionWrapper";
 import { Frown } from "lucide-react";
 

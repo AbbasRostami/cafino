@@ -1,4 +1,9 @@
-import { DialogClose, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  DialogClose,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
@@ -9,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { MotionDiv, MotionForm } from "@/utils/MotionWrapper";
 import { ModalContentDiscountProps } from "@/types/admin";
 import { DiscountFormType, discountSchema } from "@/schemas/admin";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 export const ModalContentDiscount = ({
   onSubmit,
@@ -48,6 +54,9 @@ export const ModalContentDiscount = ({
         <DialogTitle className="text-right  items-center hidden md:flex gap-2 text-xl text-amber-600 dark:text-amber-400">
           افزودن کد تخفیف
         </DialogTitle>
+        <VisuallyHidden>
+          <DialogDescription>افزودن کد تخفیف</DialogDescription>
+        </VisuallyHidden>
       </DialogHeader>
 
       <MotionForm

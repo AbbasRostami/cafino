@@ -20,7 +20,7 @@ export function CommentForm({
     register,
     handleSubmit,
     reset,
-    formState: { errors, isDirty },
+    formState: { errors, isDirty, isValid },
   } = useForm<FormValues>({
     resolver: zodResolver(CommentSchema),
     mode: "onChange",
@@ -44,12 +44,12 @@ export function CommentForm({
         placeholder="نظر خود را بنویسید..."
         {...register("text")}
         className={`${
-          errors.text ? "border-red-500" : ""
+          errors?.text ? "border-red-500" : ""
         } transition-all duration-200`}
         rows={5}
       />
-      {errors.text && (
-        <p className="text-red-500 text-sm">{errors.text.message}</p>
+      {errors?.text && (
+        <p className="text-red-500 text-sm">{errors?.text?.message}</p>
       )}
       <div className="flex justify-end gap-2 w-full">
         <Button variant="outline" onClick={closeModal}>
@@ -57,7 +57,7 @@ export function CommentForm({
         </Button>
         <Button
           type="submit"
-          disabled={!isDirty || isPending}
+          disabled={!isDirty || isPending || !isValid}
           className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600   text-white shadow-lg hover:shadow-xl transition-all duration-300 p-2 rounded-lg w-1/2"
         >
           {isPending && <Loader2 className="w-4 h-4 animate-spin" />}

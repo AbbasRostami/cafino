@@ -1,4 +1,3 @@
-import React from "react";
 import DashboardClient from "./DashboardClient";
 import { SidebarProvider } from "../context/SidebarContext";
 import { Metadata } from "next";

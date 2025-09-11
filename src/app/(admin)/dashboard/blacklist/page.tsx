@@ -14,7 +14,6 @@ export default function Blacklist() {
     page: currentPage,
     limit: currentLimit,
   });
-  console.log(blacklist);
 
   const {
     mutate: removeFromBlacklist,

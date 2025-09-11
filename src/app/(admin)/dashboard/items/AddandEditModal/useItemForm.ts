@@ -65,19 +65,19 @@ export function useItemForm({ isOpen, onClose, item }: UseItemFormProps) {
 
     if (item) {
       reset({
-        title: item.title,
-        description: item.description || "",
-        price: item.price,
-        discount: item.discount,
-        quantity: item.quantity,
+        title: item?.title,
+        description: item?.description || "",
+        price: item?.price,
+        discount: item?.discount,
+        quantity: item?.quantity,
         category: "",
-        ingredients: item.ingredients.length ? item.ingredients : [""],
+        ingredients: item?.ingredients.length ? item?.ingredients : [""],
         images: [],
-        show: item.show ?? true,
+        show: item?.show ?? true,
       });
 
       const categoryObj = categories.find(
-        (cat) => cat.title === item.category?.title
+        (cat) => cat?.title === item?.category?.title
       );
       if (categoryObj) {
         setValue("category", categoryObj.id);
@@ -131,11 +131,11 @@ export function useItemForm({ isOpen, onClose, item }: UseItemFormProps) {
       })
     );
 
-    const validFiles = compressed.filter(Boolean) as File[];
+    const validFiles = compressed?.filter(Boolean) as File[];
     setImageFiles((prev) => [...prev, ...validFiles]);
     setImagePreview((prev) => [
       ...prev,
-      ...validFiles.map((f) => URL.createObjectURL(f)),
+      ...validFiles?.map((f) => URL.createObjectURL(f)),
     ]);
     setValue("images", [...imageFiles, ...validFiles]);
 
@@ -143,7 +143,7 @@ export function useItemForm({ isOpen, onClose, item }: UseItemFormProps) {
   };
 
   const removeImage = (index: number) => {
-    const newFiles = imageFiles.filter((_, i) => i !== index);
+    const newFiles = imageFiles?.filter((_, i) => i !== index);
     setImageFiles(newFiles);
     setImagePreview((prev) => prev.filter((_, i) => i !== index));
     setValue("images", newFiles);
@@ -166,13 +166,13 @@ export function useItemForm({ isOpen, onClose, item }: UseItemFormProps) {
       if (data.ingredients?.length)
         appendField("ingredients", data.ingredients.join(","));
 
-      imageFiles.forEach((img) => formData.append("images", img));
+      imageFiles?.forEach((img) => formData.append("images", img));
     };
 
     if (isEditing && item) {
       const hasChanges =
         Object.keys(dirtyFields).length > 0 ||
-        imageFiles.length > 0 ||
+        imageFiles?.length > 0 ||
         data.show !== item.show;
 
       if (!hasChanges) {
@@ -181,7 +181,7 @@ export function useItemForm({ isOpen, onClose, item }: UseItemFormProps) {
       }
 
       appendCommonFields();
-      updateItem({ id: item.id, formData }, { onSuccess: onClose });
+      updateItem({ id: item?.id, formData }, { onSuccess: onClose });
     } else {
       appendCommonFields();
       createItem(formData, {

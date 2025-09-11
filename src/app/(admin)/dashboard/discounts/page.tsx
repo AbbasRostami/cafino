@@ -1,23 +1,35 @@
 "use client";
+
+import { DataTable } from "@/app/(admin)/components/common/DataTable";
+import { useState, useMemo } from "react";
+import { ClipboardPlus } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { CreateDiscountModal } from "./CreateDiscount";
+import { columns } from "./columns";
 import {
   useDeleteDiscount,
   useGetDiscounts,
   useUpdateDiscountStatus,
 } from "@/services";
-import { DataTable } from "@/app/(admin)/components/common/DataTable";
-import { useState, useMemo } from "react";
-import { ClipboardPlus } from "lucide-react";
-import { CreateDiscountModal } from "./CreateDiscount/CreateDiscountModal";
-import { columns } from "./columns";
 
 export default function Discounts() {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentLimit, setCurrentLimit] = useState(10);
   const [searchValue, setSearchValue] = useState("");
+  const [isActiveFilter, setIsActiveFilter] = useState<string>("");
+  const [sortBy, setSortBy] = useState<string>("newest");
 
   const { discounts, isLoading, total } = useGetDiscounts({
     page: currentPage,
     limit: currentLimit,
+    isActive: isActiveFilter === "" ? undefined : isActiveFilter === "true",
+    sortBy: sortBy || undefined,
   });
 
   const {
@@ -32,14 +44,53 @@ export default function Discounts() {
     variables: updatingVars,
   } = useUpdateDiscountStatus();
 
+  const handleIsActiveFilterChange = (newIsActive: string) => {
+    setIsActiveFilter(newIsActive);
+    setCurrentPage(1);
+  };
+
+  const handleSortByChange = (newSortBy: string) => {
+    setSortBy(newSortBy);
+    setCurrentPage(1);
+  };
+
   const headerProps = useMemo(
     () => ({
       title: "لیست کد های تخفیف",
       icon: <ClipboardPlus size={30} />,
       showColumnVisibility: true,
-      actions: <CreateDiscountModal />,
+      actions: (
+        <div className="flex flex-col md:flex-row items-center gap-4">
+          <div className="flex items-center gap-2">
+            <Select value={sortBy} onValueChange={handleSortByChange}>
+              <SelectTrigger className="w-48">
+                <SelectValue placeholder="مرتب‌سازی" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="newest">جدیدترین</SelectItem>
+                <SelectItem value="oldest">قدیمی‌ترین</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex items-center gap-2">
+            <Select
+              value={isActiveFilter}
+              onValueChange={handleIsActiveFilterChange}
+            >
+              <SelectTrigger className="w-48">
+                <SelectValue placeholder="وضعیت فعال" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="true">فعال</SelectItem>
+                <SelectItem value="false">غیرفعال</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <CreateDiscountModal />
+        </div>
+      ),
     }),
-    []
+    [sortBy, handleSortByChange, isActiveFilter, handleIsActiveFilterChange]
   );
 
   return (
