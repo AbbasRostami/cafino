@@ -4,11 +4,11 @@ import { useMemo, useState } from "react";
 import { Users as UsersIcon } from "lucide-react";
 
 import { columns } from "./columns";
-import { useGetUserListAdmin } from "@/services/user/useGetUserListAdmin";
 import {
   useAddUserToBlacklist,
   useChangeUserPermission,
   useDeleteUser,
+  useGetUserListAdmin,
 } from "@/services";
 
 export default function Users() {
@@ -37,7 +37,6 @@ export default function Users() {
     isPending: isAddingToBlacklist,
     variables: addToBlacklistVars,
   } = useAddUserToBlacklist();
-  console.log(users);
 
   const headerProps = useMemo(
     () => ({

@@ -33,20 +33,20 @@ export const columns = ({
       {
         accessorKey: "id",
         header: "ردیف",
-        cell: (info) => (currentPage - 1) * currentLimit + info.row.index + 1,
+        cell: (info) => (currentPage - 1) * currentLimit + info?.row?.index + 1,
         enableSorting: false,
       },
       {
         header: "نام کاربری",
         accessorKey: "username",
-        cell: (info) => info.getValue() || "-",
+        cell: (info) => info?.getValue() || "-",
         enableSorting: true,
       },
       {
         header: "تاریخ تولد",
         accessorKey: "birthday",
         cell: (info) =>
-          info.getValue()
+          info?.getValue()
             ? formatJalaliDate(info.getValue() as string, "jYYYY/jMM/jDD")
             : "-",
         enableSorting: true,
@@ -54,7 +54,7 @@ export const columns = ({
       {
         header: "ایمیل",
         accessorKey: "email",
-        cell: (info) => info.getValue() || "-",
+        cell: (info) => info?.getValue() || "-",
         enableSorting: true,
       },
       {
@@ -133,8 +133,9 @@ export const columns = ({
         header: "تاریخ ثبت",
         accessorKey: "created_at",
         cell: (info) => {
-          const date = info.getValue() as string;
-          return date ? formatJalaliDate(date, "jYYYY/jMM/jDD") : "-";
+          return info?.getValue()
+            ? formatJalaliDate(info?.getValue() as string, "jYYYY/jMM/jDD")
+            : "-";
         },
         enableSorting: true,
       },

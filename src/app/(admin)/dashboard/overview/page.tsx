@@ -18,7 +18,7 @@ import {
   ItemsMetricsSkeleton,
   CommentsMetricsSkeleton,
   LatestCommentsSkeleton,
-} from "@/components/skeleton/admin";
+} from "@/components/skeleton";
 
 export default function Overview() {
   const { data, isLoading } = useAdminOverview();

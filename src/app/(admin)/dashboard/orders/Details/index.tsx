@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import {
   Dialog,
   DialogTrigger,
@@ -10,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { useIsMobile } from "@/hooks/useMediaQuery";
 import { Eye } from "lucide-react";
 import { OrderContent } from "./OrderContent";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
@@ -20,16 +19,17 @@ export default function OrderDetails({
   order,
   setSelectedOrder,
 }: OrderDetailsProps) {
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useIsMobile();
 
   return (
-    <div className="flex justify-center items-center gap-2">
+    <>
       {isMobile ? (
         <Drawer>
-          <DrawerTrigger asChild>
+          <DrawerTrigger>
             <Button
               variant="outline"
               size="sm"
+              aria-label="جزئیات سفارش"
               className="rounded-full transition-all duration-300 hover:shadow-md hover:scale-105"
               onClick={() => setSelectedOrder(order)}
             >
@@ -37,12 +37,12 @@ export default function OrderDetails({
             </Button>
           </DrawerTrigger>
 
-          <DrawerContent className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 border-0 shadow-2xl  p-2">
-            <VisuallyHidden asChild>
+          <DrawerContent className="h-[80vh] overflow-y-auto border-none">
+            <VisuallyHidden>
               <DialogTitle>جزئیات سفارش</DialogTitle>
             </VisuallyHidden>
 
-            <VisuallyHidden asChild>
+            <VisuallyHidden>
               <DialogDescription>
                 اطلاعات کامل سفارش انتخاب‌شده
               </DialogDescription>
@@ -52,10 +52,11 @@ export default function OrderDetails({
         </Drawer>
       ) : (
         <Dialog>
-          <DialogTrigger asChild>
+          <DialogTrigger>
             <Button
               variant="outline"
               size="sm"
+              aria-label="جزئیات سفارش"
               className="rounded-full transition-all duration-300 hover:shadow-md hover:scale-105"
               onClick={() => setSelectedOrder(order)}
             >
@@ -64,13 +65,13 @@ export default function OrderDetails({
           </DialogTrigger>
           <DialogContent
             showCloseButton={false}
-            className="min-w-2xl max-h-[90vh] scrollbar-hide overflow-y-auto bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 border-0 shadow-2xl rounded-2xl"
+            className="min-w-2xl max-h-[90vh] overflow-y-auto scrollbar-hide border-none rounded-2xl"
           >
-            <VisuallyHidden asChild>
+            <VisuallyHidden>
               <DialogTitle>جزئیات سفارش</DialogTitle>
             </VisuallyHidden>
 
-            <VisuallyHidden asChild>
+            <VisuallyHidden>
               <DialogDescription>
                 اطلاعات کامل سفارش انتخاب‌شده
               </DialogDescription>
@@ -79,6 +80,6 @@ export default function OrderDetails({
           </DialogContent>
         </Dialog>
       )}
-    </div>
+    </>
   );
 }

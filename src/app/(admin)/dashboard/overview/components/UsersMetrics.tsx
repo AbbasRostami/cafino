@@ -51,7 +51,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function UsersMetrics({ data }: { data: UserOverview }) {
+export function UsersMetrics({ data }: { data?: UserOverview }) {
   const id = "users-metrics";
 
   const chartData = [

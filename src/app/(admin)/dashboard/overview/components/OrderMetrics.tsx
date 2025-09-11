@@ -18,13 +18,15 @@ import {
 } from "@/components/ui/chart";
 import { OrderOverview } from "@/types/admin";
 
-export function OrderMetrics({ data }: { data: OrderOverview }) {
+export function OrderMetrics({ data }: { data?: OrderOverview }) {
   if (!data?.byStatus) return null;
 
-  const chartData = Object.entries(data?.byStatus).map(([status, value]) => ({
-    status,
-    count: value ?? 0,
-  }));
+  const chartData = Object.entries(data?.byStatus || {})?.map(
+    ([status, value]) => ({
+      status,
+      count: value ?? 0,
+    })
+  );
 
   const chartConfig = {
     pending: {

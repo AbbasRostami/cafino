@@ -11,7 +11,7 @@ import { formatJalaliDate } from "@/utils/formatters";
 import { CommentOverview } from "@/types/admin";
 import { MotionDiv } from "@/utils/MotionWrapper";
 
-export function LastestComments({ data }: { data: CommentOverview }) {
+export function LastestComments({ data }: { data?: CommentOverview }) {
   return (
     <MotionDiv
       initial={{ opacity: 0, y: 25 }}
@@ -58,7 +58,7 @@ export function LastestComments({ data }: { data: CommentOverview }) {
                 <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 pt-2 border-t border-gray-200/40 dark:border-gray-700/40">
                   <div className="flex items-center gap-1.5">
                     <Calendar className="h-3.5 w-3.5 text-amber-500" />
-                    <span className="font-normal">
+                    <span className="text-sm font-normal">
                       {formatJalaliDate(comment?.created_at)}
                     </span>
                   </div>
@@ -66,7 +66,9 @@ export function LastestComments({ data }: { data: CommentOverview }) {
                   {comment?.star && (
                     <div className="flex items-center gap-1 text-amber-500">
                       <Star className="h-3.5 w-3.5" fill="currentColor" />
-                      <span className="font-semibold">{comment?.star}</span>
+                      <span className="text-sm font-semibold">
+                        {comment?.star}
+                      </span>
                     </div>
                   )}
                 </div>

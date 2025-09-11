@@ -66,7 +66,7 @@ export const OrderContent = ({ order, isMobile }: OrderContentProps) => (
   >
     {!isMobile && (
       <MotionDiv variants={itemVariants}>
-        <div className="bg-gradient-to-r from-amber-500 to-amber-600 dark:from-amber-700 dark:to-amber-800 p-6 rounded-t-2xl -m-6 mb-6">
+        <div className="bg-gradient-to-r from-amber-500 to-amber-600 dark:from-amber-700 dark:to-amber-800 p-6 rounded-t-2xl  -m-6 mb-6">
           <div className="text-white">
             <>
               <div className="text-2xl font-bold flex items-center gap-3">
@@ -103,7 +103,7 @@ export const OrderContent = ({ order, isMobile }: OrderContentProps) => (
         variants={cardHoverVariants}
         initial="rest"
         whileHover="hover"
-        className="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/30 dark:to-amber-800/30 p-5 rounded-2xl border border-amber-200/50 dark:border-amber-800/50 shadow-sm"
+        className="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/30 dark:to-amber-800/30 p-5 rounded-2xl border border-amber-200/50 dark:border-amber-800/50 shadow-sm mt-2"
       >
         <div className="flex items-center gap-3 mb-4">
           <MotionDiv
@@ -304,17 +304,14 @@ export const OrderContent = ({ order, isMobile }: OrderContentProps) => (
               key={index}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: index * 0.3 }}
               className="space-y-3"
             >
               <div className="flex flex-col md:flex-row justify-between items-start gap-2">
                 <div className="flex items-center gap-2">
-                  <MotionDiv
-                    whileHover={{ scale: 1.1 }}
-                    className="p-1.5 bg-cyan-500/20 dark:bg-cyan-700/30 rounded-lg"
-                  >
+                  <div className="p-1.5 hover:scale-105 transition-all duration-300 bg-cyan-500/20 dark:bg-cyan-700/30 rounded-lg">
                     <CreditCard className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
-                  </MotionDiv>
+                  </div>
                   <span className="text-sm font-medium text-cyan-800 dark:text-cyan-200">
                     شماره فاکتور:
                   </span>
@@ -325,12 +322,9 @@ export const OrderContent = ({ order, isMobile }: OrderContentProps) => (
               </div>
               <div className="flex flex-col md:flex-row justify-between items-start gap-2">
                 <div className="flex items-center gap-2">
-                  <MotionDiv
-                    whileHover={{ scale: 1.1 }}
-                    className="p-1.5 bg-cyan-500/20 dark:bg-cyan-700/30 rounded-lg"
-                  >
+                  <div className="p-1.5 hover:scale-105 transition-all duration-300 bg-cyan-500/20 dark:bg-cyan-700/30 rounded-lg">
                     <Hash className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
-                  </MotionDiv>
+                  </div>
                   <span className="font-medium text-cyan-800 dark:text-cyan-200">
                     کد پیگیری:
                   </span>
@@ -341,12 +335,9 @@ export const OrderContent = ({ order, isMobile }: OrderContentProps) => (
               </div>
               <div className="flex flex-col md:flex-row justify-between items-start gap-2">
                 <div className="flex items-center gap-2">
-                  <MotionDiv
-                    whileHover={{ scale: 1.1 }}
-                    className="p-1.5 bg-cyan-500/20 dark:bg-cyan-700/30 rounded-lg"
-                  >
+                  <div className="p-1.5 bg-cyan-500/20 hover:scale-105 transition-all duration-300 dark:bg-cyan-700/30 rounded-lg">
                     <Calendar className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
-                  </MotionDiv>
+                  </div>
                   <span className="font-medium text-cyan-800 dark:text-cyan-200">
                     تاریخ پرداخت:
                   </span>
@@ -357,12 +348,9 @@ export const OrderContent = ({ order, isMobile }: OrderContentProps) => (
               </div>
               <div className="flex flex-col md:flex-row justify-between items-start gap-2">
                 <div className="flex items-center gap-2">
-                  <MotionDiv
-                    whileHover={{ scale: 1.1 }}
-                    className="p-1.5 bg-cyan-500/20 dark:bg-cyan-700/30 rounded-lg"
-                  >
+                  <div className="p-1.5 hover:scale-105 transition-all duration-300 bg-cyan-500/20 dark:bg-cyan-700/30 rounded-lg">
                     <CreditCard className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
-                  </MotionDiv>
+                  </div>
                   <span className="font-medium text-cyan-800 dark:text-cyan-200">
                     کارت پرداخت:
                   </span>
@@ -373,19 +361,14 @@ export const OrderContent = ({ order, isMobile }: OrderContentProps) => (
               </div>
               <div className="flex flex-col md:flex-row justify-between items-start gap-2">
                 <div className="flex items-center gap-2">
-                  <MotionDiv
-                    whileHover={{ scale: 1.1 }}
-                    className="p-1.5 bg-cyan-500/20 dark:bg-cyan-700/30 rounded-lg"
-                  >
+                  <div className="p-1.5 hover:scale-105 transition-all duration-300 bg-cyan-500/20 dark:bg-cyan-700/30 rounded-lg">
                     <CheckCircle className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
-                  </MotionDiv>
+                  </div>
                   <span className="font-medium text-cyan-800 dark:text-cyan-200">
                     وضعیت پرداخت:
                   </span>
                 </div>
-                <MotionSpan
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                <span
                   className={`px-2 py-1 rounded-full text-xs font-medium ${
                     payment?.status
                       ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300"
@@ -393,7 +376,7 @@ export const OrderContent = ({ order, isMobile }: OrderContentProps) => (
                   }`}
                 >
                   {payment?.status ? "موفق" : "ناموفق"}
-                </MotionSpan>
+                </span>
               </div>
             </MotionDiv>
           ))}

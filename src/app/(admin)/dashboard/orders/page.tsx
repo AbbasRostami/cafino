@@ -21,11 +21,13 @@ export default function Orders() {
   const [selectedOrder, setSelectedOrder] = useState<OrderAdmin | null>(null);
   const [searchValue, setSearchValue] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("");
+  const [sortBy, setSortBy] = useState<string>("newest");
 
   const { orders, isLoading, total } = useGetOrdersAdmin({
     page: currentPage,
     limit: currentLimit,
     status: statusFilter || undefined,
+    sortBy: sortBy || undefined,
   });
 
   const {
@@ -39,12 +41,29 @@ export default function Orders() {
     setCurrentPage(1);
   };
 
+  const handleSortByChange = (newSortBy: string) => {
+    setSortBy(newSortBy);
+    setCurrentPage(1);
+  };
+
   const headerProps = useMemo(
     () => ({
       title: "لیست سفارشات",
       icon: <Package size={30} />,
       actions: (
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col md:flex-row mt-2 md:mt-0 items-center gap-4">
+          <div className="flex items-center gap-2">
+            <Select value={sortBy} onValueChange={handleSortByChange}>
+              <SelectTrigger className="w-48">
+                <SelectValue placeholder="مرتب‌سازی" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="newest">جدیدترین</SelectItem>
+                <SelectItem value="oldest">قدیمی‌ترین</SelectItem>
+                <SelectItem value="total_amount">مبلغ سفارش</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
           <div className="flex items-center gap-2">
             <Select
               value={statusFilter}
@@ -57,7 +76,7 @@ export default function Orders() {
                 <SelectItem value="pending">در انتظار تایید</SelectItem>
                 <SelectItem value="processing">در حال پردازش</SelectItem>
                 <SelectItem value="delivered">تحویل داده شده</SelectItem>
-                <SelectItem value="done">تمام شده</SelectItem>
+                <SelectItem value="done">تکمیل شده</SelectItem>
                 <SelectItem value="failed">ناموفق</SelectItem>
                 <SelectItem value="canceled">لغوشده</SelectItem>
                 <SelectItem value="refunded">بازگشت وجه</SelectItem>
@@ -68,7 +87,7 @@ export default function Orders() {
       ),
       showColumnVisibility: true,
     }),
-    [statusFilter, handleStatusFilterChange]
+    [statusFilter, handleStatusFilterChange, sortBy, handleSortByChange]
   );
 
   const pageSizeOptions = useMemo(() => [5, 10, 25, 50], []);

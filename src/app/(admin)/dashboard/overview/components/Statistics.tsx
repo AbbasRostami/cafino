@@ -29,9 +29,7 @@ export const Statistics = ({ data }: StatisticsDataProps) => {
       </Card>
       <Card className="bg-white/90 dark:bg-gray-900 border-none shadow-lg hover:shadow-xl transition-all duration-500 h-[140px]">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-bold">
-            تعداد کل کاربران
-          </CardTitle>
+          <CardTitle className="text-sm font-bold">تعداد کل کاربران</CardTitle>
           <Users size={25} />
         </CardHeader>
         <CardContent>
@@ -44,9 +42,7 @@ export const Statistics = ({ data }: StatisticsDataProps) => {
       </Card>
       <Card className="bg-white/90 dark:bg-gray-900 border-none shadow-lg hover:shadow-xl transition-all duration-500 h-[140px]">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-bold">
-            تعداد کل سفارشات
-          </CardTitle>
+          <CardTitle className="text-sm font-bold">تعداد کل سفارشات</CardTitle>
           <ShoppingCart size={25} />
         </CardHeader>
         <CardContent>
@@ -59,9 +55,7 @@ export const Statistics = ({ data }: StatisticsDataProps) => {
       </Card>
       <Card className="bg-white/90 dark:bg-gray-900 border-none shadow-lg hover:shadow-xl transition-all duration-500 h-[140px]">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-bold">
-            تعداد کل کامنت ها
-          </CardTitle>
+          <CardTitle className="text-sm font-bold">تعداد کل کامنت ها</CardTitle>
           <MessagesSquare size={25} />
         </CardHeader>
         <CardContent>

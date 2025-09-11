@@ -22,7 +22,7 @@ import { formatCurrency } from "@/utils/formatters";
 
 export const description = "Revenue bar chart";
 
-export function RevenueMetrics({ revenue }: { revenue: RevenueOverview }) {
+export function RevenueMetrics({ revenue }: { revenue?: RevenueOverview }) {
   const chartData = [
     {
       name: "امروز",

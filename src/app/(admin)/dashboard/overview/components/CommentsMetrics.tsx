@@ -15,9 +15,11 @@ import {
 import { CommentOverview } from "@/types/admin";
 import { MotionDiv } from "@/utils/MotionWrapper";
 
-export function CommentsMetrics({ data }: { data: CommentOverview }) {
+export function CommentsMetrics({ data }: { data?: CommentOverview }) {
   const approvalRate =
-    data?.total > 0 ? Math.round((data?.accepted / data?.total) * 100) : 0;
+    data?.total && data?.accepted && data?.total > 0
+      ? Math.round((data?.accepted / data?.total) * 100)
+      : 0;
 
   return (
     <Card className="gap-6 py-6 bg-white/90 dark:bg-gray-900 border-none shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden h-full sm:h-[450px]">

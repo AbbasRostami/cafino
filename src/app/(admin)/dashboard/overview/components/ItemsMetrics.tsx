@@ -15,7 +15,7 @@ import {
 import { MotionLi } from "@/utils/MotionWrapper";
 import { ItemOverview } from "@/types/admin";
 
-export function ItemsMetrics({ data }: { data: ItemOverview }) {
+export function ItemsMetrics({ data }: { data?: ItemOverview }) {
   return (
     <Card className="gap-2 bg-white/90 dark:bg-gray-900 border-none shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden h-full md:h-[450px]">
       <CardHeader className="relative z-10 pb-4">
