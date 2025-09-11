@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Sidebar from "@/components/profile/layout/sidebar";
+import Sidebar from "@/components/profile/layout";
 import { ConfirmModal } from "@/components/common/ConfirmModal";
 import Navbar from "@/components/common/Header";
 
@@ -7,10 +7,7 @@ export const metadata: Metadata = {
   title: "پنل کاربری | Cafino",
   description:
     "مدیریت حساب کاربری، سفارش‌ها، آدرس‌ها و تنظیمات در کافه رستوران کافینو.",
-  robots: {
-    index: false,
-    follow: false,
-  },
+  authors: [{ name: "Cafino" }],
 };
 
 export default function ProfileLayout({

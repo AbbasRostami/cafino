@@ -24,14 +24,12 @@ const OrdersPageClient = () => {
     handleCloseModal,
   } = useOrders({ initialLimit: 4 });
 
-  // Data fetching
 
   const { data: orders, isLoading } = useGetOrders(limitParam, pageParam);
   const { mutate: CancelOrder, isPending } = useCancelOrder();
 
-  // Calculate pagination
   const totalParam = Number(orders?.total) || 0;
-  const totalPages = Math.max(1, Math.ceil(totalParam / limitParam));
+  const totalPages = Math?.max(1, Math?.ceil(totalParam / limitParam));
   const currentPage = pageParam;
 
   if (isLoading) {
@@ -41,8 +39,6 @@ const OrdersPageClient = () => {
   if (orders?.orders?.length === 0) {
     return <EmptyState />;
   }
-
-  console.log(orders);
   
   return (
     <div className="container mx-auto px-2 py-8">

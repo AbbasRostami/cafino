@@ -106,8 +106,6 @@ export default function AddressesPage() {
     return <AddressSkeleton />;
   }
 
-  console.log(addressesData);
-
   return (
     <div className="space-y-6">
       <AddressHeader />
