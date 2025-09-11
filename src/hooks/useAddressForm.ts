@@ -31,9 +31,9 @@ export const useAddressForm = ({
 
   // Filter cities based on selected province
   useEffect(() => {
-    if (formData.province) {
+    if (formData?.province) {
       const matchedProvince = provinces?.find(
-        (p) => p.name === formData.province
+        (p) => p?.name === formData?.province
       );
       if (matchedProvince) {
         const result = cities?.filter(
@@ -44,7 +44,7 @@ export const useAddressForm = ({
     } else {
       setFilteredCities([]);
     }
-  }, [formData.province, provinces, cities]);
+  }, [formData?.province, provinces, cities]);
 
   const updateFormData = (data: Partial<AddressFormData>) => {
     setFormData((prev) => ({ ...prev, ...data }));

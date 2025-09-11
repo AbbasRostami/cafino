@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { cn } from "@/utils/utils";
+import { cn } from "@/utils/twMerge";
 
 function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (

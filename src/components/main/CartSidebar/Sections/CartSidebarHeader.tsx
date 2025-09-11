@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { CartSidebarHeaderProps } from "@/types/main/cartSidebar";
+import { CartSidebarHeaderProps } from "@/types/main";
 import { ShoppingCart, Trash2 } from "lucide-react";
 
 export const CartSidebarHeader: React.FC<CartSidebarHeaderProps> = ({

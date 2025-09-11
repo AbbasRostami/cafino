@@ -1,5 +1,5 @@
 import type { Metadata, ResolvingMetadata } from "next";
-import { MenuItemResponse } from "@/types/main/menu/menu";
+import { MenuItemResponse } from "@/types/main/menu";
 
 type BuildMenuMetadataOptions = {
   baseUrl?: string;

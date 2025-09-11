@@ -12,6 +12,7 @@ export interface UseGetItemsAdminProps {
   page: number;
   limit: number;
   search: string;
+  sortBy: string;
 }
 
 export interface DeleteItemRequest {
@@ -40,7 +41,7 @@ export interface ItemsResponse {
   createdAt: string;
   category: CategoryInfo;
   images: ItemImage[];
-  show: boolean;
+  show?: boolean;
 }
 
 export interface CreateItemRequest {

@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import React from "react";
+
 import {
   CartSidebarFooter,
   CartSidebarHeader,

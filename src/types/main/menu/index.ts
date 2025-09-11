@@ -160,10 +160,12 @@ export interface PriceInputsProps {
 
 export type GenerateProps = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  params: Promise<{ id: string }>;
 };
 
 export type MenuPageProps = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  params: Promise<{ id: string }>;
 };
 
 export interface MenusWrapperProps {

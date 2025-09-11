@@ -11,7 +11,7 @@ const GallerySection = () => {
 
   return (
     <>
-      {/* SEO Structured Data */}
+      {/* SEO */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

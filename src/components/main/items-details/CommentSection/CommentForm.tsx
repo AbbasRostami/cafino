@@ -4,7 +4,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Slider } from "@/components/ui/slider";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/twMerge";
 import { commentFormSchema, CommentFormData } from "@/schemas/main";
 import { MotionDiv } from "@/utils/MotionWrapper";
 
@@ -43,7 +43,6 @@ export const CommentForm = ({
 
   return (
     <div className="space-y-6">
-      {/* Rating Section */}
       <div className="space-y-3">
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
           امتیاز شما
@@ -58,13 +57,13 @@ export const CommentForm = ({
                 min={1}
                 max={5}
                 step={1}
-                value={[field.value]}
-                onValueChange={(val) => field.onChange(val[0])}
+                value={[field?.value]}
+                onValueChange={(val) => field?.onChange(val[0])}
                 className="text-amber-400"
               />
               <div className="flex items-center justify-between text-sm">
                 <span className="text-gray-600 dark:text-gray-300">
-                  امتیاز انتخاب‌شده: {field.value}
+                  امتیاز انتخاب‌شده: {field?.value}
                 </span>
                 <div className="flex items-center gap-1">
                   {[1, 2, 3, 4, 5].map((star) => (
@@ -72,7 +71,9 @@ export const CommentForm = ({
                       key={star}
                       className={cn(
                         "text-lg",
-                        star <= field.value ? "text-amber-500" : "text-gray-300"
+                        star <= field?.value
+                          ? "text-amber-500"
+                          : "text-gray-300"
                       )}
                     >
                       ★
@@ -83,12 +84,11 @@ export const CommentForm = ({
             </div>
           )}
         />
-        {errors.star && (
+        {errors?.star && (
           <p className="text-red-500 text-sm">{errors?.star?.message}</p>
         )}
       </div>
 
-      {/* Comment Text Section */}
       <div className="space-y-3">
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
           نظر شما
@@ -108,13 +108,12 @@ export const CommentForm = ({
           <div className="text-xs text-muted-foreground">
             {maxLength - textLength} کاراکتر باقی مانده
           </div>
-          {errors.text && (
+          {errors?.text && (
             <p className="text-red-500 text-sm">{errors?.text?.message}</p>
           )}
         </div>
       </div>
 
-      {/* Submit Button */}
       <MotionDiv whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
         <Button
           type="submit"

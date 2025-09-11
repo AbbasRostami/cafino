@@ -101,7 +101,6 @@ const CategorySectionClient: React.FC<CategorySectionClientProps> = ({
           ))}
         </Swiper>
 
-        {/* Custom Pagination */}
         <div className="Category-slider-pagination mt-4 mb-6 cursor-pointer flex items-center justify-center gap-2"></div>
       </div>
     </>

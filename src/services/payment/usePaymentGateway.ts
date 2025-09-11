@@ -15,13 +15,10 @@ export const usePaymentGateway = () => {
     (data) => data,
     {
       onSuccess: () => {
-        toast.success("درگاه پرداخت با موفقیت ایجاد شد");
         queryClient.invalidateQueries({ queryKey: ["/v1/cart"] });
         queryClient.refetchQueries({ queryKey: ["/v1/cart"] });
       },
-      onError: () => {
-        toast.error("خطا در ایجاد درگاه پرداخت");
-      },
+      onError: () => {},
     }
   );
 

@@ -3,7 +3,9 @@ import { CategoryResponse } from "@/types/main";
 
 export const getCategories = async (): Promise<CategoryResponse> => {
   try {
-    const res = await fetchWithServer("/v1/category");
+    const res = await fetchWithServer("/v1/category", {
+      next: { revalidate: 60 },
+    });
     const data = await res.json();
     return data.data as CategoryResponse;
   } catch (error) {

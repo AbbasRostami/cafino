@@ -39,9 +39,9 @@ export function FormSections({
   categories,
 }: FormSectionsProps) {
   const imageSlots = Array.from({ length: 5 }, (_, index) => {
-    const hasImage = index < imagePreview.length;
+    const hasImage = index < imagePreview?.length;
     const imageUrl = hasImage ? imagePreview[index] : null;
-    const fileName = hasImage ? imageFiles[index]?.name : null;
+    const fileName = hasImage ? imageFiles?.[index]?.name : null;
 
     return (
       <MotionDiv
@@ -58,7 +58,7 @@ export function FormSections({
         {hasImage ? (
           <>
             <Image
-              src={imageUrl!}
+              src={imageUrl || ""}
               alt={`تصویر ${index + 1}`}
               width={200}
               height={200}
@@ -69,7 +69,7 @@ export function FormSections({
                 type="button"
                 variant="destructive"
                 size="sm"
-                onClick={() => removeImage(index)}
+                onClick={() => removeImage?.(index)}
                 className="h-8 w-8 rounded-full"
               >
                 <Trash2 size={16} />
@@ -292,9 +292,9 @@ export function FormSections({
           </div>
         </div>
         <div className="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-3">
-          {ingredientFields.map((field, index) => (
+          {ingredientFields?.map((field, index) => (
             <MotionDiv
-              key={field.id}
+              key={field?.id}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * index }}
@@ -317,7 +317,7 @@ export function FormSections({
             </MotionDiv>
           ))}
         </div>
-        {ingredientFields.length === 0 && (
+        {ingredientFields?.length === 0 && (
           <div className="text-center py-8 text-gray-500 dark:text-gray-400">
             <ImageIcon className="w-12 h-12 mx-auto mb-3 opacity-50" />
             <p>هیچ ماده اولیه‌ای اضافه نشده است</p>

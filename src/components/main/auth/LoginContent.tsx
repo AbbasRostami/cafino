@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+
 import { OtpInputForm } from "./OtpInputForm";
 import { PhoneInputForm } from "./PhoneInputForm";
 import Image from "next/image";

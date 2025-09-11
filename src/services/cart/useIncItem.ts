@@ -13,8 +13,6 @@ export const useIncItem = () => {
         queryClient.invalidateQueries({ queryKey: ["/v1/cart"] });
       },
       onError: (error: any) => {
-        console.log(error);
-
         if (error?.status === 422) {
           toast.error("موجودی این محصول کافی نیست.");
         } else {

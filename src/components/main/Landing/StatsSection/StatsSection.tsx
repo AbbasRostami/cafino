@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import Logo from "./../../../../assets/Stattis.webp";
+import Logo from "./../../../../assets/HeroSection/Stattis.webp";
 import Image from "next/image";
 import { useInView, useMotionValue, animate } from "framer-motion";
 

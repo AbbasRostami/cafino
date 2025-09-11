@@ -10,7 +10,6 @@ import {
   Twitter,
   Youtube,
 } from "lucide-react";
-import { RiTelegram2Fill } from "react-icons/ri";
 
 const iconMap = {
   MapPin,
@@ -21,7 +20,6 @@ const iconMap = {
   Instagram,
   Twitter,
   Youtube,
-  RiTelegram2Fill,
 };
 
 const ContactInfo = ({ contactInfo, socialMedia }: ContactInfoProps) => {

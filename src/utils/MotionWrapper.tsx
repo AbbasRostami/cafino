@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 const createMotion =
   (Tag: any) =>
@@ -45,3 +45,4 @@ export const MotionMain = createMotion(motion.main);
 export const MotionFooter = createMotion(motion.footer);
 export const MotionNav = createMotion(motion.nav);
 export const MotionA = createMotion(motion.a);
+export const MotSionAnimatePresence = createMotion(AnimatePresence);

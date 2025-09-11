@@ -1,19 +1,30 @@
 import { useGet } from "@/hooks/useReactQueryHooks";
-import {
-  GetDiscountsResponse,
-  UseGetDiscountsProps,
-} from "@/types/admin/discounts";
+import { GetDiscountsResponse, UseGetDiscountsProps } from "@/types/admin";
 
 export const useGetDiscounts = ({
   page = 1,
   limit = 10,
+  isActive,
+  sortBy,
 }: UseGetDiscountsProps = {}) => {
-  const { data, isLoading, error } = useGet<GetDiscountsResponse>(
-    `/v1/discount?page=${page}&limit=${limit}`,
-    {
-      queryKey: ["discounts", page, limit],
-    }
-  );
+  const queryParams: Record<string, string> = {
+    page: String(page),
+    limit: String(limit),
+  };
+
+  if (isActive !== undefined) {
+    queryParams.isActive = String(isActive);
+  }
+
+  if (sortBy) {
+    queryParams.sortBy = sortBy;
+  }
+
+  const url = `/v1/discount?${new URLSearchParams(queryParams).toString()}`;
+
+  const { data, isLoading, error } = useGet<GetDiscountsResponse>(url, {
+    queryKey: ["discounts", page, limit, isActive, sortBy],
+  });
 
   return {
     discounts: data?.data?.discounts || [],

@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useLoginLogic } from "@/hooks/useLoginLogic";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";

@@ -1,5 +1,5 @@
 import { useGet } from "@/hooks/useReactQueryHooks";
-import { SalesReportResponse } from "@/types/admin/overview";
+import { SalesReport } from "@/types/admin";
 
 interface UseSalesReportProps {
   start: string;
@@ -7,7 +7,7 @@ interface UseSalesReportProps {
 }
 
 export const useSalesReport = ({ start, end }: UseSalesReportProps) => {
-  const { data, isLoading, error } = useGet<SalesReportResponse>(
+  const { data, isLoading, error } = useGet<{ data: SalesReport }>(
     `/v1/admin/overview/sales-report?start=${start}&end=${end}`,
     {
       queryKey: ["sales-report", start, end],

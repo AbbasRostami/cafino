@@ -1,8 +1,8 @@
 import { useGet } from "@/hooks/useReactQueryHooks";
-import { OrderOverviewResponse } from "@/types/admin/overview";
+import { OrderOverview } from "@/types/admin";
 
 export const useOrderOverview = () => {
-  const { data, isLoading, error } = useGet<OrderOverviewResponse>(
+  const { data, isLoading, error } = useGet<{ data: OrderOverview }>(
     "/v1/admin/overview/orders",
     {
       queryKey: ["order-overview"],

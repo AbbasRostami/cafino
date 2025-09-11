@@ -1,7 +1,6 @@
 import { ItemsDetails } from "@/components/main/items-details";
 import { useGetItemsDetailsServer } from "@/services/server/useGetItemsDetailsServer";
 import { GenerateProps, MenuItemClientProps, Item } from "@/types/main";
-import React from "react";
 import type { Metadata, ResolvingMetadata } from "next";
 import { buildItemMetadata } from "@/lib/metadata/buildItemMetadata";
 

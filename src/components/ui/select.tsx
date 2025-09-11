@@ -9,7 +9,7 @@ import {
   ListFilterPlus,
 } from "lucide-react";
 
-import { cn } from "@/utils/utils";
+import { cn } from "@/utils/twMerge";
 
 function Select({
   ...props

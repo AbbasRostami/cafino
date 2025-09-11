@@ -1,5 +1,5 @@
 import { fetchWithServer } from "@/hooks/fetchApiWithCookies";
-import { MenuItemResponse } from "@/types/main/menu/menu";
+import { MenuItemResponse } from "@/types/main/menu";
 
 type GetItemsParams = {
   queryString?: string;

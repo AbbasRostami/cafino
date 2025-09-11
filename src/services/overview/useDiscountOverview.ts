@@ -1,8 +1,8 @@
 import { useGet } from "@/hooks/useReactQueryHooks";
-import { DiscountOverviewResponse } from "@/types/admin/overview";
+import { DiscountOverview } from "@/types/admin";
 
 export const useDiscountOverview = () => {
-  const { data, isLoading, error } = useGet<DiscountOverviewResponse>(
+  const { data, isLoading, error } = useGet<{ data: DiscountOverview }>(
     "/v1/admin/overview/discounts",
     {
       queryKey: ["discount-overview"],

@@ -10,8 +10,8 @@ export const rootMetadata: Metadata = {
   metadataBase: new URL(siteUrl),
 
   title: {
-    default: `${siteName} | کافه و رستوران`,
-    template: `%s | ${siteName}`,
+    default: ` | کافه و رستوران`,
+    template: `%s`,
   },
   description: siteDescription,
 

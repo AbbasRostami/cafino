@@ -2,7 +2,6 @@ export interface MobileNavbarProps {
   isAuthenticated: boolean;
   user: any;
   pathname: string;
-  onLogout: () => Promise<void>;
   openMobileMenu: boolean;
   setOpenMobileMenu: (open: boolean) => void;
   openMobileLoginDialog: boolean;
@@ -19,7 +18,6 @@ export interface DesktopNavbarProps {
   isAuthenticated: boolean;
   user: any;
   pathname: string;
-  onLogout: () => Promise<void>;
   openLoginDialog: boolean;
   setOpenLoginDialog: (open: boolean) => void;
 }

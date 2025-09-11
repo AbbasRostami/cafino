@@ -1,6 +1,5 @@
 "use client";
 
-import { AnimatePresence } from "framer-motion";
 import { CheckoutCartProps } from "@/types/main";
 import { useCheckout } from "@/hooks/useCheckout";
 import {
@@ -12,6 +11,7 @@ import {
   OrderSummary,
   SelectedAddressDisplay,
 } from "./index";
+import { MotSionAnimatePresence } from "@/utils/MotionWrapper";
 
 export default function CheckoutCart({ cart }: CheckoutCartProps) {
   const {
@@ -79,7 +79,7 @@ export default function CheckoutCart({ cart }: CheckoutCartProps) {
                 />
               )}
 
-              <AnimatePresence mode="popLayout">
+              <MotSionAnimatePresence mode="popLayout">
                 <div className="flex items-center gap-3 ">
                   <h3 className="text-lg font-bold text-gray-800 dark:text-white">
                     لیست سبد خرید
@@ -89,7 +89,7 @@ export default function CheckoutCart({ cart }: CheckoutCartProps) {
                 {cart?.cartItems?.map((item: any) => (
                   <CartItemCard key={item?.itemId} item={item} />
                 ))}
-              </AnimatePresence>
+              </MotSionAnimatePresence>
 
               <DiscountSection
                 cart={cart}

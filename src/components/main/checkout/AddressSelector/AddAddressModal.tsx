@@ -26,7 +26,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import { X, MapPin, Loader2 } from "lucide-react";
+import { X, MapPin, Loader2, Check, ChevronsUpDown } from "lucide-react";
 import { AddressFormData } from "@/schemas/profile";
 import { addressFormSchema } from "@/schemas/profile";
 import { MotionForm } from "@/utils/MotionWrapper";
@@ -36,6 +36,20 @@ import { useAddressForm } from "@/hooks/useAddressForm";
 import { toast } from "sonner";
 import { AddAddressModalProps } from "@/types/main";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import {
+  Command,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+} from "@/components/ui/command";
+import {
+  PopoverContent,
+  Popover,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/utils/twMerge";
 
 export default function AddAddressModal({
   open,
@@ -101,49 +115,103 @@ export default function AddAddressModal({
     >
       <div className="space-y-2">
         <Label htmlFor="province">استان</Label>
-        <Select
-          onValueChange={handleProvinceChange}
-          value={form.watch("province")}
-        >
-          <SelectTrigger className="w-full rounded-lg">
-            <SelectValue placeholder="انتخاب استان" />
-          </SelectTrigger>
-          <SelectContent>
-            {provinces?.map((province) => (
-              <SelectItem key={province?.id} value={province?.name}>
-                {province?.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        {form?.formState?.errors?.province && (
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              role="combobox"
+              className={cn(
+                "w-full justify-between rounded-lg",
+                !form.watch("province") && "text-muted-foreground"
+              )}
+            >
+              {form.watch("province") || "انتخاب استان"}
+              <ChevronsUpDown className="opacity-50 h-4 w-4" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-full p-0">
+            <Command>
+              <CommandInput placeholder="جستجوی استان..." className="h-9" />
+              <CommandList className="max-h-56 overflow-y-auto">
+                <CommandEmpty>استانی پیدا نشد.</CommandEmpty>
+                <CommandGroup>
+                  {provinces?.map((province) => (
+                    <CommandItem
+                      key={province?.id}
+                      value={province?.name}
+                      onSelect={() => handleProvinceChange(province?.name)}
+                    >
+                      {province?.name}
+                      <Check
+                        className={cn(
+                          "ml-auto",
+                          province?.name === form.watch("province")
+                            ? "opacity-100"
+                            : "opacity-0"
+                        )}
+                      />
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+        {form.formState.errors?.province && (
           <p className="text-sm text-red-500">
-            {form?.formState?.errors?.province?.message}
+            {form.formState.errors.province.message}
           </p>
         )}
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="city">شهر</Label>
-        <Select
-          onValueChange={handleCityChange}
-          value={form.watch("city")}
-          disabled={!form.watch("province")}
-        >
-          <SelectTrigger className="w-full rounded-lg">
-            <SelectValue placeholder="ابتدا استان را انتخاب کنید" />
-          </SelectTrigger>
-          <SelectContent>
-            {filteredCities?.map((city) => (
-              <SelectItem key={city?.id} value={city?.name}>
-                {city?.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        {form?.formState?.errors?.city && (
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              role="combobox"
+              disabled={!form.watch("province")}
+              className={cn(
+                "w-full justify-between rounded-lg",
+                !form.watch("city") && "text-muted-foreground"
+              )}
+            >
+              {form.watch("city") || "ابتدا استان را انتخاب کنید"}
+              <ChevronsUpDown className="opacity-50 h-4 w-4" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-full p-0">
+            <Command>
+              <CommandInput placeholder="جستجوی شهر..." className="h-9" />
+              <CommandList className="max-h-56 overflow-y-auto">
+                <CommandEmpty>شهری پیدا نشد.</CommandEmpty>
+                <CommandGroup>
+                  {filteredCities?.map((city) => (
+                    <CommandItem
+                      key={city?.id}
+                      value={city?.name}
+                      onSelect={() => handleCityChange(city?.name)}
+                    >
+                      {city?.name}
+                      <Check
+                        className={cn(
+                          "ml-auto",
+                          city?.name === form.watch("city")
+                            ? "opacity-100"
+                            : "opacity-0"
+                        )}
+                      />
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+        {form.formState.errors?.city && (
           <p className="text-sm text-red-500">
-            {form?.formState?.errors?.city?.message}
+            {form.formState.errors.city.message}
           </p>
         )}
       </div>

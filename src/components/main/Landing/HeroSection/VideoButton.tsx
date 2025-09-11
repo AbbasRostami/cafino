@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { Button } from "@/components/ui/button";
 import { Play } from "lucide-react";
 import { MotionDiv } from "@/utils/MotionWrapper";

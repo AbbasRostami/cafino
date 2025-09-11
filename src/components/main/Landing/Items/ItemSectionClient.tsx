@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { Star, ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,7 +18,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectFade, Pagination } from "swiper/modules";
-import { getStockStatus } from "@/utils/formatters";
+import { formatCurrency, getStockStatus } from "@/utils/formatters";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -164,7 +163,7 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
                       >
                         {item?.images?.length > 0 ? (
                           item?.images?.map((img) => (
-                            <SwiperSlide key={img?.id}>
+                            <SwiperSlide key={img?.imageUrl}>
                               <Image
                                 src={img.imageUrl || "/images/default.png"}
                                 alt={item?.title}
@@ -199,7 +198,7 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
 
                       {discount > 0 && (
                         <div className="absolute top-4 right-4 bg-gradient-to-tr from-red-500 to-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-20">
-                          {Math.round(discount)}% تخفیف
+                          {Math?.round(discount)}% تخفیف
                         </div>
                       )}
                     </div>
@@ -217,7 +216,7 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
 
                     {discount > 0 && (
                       <div className="absolute top-4 right-4 bg-gradient-to-tr from-red-500 to-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-20">
-                        {Math.round(discount)}% تخفیف
+                        {Math?.round(discount)}% تخفیف
                       </div>
                     )}
                   </div>
@@ -236,7 +235,7 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
                       <div className="flex items-center gap-1 bg-amber-100 dark:bg-amber-900/30 px-2 py-1 rounded-full">
                         <Star className="text-yellow-400 fill-current" />
                         <span className="text-xs font-medium text-amber-800 dark:text-amber-200">
-                          {item?.rate.toFixed(1)}
+                          {item?.rate?.toFixed(1)}
                         </span>
                       </div>
                     </div>
@@ -341,7 +340,7 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
                     <div className="mt-2 flex flex-col  justify-between items-center gap-2">
                       <div className="flex sm:flex-col xl:flex-row items-center justify-between gap-3 md:gap-1 min-h-[44px]">
                         <span className="text-lg font-bold text-amber-600 dark:text-amber-400">
-                          {finalPrice} تومان
+                          {formatCurrency(finalPrice)} تومان
                         </span>
 
                         <span
@@ -349,7 +348,7 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
                             discount === 0 ? "invisible" : ""
                           }`}
                         >
-                          {originalPrice}
+                          {formatCurrency(originalPrice)} تومان
                         </span>
                       </div>
                       <div className="flex justify-end">

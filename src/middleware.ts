@@ -1,29 +1,62 @@
-// middleware.ts
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
-  // const { pathname } = request.nextUrl;
+  const { pathname } = request.nextUrl;
 
-  // // لیست مسیرهای محافظت‌شده
-  // const protectedRoutes = ["/profile"];
+  // دریافت تمام کوکی‌ها
+  const allCookies = request.cookies.getAll();
+  const accessToken = request.cookies.get("access-token");
+  const refreshToken = request.cookies.get("refresh-token");
 
-  // const isProtected = protectedRoutes.some((route) =>
-  //   pathname.startsWith(route)
-  // );
+  console.log("🟢 Middleware running...");
+  console.log("📍 URL:", pathname);
+  console.log("🍪 All cookies count:", allCookies.length);
+  console.log(
+    "🍪 All cookies:",
+    allCookies.map((c) => ({
+      name: c.name,
+      value: c.value ? "exists" : "empty",
+    }))
+  );
+  console.log(
+    "🔑 Access Token:",
+    accessToken?.value ? "✅ Found" : "❌ Not found"
+  );
+  console.log(
+    "🔄 Refresh Token:",
+    refreshToken?.value ? "✅ Found" : "❌ Not found"
+  );
 
-  // // توکن از کوکی
-  // const token = request.cookies.get("access-token")?.value;
-  // console.log("middleware running on: ", pathname);
-  // console.log("access-token: ", token);
-  // console.log("isProtected: ", isProtected);
-  // // اگر مسیر محافظت شده بود و توکنی وجود نداشت => ریدایرکت
-  // if (isProtected && !token) {
-  //   return NextResponse.redirect(new URL("/", request.url));
-  // }
+  // بررسی مسیرهای محافظت شده
+  const protectedRoutes = ["/profile", "/admin"];
+  const isProtected = protectedRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
 
-  // return NextResponse.next();
+  if (isProtected) {
+    console.log("🔒 Protected route detected");
+
+    if (!accessToken?.value) {
+      console.log("❌ No access token found → redirecting to /");
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+
+    console.log("✅ Access token exists → allowing access");
+
+    // اضافه کردن توکن به headers برای استفاده در کامپوننت‌ها
+    const response = NextResponse.next();
+    response.headers.set("x-auth-token", accessToken.value);
+    console.log("✅ Token added to x-auth-token header");
+
+    return response;
+  } else {
+    console.log("✅ Public route → allowing access");
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
-  // matcher: ["/profile/:path*"],
+  matcher: ["/dashboard/:path*", "/profile/:path*"],
 };

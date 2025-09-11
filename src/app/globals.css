@@ -193,7 +193,6 @@ body {
   animation: reveal 0.8s ease-in-out forwards;
 }
 
-
 :root {
   --wave-from: #fffbeb;
   --wave-mid: #fff7ed;
@@ -637,4 +636,8 @@ body {
   .dark &::after {
     box-shadow: 5px -5px 0 5px #23232a;
   }
+}
+
+.swiper-slide-thumb-active > div {
+  @apply ring-4 ring-amber-500 scale-105 shadow-lg;
 }

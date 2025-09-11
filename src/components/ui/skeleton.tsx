@@ -1,4 +1,4 @@
-import { cn } from "@/utils/utils";
+import { cn } from "@/utils/twMerge";
 
 function Skeleton({ className, ...props }: React.ComponentProps<"div">) {
   return (

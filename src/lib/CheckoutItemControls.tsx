@@ -1,7 +1,5 @@
-import React from "react";
 import { Plus, Minus, Trash2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
 import {
   Tooltip,
   TooltipContent,
@@ -9,6 +7,7 @@ import {
   TooltipProvider,
 } from "@/components/ui/tooltip";
 import { useAddToCartButtonLogic } from "./AddToCartButton";
+import { MotionDiv, MotionSpan } from "@/utils/MotionWrapper";
 
 interface CheckoutItemControlsProps {
   itemId: string;
@@ -36,7 +35,7 @@ export const CheckoutItemControls: React.FC<CheckoutItemControlsProps> = ({
   if (count === 0) return null;
 
   return (
-    <motion.div
+    <MotionDiv
       className={`w-fit flex justify-center items-center rounded-xl overflow-hidden border border-zinc-300 dark:border-zinc-700 bg-white/40 dark:bg-black/40 backdrop-blur-md divide-x divide-zinc-200 dark:divide-zinc-800 ${className}`}
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -53,7 +52,7 @@ export const CheckoutItemControls: React.FC<CheckoutItemControlsProps> = ({
                 className="px-3 py-2 text-rose-600 dark:text-rose-300 hover:bg-rose-100 dark:hover:bg-rose-900 transition-colors"
                 onClick={handleRemove}
               >
-                <motion.div
+                <MotionDiv
                   whileHover={{ rotate: 15, scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -62,7 +61,7 @@ export const CheckoutItemControls: React.FC<CheckoutItemControlsProps> = ({
                   ) : (
                     <Trash2 size={22} />
                   )}
-                </motion.div>
+                </MotionDiv>
               </Button>
             </TooltipTrigger>
             <TooltipContent>
@@ -77,7 +76,7 @@ export const CheckoutItemControls: React.FC<CheckoutItemControlsProps> = ({
           className="px-3 py-2 text-yellow-700 dark:text-yellow-300 hover:bg-yellow-100 dark:hover:bg-yellow-900 transition-colors"
           onClick={handleDec}
         >
-          <motion.div
+          <MotionDiv
             whileHover={{ rotate: -12, scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -86,21 +85,21 @@ export const CheckoutItemControls: React.FC<CheckoutItemControlsProps> = ({
             ) : (
               <Minus size={22} />
             )}
-          </motion.div>
+          </MotionDiv>
         </Button>
       )}
 
       {/* عدد */}
-      <motion.span
+      <MotionSpan
         key={count}
         className="px-5 py-1 text-base font-semibold text-gray-900 dark:text-white relative"
         initial={{ scale: 1.2, opacity: 0.4 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: "spring", stiffness: 300 }}
       >
-        <span className="relative z-10">{count.toLocaleString("fa-IR")}</span>
+        <span className="relative z-10">{count}</span>
         <span className="absolute bottom-0 left-2 right-2 h-[2px] bg-yellow-400/70 rounded-full" />
-      </motion.span>
+      </MotionSpan>
 
       {/* افزایش */}
       <Button
@@ -109,7 +108,7 @@ export const CheckoutItemControls: React.FC<CheckoutItemControlsProps> = ({
         className="px-3 py-2 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900 transition-colors"
         onClick={handleInc}
       >
-        <motion.div
+        <MotionDiv
           whileHover={{ rotate: 12, scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -118,9 +117,9 @@ export const CheckoutItemControls: React.FC<CheckoutItemControlsProps> = ({
           ) : (
             <Plus size={30} />
           )}
-        </motion.div>
+        </MotionDiv>
       </Button>
-    </motion.div>
+    </MotionDiv>
   );
 };
 

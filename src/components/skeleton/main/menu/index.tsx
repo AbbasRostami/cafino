@@ -1,6 +1,6 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/utils/utils";
+import { cn } from "@/utils/twMerge";
 
 export const MenuItemSkeleton = ({
   viewMode,

@@ -10,8 +10,8 @@ import {
 } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
 import { useAdminOverview } from "@/services";
-import { cn } from "@/utils/utils";
 import { useRouter } from "next/navigation";
+import { cn } from "@/utils/twMerge";
 
 export default function Messages() {
   const [isOpen, setIsOpen] = useState(false);

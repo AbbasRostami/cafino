@@ -16,7 +16,7 @@ export const getServerApiUrl = (endpoint: string) => {
     ? `${baseUrl}${endpoint}`
     : `${baseUrl}/api${endpoint}`;
 };
-// تابع ارسال درخواست با توکن (برای سرور کامپوننت‌ها)
+
 export const fetchWithServer = async (
   url: string,
   options: RequestInit = {}
@@ -26,7 +26,6 @@ export const fetchWithServer = async (
     const fullUrl = getServerApiUrl(url);
     const cookieStore = await cookies();
     const allCookies = cookieStore.getAll();
-    console.log("🔍 Server API call:", fullUrl);
     console.log("🔍 Server API call:", fullUrl);
     console.log("🔑 Token available:", token ? "✅ Yes" : "❌ No");
 
@@ -44,7 +43,6 @@ export const fetchWithServer = async (
       headers,
     });
 
-    console.log("✅ Server API response status:", response.status);
     return response;
   } catch (error) {
     console.error("❌ Server API error:", error);

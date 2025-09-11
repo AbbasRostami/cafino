@@ -125,7 +125,6 @@ export interface ApiResponse<T> {
   data: T;
 }
 
-
 // Props
 
 export interface StatisticsDataProps {

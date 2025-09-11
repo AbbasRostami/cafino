@@ -1,5 +1,5 @@
 import { usePost } from "@/hooks/useReactQueryHooks";
-import { ItemResponse } from "@/types/admin/items";
+import { ItemResponse } from "@/types";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 

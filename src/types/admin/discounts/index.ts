@@ -58,4 +58,6 @@ export type ColumnsDiscountsProps = {
 export interface UseGetDiscountsProps {
   page?: number;
   limit?: number;
+  isActive?: boolean;
+  sortBy?: string;
 }

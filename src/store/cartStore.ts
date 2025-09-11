@@ -265,8 +265,6 @@ export const useCartStore = create<CartState>((set, get) => ({
   },
 }));
 
-// Note: React Query hooks have been moved to src/services/cart/
-
 // Migration function: move guest cart to server after login
 export async function migrateGuestCartToServer(
   addToCartMultipleApi: (data: {

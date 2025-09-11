@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { FavoriteToggleButton } from "@/lib/FavoriteToggleButton";
 import { AddToCartButtonStyled } from "@/lib/AddToCartButtonStyled";
 import { MenuItemCardProps, PriceInfo } from "@/types/main";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/twMerge";
 import { formatCurrency, getStockStatus } from "@/utils/formatters";
 import { CartItem } from "@/store/cartStore";
 import {

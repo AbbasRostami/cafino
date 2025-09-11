@@ -1,8 +1,8 @@
 import { useGet } from "@/hooks/useReactQueryHooks";
-import { MessageOverviewResponse } from "@/types/admin/overview";
+import { MessageOverview } from "@/types/admin";
 
 export const useMessageOverview = () => {
-  const { data, isLoading, error } = useGet<MessageOverviewResponse>(
+  const { data, isLoading, error } = useGet<{ data: MessageOverview }>(
     "/v1/admin/overview/messages",
     {
       queryKey: ["message-overview"],

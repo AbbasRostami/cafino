@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 import { useGetItems } from "@/services";
 import { getMenuQueryParams } from "@/lib/query";
-import { MenusWrapperProps } from "@/types/main/menu/menu";
+import { MenusWrapperProps } from "@/types/main/menu";
 import { MenuHeader } from "./layout/MenuHeader";
 import { SearchBar } from "./filters/SearchBar";
 import { MenuControls } from "./filters/MenuControls";

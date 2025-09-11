@@ -1,8 +1,8 @@
 import { useGet } from "@/hooks/useReactQueryHooks";
-import { CommentOverviewResponse } from "@/types/admin/overview";
+import { CommentOverview } from "@/types/admin";
 
 export const useCommentOverview = () => {
-  const { data, isLoading, error } = useGet<CommentOverviewResponse>(
+  const { data, isLoading, error } = useGet<{ data: CommentOverview }>(
     "/v1/admin/overview/comments",
     {
       queryKey: ["comment-overview"],

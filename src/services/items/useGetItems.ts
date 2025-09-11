@@ -1,13 +1,17 @@
 import { useGet } from "@/hooks/useReactQueryHooks";
 import { Item, ItemResponse } from "@/types/main";
-import { MenuItemResponse } from "@/types/main/menu/menu";
+import { MenuItemResponse } from "@/types/main/menu";
 
-export const useGetItems = (queryString: string) => {
+export const useGetItems = (
+  queryString: string,
+  initialData?: MenuItemResponse
+) => {
   const endpoint = `/v1/item?${queryString}`;
 
   return useGet<MenuItemResponse>(endpoint, {
     queryKey: ["items", queryString],
     staleTime: 10 * 1000,
+    initialData: initialData,
   });
 };
 

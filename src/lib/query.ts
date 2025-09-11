@@ -1,5 +1,5 @@
 export type MenuQueryParams = {
-  categoryId?: string;
+  category?: string;
   page: number;
   limit: number;
   sortBy?: string;
@@ -9,6 +9,25 @@ export type MenuQueryParams = {
   availableOnly?: string;
 };
 
+// Convert searchParams to URLSearchParams
+export const convertSearchParamsToURLSearchParams = (searchParams: {
+  [key: string]: string | string[] | undefined;
+}): URLSearchParams => {
+  const urlSearchParams = new URLSearchParams();
+
+  Object.entries(searchParams).forEach(([key, value]) => {
+    if (value !== undefined) {
+      if (Array.isArray(value)) {
+        value.forEach((v) => urlSearchParams.append(key, v));
+      } else {
+        urlSearchParams.set(key, value);
+      }
+    }
+  });
+
+  return urlSearchParams;
+};
+
 export const getMenuQueryParams = (
   searchParams: URLSearchParams
 ): {
@@ -16,7 +35,7 @@ export const getMenuQueryParams = (
   queryString: string;
 } => {
   const query: MenuQueryParams = {
-    categoryId: searchParams.get("categoryId") || undefined,
+    category: searchParams.get("category") || undefined,
     page: Number(searchParams.get("page") || 1),
     limit: Number(searchParams.get("limit") || 6),
     sortBy: searchParams.get("sortBy") || undefined,
@@ -31,7 +50,7 @@ export const getMenuQueryParams = (
   params.set("limit", query.limit.toString());
 
   const optionalKeys: (keyof MenuQueryParams)[] = [
-    "categoryId",
+    "category",
     "sortBy",
     "minPrice",
     "maxPrice",

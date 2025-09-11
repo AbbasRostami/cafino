@@ -1,12 +1,11 @@
 "use client";
 
-import React from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Smartphone, LogIn, CheckCircle2, XCircle } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/twMerge";
 import { PhoneInputFormProps } from "@/types/main";
 import { phoneSchema } from "@/schemas";
 
