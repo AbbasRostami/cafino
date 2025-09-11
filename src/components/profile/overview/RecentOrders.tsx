@@ -49,7 +49,7 @@ export const RecentOrders = ({
                   </span>
                   <span className="text-sm text-gray-800 dark:text-gray-200">
                     {formatJalaliDate(
-                      order?.payments[0].created_at,
+                      order?.payments[0]?.created_at,
                       "jYYYY/jMM/jDD"
                     )}
                   </span>
@@ -69,7 +69,7 @@ export const RecentOrders = ({
                                 key={i}
                                 className=" py-0.5 rounded-full text-gray-800 dark:text-gray-200  text-xs  truncate max-w-[100px]"
                               >
-                                {ing.item.title}
+                                {ing?.item?.title}
                               </span>
                             ))}
 
@@ -84,7 +84,7 @@ export const RecentOrders = ({
                       <TooltipContent>
                         <div className="max-w-[200px] text-xs">
                           {order?.items
-                            ?.map((i: any) => i.item.title)
+                            ?.map((i: any) => i?.item?.title)
                             .join(", ")}
                         </div>
                       </TooltipContent>

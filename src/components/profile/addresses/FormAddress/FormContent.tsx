@@ -3,20 +3,25 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
-import {
-  AddressFormData,
-  FormContentAddressProps,
-  Province,
-} from "@/types/Profile";
+
+import { AddressFormData, FormContentAddressProps } from "@/types/Profile";
 import { addressFormSchema } from "@/schemas/profile";
 import { MotionForm } from "@/utils/MotionWrapper";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Command,
+  CommandItem,
+  CommandGroup,
+  CommandEmpty,
+  CommandList,
+  CommandInput,
+} from "@/components/ui/command";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/utils/utils";
 
 export const FormContent = ({
   onSubmit,
@@ -78,23 +83,50 @@ export const FormContent = ({
         )}
       </div>
 
-      <div className="space-y-1">
+      <div className="space-y-2">
         <Label htmlFor="province">استان</Label>
-        <Select
-          onValueChange={handleProvinceChange}
-          value={form.watch("province")}
-        >
-          <SelectTrigger className="w-full rounded-lg">
-            <SelectValue placeholder="انتخاب استان" />
-          </SelectTrigger>
-          <SelectContent>
-            {provinces?.map((province: Province) => (
-              <SelectItem key={province.id} value={province.name}>
-                {province.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              role="combobox"
+              className={cn(
+                "w-full justify-between rounded-lg",
+                !form.watch("province") && "text-muted-foreground"
+              )}
+            >
+              {form.watch("province") || "انتخاب استان"}
+              <ChevronsUpDown className="opacity-50 h-4 w-4" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-full p-0">
+            <Command>
+              <CommandInput placeholder="جستجوی استان..." className="h-9" />
+              <CommandList className="max-h-56 overflow-y-auto">
+                <CommandEmpty>استانی پیدا نشد.</CommandEmpty>
+                <CommandGroup>
+                  {provinces?.map((province) => (
+                    <CommandItem
+                      key={province?.id}
+                      value={province?.name}
+                      onSelect={() => handleProvinceChange(province?.name)}
+                    >
+                      {province?.name}
+                      <Check
+                        className={cn(
+                          "ml-auto",
+                          province?.name === form.watch("province")
+                            ? "opacity-100"
+                            : "opacity-0"
+                        )}
+                      />
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
         {form?.formState?.errors?.province && (
           <p className="text-sm text-red-500">
             {form?.formState?.errors?.province?.message}
@@ -102,24 +134,51 @@ export const FormContent = ({
         )}
       </div>
 
-      <div className="space-y-1">
+      <div className="space-y-2">
         <Label htmlFor="city">شهر</Label>
-        <Select
-          onValueChange={handleCityChange}
-          value={form.watch("city")}
-          disabled={!form.watch("province")}
-        >
-          <SelectTrigger className="w-full rounded-lg">
-            <SelectValue placeholder="انتخاب شهر" />
-          </SelectTrigger>
-          <SelectContent>
-            {filteredCities?.map((city) => (
-              <SelectItem key={city.id} value={city.name}>
-                {city.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              role="combobox"
+              disabled={!form.watch("province")}
+              className={cn(
+                "w-full justify-between rounded-lg",
+                !form.watch("city") && "text-muted-foreground"
+              )}
+            >
+              {form.watch("city") || "ابتدا استان را انتخاب کنید"}
+              <ChevronsUpDown className="opacity-50 h-4 w-4" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-full p-0">
+            <Command>
+              <CommandInput placeholder="جستجوی شهر..." className="h-9" />
+              <CommandList className="max-h-56 overflow-y-auto">
+                <CommandEmpty>شهری پیدا نشد.</CommandEmpty>
+                <CommandGroup>
+                  {filteredCities?.map((city) => (
+                    <CommandItem
+                      key={city?.id}
+                      value={city?.name}
+                      onSelect={() => handleCityChange(city?.name)}
+                    >
+                      {city?.name}
+                      <Check
+                        className={cn(
+                          "ml-auto",
+                          city?.name === form.watch("city")
+                            ? "opacity-100"
+                            : "opacity-0"
+                        )}
+                      />
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
         {form?.formState?.errors?.city && (
           <p className="text-sm text-red-500">
             {form?.formState?.errors?.city?.message}

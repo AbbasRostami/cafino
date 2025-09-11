@@ -70,7 +70,6 @@ export default function Sidebar() {
       >
         <div className="relative p-5 flex flex-col items-center gap-4 border-b border-gray-200 dark:border-gray-800">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 to-orange-500"></div>
-
           <div className="absolute top-3 left-3 w-2 h-2 rounded-full bg-amber-400"></div>
           <div className="absolute top-3 right-3 w-2 h-2 rounded-full bg-amber-400"></div>
 
@@ -209,7 +208,6 @@ export default function Sidebar() {
       >
         {navItems.map((item) => {
           const isActive = pathname === item.href;
-
           return (
             <Link
               key={item.href}
