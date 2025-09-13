@@ -11,7 +11,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { useAdminOverview } from "@/services";
 import { useRouter } from "next/navigation";
-import { cn } from "@/utils/twMerge";
+import { cn } from "@/utils/utils";
 
 export default function Messages() {
   const [isOpen, setIsOpen] = useState(false);
@@ -124,9 +124,6 @@ export default function Messages() {
                 </div>
                 <p className="text-gray-600 dark:text-gray-400 font-medium">
                   همه پیام‌ها پاسخ داده شده‌اند
-                </p>
-                <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">
-                  وضعیت عالی! 🎉
                 </p>
               </div>
             )}

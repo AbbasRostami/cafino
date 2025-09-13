@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { HomeIcon, ChevronRightIcon } from "lucide-react";
-import { cn } from "@/utils/twMerge";
+import { cn } from "@/utils/utils";
 
 const routeMap: { [key: string]: string } = {
   overview: "داشبورد",

@@ -3,7 +3,6 @@ import {
   convertSearchParamsToURLSearchParams,
 } from "@/lib/query";
 import { getItemsServer } from "@/services/server/useGetItemsServer";
-import { Suspense } from "react";
 import Menus from "@/components/main/menu/Menus";
 import type { Metadata, ResolvingMetadata } from "next";
 import { buildMenuMetadata } from "@/lib/metadata/buildMenuMetadata";
@@ -24,9 +23,7 @@ export default async function MenuPage({ searchParams }: MenuPageProps) {
 
   return (
     <div className="min-h-screen pt-20 md:pt-32 px-4 text-gray-800 dark:text-gray-200">
-      <Suspense fallback={<div>Loading...</div>}>
-        <Menus initialData={serverData} query={query} />
-      </Suspense>
+      <Menus initialData={serverData} query={query} />
     </div>
   );
 }

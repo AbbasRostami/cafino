@@ -14,7 +14,7 @@ import {
 import { useFavorites } from "@/hooks/useFavorites";
 import { Suspense } from "react";
 import { FavoriteItem } from "@/types/Profile";
-import { MotSionAnimatePresence } from "@/utils/MotionWrapper";
+import { MotionAnimatePresence } from "@/utils/MotionWrapper";
 
 const FavoritesPageClient = () => {
   const {
@@ -49,7 +49,7 @@ const FavoritesPageClient = () => {
       <FavoriteHeader />
 
       <div className="bg-white/90 dark:bg-gray-900/90 border border-gray-200 dark:border-gray-800 p-4 shadow-xl rounded-2xl">
-        <MotSionAnimatePresence>
+        <MotionAnimatePresence>
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {favoritesData?.map((favorite: FavoriteItem) => (
               <FavoriteCard
@@ -60,7 +60,7 @@ const FavoritesPageClient = () => {
               />
             ))}
           </div>
-        </MotSionAnimatePresence>
+        </MotionAnimatePresence>
 
         <FilterAndPagination
           currentPage={currentPage}
