@@ -32,6 +32,7 @@
     "@radix-ui/react-visually-hidden": "^1.2.3",
     "@tanstack/react-query": "^5.81.5",
     "@tanstack/react-query-devtools": "^5.79.0",
+    "@tanstack/react-query-next-experimental": "^5.87.4",
     "@tanstack/react-table": "^8.21.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
