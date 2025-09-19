@@ -1,12 +1,29 @@
 import { useGet } from "@/hooks/useReactQueryHooks";
-import { GetOrdersResponseProfile } from "@/types/Profile";
+import { GetOrdersResponseProfile, GetOrdersParams } from "@/types/Profile";
 
-export const useGetOrders = (limit: number = 4, page: number = 1) => {
+export const useGetOrders = (params?: GetOrdersParams) => {
+  const queryParams = new URLSearchParams();
+
+  if (params?.limit) queryParams.append("limit", params.limit.toString());
+  if (params?.page) queryParams.append("page", params.page.toString());
+
+  const endpoint = `/v1/profile/orders${
+    queryParams.toString() ? `?${queryParams.toString()}` : ""
+  }`;
+
   const { data, isLoading, error } = useGet<{ data: GetOrdersResponseProfile }>(
-    `/v1/profile/orders?limit=${limit}&page=${page}`,
+    endpoint,
     {
-      queryKey: ["orders", limit, page],
+      queryKey: ["orders", params],
     }
   );
-  return { data: data?.data, isLoading, error };
+
+  return {
+    data: data?.data,
+    isLoading,
+    error,
+    total: data?.data?.total || 0,
+    page: data?.data?.page || params?.page || 1,
+    limit: data?.data?.limit || params?.limit || 4,
+  };
 };

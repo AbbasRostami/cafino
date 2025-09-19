@@ -28,7 +28,6 @@ export interface UpdateProfileRequest {
   first_name: string;
   last_name: string;
   birthday: string;
-  email: string;
 }
 
 export interface ProfileFormData {
@@ -36,7 +35,6 @@ export interface ProfileFormData {
   first_name: string;
   last_name: string;
   birthday: string;
-  email: string;
 }
 
 export interface AvatarProps {
@@ -74,7 +72,6 @@ export interface SettingsFormData {
   last_name: string;
   birthday: string;
   phone: string;
-  email: string;
 }
 
 export interface UpdateSettingsRequest {
@@ -83,5 +80,4 @@ export interface UpdateSettingsRequest {
   last_name?: string;
   birthday?: string;
   phone?: string;
-  email?: string;
 }

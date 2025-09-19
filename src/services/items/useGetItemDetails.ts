@@ -1,22 +1,11 @@
 import { useGet } from "@/hooks/useReactQueryHooks";
 import { Item } from "@/types";
 
-export const useGetItemDetails = (id: string, initialItem?: Item) => {
-  const { data, isLoading, isFetching } = useGet<{
-    data: { item: Item };
-    statusCode: number;
-  }>(`/v1/item/${id}`, {
+export const useGetItemDetails = (id: string, initialData?: Item) => {
+  const endpoint = `/v1/item/${id}`;
+
+  return useGet<Item>(endpoint, {
     queryKey: ["item-details", id],
-    initialData: initialItem
-      ? { data: { item: initialItem }, statusCode: 200 }
-      : undefined,
-    staleTime: 0,
+    initialData: initialData,
   });
-
-  const shouldShowLoading = isLoading || (isFetching && !data?.data?.item);
-
-  return {
-    data: data?.data?.item,
-    isLoading: shouldShowLoading,
-  };
 };

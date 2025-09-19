@@ -13,6 +13,7 @@ export const useRejectComment = () => {
         toast.success("نظر با موفقیت رد شد");
         queryClient.invalidateQueries({ queryKey: ["comments-admin"] });
         queryClient.invalidateQueries({ queryKey: ["admin-overview"] });
+        queryClient.invalidateQueries({ queryKey: ["comment-overview"] });
       },
       onError: () => {
         toast.error("خطا در رد نظر");

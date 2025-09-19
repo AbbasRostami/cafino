@@ -1,5 +1,5 @@
 // Main item hooks
-export { useGetItems } from "./useGetItems";
+export { useGetItems, useGetItemsSuspense } from "./useGetItems";
 export { useGetItemDetails } from "./useGetItemDetails";
 
 // Admin item hooks

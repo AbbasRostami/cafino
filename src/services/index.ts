@@ -42,3 +42,6 @@ export * from "./auth";
 
 // overview services
 export * from "./overview";
+
+// ticket services
+export * from "./tickets";

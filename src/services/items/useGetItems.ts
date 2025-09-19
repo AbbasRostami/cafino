@@ -1,7 +1,10 @@
 import { useGet } from "@/hooks/useReactQueryHooks";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { fetchApi } from "@/hooks/useAuthToken";
 import { Item, ItemResponse } from "@/types/main";
 import { MenuItemResponse } from "@/types/main/menu";
 
+// useGetItems is used to get the items useQuery
 export const useGetItems = (
   queryString: string,
   initialData?: MenuItemResponse
@@ -10,18 +13,18 @@ export const useGetItems = (
 
   return useGet<MenuItemResponse>(endpoint, {
     queryKey: ["items", queryString],
-    staleTime: 10 * 1000,
     initialData: initialData,
   });
 };
 
+// useGetItemsLanding is used to get the items useQuery
 export const useGetItemsLanding = (
   page: number = 1,
   limit: number = 15,
   sortBy: string = "topRated",
   items: Item[] = []
 ) => {
-  const { data, isLoading, isFetching } = useGet<ItemResponse>(
+  const { data, isLoading, isFetching, isRefetching } = useGet<ItemResponse>(
     `/v1/item?page=${page}&limit=${limit}&sortBy=${sortBy}`,
     {
       queryKey: ["items-landing", page, limit, sortBy],
@@ -36,5 +39,19 @@ export const useGetItemsLanding = (
   const shouldShowLoading =
     isLoading || (isFetching && !data?.data?.items?.length);
 
-  return { data, isLoading: shouldShowLoading };
+  return { data, isLoading: shouldShowLoading, isFetching, isRefetching };
+};
+
+// useGetItemsSuspense is used to get the items useSuspenseQuery
+export const useGetItemsSuspense = (queryString: string) => {
+  return useSuspenseQuery<MenuItemResponse>({
+    queryKey: ["items", queryString],
+    queryFn: () =>
+      fetchApi.get<MenuItemResponse>(`/v1/item?${queryString}`).then((res) => {
+        console.log("API result:", res);
+        return res;
+      }),
+
+    staleTime: 10 * 1000,
+  });
 };

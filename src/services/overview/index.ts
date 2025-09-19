@@ -8,3 +8,4 @@ export { useMessageOverview } from "./useMessageOverview";
 export { useCommentOverview } from "./useCommentOverview";
 export { useSalesReport } from "./useSalesReport";
 export { useProfileOverview } from "./useProfileOverview";
+export { useTicketsOverview } from "./useTicketsOverview";

@@ -5,7 +5,7 @@ import { toast } from "sonner";
 export const useCancelOrder = () => {
   const queryClient = useQueryClient();
 
-  const { mutate, isPending, error } = usePut(
+  const { mutate, isPending, error, variables } = usePut(
     (id: string) => `/v1/profile/orders/{id}?id=${id}`,
     () => undefined,
     {
@@ -21,5 +21,6 @@ export const useCancelOrder = () => {
     mutate: (id: string) => mutate(id),
     isPending,
     error,
+    cancellingOrderId: variables || null,
   };
 };

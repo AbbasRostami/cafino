@@ -13,6 +13,7 @@ export const useAcceptComment = () => {
         toast.success("نظر با موفقیت قبول شد");
         queryClient.invalidateQueries({ queryKey: ["comments-admin"] });
         queryClient.invalidateQueries({ queryKey: ["admin-overview"] });
+        queryClient.invalidateQueries({ queryKey: ["comment-overview"] });
       },
       onError: () => {
         toast.error("خطا در قبول نظر");

@@ -1,18 +1,29 @@
 import { useGet } from "@/hooks/useReactQueryHooks";
-import { FavoriteListResponse } from "@/types/Profile";
+import { FavoriteListResponse, GetFavoritesParams } from "@/types/Profile";
 
-export const useGetFavorites = (limit: number, page: number) => {
+export const useGetFavorites = (params?: GetFavoritesParams) => {
+  const queryParams = new URLSearchParams();
+
+  if (params?.limit) queryParams.append("limit", params.limit.toString());
+  if (params?.page) queryParams.append("page", params.page.toString());
+  if (params?.sortBy) queryParams.append("sortBy", params.sortBy);
+
+  const endpoint = `/v1/profile/favorites${
+    queryParams.toString() ? `?${queryParams.toString()}` : ""
+  }`;
+
   const { data, isLoading, isError, isPending } = useGet<FavoriteListResponse>(
-    `/v1/profile/favorites?limit=${limit}&page=${page}`,
+    endpoint,
     {
-      queryKey: ["favorites", limit, page],
+      queryKey: ["favorites", params],
     }
   );
+
   return {
     data: data?.data?.items || [],
-    total: data?.total || 0,
-    page: data?.page || page,
-    limit: data?.limit || limit,
+    total: data?.data?.total || 0,
+    page: data?.data?.page || params?.page || 1,
+    limit: data?.data?.limit || params?.limit || 6,
     isLoading,
     isError,
     isPending,

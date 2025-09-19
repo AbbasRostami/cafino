@@ -13,6 +13,7 @@ export const useChangeOrderStatus = () => {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["orders-admin"] });
         queryClient.invalidateQueries({ queryKey: ["admin-overview"] });
+        queryClient.invalidateQueries({ queryKey: ["order-overview"] });
         toast.success("وضعیت سفارش با موفقیت تغییر کرد");
       },
       onError: () => {
