@@ -45,4 +45,4 @@ export const MotionMain = createMotion(motion.main);
 export const MotionFooter = createMotion(motion.footer);
 export const MotionNav = createMotion(motion.nav);
 export const MotionA = createMotion(motion.a);
-export const MotSionAnimatePresence = createMotion(AnimatePresence);
+export const MotionAnimatePresence = createMotion(AnimatePresence);
