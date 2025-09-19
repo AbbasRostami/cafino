@@ -100,6 +100,14 @@ export interface CommentOverview {
   latestUnacceptedComments: UnacceptedComment[];
 }
 
+// Ticket Overview Types
+export interface TicketOverview {
+  total: number;
+  open: number;
+  closed: number;
+  answered: number;
+}
+
 // Sales Report Types
 export interface SalesReport {
   grossSales: number;
@@ -116,6 +124,7 @@ export interface AdminOverview {
   revenue: RevenueOverview;
   message: MessageOverview;
   comment: CommentOverview;
+  ticket: TicketOverview;
 }
 
 // API Response Types
@@ -137,5 +146,7 @@ export interface StatisticsDataProps {
     totalComments?: number;
     totalOrder?: number;
     totalUsers?: number;
+    totalTickets?: number;
+    openTickets?: number;
   };
 }

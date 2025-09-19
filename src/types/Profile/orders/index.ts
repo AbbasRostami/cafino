@@ -91,6 +91,7 @@ export interface OrderCardProps {
   orders: OrderProfile[];
   onViewDetails: (order: OrderAdmin) => void;
   isPending: boolean;
+  cancellingOrderId: string | null;
   CancelOrder: (orderId: string) => void;
 }
 
@@ -100,7 +101,14 @@ export interface OrderDetailsModalProps {
   onClose: () => void;
 }
 
-export interface OrdersFilterProps {
+export interface GetOrdersParams {
+  limit?: number;
+  page?: number;
+  sortBy?: string;
+  status?: string;
+}
+
+export interface OrdersPaginationProps {
   selectedLimit: number;
   onLimitChange: (limit: number) => void;
   totalItems: number;

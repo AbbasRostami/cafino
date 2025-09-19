@@ -17,17 +17,21 @@ export interface FavoriteItem {
 export interface FavoriteListResponse {
   data: {
     items: FavoriteItem[];
+    total: number;
+    page: number;
+    limit: number;
   };
-  total: number;
-  page: number;
-  limit: number;
   statusCode?: number;
 }
 
 export interface FavoriteCardProps {
   favorite: FavoriteItem;
-  onDelete: (itemId: string) => void;
-  isPending: boolean;
+}
+
+export interface GetFavoritesParams {
+  limit?: number;
+  page?: number;
+  sortBy?: string;
 }
 
 export interface FilterAndPaginationProps {

@@ -1,4 +1,5 @@
 export interface Item {
+  item: any;
   id: string;
   title: string;
   ingredients: string[];
