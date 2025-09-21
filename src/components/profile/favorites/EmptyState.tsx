@@ -1,11 +1,9 @@
 import { Heart, X, Plus } from "lucide-react";
 import { MotionButton, MotionDiv } from "@/utils/MotionWrapper";
+import { useRouter } from "next/navigation";
 
-interface EmptyStateProps {
-  onViewProducts: () => void;
-}
-
-export const EmptyState = ({ onViewProducts }: EmptyStateProps) => {
+export const EmptyState = () => {
+  const router = useRouter();
   return (
     <MotionDiv
       className="text-center py-16"
@@ -39,7 +37,7 @@ export const EmptyState = ({ onViewProducts }: EmptyStateProps) => {
           boxShadow: "0 5px 15px rgba(236, 72, 153, 0.4)",
         }}
         whileTap={{ scale: 0.95 }}
-        onClick={onViewProducts}
+        onClick={() => router.push("/menu")}
       >
         مشاهده محصولات
         <Plus size={18} />

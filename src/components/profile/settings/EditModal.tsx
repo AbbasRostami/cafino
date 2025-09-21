@@ -53,7 +53,6 @@ export const EditModal = ({
       first_name: "",
       last_name: "",
       birthday: "",
-      email: "",
     },
     resolver: zodResolver(profileFormSchema) as any,
   });
@@ -65,7 +64,6 @@ export const EditModal = ({
         first_name: user?.first_name || "",
         last_name: user?.last_name || "",
         birthday: user?.birthday || "",
-        email: user?.email || "",
       });
     }
   }, [user, reset]);
@@ -103,13 +101,6 @@ export const EditModal = ({
         name="last_name"
         register={register}
         errors={errors}
-      />
-      <InputBlock
-        label="ایمیل"
-        name="email"
-        register={register}
-        errors={errors}
-        type="email"
       />
       <InputBlock
         label="نام کاربری"

@@ -21,7 +21,7 @@ import {
   CommandInput,
 } from "@/components/ui/command";
 import { Check, ChevronsUpDown } from "lucide-react";
-import { cn } from "@/utils/twMerge";
+import { cn } from "@/utils/utils";
 
 export const FormContent = ({
   onSubmit,

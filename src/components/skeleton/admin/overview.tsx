@@ -1,8 +1,14 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-export const StatisticsSkeleton = () => (
-  <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-    {[...Array(4)].map((_, i) => (
+export const StatisticsSkeleton = ({
+  cols = 4,
+  rows = 5,
+}: {
+  cols?: number;
+  rows?: number;
+}) => (
+  <div className={`grid gap-4 sm:grid-cols-2 xl:grid-cols-${cols} mb-4`}>
+    {[...Array(rows)].map((_, i) => (
       <div
         key={i}
         className="bg-white/90 dark:bg-gray-900 border-none shadow-lg rounded-lg p-6 h-[140px]"

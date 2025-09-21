@@ -11,6 +11,7 @@ import {
   LogOut,
   User,
   ChevronLeft,
+  Tickets,
 } from "lucide-react";
 import { useLogout, useUserProfile } from "@/services";
 import {
@@ -49,6 +50,11 @@ const navItems = [
     href: "/profile/settings",
     icon: <Settings size={20} />,
     label: "پروفایل",
+  },
+  {
+    href: "/profile/tickets",
+    icon: <Tickets size={20} />,
+    label: "تیکت",
   },
 ];
 
@@ -170,24 +176,10 @@ export default function Sidebar() {
 
         <div className="p-3">
           <MotionButton
-            whileHover={{
-              scale: 1.02,
-              boxShadow: "0 4px 15px rgba(239, 68, 68, 0.2)",
-            }}
-            whileTap={{ scale: 0.98 }}
             className="w-full flex items-center justify-center gap-2 p-3 text-gray-700 dark:text-gray-200 rounded-xl bg-gradient-to-r from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 hover:border-red-300 dark:hover:border-red-500 transition-all relative overflow-hidden"
-            onClick={() => logout()}
+            onClick={() => logout("/")}
             disabled={isPending}
           >
-            <MotionDiv
-              className="absolute inset-0 bg-gradient-to-r from-red-50/0 to-red-50/0"
-              whileHover={{
-                background:
-                  "linear-gradient(to right, rgba(254, 226, 226, 0), rgba(254, 226, 226, 0.5))",
-              }}
-              transition={{ duration: 0.3 }}
-            />
-
             <div className="relative z-10 flex items-center gap-2">
               <div className="p-1.5 rounded-full bg-red-100 dark:bg-red-900/30">
                 <LogOut size={16} className="text-red-500 dark:text-red-400" />

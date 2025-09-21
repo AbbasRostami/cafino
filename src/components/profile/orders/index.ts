@@ -1,5 +1,5 @@
 export { OrdersHeader } from "./OrdersHeader";
 export { EmptyState } from "./EmptyState";
 export { OrderCard } from "./OrderCard";
-export { OrdersFilter } from "./OrdersFilter";
+export { OrdersPagination } from "./OrderPagination";
 export { OrderDetailsModal } from "./OrderDetailsModal";

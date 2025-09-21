@@ -16,19 +16,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
-import { OrdersFilterProps } from "@/types/Profile";
+import { OrdersPaginationProps } from "@/types/Profile";
 
-export const OrdersFilter = ({
+export const OrdersPagination = ({
   selectedLimit,
   onLimitChange,
   totalItems,
   currentPage,
   totalPages,
   onPageChange,
-}: OrdersFilterProps) => {
+}: OrdersPaginationProps) => {
   return (
     <div className="flex flex-col sm:flex-row justify-between items-center mt-0 sm:mt-10 gap-4 p-2 sm:p-0 pb-14">
-      <div className="text-sm text-gray-500 dark:text-gray-400">
+      <div className="text-sm space-x-1 text-gray-500 dark:text-gray-400">
         نمایش {selectedLimit} از
         {totalItems}
       </div>
@@ -47,8 +47,8 @@ export const OrdersFilter = ({
             <SelectContent>
               <SelectGroup>
                 <SelectItem value="4">۴</SelectItem>
-                <SelectItem value="10">۸</SelectItem>
-                <SelectItem value="15">۱۲</SelectItem>
+                <SelectItem value="8">۸</SelectItem>
+                <SelectItem value="12">۱۲</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
@@ -75,24 +75,61 @@ export const OrdersFilter = ({
               </PaginationItem>
             )}
 
-            {[...Array(totalPages)].map((_, index) => {
-              const page = index + 1;
-              return (
-                <PaginationItem key={page}>
-                  <PaginationLink
-                    isActive={page === currentPage}
-                    className={`${
-                      page === currentPage
-                        ? "bg-gradient-to-r from-gray-50 to-white dark:from-gray-700 dark:to-gray-600"
-                        : "bg-gradient-to-l from-gray-100 to-white dark:from-gray-700 dark:to-gray-800"
-                    }`}
-                    onClick={() => onPageChange(page)}
-                  >
-                    {page}
-                  </PaginationLink>
-                </PaginationItem>
-              );
-            })}
+            {[1, 2].map((page) => (
+              <PaginationItem key={page}>
+                <PaginationLink
+                  isActive={page === currentPage}
+                  className={`${
+                    page === currentPage
+                      ? "bg-gradient-to-r from-gray-50 to-white dark:from-gray-700 dark:to-gray-600"
+                      : "bg-gradient-to-l from-gray-100 to-white dark:from-gray-700 dark:to-gray-800"
+                  }`}
+                  onClick={() => onPageChange(page)}
+                >
+                  {page}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+
+            {totalPages > 3 && currentPage > 3 && (
+              <PaginationItem>
+                <span className="px-3 py-2 text-gray-500">...</span>
+              </PaginationItem>
+            )}
+
+            {currentPage > 2 && currentPage < totalPages - 1 && (
+              <PaginationItem>
+                <PaginationLink
+                  isActive={true}
+                  className="bg-gradient-to-r from-gray-50 to-white dark:from-gray-700 dark:to-gray-600"
+                  onClick={() => onPageChange(currentPage)}
+                >
+                  {currentPage}
+                </PaginationLink>
+              </PaginationItem>
+            )}
+
+            {totalPages > 3 && currentPage < totalPages - 2 && (
+              <PaginationItem>
+                <span className="px-3 py-2 text-gray-500">...</span>
+              </PaginationItem>
+            )}
+
+            {totalPages > 2 && (
+              <PaginationItem>
+                <PaginationLink
+                  isActive={totalPages === currentPage}
+                  className={`${
+                    totalPages === currentPage
+                      ? "bg-gradient-to-r from-gray-50 to-white dark:from-gray-700 dark:to-gray-600"
+                      : "bg-gradient-to-l from-gray-100 to-white dark:from-gray-700 dark:to-gray-800"
+                  }`}
+                  onClick={() => onPageChange(totalPages)}
+                >
+                  {totalPages}
+                </PaginationLink>
+              </PaginationItem>
+            )}
 
             {currentPage < totalPages && (
               <PaginationItem>

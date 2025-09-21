@@ -1,6 +1,6 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/utils/twMerge";
+import { cn } from "@/utils/utils";
 
 export const MenuItemSkeleton = ({
   viewMode,
@@ -123,5 +123,20 @@ export const SkeletonSidebar = () => {
         </div>
       </ScrollArea>
     </aside>
+  );
+};
+
+export const MenuSkeleton = () => {
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex flex-col xl:flex-row gap-6">
+        <div className="h-full shrink-0">
+          <SkeletonSidebar />
+        </div>
+        <div className="flex-1">
+          <MenuItemSkeleton viewMode="grid" />
+        </div>
+      </div>
+    </div>
   );
 };

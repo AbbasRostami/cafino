@@ -44,3 +44,5 @@ export {
   CommentsMetricsSkeleton,
   LatestCommentsSkeleton,
 } from "./overview";
+
+export { AdminTicketChatSkeleton } from "./AdminTicketChatSkeleton";

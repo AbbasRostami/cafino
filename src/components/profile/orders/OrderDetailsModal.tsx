@@ -19,12 +19,15 @@ import {
   DialogHeader,
   DialogTitle,
   DialogClose,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Package, CreditCard, MapPin, Download, Truck, X } from "lucide-react";
 import { formatCurrency } from "@/utils/formatters";
 import { OrderDetailsModalProps } from "@/types/Profile";
 import { useIsMobile } from "@/hooks/useMediaQuery";
 import { DrawerContent } from "@/components/ui/drawer";
+import { useRouter } from "next/navigation";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 export const OrderDetailsModal = ({
   order,
@@ -35,6 +38,7 @@ export const OrderDetailsModal = ({
   const isMobile = useIsMobile();
 
   const Content = () => {
+    const router = useRouter();
     return (
       <div className="max-h-[60vh] overflow-y-auto bg-gradient-to-br from-slate-50 to-gray-100 dark:from-slate-900 dark:to-gray-800 p-2 sm:p-6">
         <div className="grid grid-cols-1 gap-6">
@@ -256,7 +260,10 @@ export const OrderDetailsModal = ({
               دانلود فاکتور
             </div>
           </Button>
-          <Button className="group relative overflow-hidden bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-medium rounded-xl px-5 py-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+          <Button
+            onClick={() => router.push("/profile/tickets")}
+            className="group relative overflow-hidden bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-medium rounded-xl px-5 py-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+          >
             <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="relative flex items-center gap-2">
               <Truck className="h-5 w-5" />
@@ -309,6 +316,9 @@ export const OrderDetailsModal = ({
               </h2>
             </div>
           </DialogTitle>
+          <VisuallyHidden>
+            <DialogDescription>جزئیات سفارش</DialogDescription>
+          </VisuallyHidden>
         </DialogHeader>
         <Content />
       </DialogContent>

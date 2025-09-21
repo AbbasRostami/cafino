@@ -10,7 +10,7 @@ export const AddressCard = ({
 }: AddressCardProps) => {
   return (
     <div className="rounded-2xl p-5 border border-muted hover:border-amber-200 dark:hover:border-amber-500 hover:bg-muted/40 transition-all duration-200 shadow-sm bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl">
-      <div className="flex flex-col md:flex-row gap-4 md:gap-8 justify-between items-start md:items-center">
+      <div className="flex flex-col lg:flex-row gap-4 md:gap-8 justify-between items-start md:items-center">
         <div className="space-y-1">
           <h3 className="text-base font-bold text-foreground">
             {address?.province} - {address?.city}

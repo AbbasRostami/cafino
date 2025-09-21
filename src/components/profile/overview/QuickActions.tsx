@@ -92,7 +92,7 @@ export const QuickActions = () => {
             asChild
           >
             <Link
-              href="/favorites"
+              href="/profile/favorites"
               className="flex items-center !justify-start lg:!justify-center gap-1"
             >
               <Star
@@ -110,14 +110,14 @@ export const QuickActions = () => {
             asChild
           >
             <Link
-              href="/rewards"
+              href="/profile/tickets"
               className="flex items-center !justify-start lg:!justify-center gap-1"
             >
               <Gift
                 size={14}
                 className="group-hover:scale-110 transition-transform"
               />
-              پاداش‌ها
+              تیکت ها
               <span className="absolute inset-0 bg-gradient-to-r from-amber-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></span>
             </Link>
           </Button>

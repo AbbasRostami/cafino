@@ -21,7 +21,7 @@ export function AddressSkeleton() {
                 key={index}
                 className="rounded-2xl p-5 border border-muted shadow-sm bg-white/80 dark:bg-gray-800/80"
               >
-                <div className="flex flex-col md:flex-row gap-4 md:gap-8 justify-between items-start md:items-center">
+                <div className="flex flex-col lg:flex-row gap-4 md:gap-8 justify-between items-start md:items-center">
                   <div className="space-y-1 flex-1">
                     <Skeleton className="h-6 w-48 mb-1 bg-gray-200 dark:bg-gray-700" />{" "}
                     <Skeleton className="h-4 mx-auto w-30  md:w-64 mb-2 bg-gray-200 dark:bg-gray-700" />{" "}

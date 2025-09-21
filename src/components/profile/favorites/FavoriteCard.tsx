@@ -10,12 +10,11 @@ import AddToCartButtonStyled from "@/lib/AddToCartButtonStyled";
 import { FavoriteCardProps } from "@/types/Profile";
 import { MotionDiv } from "@/utils/MotionWrapper";
 import { formatCurrency } from "@/utils/formatters";
+import { useDeleteFromFavorite } from "@/services";
 
-export const FavoriteCard = ({
-  favorite,
-  onDelete,
-  isPending,
-}: FavoriteCardProps) => {
+export const FavoriteCard = ({ favorite }: FavoriteCardProps) => {
+  const { mutate: deleteFromFavorite, isPending } = useDeleteFromFavorite();
+
   const handleDelete = async () => {
     const isConfirmed = await confirm({
       title: "آیا از حذف از علاقه مندی مطمئن هستید؟",
@@ -26,7 +25,7 @@ export const FavoriteCard = ({
     });
 
     if (isConfirmed) {
-      onDelete(favorite?.item?.id);
+      deleteFromFavorite({ itemId: favorite?.item?.id });
     }
   };
 

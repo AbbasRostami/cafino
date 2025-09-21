@@ -6,7 +6,6 @@ export const ProfileInfo = ({ user }: ProfileInfoProps) => {
     { label: "نام", value: user?.first_name, icon: "🧑" },
     { label: "نام خانوادگی", value: user?.last_name, icon: "🧑‍🦱" },
     { label: "نام کاربری", value: user?.username, icon: "👤" },
-    { label: "آدرس ایمیل", value: user?.email, icon: "✉️" },
     { label: "شماره تلفن", value: user?.phone, icon: "📞" },
     {
       label: "تاریخ تولد",
@@ -14,11 +13,6 @@ export const ProfileInfo = ({ user }: ProfileInfoProps) => {
         ? formatJalaliDate(user.birthday, "jYYYY/jMM/jDD")
         : "---",
       icon: "🎂",
-    },
-    {
-      label: "نقش",
-      value: user?.role === "admin" ? "مدیر" : "کاربر",
-      icon: "🛡️",
     },
     {
       label: "وضعیت",
