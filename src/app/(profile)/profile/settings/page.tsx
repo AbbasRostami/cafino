@@ -42,7 +42,7 @@ export default function SettingsPage() {
     <div className="py-8">
       <SettingsHeader />
 
-      <div className="bg-white/90 dark:bg-gray-900/90 border border-gray-200 dark:border-gray-800 mt-4 px-4 py-6 rounded-2xl space-y-4 pb-16">
+      <div className="bg-white/90 dark:bg-gray-900/90 border border-gray-200 dark:border-gray-800 mt-4 px-4 py-6 rounded-2xl space-y-4">
         <AvatarSection
           user={user}
           avatarPreview={avatarPreview}
@@ -55,7 +55,7 @@ export default function SettingsPage() {
         <ProfileInfo user={user} />
         <Button
           onClick={() => setIsEditing(true)}
-          className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-gray-700 hover:bg-amber-700"
+          className="w-full mt-6  bg-gradient-to-r from-amber-500 to-orange-500 text-gray-700 hover:bg-amber-700"
         >
           ویرایش
         </Button>

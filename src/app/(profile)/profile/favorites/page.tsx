@@ -1,7 +1,9 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useGetFavorites } from "@/services";
 import { FavoritesSkeleton } from "@/components/skeleton";
+import { GetFavoritesParams } from "@/types/Profile";
 
 import {
   FavoriteCard,
@@ -11,37 +13,54 @@ import {
   FavoriteFooter,
 } from "@/components/profile/favorites";
 
-import { useFavorites } from "@/hooks/useFavorites";
-import { Suspense } from "react";
 import { FavoriteItem } from "@/types/Profile";
 import { MotionAnimatePresence } from "@/utils/MotionWrapper";
 
-const FavoritesPageClient = () => {
-  const {
-    limitParam,
-    pageParam,
-    handleLimitChange,
-    goToPage,
-    handleDeleteFavorite,
-    handleViewProducts,
-    isPending,
-  } = useFavorites({ initialLimit: 6 });
+export default function FavoritesPage() {
+  const [filters, setFilters] = useState<GetFavoritesParams>({
+    page: 1,
+    limit: 6,
+  });
+
+  const handleFilterChange = (
+    key: keyof GetFavoritesParams,
+    value?: string | number
+  ) => {
+    setFilters((prev) => ({
+      ...prev,
+      [key]: value || undefined,
+      ...(key !== "page" ? { page: 1 } : {}),
+    }));
+  };
 
   const {
     data: favoritesData,
     isLoading,
     total,
-  } = useGetFavorites(limitParam, pageParam);
+    page,
+    limit,
+  } = useGetFavorites(filters);
 
-  const totalPages = Math?.max(1, Math?.ceil(total / limitParam));
-  const currentPage = pageParam;
+  const totalPages = Math?.max(1, Math?.ceil(total / limit));
+  const currentPage = page;
+
+  useEffect(() => {
+    if (
+      !isLoading &&
+      favoritesData?.length === 0 &&
+      currentPage > 1 &&
+      total > 0
+    ) {
+      handleFilterChange("page", currentPage - 1);
+    }
+  }, [favoritesData, currentPage, total, isLoading]);
 
   if (isLoading) {
     return <FavoritesSkeleton />;
   }
 
-  if (favoritesData?.length === 0) {
-    return <EmptyState onViewProducts={handleViewProducts} />;
+  if (favoritesData?.length === 0 && total === 0) {
+    return <EmptyState />;
   }
 
   return (
@@ -52,12 +71,7 @@ const FavoritesPageClient = () => {
         <MotionAnimatePresence>
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {favoritesData?.map((favorite: FavoriteItem) => (
-              <FavoriteCard
-                key={favorite?.id}
-                favorite={favorite}
-                onDelete={(itemId) => handleDeleteFavorite({ itemId })}
-                isPending={isPending}
-              />
+              <FavoriteCard key={favorite?.id} favorite={favorite} />
             ))}
           </div>
         </MotionAnimatePresence>
@@ -65,21 +79,14 @@ const FavoritesPageClient = () => {
         <FilterAndPagination
           currentPage={currentPage}
           totalPages={totalPages}
-          onPageChange={goToPage}
-          selectedLimit={limitParam}
-          onLimitChange={handleLimitChange}
+          onPageChange={(page) => handleFilterChange("page", page)}
+          selectedLimit={limit}
+          onLimitChange={(limit) => handleFilterChange("limit", limit)}
           totalItems={total}
         />
 
         <FavoriteFooter />
       </div>
     </div>
-  );
-};
-export default function FavoritesPage() {
-  return (
-    <Suspense fallback={<div>Loading favorites...</div>}>
-      <FavoritesPageClient />
-    </Suspense>
   );
 }
