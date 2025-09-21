@@ -16,6 +16,7 @@ export const useCloseTicket = () => {
         toast.success("تیکت با موفقیت بسته شد");
         queryClient.invalidateQueries({ queryKey: ["tickets"] });
         queryClient.invalidateQueries({ queryKey: ["user-tickets"] });
+        queryClient.invalidateQueries({ queryKey: ["tickets-overview"] });
       },
       onError: () => {
         toast.error("خطا در بستن تیکت");
