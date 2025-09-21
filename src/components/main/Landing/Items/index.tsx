@@ -8,7 +8,7 @@ import { getItemsServer } from "@/services/server/useGetItemsServer";
 
 export default async function ItemSection() {
   const itemsResponse = await getItemsServer({
-    queryString: "page=2&limit=20&sortBy=newest",
+    queryString: "page=1&limit=15&sortBy=topRated",
   });
 
   const items = itemsResponse?.data?.items || [];

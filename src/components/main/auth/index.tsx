@@ -1,6 +1,6 @@
 "use client";
 
-import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { useIsMobile } from "@/hooks/useMediaQuery";
 import { useLoginLogic } from "@/hooks/useLoginLogic";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import {
@@ -18,7 +18,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   onOpenChange,
   onSuccess,
 }) => {
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useIsMobile();
   const {
     step,
     isSendOTPLoading,
@@ -36,13 +36,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   if (isMobile) {
     return (
       <Drawer open={open} onOpenChange={onOpenChange}>
-        <DrawerContent className="max-h-[90vh]">
+        <DrawerContent className="max-h-[90vh] border-none">
           <DrawerHeader className="text-center">
             <VisuallyHidden>
               <DrawerTitle>فرم ورود و ثبت نام</DrawerTitle>
             </VisuallyHidden>
           </DrawerHeader>
-          <div className="px-4 pb-4">
+          <div className="px-4 pb-4 overflow-y-auto scrollbar-hide">
             <LoginContent
               step={step}
               isSendOTPLoading={isSendOTPLoading}
@@ -64,7 +64,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="!w-lg max-h-[90vh] p-0 border-none shadow-none">
+      <DialogContent className="!w-lg max-h-[90vh] p-0 border-none">
         <VisuallyHidden>
           <DialogTitle>فرم ورود و ثبت نام</DialogTitle>
         </VisuallyHidden>

@@ -49,7 +49,7 @@ import {
   Popover,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { cn } from "@/utils/twMerge";
+import { cn } from "@/utils/utils";
 
 export default function AddAddressModal({
   open,

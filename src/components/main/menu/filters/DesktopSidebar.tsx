@@ -1,7 +1,7 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { SlidersHorizontal, Sparkles, X } from "lucide-react";
-import { cn } from "@/utils/twMerge";
+import { cn } from "@/utils/utils";
 import React, { useState, useEffect } from "react";
 import { Slider } from "@/components/ui/slider";
 import { DesktopSidebarProps } from "@/types/main";

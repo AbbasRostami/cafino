@@ -1,5 +1,5 @@
 import CategorySectionClient from "./CategorySectionClient";
-import { getCategories } from "@/services/server/useGetCategoriesServer";
+import { getCategories } from "@/services/server";
 
 const CategorySection = async () => {
   const categories = await getCategories();

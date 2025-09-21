@@ -2,30 +2,35 @@ import {
   getMenuQueryParams,
   convertSearchParamsToURLSearchParams,
 } from "@/lib/query";
-import { getItemsServer } from "@/services/server/useGetItemsServer";
+import { getItemsServer } from "@/services/server";
+import { Suspense } from "react";
 import Menus from "@/components/main/menu/Menus";
 import type { Metadata, ResolvingMetadata } from "next";
-import { buildMenuMetadata } from "@/lib/metadata/buildMenuMetadata";
-import { GenerateProps, MenuPageProps } from "@/types/main";
+import { buildMenuMetadata } from "@/lib/metadata";
+import { GenerateProps } from "@/types/main";
+import { MenuSkeleton } from "@/components/skeleton";
+import { MenuHeader } from "@/components/main/menu";
 
-async function fetchMenuData(searchParams: URLSearchParams) {
-  const { queryString, query } = getMenuQueryParams(searchParams);
-  const serverData = await getItemsServer({ queryString });
-  return { serverData, query };
-}
-
-export default async function MenuPage({ searchParams }: MenuPageProps) {
+export default async function MenuPage({ searchParams }: GenerateProps) {
   const resolvedSearchParams = await searchParams;
   const urlSearchParams =
     convertSearchParamsToURLSearchParams(resolvedSearchParams);
-
-  const { serverData, query } = await fetchMenuData(urlSearchParams);
+  const { queryString } = getMenuQueryParams(urlSearchParams);
 
   return (
     <div className="min-h-screen pt-20 md:pt-32 px-4 text-gray-800 dark:text-gray-200">
-      <Menus initialData={serverData} query={query} />
+      <MenuHeader />
+      <Suspense fallback={<MenuSkeleton />}>
+        <MenuContent queryString={queryString} />
+      </Suspense>
     </div>
   );
+}
+
+async function MenuContent({ queryString }: { queryString: string }) {
+  const initialData = await getItemsServer({ queryString });
+
+  return <Menus initialData={initialData} />;
 }
 
 // SEO - Metadata

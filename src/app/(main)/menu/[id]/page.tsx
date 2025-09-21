@@ -1,31 +1,47 @@
 import { ItemsDetails } from "@/components/main/items-details";
-import { useGetItemsDetailsServer } from "@/services/server/useGetItemsDetailsServer";
+import { useGetItemsDetailsServer } from "@/services/server";
 import { GenerateProps, MenuItemClientProps, Item } from "@/types/main";
 import type { Metadata, ResolvingMetadata } from "next";
-import { buildItemMetadata } from "@/lib/metadata/buildItemMetadata";
-
-async function fetchItem(id: string) {
-  const serverData = await useGetItemsDetailsServer(id);
-  return serverData?.item as Item | undefined;
-}
+import { buildItemMetadata } from "@/lib/metadata";
+import { ItemDetailsSkeleton } from "@/components/skeleton";
+import { Suspense } from "react";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { getQueryClient } from "@/lib/queryClient";
 
 export default async function MenuItemPage({ params }: MenuItemClientProps) {
-  const { id } = await params;
-  const initialItem = await fetchItem(id);
-
   return (
     <div className="min-h-screen pt-28 pb-10">
-      <ItemsDetails id={id} initialItem={initialItem} />
+      <Suspense fallback={<ItemDetailsSkeleton />}>
+        <MenuItemPageWithPrefetch params={params} />
+      </Suspense>
     </div>
   );
 }
 
+async function MenuItemPageWithPrefetch({ params }: MenuItemClientProps) {
+  const { id } = await params;
+  const queryClient = getQueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ["item-details", id],
+    queryFn: () => useGetItemsDetailsServer(id),
+  });
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <ItemsDetails id={id} />
+    </HydrationBoundary>
+  );
+}
+
+// SEO - Metadata
 export async function generateMetadata(
   { params }: GenerateProps,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const { id } = await params;
-  const item = await fetchItem(id);
+  const serverData = await useGetItemsDetailsServer(id);
+  const item = serverData?.item as Item | undefined;
 
   const previousImages = (await parent).openGraph?.images || [];
   return buildItemMetadata(item, {

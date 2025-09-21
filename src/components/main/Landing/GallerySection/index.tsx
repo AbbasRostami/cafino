@@ -5,6 +5,7 @@ import { gallerySectionStructuredData } from "@/lib/metadata/gallerySection";
 import GalleryMainSection from "./GalleryMainSection";
 import GalleryTextSection from "./GalleryTextSection";
 import GalleryImagesSection from "./GalleryImagesSection";
+import Script from "next/script";
 
 const GallerySection = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -12,7 +13,8 @@ const GallerySection = () => {
   return (
     <>
       {/* SEO */}
-      <script
+      <Script
+        id="gallery-section-structured-data"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(gallerySectionStructuredData),

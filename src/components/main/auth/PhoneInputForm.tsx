@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Smartphone, LogIn, CheckCircle2, XCircle } from "lucide-react";
-import { cn } from "@/utils/twMerge";
+import { cn } from "@/utils/utils";
 import { PhoneInputFormProps } from "@/types/main";
 import { phoneSchema } from "@/schemas";
 

@@ -18,9 +18,10 @@ const badgeVariants = cva(
         outline:
           "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
 
-        // 🎯 واریانت جدید سبز
         success:
           "border-transparent bg-green-500 text-white [a&]:hover:bg-green-600 focus-visible:ring-green-500/20 dark:focus-visible:ring-green-400/40",
+        pending:
+          "border-transparent bg-amber-500 dark:bg-amber-600 text-white [a&]:hover:bg-amber-600 focus-visible:ring-amber-500/20 dark:focus-visible:ring-amber-400/40",
       },
     },
     defaultVariants: {

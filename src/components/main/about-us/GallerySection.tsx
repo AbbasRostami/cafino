@@ -11,7 +11,7 @@ import "swiper/css/effect-fade";
 import {
   MotionDiv,
   MotionH3,
-  MotSionAnimatePresence,
+  MotionAnimatePresence,
 } from "@/utils/MotionWrapper";
 
 import image1 from "../../../assets/Gallery/Gallery1.avif";
@@ -69,7 +69,7 @@ export const GallerySection: React.FC = () => {
             >
               {galleryImages.map((image, index) => (
                 <SwiperSlide key={index}>
-                  <MotSionAnimatePresence mode="wait">
+                  <MotionAnimatePresence mode="wait">
                     <MotionDiv
                       initial={{ opacity: 0, scale: 1.1 }}
                       animate={{ opacity: 1, scale: 1 }}
@@ -91,7 +91,7 @@ export const GallerySection: React.FC = () => {
                         </p>
                       </div>
                     </MotionDiv>
-                  </MotSionAnimatePresence>
+                  </MotionAnimatePresence>
                 </SwiperSlide>
               ))}
             </Swiper>

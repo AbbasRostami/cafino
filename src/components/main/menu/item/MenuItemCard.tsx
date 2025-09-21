@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { FavoriteToggleButton } from "@/lib/FavoriteToggleButton";
 import { AddToCartButtonStyled } from "@/lib/AddToCartButtonStyled";
 import { MenuItemCardProps, PriceInfo } from "@/types/main";
-import { cn } from "@/utils/twMerge";
+import { cn } from "@/utils/utils";
 import { formatCurrency, getStockStatus } from "@/utils/formatters";
 import { CartItem } from "@/store/cartStore";
 import {
@@ -78,10 +78,15 @@ export const MenuItemCard = ({ item, viewMode }: MenuItemCardProps) => {
       >
         <Image
           src={item?.images[currentImageIndex]?.imageUrl || ""}
-          alt={item?.title}
+          alt={item?.title || "menu item"}
           className="group-hover:scale-105 transition-all duration-300 object-cover"
           fill
-          priority
+          priority={currentImageIndex === 0}
+          sizes="
+    (max-width: 640px) 100vw,
+    (max-width: 1024px) 50vw,
+    33vw
+  "
         />
 
         {item?.images?.length > 1 && (

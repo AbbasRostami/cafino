@@ -11,7 +11,7 @@ import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, ArrowLeft } from "lucide-react";
 import { otpSchema } from "@/schemas/main";
-import { cn } from "@/utils/twMerge";
+import { cn } from "@/utils/utils";
 import { OtpInputFormProps } from "@/types/main";
 
 export const OtpInputForm: React.FC<OtpInputFormProps> = ({

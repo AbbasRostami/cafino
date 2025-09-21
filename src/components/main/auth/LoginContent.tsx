@@ -1,6 +1,5 @@
 "use client";
 
-
 import { OtpInputForm } from "./OtpInputForm";
 import { PhoneInputForm } from "./PhoneInputForm";
 import Image from "next/image";
@@ -21,7 +20,6 @@ export const LoginContent: React.FC<LoginContentProps> = ({
   resendTimer,
   formatTime,
 }) => {
-    
   const LogoComponent = () => (
     <div className="flex flex-col items-center gap-4 mb-3">
       <Image
@@ -40,7 +38,7 @@ export const LoginContent: React.FC<LoginContentProps> = ({
   );
 
   return (
-    <div className="relative p-6 rounded-2xl shadow-2xl bg-white/90 dark:bg-gray-900/90 overflow-hidden">
+    <div className="relative p-2 pb-4  overflow-hidden">
       <div className="relative z-10">
         <LogoComponent />
         {step === "phone" ? (

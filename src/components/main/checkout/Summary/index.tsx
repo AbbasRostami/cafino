@@ -79,7 +79,7 @@ export default function OrderSummary({
   );
 
   return (
-    <div>
+    <>
       <div
         className="sticky top-24 max-w-full rounded-2xl shadow-xl border border-amber-200 dark:border-gray-800 
          bg-white/70 dark:bg-gray-900/80 backdrop-blur-lg p-6 space-y-4 z-10"
@@ -165,6 +165,6 @@ export default function OrderSummary({
           )}
         </MotionDiv>
       </div>
-    </div>
+    </>
   );
 }

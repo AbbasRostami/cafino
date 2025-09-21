@@ -60,7 +60,7 @@ const GalleryTextSection = ({
           visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
         }}
         whileHover={{ y: -5 }}
-        className="relative p-8 rounded-3xl overflow-hidden group bg-gradient-to-br from-white/90 via-amber-50/80 to-orange-50/70 dark:from-gray-900/95 dark:via-amber-900/20 dark:to-orange-900/15 backdrop-blur-sm border border-amber-200/60 dark:border-amber-700/40 shadow-2xl hover:shadow-3xl transition-all duration-500"
+        className="relative p-8 rounded-3xl overflow-hidden group bg-gradient-to-br from-white/90 via-amber-50/80 to-orange-50/70 dark:from-gray-900/95 dark:via-amber-900/20 dark:to-orange-900/15 backdrop-blur-sm border border-amber-200/60 dark:border-amber-700/40 shadow-xl transition-all duration-500"
       >
         <MotionDiv
           className="flex items-center gap-4 mb-8 relative z-10"

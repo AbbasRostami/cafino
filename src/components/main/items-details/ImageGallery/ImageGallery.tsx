@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { cn } from "@/utils/twMerge";
+import { cn } from "@/utils/utils";
 import { ImageGalleryProps } from "@/types/main";
 import { MotionDiv } from "@/utils/MotionWrapper";
 

@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { ItemDetailsSkeleton } from "@/components/skeleton";
 import { useGetItemDetails } from "@/services/items";
 import { useGetCommentsItems } from "@/services";
 import { ImageGallery, ItemInfo, PriceSection, CommentsSection } from "./index";
@@ -18,8 +17,9 @@ export default function ItemsDetails({
   const [sortBy, setSortBy] = useState<SortBy>("newest");
   const [activeReplyId, setActiveReplyId] = useState<string | null>(null);
 
-  const { data, isLoading } = useGetItemDetails(id, initialItem);
+  const { data } = useGetItemDetails(id, initialItem);
 
+  console.log("data", data?.item);
   const { data: CommentsItems, isLoading: isLoadingComments } =
     useGetCommentsItems({
       itemId: id,
@@ -28,10 +28,8 @@ export default function ItemsDetails({
       sortBy,
     });
 
-  if (isLoading || !data) return <ItemDetailsSkeleton />;
-
-  const originalPrice = data?.price;
-  const discount = data?.discount;
+  const originalPrice = data?.item?.price;
+  const discount = data?.item?.discount;
   const finalPrice =
     discount > 0
       ? originalPrice - (originalPrice * discount) / 100
@@ -48,7 +46,7 @@ export default function ItemsDetails({
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         <div className="space-y-8">
           <ImageGallery
-            images={data?.images}
+            images={data?.item?.images}
             activeImage={activeImage}
             onImageChange={setActiveImage}
             discount={discount}
@@ -57,14 +55,14 @@ export default function ItemsDetails({
 
         <div className="space-y-8">
           <ItemInfo
-            item={data as any}
+            item={data?.item}
             finalPrice={finalPrice}
             originalPrice={originalPrice}
             discount={discount}
           />
 
           <PriceSection
-            item={data as any}
+            item={data?.item}
             finalPrice={finalPrice}
             originalPrice={originalPrice}
             discount={discount}

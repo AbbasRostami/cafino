@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { cn } from "@/utils/twMerge";
+import { cn } from "@/utils/utils";
 import { replyFormSchema, ReplyFormData } from "@/schemas/main";
 import { MotionDiv } from "@/utils/MotionWrapper";
 import { ReplyFormProps } from "@/types/main";

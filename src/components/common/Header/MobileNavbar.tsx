@@ -3,15 +3,10 @@ import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import {
   Menu,
   Home,
@@ -62,11 +57,11 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
 
         <SheetContent
           side="right"
-          className="w-[270px] bg-gradient-to-b from-amber-50 to-white dark:from-zinc-950 dark:to-zinc-900 border-l border-amber-100 dark:border-zinc-800 shadow-2xl"
+          className="w-[270px] scrollbar-hide bg-gradient-to-b from-amber-50 to-white dark:from-zinc-950 dark:to-zinc-900 border-l border-amber-100 dark:border-zinc-800 shadow-2xl"
         >
           <VisuallyHidden>
             <SheetTitle>Mobile Sidebar</SheetTitle>
-            <DialogDescription>Mobile Sidebar</DialogDescription>
+            <SheetDescription>Mobile Sidebar</SheetDescription>
           </VisuallyHidden>
 
           <div className="flex flex-col h-full">
@@ -77,7 +72,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
               </div>
             </div>
 
-            <div className="flex-1 py-4 px-3 space-y-2 overflow-y-auto">
+            <div className="flex-1 py-4 px-3 space-y-2 overflow-y-auto scrollbar-hide">
               {[
                 { href: "/", label: "صفحه اصلی", icon: Home },
                 { href: "/menu", label: "منو", icon: FileText },
@@ -93,7 +88,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
                   <Link
                     key={href}
                     href={href}
-                    className={`relative flex items-center gap-3 p-4 rounded-xl transition-all duration-300 border ${
+                    className={`relative flex items-center gap-3 p-4 rounded-xl transition-all duration-300 ${
                       isActive
                         ? "bg-gradient-to-r from-amber-50/80 to-orange-50/80 dark:from-amber-900/30 dark:to-orange-900/20 text-amber-700 dark:text-amber-300 shadow-inner"
                         : "text-gray-600 dark:text-gray-300 hover:bg-gray-50/80 dark:hover:bg-gray-800/50"
@@ -118,13 +113,13 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
                 <>
                   <Link
                     href="/profile"
-                    className="flex items-center gap-3 p-4 rounded-xl border text-amber-700 dark:text-amber-300 bg-amber-100/50 dark:bg-amber-900/20 hover:bg-amber-200/50 dark:hover:bg-amber-800/40 transition-all"
+                    className="flex items-center gap-3 p-4 rounded-xl border border-amber-600 text-amber-700 dark:text-amber-300 bg-amber-100/50 dark:bg-amber-900/20 hover:bg-amber-200/50 dark:hover:bg-amber-800/40 transition-all"
                   >
                     <User className="w-5 h-5" />
                     <span> ورود به پنل کاربری</span>
                   </Link>
                   <button
-                    onClick={() => logout()}
+                    onClick={() => logout("/")}
                     disabled={isPending}
                     className="flex items-center gap-3 p-4 rounded-xl border border-transparent hover:bg-red-50 dark:hover:bg-red-900/20 hover:border-red-200 dark:hover:border-red-800 text-red-600 dark:text-red-400 transition-all w-full disabled:opacity-50 disabled:cursor-not-allowed"
                   >

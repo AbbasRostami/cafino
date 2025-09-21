@@ -3,13 +3,11 @@ import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 import { useGetItems } from "@/services";
 import { getMenuQueryParams } from "@/lib/query";
-import { MenusWrapperProps } from "@/types/main/menu";
-import { MenuHeader } from "./layout/MenuHeader";
 import { SearchBar } from "./filters/SearchBar";
 import { MenuControls } from "./filters/MenuControls";
 import { EmptyState, MenuGrid, MenuPagination } from ".";
-import { MenuItemSkeleton, SkeletonSidebar } from "@/components/skeleton";
 import { useMenuFilters } from "@/hooks/useMenuFilters";
+import { MenuItemResponse } from "@/types/main/menu";
 
 const MenuFiltersSidebar = dynamic(
   () => import("./filters/MenuFiltersSidebar"),
@@ -18,11 +16,16 @@ const MenuFiltersSidebar = dynamic(
   }
 );
 
-export default function Menus({ initialData }: MenusWrapperProps) {
+export default function Menus({
+  initialData,
+}: {
+  initialData: MenuItemResponse;
+}) {
   const searchParams = useSearchParams();
   const { queryString } = getMenuQueryParams(searchParams);
 
-  const { data: items, isLoading } = useGetItems(queryString, initialData);
+  const { data: items } = useGetItems(queryString, initialData);
+
   const {
     viewMode,
     input,
@@ -43,13 +46,11 @@ export default function Menus({ initialData }: MenusWrapperProps) {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <MenuHeader />
-
       <SearchBar input={input} setInput={setInput} />
 
       <div className="flex flex-col xl:flex-row gap-6">
         <div className="h-full shrink-0">
-          {isLoading ? <SkeletonSidebar /> : <MenuFiltersSidebar />}
+          <MenuFiltersSidebar />
         </div>
 
         <div className="flex-1">
@@ -61,9 +62,7 @@ export default function Menus({ initialData }: MenusWrapperProps) {
             onClearFilters={clearFilters}
           />
 
-          {isLoading ? (
-            <MenuItemSkeleton viewMode={viewMode} />
-          ) : itemsList && itemsList.length > 0 ? (
+          {itemsList.length > 0 ? (
             <MenuGrid items={itemsList} viewMode={viewMode} />
           ) : (
             <EmptyState />
@@ -71,7 +70,7 @@ export default function Menus({ initialData }: MenusWrapperProps) {
         </div>
       </div>
 
-      {!isLoading && itemsList && itemsList.length > 0 && (
+      {itemsList && itemsList.length > 0 && (
         <MenuPagination
           currentPage={currentPage}
           totalPages={totalPages}

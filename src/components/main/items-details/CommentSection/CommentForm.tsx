@@ -4,7 +4,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Slider } from "@/components/ui/slider";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { cn } from "@/utils/twMerge";
+import { cn } from "@/utils/utils";
 import { commentFormSchema, CommentFormData } from "@/schemas/main";
 import { MotionDiv } from "@/utils/MotionWrapper";
 

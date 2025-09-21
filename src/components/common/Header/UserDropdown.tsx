@@ -66,7 +66,7 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
           <DropdownMenuSeparator />
           <DropdownMenuItem
             className="cursor-pointer font-bold"
-            onClick={() => logout()}
+            onClick={() => logout("/")}
             disabled={isPending}
             variant="destructive"
           >

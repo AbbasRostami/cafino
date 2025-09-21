@@ -2,7 +2,6 @@ import { Toaster } from "@/components/ui/sonner";
 import Footer from "@/components/common/Footer/Footer";
 import { ConfirmModal } from "@/components/common/ConfirmModal";
 import Navbar from "@/components/common/Header";
-import { FloatingContactButton } from "@/components/common/FloatingContactButton";
 
 export default function MainLayout({
   children,
@@ -16,7 +15,7 @@ export default function MainLayout({
       <ConfirmModal />
       {children}
       <Footer />
-      <FloatingContactButton />
+      {/* <FloatingContactButton /> */}
     </div>
   );
 }
