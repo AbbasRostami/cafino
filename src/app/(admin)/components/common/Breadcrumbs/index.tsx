@@ -15,6 +15,8 @@ const routeMap: { [key: string]: string } = {
   blacklist: "لیست سیاه",
   comments: "کامنت ها",
   messages: "مدیریت پیام کاربران",
+  tickets: "تیکت ها مدیریت",
+  "rate-limit": "مدیریت محدودیت ها",
 };
 
 export default function DashboardBreadcrumbs() {

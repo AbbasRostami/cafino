@@ -30,7 +30,7 @@ export default function DashboardClient({
         className={`flex-1 transition-all duration-300 ease-in-out ${mainContentMargin}`}
       >
         <AppHeader />
-        <div className="p-4 mx-auto max-w-7xl md:p-6">
+        <div className="p-4 mx-auto max-w-8xl md:p-6">
           <ConfirmModal />
           <DashboardBreadcrumbs />
           {children}

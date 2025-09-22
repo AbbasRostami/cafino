@@ -1,5 +1,5 @@
 "use client";
-import { useGetContacts } from "@/services";
+import { useDeleteContact, useGetContacts } from "@/services";
 import { DataTable } from "@/app/(admin)/components/common/DataTable";
 import { useState, useMemo } from "react";
 import { MessageSquare } from "lucide-react";
@@ -38,6 +38,13 @@ export default function Messages() {
     hasReply:
       hasReply === "true" ? true : hasReply === "false" ? false : undefined,
   });
+
+  // delete contact
+  const {
+    mutate: deleteContact,
+    isPending: isDeleting,
+    variables: deletingVars,
+  } = useDeleteContact();
 
   // Modal management functions
   const openViewModal = (contact: Contact) => {
@@ -129,6 +136,9 @@ export default function Messages() {
           currentLimit,
           onViewMessage: openViewModal,
           onReplyToMessage: openReplyModal,
+          deleteContact,
+          isDeleting,
+          deletingVars,
         })}
         isLoading={isLoading}
         headerProps={headerProps}

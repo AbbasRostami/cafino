@@ -170,7 +170,7 @@ export function ItemDetailsModal({
               ))}
             </div>
             <span className="text-sm text-gray-600 dark:text-gray-400">
-              ({rate_count} رای)
+              ({rate_count} امتیاز)
             </span>
           </div>
 
@@ -269,7 +269,7 @@ export function ItemDetailsModal({
           <div className="bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-950/20 dark:to-red-950/20 rounded-xl p-4 border border-orange-200 dark:border-orange-800 text-center">
             <TrendingUp className="w-6 h-6 text-orange-600 mx-auto mb-2" />
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              تعداد رای
+              تعداد امتیازات
             </p>
             <p className="text-lg font-bold text-gray-900 dark:text-white">
               {rate_count}

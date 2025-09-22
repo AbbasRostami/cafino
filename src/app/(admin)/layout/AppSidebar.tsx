@@ -21,6 +21,8 @@ import {
   MessageCircleCode,
   OctagonMinus,
   Send,
+  ShieldBan,
+  TicketsPlane,
 } from "lucide-react";
 type NavItem = {
   name: string;
@@ -61,6 +63,11 @@ const navItems: NavItem[] = [
     path: "/dashboard/discounts",
   },
   {
+    name: "مدیریت تیکت ها",
+    icon: <TicketsPlane />,
+    path: "/dashboard/tickets",
+  },
+  {
     name: "مدیریت کامنت ها",
     icon: <MessageCircleCode />,
     path: "/dashboard/comments",
@@ -74,6 +81,11 @@ const navItems: NavItem[] = [
     name: "لیست سیاه",
     icon: <OctagonMinus />,
     path: "/dashboard/blacklist",
+  },
+  {
+    name: "مدیریت محدودیت ها",
+    icon: <ShieldBan />,
+    path: "/dashboard/rate-limit",
   },
 ];
 

@@ -2,9 +2,15 @@
 
 import { DataTable } from "@/app/(admin)/components/common/DataTable";
 import { useMemo, useState } from "react";
-import { MessageCircleCode } from "lucide-react";
+import {
+  CheckCircle2,
+  MessageCircleCode,
+  MessageSquare,
+  XCircle,
+} from "lucide-react";
 import {
   useAcceptComment,
+  useCommentOverview,
   useGetCommentsAdmin,
   useRejectComment,
 } from "@/services";
@@ -16,6 +22,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { columns } from "./columns";
+import { StatisticsSkeleton } from "@/components/skeleton";
+import { StatisticsCard } from "../../components/common/StatisticsCard";
 
 export default function Comments() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,6 +32,7 @@ export default function Comments() {
   const [acceptFilter, setAcceptFilter] = useState<string>("");
   const [sortBy, setSortBy] = useState<string>("newest");
 
+  const { data, isLoading: isLoadingOverview } = useCommentOverview();
   const { comments, isLoading, total } = useGetCommentsAdmin({
     page: currentPage,
     limit: currentLimit,
@@ -98,35 +107,62 @@ export default function Comments() {
   );
 
   return (
-    <DataTable
-      data={comments}
-      columns={columns({
-        currentPage,
-        currentLimit,
-        acceptComment,
-        isAcceptingComment,
-        acceptingVars,
-        rejectComment,
-        isRejectingComment,
-        rejectingVars,
-      })}
-      isLoading={isLoading}
-      headerProps={headerProps}
-      emptyStateMessage="هیچ کامنتی یافت نشد"
-      emptyStateDescription="کامنت‌های جدید در اینجا نمایش داده خواهند شد"
-      enablePagination={true}
-      page={currentPage}
-      limit={currentLimit}
-      totalCount={total}
-      onPageChange={setCurrentPage}
-      onLimitChange={(limit) => {
-        setCurrentLimit(limit);
-        setCurrentPage(1);
-      }}
-      pageSizeOptions={[5, 10, 25, 50]}
-      enableSearch={true}
-      searchValue={searchValue}
-      onSearchChange={setSearchValue}
-    />
+    <>
+      {isLoadingOverview ? (
+        <StatisticsSkeleton cols={3} rows={3} />
+      ) : (
+        <>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-6">
+            <StatisticsCard
+              title="تعداد کل کامنت ها"
+              icon={MessageSquare}
+              value={data?.total || 0}
+            />
+
+            <StatisticsCard
+              title="کامنت های تایید شده"
+              icon={CheckCircle2}
+              value={data?.accepted || 0}
+            />
+
+            <StatisticsCard
+              title="کامنت های تایید نشده"
+              icon={XCircle}
+              value={data?.unaccepted || 0}
+            />
+          </div>
+        </>
+      )}
+      <DataTable
+        data={comments}
+        columns={columns({
+          currentPage,
+          currentLimit,
+          acceptComment,
+          isAcceptingComment,
+          acceptingVars,
+          rejectComment,
+          isRejectingComment,
+          rejectingVars,
+        })}
+        isLoading={isLoading}
+        headerProps={headerProps}
+        emptyStateMessage="هیچ کامنتی یافت نشد"
+        emptyStateDescription="کامنت‌های جدید در اینجا نمایش داده خواهند شد"
+        enablePagination={true}
+        page={currentPage}
+        limit={currentLimit}
+        totalCount={total}
+        onPageChange={setCurrentPage}
+        onLimitChange={(limit) => {
+          setCurrentLimit(limit);
+          setCurrentPage(1);
+        }}
+        pageSizeOptions={[5, 10, 25, 50]}
+        enableSearch={true}
+        searchValue={searchValue}
+        onSearchChange={setSearchValue}
+      />
+    </>
   );
 }

@@ -10,20 +10,27 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Reply, Eye } from "lucide-react";
+import { Reply, Eye, Trash, Loader2 } from "lucide-react";
 import { formatJalaliDate } from "@/utils/formatters";
 import { Contact } from "@/types/admin";
+import { confirm } from "@/components/common/ConfirmModal";
 
 export const columns = ({
   currentPage,
   currentLimit,
   onViewMessage,
   onReplyToMessage,
+  deleteContact,
+  isDeleting,
+  deletingVars,
 }: {
   currentPage: number;
   currentLimit: number;
   onViewMessage: (contact: Contact) => void;
   onReplyToMessage: (contact: Contact) => void;
+  deleteContact: (data: { id: string }) => void;
+  isDeleting: boolean;
+  deletingVars: { id: string } | null | undefined;
 }) =>
   useMemo<ColumnDef<Contact>[]>(
     () => [
@@ -144,6 +151,38 @@ export const columns = ({
                     <p>پاسخ به پیام</p>
                   </TooltipContent>
                 </Tooltip>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 rounded-full dark:bg-red-900/30 dark:hover:bg-red-900/50 transition-all duration-200 hover:scale-110"
+                      onClick={async () => {
+                        const isConfirmed = await confirm({
+                          title: "حذف پیام",
+                          description: "آیا از حذف این پیام اطمینان دارید؟",
+                          confirmText: "حذف",
+                          cancelText: "انصراف",
+                        });
+                        if (isConfirmed) deleteContact({ id: contact.id });
+                      }}
+                      disabled={isDeleting}
+                    >
+                      {isDeleting && deletingVars?.id === contact.id ? (
+                        <Loader2 className="animate-spin" size={20} />
+                      ) : (
+                        <Trash
+                          className="text-red-600 dark:text-red-400"
+                          size={20}
+                          strokeWidth={2.2}
+                        />
+                      )}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>حذف پیام</p>
+                  </TooltipContent>
+                </Tooltip>
               </div>
             </TooltipProvider>
           );
@@ -151,5 +190,13 @@ export const columns = ({
         enableSorting: false,
       },
     ],
-    [currentPage, currentLimit, onViewMessage, onReplyToMessage]
+    [
+      currentPage,
+      currentLimit,
+      onViewMessage,
+      onReplyToMessage,
+      deleteContact,
+      isDeleting,
+      deletingVars,
+    ]
   );

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSidebar } from "../context/SidebarContext";
 import UserDropdown from "../components/Header/UserDropdown";
-import Messages from "../components/Header/Messages";
+import Messages from "../components/Header/TicketNavbar";
 
 import { ThemeSwitcher } from "@/components/common/ThemeToggle";
 import { PanelLeftOpen, PanelRightOpen } from "lucide-react";

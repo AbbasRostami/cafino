@@ -28,7 +28,7 @@ export default function Overview() {
       <div className="grid grid-cols-12 gap-4 md:gap-6">
         <div className="col-span-12 xl:col-span-12">
           {isLoading ? (
-            <StatisticsSkeleton />
+            <StatisticsSkeleton cols={5} />
           ) : (
             <Statistics
               data={{
@@ -40,6 +40,8 @@ export default function Overview() {
                 activeOrder: data?.order?.active,
                 grossSales: data?.revenue?.total?.grossSales,
                 netRevenue: data?.revenue?.total?.netRevenue,
+                totalTickets: data?.ticket?.total,
+                openTickets: data?.ticket?.open,
               }}
             />
           )}
