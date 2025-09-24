@@ -38,27 +38,22 @@ export const LoginContent: React.FC<LoginContentProps> = ({
   );
 
   return (
-    <div className="relative p-2 pb-4  overflow-hidden">
-      <div className="relative z-10">
-        <LogoComponent />
-        {step === "phone" ? (
-          <PhoneInputForm
-            onSubmit={handleSendOTP}
-            isLoading={isSendOTPLoading}
-          />
-        ) : (
-          <OtpInputForm
-            phoneNumber={phoneValue}
-            onSubmit={handleVerifyOTP}
-            onResend={handleResendOTP}
-            onBack={goBackToPhone}
-            isVerifyOTPLoading={isVerifyOTPLoading}
-            isResendLoading={isResendOTPLoading}
-            resendTimer={resendTimer}
-            formatTime={formatTime}
-          />
-        )}
-      </div>
-    </div>
+    <>
+      <LogoComponent />
+      {step === "phone" ? (
+        <PhoneInputForm onSubmit={handleSendOTP} isLoading={isSendOTPLoading} />
+      ) : (
+        <OtpInputForm
+          phoneNumber={phoneValue}
+          onSubmit={handleVerifyOTP}
+          onResend={handleResendOTP}
+          onBack={goBackToPhone}
+          isVerifyOTPLoading={isVerifyOTPLoading}
+          isResendLoading={isResendOTPLoading}
+          resendTimer={resendTimer}
+          formatTime={formatTime}
+        />
+      )}
+    </>
   );
 };

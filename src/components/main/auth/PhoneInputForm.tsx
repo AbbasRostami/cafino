@@ -17,7 +17,7 @@ export const PhoneInputForm: React.FC<PhoneInputFormProps> = ({
     register,
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<{ phone: string }>({
     resolver: zodResolver(phoneSchema),
     defaultValues: { phone: "" },
@@ -134,7 +134,7 @@ export const PhoneInputForm: React.FC<PhoneInputFormProps> = ({
         <div className="space-y-3 flex justify-center">
           <Button
             type="submit"
-            disabled={isLoading || !!errors.phone}
+            disabled={isLoading || !isValid}
             className={cn(
               "w-full  max-w-sm h-12 cursor-pointer text-lg font-bold",
               "bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600",

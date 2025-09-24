@@ -19,7 +19,6 @@ export default function ItemsDetails({
 
   const { data } = useGetItemDetails(id, initialItem);
 
-  console.log("data", data?.item);
   const { data: CommentsItems, isLoading: isLoadingComments } =
     useGetCommentsItems({
       itemId: id,
@@ -36,7 +35,7 @@ export default function ItemsDetails({
       : originalPrice;
 
   return (
-    <div className="container mx-auto px-4 md:px-8 lg:px-28">
+    <div className="px-4 md:px-8 lg:px-8 xl:px-24">
       <div className="fixed inset-0 -z-10">
         <div className="absolute top-[10%] left-[15%] w-96 h-96 bg-amber-400/10 rounded-full blur-3xl"></div>
         <div className="absolute bottom-[15%] right-[20%] w-80 h-80 bg-orange-500/10 rounded-full blur-3xl animation-delay-2000"></div>

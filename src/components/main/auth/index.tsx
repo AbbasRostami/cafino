@@ -2,16 +2,25 @@
 
 import { useIsMobile } from "@/hooks/useMediaQuery";
 import { useLoginLogic } from "@/hooks/useLoginLogic";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogClose,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   Drawer,
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
+  DrawerDescription,
 } from "@/components/ui/drawer";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { LoginContent } from "./LoginContent";
 import { LoginFormProps } from "@/types/main";
+import { X } from "lucide-react";
 
 export const LoginForm: React.FC<LoginFormProps> = ({
   open,
@@ -40,6 +49,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           <DrawerHeader className="text-center">
             <VisuallyHidden>
               <DrawerTitle>فرم ورود و ثبت نام</DrawerTitle>
+              <DrawerDescription>فرم ورود و ثبت نام</DrawerDescription>
             </VisuallyHidden>
           </DrawerHeader>
           <div className="px-4 pb-4 overflow-y-auto scrollbar-hide">
@@ -64,9 +74,23 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="!w-lg max-h-[90vh] p-0 border-none">
+      <DialogContent
+        showCloseButton={false}
+        className="!w-lg max-h-[90vh] px-0  border-none"
+      >
+        <DialogHeader>
+          <DialogClose asChild>
+            <button
+              aria-label="close"
+              className="absolute left-4 top-4 cursor-pointer rounded-sm opacity-70 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </DialogClose>
+        </DialogHeader>
         <VisuallyHidden>
           <DialogTitle>فرم ورود و ثبت نام</DialogTitle>
+          <DialogDescription>فرم ورود و ثبت نام</DialogDescription>
         </VisuallyHidden>
         <LoginContent
           step={step}

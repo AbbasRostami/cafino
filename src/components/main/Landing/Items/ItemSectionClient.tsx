@@ -131,7 +131,6 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
               },
               quantity: item?.quantity,
             };
-
             return (
               <SwiperSlide className=" py-2 md:py-10 " key={item?.id}>
                 <MotionDiv
@@ -163,7 +162,7 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
                       >
                         {item?.images?.length > 0 ? (
                           item?.images?.map((img) => (
-                            <SwiperSlide key={img?.imageUrl}>
+                            <SwiperSlide key={img?.id}>
                               <Image
                                 src={img.imageUrl || "/images/default.png"}
                                 alt={item?.title}

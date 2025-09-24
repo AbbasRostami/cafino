@@ -16,6 +16,7 @@ import {
   DialogContent,
   DialogTitle,
   DialogTrigger,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import {
@@ -157,6 +158,7 @@ const HeroContent = () => {
           >
             <VisuallyHidden>
               <DialogTitle>ویدیو معرفی</DialogTitle>
+              <DialogDescription>ویدیو معرفی</DialogDescription>
             </VisuallyHidden>
 
             {open && (
@@ -164,7 +166,6 @@ const HeroContent = () => {
                 controls
                 autoPlay
                 className="w-full aspect-video rounded-xl"
-                poster="/videos/teaser-poster.jpg"
               >
                 <source src="/videos/Teaser.mp4" type="video/mp4" />
                 مرورگر شما از ویدیو پشتیبانی نمی‌کند.

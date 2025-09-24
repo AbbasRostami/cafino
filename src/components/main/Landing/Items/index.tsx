@@ -5,6 +5,7 @@ import {
   generateRestaurantStructuredData,
 } from "@/lib/metadata/itemsSection";
 import { getItemsServer } from "@/services/server/useGetItemsServer";
+import { Item } from "@/types/main";
 
 export default async function ItemSection() {
   const itemsResponse = await getItemsServer({
@@ -13,7 +14,9 @@ export default async function ItemSection() {
 
   const items = itemsResponse?.data?.items || [];
 
-  const itemsStructuredData = generateItemsSectionStructuredData(items);
+  const itemsStructuredData = generateItemsSectionStructuredData(
+    items as Item[]
+  );
   const restaurantStructuredData = generateRestaurantStructuredData();
 
   return (
@@ -35,7 +38,7 @@ export default async function ItemSection() {
           ),
         }}
       />
-      <ItemSectionClient items={items} />
+      <ItemSectionClient items={items as Item[]} />
     </>
   );
 }
