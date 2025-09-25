@@ -25,6 +25,7 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
       <DropdownMenu dir="rtl">
         <DropdownMenuTrigger asChild>
           <Button
+            data-testid="user-dropdown"
             variant="outline"
             className="hidden bg-gray-200 sm:inline-flex rounded-full gap-2 cursor-pointer px-4 py-5"
           >
@@ -80,6 +81,7 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
 
   return (
     <Button
+      data-testid="login-button"
       variant="outline"
       className="hidden sm:inline-flex rounded-full gap-2 cursor-pointer"
       onClick={onLoginClick}

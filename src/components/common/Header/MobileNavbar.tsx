@@ -43,6 +43,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
       <Sheet open={openMobileMenu} onOpenChange={setOpenMobileMenu}>
         <SheetTrigger asChild>
           <Button
+            data-testid="mobile-menu-button"
             variant="outline"
             size="icon"
             className="rounded-full transition-all duration-300 hover:bg-amber-100 hover:text-amber-600 dark:hover:bg-amber-900/30 dark:hover:text-amber-400"
@@ -56,6 +57,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
         </SheetTrigger>
 
         <SheetContent
+          data-testid="mobile-menu"
           side="right"
           className="w-[270px] scrollbar-hide bg-gradient-to-b from-amber-50 to-white dark:from-zinc-950 dark:to-zinc-900 border-l border-amber-100 dark:border-zinc-800 shadow-2xl"
         >

@@ -18,6 +18,7 @@ const Logo: React.FC<LogoProps> = ({
   return (
     <>
       <Image
+        data-testid="logo"
         priority
         src={CafeinLogoLight}
         alt="Cafein Logo Light"
@@ -27,6 +28,7 @@ const Logo: React.FC<LogoProps> = ({
         sizes={sizes}
       />
       <Image
+        data-testid="logo"
         priority
         src={CafeinLogoDark}
         alt="Cafein Logo Dark"

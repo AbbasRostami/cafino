@@ -23,7 +23,7 @@ const DesktopNavbar: React.FC<DesktopNavbarProps> = ({
 
   return (
     <>
-      <div className="hidden lg:flex items-center gap-4">
+      <div data-testid="desktop-nav" className="hidden lg:flex items-center gap-4">
         {links?.map(({ href, label, icon: Icon }) => {
           const isActive = pathname === href;
 

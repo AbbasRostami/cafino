@@ -18,6 +18,7 @@ export function ThemeSwitcher() {
   return (
     <div className="relative group">
       <button
+        data-testid="theme-toggle"
         onClick={(e) => {
           const root = document.documentElement;
 

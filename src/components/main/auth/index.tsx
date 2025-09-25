@@ -75,6 +75,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
+        data-testid="login-modal"
         showCloseButton={false}
         className="!w-lg max-h-[90vh] px-0  border-none"
       >
