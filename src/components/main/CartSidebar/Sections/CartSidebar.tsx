@@ -65,6 +65,7 @@ const CartSidebar = () => {
         />
       </SheetTrigger>
       <SheetContent
+        data-testid="cart-drawer"
         side="right"
         className="w-[300px] sm:w-[400px] flex flex-col bg-white dark:bg-gray-900 border-l border-gray-200 dark:border-neutral-700 "
       >

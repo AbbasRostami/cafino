@@ -36,6 +36,7 @@ import Image from "next/image";
 import { formatJalaliDate } from "@/utils/formatters";
 import { ItemDetailsModalProps } from "@/types/admin";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { formatCurrency } from "@/utils/formatters";
 
 export function ItemDetailsModal({
   isOpen,
@@ -56,7 +57,7 @@ export function ItemDetailsModal({
     rate,
     rate_count,
     show,
-    createdAt,
+    created_at,
     images,
     ingredients,
     category,
@@ -204,7 +205,7 @@ export function ItemDetailsModal({
                 قیمت اصلی:
               </span>
               <span className="text-lg font-medium text-gray-900 dark:text-white">
-                {price} تومان
+                { formatCurrency(price)} تومان
               </span>
             </div>
 
@@ -227,7 +228,7 @@ export function ItemDetailsModal({
                     قیمت نهایی:
                   </span>
                   <span className="text-2xl font-bold text-green-600">
-                    {discountedPrice} تومان
+                    {formatCurrency(discountedPrice)} تومان
                   </span>
                 </div>
               </>
@@ -334,7 +335,7 @@ export function ItemDetailsModal({
                 تاریخ ثبت:
               </span>
               <span className="text-gray-900 dark:text-white font-medium">
-                {formatJalaliDate(new Date(createdAt), "jYYYY/jMM/jDD - HH:MM")}
+                {formatJalaliDate(new Date(created_at), "jYYYY/jMM/jDD - HH:MM")}
               </span>
             </div>
 

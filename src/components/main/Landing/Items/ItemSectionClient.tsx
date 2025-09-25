@@ -53,7 +53,7 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
         <div className="overflow-hidden pt-2 px-2 rounded-2xl">
           <div className="flex gap-6 flex-nowrap">
             {Array.from({ length: 5 }).map((_, index) => (
-              <div key={index} className="flex-shrink-0">
+              <div key={index} className="flex-shrink-0 py-4 md:py-10">
                 <SkeletonItemSection />
               </div>
             ))}

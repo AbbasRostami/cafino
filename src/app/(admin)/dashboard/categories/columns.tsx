@@ -59,12 +59,7 @@ export const columns = ({
         cell: (info) => info?.getValue() as string,
         enableSorting: true,
       },
-      {
-        accessorKey: "slug",
-        header: "اسلاگ",
-        cell: (info) => info?.getValue() as string,
-        enableSorting: true,
-      },
+
       {
         accessorKey: "show",
         header: "نمایش",

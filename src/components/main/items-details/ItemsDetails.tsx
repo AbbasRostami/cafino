@@ -7,9 +7,11 @@ import { Item, SortBy } from "@/types/main";
 
 export default function ItemsDetails({
   id,
+  slug,
   initialItem,
 }: {
   id: string;
+  slug: string;
   initialItem?: Item;
 }) {
   const [activeImage, setActiveImage] = useState(0);
@@ -17,7 +19,7 @@ export default function ItemsDetails({
   const [sortBy, setSortBy] = useState<SortBy>("newest");
   const [activeReplyId, setActiveReplyId] = useState<string | null>(null);
 
-  const { data } = useGetItemDetails(id, initialItem);
+  const { data } = useGetItemDetails(id, slug, initialItem);
 
   const { data: CommentsItems, isLoading: isLoadingComments } =
     useGetCommentsItems({

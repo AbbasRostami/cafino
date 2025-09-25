@@ -13,7 +13,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Image from "next/image";
-import { formatJalaliDate } from "@/utils/formatters";
+import { formatJalaliDate, formatCurrency } from "@/utils/formatters";
 import { Badge } from "@/components/ui/badge";
 import { ItemDetailsModal } from "./Details";
 import { MenuItem } from "@/types/main";
@@ -79,7 +79,7 @@ export const columns = ({
         header: "قیمت",
         cell: (info) => {
           const price = info?.getValue() as number;
-          return price ? price + " تومان" : "-";
+          return price ? formatCurrency(price) + " تومان" : "-";
         },
         enableSorting: true,
       },
@@ -158,7 +158,7 @@ export const columns = ({
         enableSorting: true,
       },
       {
-        accessorKey: "createdAt",
+        accessorKey: "created_at",
         header: "تاریخ ثبت",
         cell: (info) => {
           const date = info?.getValue() as string;
@@ -167,7 +167,7 @@ export const columns = ({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <p className="cursor-pointer  hover:underline">
-                    {formatJalaliDate(date, "jYYYY/jMM/jDD")}
+                    {formatJalaliDate(date)}
                   </p>
                 </TooltipTrigger>
                 <TooltipContent className="max-w-xs">
@@ -214,7 +214,7 @@ export const columns = ({
               <ItemDetailsModal
                 isOpen={isDetailsOpen}
                 onClose={() => setIsDetailsOpen(false)}
-                item={item as ItemsResponse}
+                item={item as unknown as ItemsResponse}
               />
               <TooltipProvider>
                 <Tooltip>

@@ -40,14 +40,12 @@ export function ModalContent({ initialData, onClose }: ModalContentProps) {
     if (initialData) {
       reset({
         title: initialData?.title,
-        slug: initialData?.slug,
         show: initialData?.show,
       });
       setPreview(initialData?.imageUrl);
     } else {
       reset({
         title: "",
-        slug: "",
         show: true,
       });
       setPreview(undefined);
@@ -112,17 +110,14 @@ export function ModalContent({ initialData, onClose }: ModalContentProps) {
       if (dirtyFields?.title) {
         formData?.append("title", data?.title?.trim());
       }
-      if (dirtyFields?.slug) {
-        formData?.append("slug", data?.slug?.trim());
-      }
+
       if (dirtyFields?.show) {
         formData?.append("show", String(data?.show ?? true));
       }
       if (file) {
         formData?.append("image", file);
       }
-      const hasChanges =
-        dirtyFields?.title || dirtyFields?.slug || dirtyFields?.show || file;
+      const hasChanges = dirtyFields?.title || dirtyFields?.show || file;
       if (!hasChanges) {
         toast.info("هیچ تغییری اعمال نشده است");
         return;
@@ -138,7 +133,6 @@ export function ModalContent({ initialData, onClose }: ModalContentProps) {
       );
     } else {
       formData.append("title", data?.title.trim());
-      formData.append("slug", data?.slug.trim());
       formData.append("show", String(data?.show ?? true));
       formData.append("image", file!);
 
@@ -205,40 +199,6 @@ export function ModalContent({ initialData, onClose }: ModalContentProps) {
               className="text-xs text-red-500 mt-1"
             >
               {errors?.title?.message}
-            </MotionP>
-          )}
-        </MotionDiv>
-
-        <MotionDiv
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.2 }}
-          className="space-y-2"
-        >
-          <div className="flex items-center justify-between">
-            <Label className="text-sm font-medium text-gray-700 dark:text-gray-300 !gap-1">
-              اسلاگ (slug) <span className="text-red-500">*</span>
-            </Label>
-          </div>
-          <Input
-            {...register("slug")}
-            dir="ltr"
-            className={`border-gray-300 dark:border-gray-600 focus:border-amber-500 dark:focus:border-amber-400 transition-colors ${
-              errors.slug ? "border-red-500 focus:border-red-500" : ""
-            } ${
-              isEditMode && dirtyFields?.slug
-                ? "ring-2 ring-amber-200 dark:ring-amber-800"
-                : ""
-            }`}
-            placeholder="example-slug"
-          />
-          {errors?.slug && (
-            <MotionP
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-xs text-red-500 mt-1"
-            >
-              {errors?.slug?.message}
             </MotionP>
           )}
         </MotionDiv>

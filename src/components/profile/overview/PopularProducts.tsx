@@ -20,12 +20,14 @@ export const PopularProducts = ({
 }) => {
   return (
     <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-xl rounded-2xl border-none">
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="flex items-center gap-2 text-sm sm:text-xl font-bold text-gray-800 dark:text-white">
-          <Star size={18} />
-          محبوب‌ترین محصولات
-        </CardTitle>
-      </CardHeader>
+      {favoritesData?.length ? (
+        <CardHeader className="flex flex-row items-center justify-between">
+          <CardTitle className="flex items-center gap-2 text-sm sm:text-xl font-bold text-gray-800 dark:text-white">
+            <Star size={18} />
+            محبوب‌ترین محصولات
+          </CardTitle>
+        </CardHeader>
+      ) : null}
       <CardContent className="space-y-4 min-h-[100px]">
         {favoritesData?.length > 0 ? (
           favoritesData?.slice(0, 3).map((fav: FavoriteItem) => (

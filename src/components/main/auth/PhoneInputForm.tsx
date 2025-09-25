@@ -73,6 +73,7 @@ export const PhoneInputForm: React.FC<PhoneInputFormProps> = ({
           <div className="flex justify-center">
             <div className="relative w-full max-w-sm group">
               <Input
+                data-testid="phone-input"
                 inputMode="numeric"
                 maxLength={11}
                 type="tel"
@@ -133,6 +134,7 @@ export const PhoneInputForm: React.FC<PhoneInputFormProps> = ({
 
         <div className="space-y-3 flex justify-center">
           <Button
+            data-testid="send-otp-button"
             type="submit"
             disabled={isLoading || !isValid}
             className={cn(

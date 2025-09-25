@@ -240,7 +240,7 @@ export const MenuItemCard = ({ item, viewMode }: MenuItemCardProps) => {
           <Button
             variant="outline"
             className="text-sm px-3 py-2 cursor-pointer border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 w-full sm:w-auto"
-            onClick={() => router.push(`/menu/${item?.id}`)}
+            onClick={() => router.push(`/menu/${item?.id}/${item?.slug}`)}
           >
             <Eye size={18} className="ml-2" />
             مشاهده جزئیات
