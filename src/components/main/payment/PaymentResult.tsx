@@ -14,7 +14,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MotionDiv } from "@/utils/MotionWrapper";
 import { toast } from "sonner";
 import Link from "next/link";
-import { formatJalaliDate } from "@/utils/formatters";
+import { formatJalaliDate, formatCurrency } from "@/utils/formatters";
 
 type PaymentStatus = "success" | "failed" | "pending";
 
@@ -137,7 +137,7 @@ const SuccessPayment = ({ orderInfo }: { orderInfo: any }) => (
             <div className="flex justify-between items-center">
               <span className="text-gray-600 dark:text-gray-400">مبلغ کل:</span>
               <span className="font-semibold text-green-700 dark:text-green-300">
-                {orderInfo.cartTotal} تومان
+                {formatCurrency(orderInfo?.cartTotal)} تومان
               </span>
             </div>
             <div className="flex justify-between items-center">

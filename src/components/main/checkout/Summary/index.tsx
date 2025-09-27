@@ -10,6 +10,8 @@ import { formatCurrency } from "@/utils/formatters";
 interface OrderSummaryPropsExtended extends OrderSummaryProps {
   onCompleteOrder?: () => void;
   isCheckoutLoading?: boolean;
+  hasUnavailableItems?: boolean;
+  hasAvailableItems?: boolean;
 }
 
 export default function OrderSummary({
@@ -18,6 +20,8 @@ export default function OrderSummary({
   isAddressSelected = false,
   onCompleteOrder,
   isCheckoutLoading = false,
+  hasUnavailableItems = false,
+  hasAvailableItems = true,
 }: OrderSummaryPropsExtended) {
   const renderAddressInfo = () => {
     if (!selectedAddress) {
@@ -60,7 +64,12 @@ export default function OrderSummary({
     <Button
       className={className}
       aria-label="ادامه فرآیند خرید"
-      disabled={!isAddressSelected || isCheckoutLoading}
+      disabled={
+        !isAddressSelected ||
+        isCheckoutLoading ||
+        hasUnavailableItems ||
+        !hasAvailableItems
+      }
       onClick={onCompleteOrder}
     >
       <MotionSpan
@@ -72,6 +81,10 @@ export default function OrderSummary({
       </MotionSpan>
       {isCheckoutLoading
         ? "در حال پردازش..."
+        : hasUnavailableItems
+        ? "حذف محصولات غیرفعال"
+        : !hasAvailableItems
+        ? "سبد خرید خالی است"
         : isAddressSelected
         ? "تایید و تکمیل سفارش"
         : "انتخاب آدرس تحویل"}
@@ -81,7 +94,7 @@ export default function OrderSummary({
   return (
     <>
       <div
-        className="sticky top-24 max-w-full rounded-2xl shadow-xl border border-amber-200 dark:border-gray-800 
+        className="sticky top-24 max-w-full h-fit rounded-2xl shadow-xl border border-amber-200 dark:border-gray-800 
          bg-white/70 dark:bg-gray-900/80 backdrop-blur-lg p-6 space-y-4 z-10"
       >
         <div className="text-xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
@@ -90,6 +103,18 @@ export default function OrderSummary({
         </div>
 
         {renderAddressInfo()}
+
+        {/* هشدار برای آیتم‌های غیرفعال */}
+        {hasUnavailableItems && (
+          <div className="p-3 rounded-lg border-red-200 bg-red-50 dark:bg-red-950/20 dark:border-red-800">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="h-4 w-4 text-red-600 dark:text-red-400" />
+              <span className="text-sm text-red-800 dark:text-red-200">
+                نمی‌توانید با محصولات غیرفعال خرید کنید
+              </span>
+            </div>
+          </div>
+        )}
 
         <div className="flex justify-between text-sm">
           <span className="text-gray-600 dark:text-gray-300 font-bold text-medium">

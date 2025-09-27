@@ -129,7 +129,7 @@ export default function AddAddressModal({
               <ChevronsUpDown className="opacity-50 h-4 w-4" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-full p-0">
+          <PopoverContent className="w-full p-0 border-none">
             <Command>
               <CommandInput placeholder="جستجوی استان..." className="h-9" />
               <CommandList className="max-h-56 overflow-y-auto">
@@ -181,7 +181,7 @@ export default function AddAddressModal({
               <ChevronsUpDown className="opacity-50 h-4 w-4" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-full p-0">
+          <PopoverContent className="w-full p-0 border-none">
             <Command>
               <CommandInput placeholder="جستجوی شهر..." className="h-9" />
               <CommandList className="max-h-56 overflow-y-auto">

@@ -6,8 +6,15 @@ import CheckoutItemControls from "@/lib/CheckoutItemControls";
 import { CartItemCardProps } from "@/types/main";
 import { MotionDiv } from "@/utils/MotionWrapper";
 import { formatCurrency } from "@/utils/formatters";
+import { Loader2, Trash2 } from "lucide-react";
+import { useAddToCartButtonLogic } from "@/lib/AddToCartButton";
+import { Button } from "@/components/ui/button";
 
 export default function CartItemCard({ item }: CartItemCardProps) {
+  const isUnavailable = item?.isAvailable === false;
+  const { removeLoading, handleRemove } = useAddToCartButtonLogic({
+    itemId: item?.itemId,
+  });
   return (
     <>
       <MotionDiv
@@ -16,7 +23,9 @@ export default function CartItemCard({ item }: CartItemCardProps) {
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, x: 50, rotate: -5 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="relative bg-white h-fit dark:bg-gray-700 rounded-2xl"
+        className={`relative bg-white h-fit dark:bg-gray-700 rounded-2xl ${
+          isUnavailable ? "opacity-60" : ""
+        }`}
       >
         <div className="overflow-hidden border border-amber-100 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow group rounded-2xl dark:bg-gray-800 hover:border-amber-200 dark:hover:border-amber-600">
           <div className="p-0">
@@ -29,6 +38,7 @@ export default function CartItemCard({ item }: CartItemCardProps) {
                     item?.images?.[0] ||
                     "https://i.pinimg.com/1200x/81/84/78/8184780b5b14d9357ef9fa7adacfb6e8.jpg"
                   }
+                  sizes="100vw"
                   alt={item?.title}
                   fill
                   loading="lazy"
@@ -71,10 +81,35 @@ export default function CartItemCard({ item }: CartItemCardProps) {
                       </span>
                     )}
                   </div>
-                  <CheckoutItemControls
-                    itemId={item?.itemId}
-                    disabled={item?.quantity === 0}
-                  />
+                  {isUnavailable ? (
+                    <Button
+                      disabled={removeLoading}
+                      onClick={handleRemove}
+                      variant="destructive"
+                      className="w-fit  text-white rounded-lg flex items-center justify-center gap-2"
+                    >
+                      {removeLoading ? (
+                        <>
+                          <Loader2 className="animate-spin" size={18} />
+                          <span className="font-medium text-sm">
+                            در حال حذف
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          <Trash2 size={18} />
+                          <span className="font-medium text-sm">
+                            حذف از سبد خرید
+                          </span>
+                        </>
+                      )}
+                    </Button>
+                  ) : (
+                    <CheckoutItemControls
+                      itemId={item?.itemId}
+                      disabled={item?.quantity === 0}
+                    />
+                  )}
                 </div>
               </div>
             </div>

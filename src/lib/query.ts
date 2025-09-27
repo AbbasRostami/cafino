@@ -9,7 +9,6 @@ export type MenuQueryParams = {
   availableOnly?: string;
 };
 
-// Convert searchParams to URLSearchParams
 export const convertSearchParamsToURLSearchParams = (searchParams: {
   [key: string]: string | string[] | undefined;
 }): URLSearchParams => {

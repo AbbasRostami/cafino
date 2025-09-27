@@ -5,7 +5,7 @@ import { CartItem } from "@/store/cartStore";
 import {
   MotionDiv,
   MotionSpan,
-  MotSionAnimatePresence,
+  MotionAnimatePresence,
 } from "@/utils/MotionWrapper";
 
 interface AddToCartButtonStyledProps {
@@ -36,7 +36,6 @@ export const AddToCartButtonStyled: React.FC<AddToCartButtonStyledProps> = ({
     isAuthenticated,
   } = logic;
 
-  // اگر کاربر مهمان است و itemData نداریم، دکمه را غیرفعال کن
   if (!isAuthenticated && !itemData) {
     return (
       <Button
@@ -48,7 +47,6 @@ export const AddToCartButtonStyled: React.FC<AddToCartButtonStyledProps> = ({
     );
   }
 
-  // دکمه افزودن اولیه
   if (count === 0) {
     return (
       <MotionDiv
@@ -61,7 +59,7 @@ export const AddToCartButtonStyled: React.FC<AddToCartButtonStyledProps> = ({
           disabled={isCartLoading || isDisabled || addLoading}
           className="w-full py-5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-lg shadow-amber-300/50 dark:shadow-amber-700/30 flex items-center gap-2 relative overflow-hidden"
         >
-          <MotSionAnimatePresence mode="wait">
+          <MotionAnimatePresence mode="wait">
             {addLoading ? (
               <MotionDiv
                 key="loading-add"
@@ -80,7 +78,7 @@ export const AddToCartButtonStyled: React.FC<AddToCartButtonStyledProps> = ({
                 <ShoppingCart size={20} />
               </MotionDiv>
             )}
-          </MotSionAnimatePresence>
+          </MotionAnimatePresence>
 
           <MotionSpan
             initial={{ opacity: 0, x: 10 }}
@@ -114,7 +112,7 @@ export const AddToCartButtonStyled: React.FC<AddToCartButtonStyledProps> = ({
               : "border-amber-200 dark:border-amber-800/50 text-amber-600 dark:text-amber-400"
           }`}
         >
-          <MotSionAnimatePresence mode="wait">
+          <MotionAnimatePresence mode="wait">
             {decLoading || removeLoading ? (
               <MotionDiv
                 key="loading-dec"
@@ -142,7 +140,7 @@ export const AddToCartButtonStyled: React.FC<AddToCartButtonStyledProps> = ({
                 <Minus size={18} />
               </MotionDiv>
             )}
-          </MotSionAnimatePresence>
+          </MotionAnimatePresence>
         </Button>
       </MotionDiv>
 
@@ -165,7 +163,7 @@ export const AddToCartButtonStyled: React.FC<AddToCartButtonStyledProps> = ({
           size="icon"
           className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-100 to-green-100 dark:from-amber-900/20 dark:to-orange-900/20 border-green-200 dark:border-amber-800/50 text-green-600 dark:text-amber-400"
         >
-          <MotSionAnimatePresence mode="wait">
+          <MotionAnimatePresence mode="wait">
             {incLoading ? (
               <MotionDiv
                 key="loading-inc"
@@ -184,7 +182,7 @@ export const AddToCartButtonStyled: React.FC<AddToCartButtonStyledProps> = ({
                 <Plus size={18} />
               </MotionDiv>
             )}
-          </MotSionAnimatePresence>
+          </MotionAnimatePresence>
         </Button>
       </MotionDiv>
     </MotionDiv>
