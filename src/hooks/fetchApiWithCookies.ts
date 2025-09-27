@@ -41,6 +41,7 @@ export const fetchWithServer = async (
     const response = await fetch(fullUrl, {
       ...options,
       headers,
+      next: options.next ?? { revalidate: 3600 },
     });
 
     return response;
