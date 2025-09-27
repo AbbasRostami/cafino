@@ -45,3 +45,6 @@ export * from "./overview";
 
 // ticket services
 export * from "./tickets";
+
+// rate-limit services
+export * from "./rate-limit";

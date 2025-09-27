@@ -21,7 +21,7 @@ export const itemFormSchema = z.object({
   quantity: z
     .number()
     .min(0, "موجودی نمی‌تواند منفی باشد")
-    .max(999999, "موجودی خیلی زیاد است"),
+    .max(99999, "موجودی خیلی زیاد است"),
   category: z.string().min(1, "انتخاب دسته‌بندی الزامی است"),
   ingredients: z
     .array(z.string().trim())
