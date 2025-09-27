@@ -34,7 +34,7 @@ export default function OrdersPage() {
   };
 
   const { data: orders, isLoading, total, page, limit } = useGetOrders(filters);
-  
+
   const {
     mutate: CancelOrder,
     isPending,

@@ -51,8 +51,8 @@ export const StatisticsCard = ({
       </CardHeader>
       <CardContent className="space-y-1">
         <div className="space-y-1">
-          <p className={`text-2xl font-bold space-x-2 ${valueClassName}`}>
-            {formatValue(value)}
+          <p className={`text-2xl font-bold space-x-1 ${valueClassName}`}>
+            <span>{formatValue(value)}</span>
             {valueLabel && (
               <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
                 {valueLabel}
@@ -62,9 +62,9 @@ export const StatisticsCard = ({
 
           {secondaryValue && secondaryLabel && (
             <p
-              className={`text-muted-foreground text-xs space-x-2 ${secondaryValueClassName}`}
+              className={`text-muted-foreground text-xs space-x-1 ${secondaryValueClassName}`}
             >
-              {formatValue(secondaryValue)}
+              <span> {formatValue(secondaryValue)}</span>
               <span>{secondaryLabel}</span>
             </p>
           )}

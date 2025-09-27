@@ -96,10 +96,14 @@ export function useItemForm({ isOpen, onClose, item }: UseItemFormProps) {
     }
   };
 
-  const handleClose = () => {
+  const resetFormState = () => {
     reset();
     setImagePreview([]);
     setImageFiles([]);
+  };
+
+  const handleClose = () => {
+    resetFormState();
     onClose();
   };
 
@@ -137,7 +141,6 @@ export function useItemForm({ isOpen, onClose, item }: UseItemFormProps) {
       ...prev,
       ...validFiles?.map((f) => URL.createObjectURL(f)),
     ]);
-    setValue("images", [...imageFiles, ...validFiles]);
 
     setIsCompressing(false);
   };
@@ -146,44 +149,51 @@ export function useItemForm({ isOpen, onClose, item }: UseItemFormProps) {
     const newFiles = imageFiles?.filter((_, i) => i !== index);
     setImageFiles(newFiles);
     setImagePreview((prev) => prev.filter((_, i) => i !== index));
-    setValue("images", newFiles);
+  };
+
+  const buildFormData = (data: ItemFormData, isEditing: boolean) => {
+    const formData = new FormData();
+
+    const append = (key: string, value: any) => {
+      if (value !== undefined && value !== "") {
+        formData.append(key, value);
+      }
+    };
+
+    const fields = [
+      { key: "title", value: data.title },
+      { key: "description", value: data.description || "" },
+      { key: "price", value: data.price.toString() },
+      { key: "discount", value: data.discount.toString() },
+      { key: "quantity", value: data.quantity.toString() },
+      { key: "category", value: data.category },
+      { key: "show", value: data.show ? "true" : "false" },
+      { key: "ingredients", value: data.ingredients.join(",") },
+    ];
+
+    fields.forEach(({ key, value }) => {
+      if (
+        key === "show" ||
+        !isEditing ||
+        dirtyFields[key as keyof typeof dirtyFields]
+      ) {
+        append(key, value);
+      }
+    });
+
+    imageFiles.forEach((file) => formData.append("images", file));
+
+    return formData;
   };
 
   const onSubmit: SubmitHandler<ItemFormData> = (data) => {
-    const formData = new FormData();
-    const appendField = (key: string, value: any) =>
-      value !== undefined && value !== "" && formData.append(key, value);
+    console.log(data);
 
-    const appendCommonFields = () => {
-      appendField("title", data.title);
-      appendField("description", data.description || "");
-      appendField("price", data.price.toString());
-      appendField("discount", data.discount.toString());
-      appendField("quantity", data.quantity.toString());
-      appendField("category", data.category);
-      appendField("show", data.show ? "true" : "false");
-
-      if (data.ingredients?.length)
-        appendField("ingredients", data.ingredients.join(","));
-
-      imageFiles?.forEach((img) => formData.append("images", img));
-    };
+    const formData = buildFormData(data, isEditing);
 
     if (isEditing && item) {
-      const hasChanges =
-        Object.keys(dirtyFields).length > 0 ||
-        imageFiles?.length > 0 ||
-        data.show !== item.show;
-
-      if (!hasChanges) {
-        toast.info("هیچ تغییری اعمال نشده است");
-        return;
-      }
-
-      appendCommonFields();
-      updateItem({ id: item?.id, formData }, { onSuccess: onClose });
+      updateItem({ id: item.id, formData }, { onSuccess: onClose });
     } else {
-      appendCommonFields();
       createItem(formData, {
         onSuccess: () => {
           toast.success("محصول افزوده شد");

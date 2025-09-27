@@ -5,6 +5,8 @@ import CheckoutCart from "@/components/main/checkout/CheckoutCart";
 
 const CartPage = () => {
   const { cart, isCartLoading } = useCart();
+  console.log("cart",cart);
+  
   return (
     <>{isCartLoading ? <CheckoutSkeleton /> : <CheckoutCart cart={cart} />}</>
   );

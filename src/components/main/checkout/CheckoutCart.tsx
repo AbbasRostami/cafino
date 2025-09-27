@@ -41,6 +41,13 @@ export default function CheckoutCart({ cart }: CheckoutCartProps) {
     handleCompleteOrder,
   } = useCheckout();
 
+  const unavailableItems =
+    cart?.cartItems?.filter((item) => item?.isAvailable === false) || [];
+  const availableItems =
+    cart?.cartItems?.filter((item) => item?.isAvailable !== false) || [];
+  const hasUnavailableItems = unavailableItems.length > 0;
+  const hasAvailableItems = availableItems.length > 0;
+
   return (
     <div className="min-h-screen pt-36 py-8 px-4 relative ">
       <div className="fixed inset-0 -z-10">
@@ -86,6 +93,27 @@ export default function CheckoutCart({ cart }: CheckoutCartProps) {
                   </h3>
                   <div className="flex-1 rounded-2xl h-0.5 bg-gradient-to-r from-amber-700 to-transparent"></div>
                 </div>
+                {hasUnavailableItems && (
+                  <div className="bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 border border-orange-200 dark:border-orange-800 rounded-xl p-4 mb-6">
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-white text-xs font-bold">!</span>
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-orange-800 dark:text-orange-200 font-semibold text-sm mb-1">
+                          {unavailableItems.length} محصول در سبد خرید شما در
+                          دسترس نیست
+                        </h4>
+                        <p className="text-orange-700 dark:text-orange-300 text-xs leading-relaxed">
+                          برای تکمیل خرید، ابتدا محصولات غیرفعال را از سبد خرید
+                          حذف کنید. این محصولات ممکن است حذف شده یا موقتاً
+                          غیرفعال باشند.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 {cart?.cartItems?.map((item: any) => (
                   <CartItemCard key={item?.itemId} item={item} />
                 ))}
@@ -110,6 +138,8 @@ export default function CheckoutCart({ cart }: CheckoutCartProps) {
               isAddressSelected={!!selectedAddressId}
               onCompleteOrder={handleCompleteOrder}
               isCheckoutLoading={isCheckoutLoading}
+              hasUnavailableItems={hasUnavailableItems}
+              hasAvailableItems={hasAvailableItems}
             />
           </div>
         )}

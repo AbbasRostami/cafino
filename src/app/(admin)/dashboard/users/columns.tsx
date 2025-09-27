@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Loader2, Trash2, ShieldUser, OctagonX } from "lucide-react";
+import { Loader2, ShieldUser, OctagonX } from "lucide-react";
 import { formatJalaliDate } from "@/utils/formatters";
 import { confirm } from "@/components/common/ConfirmModal";
 import {
@@ -18,9 +18,6 @@ import { AddressAdmin, UserAdmin, UserColumnsProps } from "@/types/admin";
 export const columns = ({
   currentPage,
   currentLimit,
-  deleteUser,
-  isDeleting,
-  deleteVars,
   changePermission,
   isChangingPermission,
   changePermissionVars,
@@ -150,11 +147,9 @@ export const columns = ({
             changePermissionVars?.phone === userPhone && isChangingPermission;
           const isCurrentUserAddingToBlacklist =
             addToBlacklistVars?.phone === userPhone && isAddingToBlacklist;
-          const isCurrentUserDeleting =
-            deleteVars?.phone === userPhone && isDeleting;
 
           return (
-            <div className="flex items-center gap-2">
+            <div className="flex justify-center items-center gap-2">
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -227,43 +222,6 @@ export const columns = ({
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
-
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      disabled={isDeleting}
-                      className="h-8 w-8 rounded-full dark:bg-red-900/30 dark:hover:bg-red-900/50 transition-all duration-200 hover:scale-110"
-                      onClick={async () => {
-                        const isConfirmed = await confirm({
-                          title: "حذف کاربر",
-                          description: "آیا از حذف این کاربر اطمینان دارید؟",
-                          confirmText: "حذف",
-                          cancelText: "انصراف",
-                        });
-                        if (isConfirmed) {
-                          deleteUser({ phone: user?.phone });
-                        }
-                      }}
-                    >
-                      {isCurrentUserDeleting ? (
-                        <Loader2 className="animate-spin" size={20} />
-                      ) : (
-                        <Trash2
-                          className="text-red-600 dark:text-red-400"
-                          size={20}
-                          strokeWidth={2.2}
-                        />
-                      )}
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>حذف کاربر</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
             </div>
           );
         },
@@ -277,7 +235,5 @@ export const columns = ({
       isChangingPermission,
       addToBlacklistVars,
       isAddingToBlacklist,
-      deleteVars,
-      isDeleting,
     ]
   );

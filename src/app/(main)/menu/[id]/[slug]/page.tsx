@@ -19,17 +19,18 @@ export default async function MenuItemPage({ params }: MenuItemClientProps) {
 }
 
 async function MenuItemPageWithPrefetch({ params }: MenuItemClientProps) {
-  const { id } = await params;
+  const { id, slug } = await params;
+
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ["item-details", id],
-    queryFn: () => useGetItemsDetailsServer(id),
+    queryKey: ["item-details", id, slug],
+    queryFn: () => useGetItemsDetailsServer(id, slug),
   });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <ItemsDetails id={id} />
+      <ItemsDetails id={id} slug={slug} />
     </HydrationBoundary>
   );
 }
@@ -39,8 +40,8 @@ export async function generateMetadata(
   { params }: GenerateProps,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const { id } = await params;
-  const serverData = await useGetItemsDetailsServer(id);
+  const { id, slug } = await params;
+  const serverData = await useGetItemsDetailsServer(id, slug);
   const item = serverData?.item as Item | undefined;
 
   const previousImages = (await parent).openGraph?.images || [];

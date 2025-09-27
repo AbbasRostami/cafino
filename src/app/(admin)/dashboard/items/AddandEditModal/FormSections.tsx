@@ -142,18 +142,18 @@ export function FormSections({
                   <SelectValue placeholder="دسته‌بندی را انتخاب کنید" />
                 </SelectTrigger>
                 <SelectContent className="text-right">
-                  {categories.map((category) => (
-                    <SelectItem key={category.id} value={category.id}>
-                      {category.title}
+                  {categories?.map((category) => (
+                    <SelectItem key={category?.id} value={category?.id}>
+                      {category?.title}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
 
-              {errors.category && (
+              {errors?.category && (
                 <p className="text-sm text-red-500 text-right flex items-center gap-1">
                   <AlertCircle size={14} />
-                  {errors.category.message}
+                  {errors?.category?.message}
                 </p>
               )}
             </div>
@@ -172,10 +172,10 @@ export function FormSections({
               placeholder="توضیحات محصول را وارد کنید"
               className="text-right min-h-[120px] border-2 focus:border-blue-500 transition-colors resize-none"
             />
-            {errors.description && (
+            {errors?.description && (
               <p className="text-sm text-red-500 text-right flex items-center gap-1">
                 <AlertCircle size={14} />
-                {errors.description.message}
+                {errors?.description?.message}
               </p>
             )}
           </div>
@@ -208,10 +208,10 @@ export function FormSections({
                 placeholder="0"
                 className="text-right h-12 border-2 focus:border-blue-500 transition-colors"
               />
-              {errors.price && (
+              {errors?.price && (
                 <p className="text-sm text-red-500 text-right flex items-center gap-1">
                   <AlertCircle size={14} />
-                  {errors.price.message}
+                  {errors?.price?.message}
                 </p>
               )}
             </div>
@@ -232,10 +232,10 @@ export function FormSections({
                 min="0"
                 max="100"
               />
-              {errors.discount && (
+              {errors?.discount && (
                 <p className="text-sm text-red-500 text-right flex items-center gap-1">
                   <AlertCircle size={14} />
-                  {errors.discount.message}
+                  {errors?.discount?.message}
                 </p>
               )}
             </div>
@@ -251,14 +251,14 @@ export function FormSections({
                 id="quantity"
                 type="number"
                 {...register("quantity", { valueAsNumber: true })}
-                placeholder="0"
+                // placeholder="0"
                 className="text-right h-12 border-2 focus:border-blue-500 transition-colors"
-                min="0"
+                // min="0"
               />
-              {errors.quantity && (
+              {errors?.quantity && (
                 <p className="text-sm text-red-500 text-right flex items-center gap-1">
                   <AlertCircle size={14} />
-                  {errors.quantity.message}
+                  {errors?.quantity?.message}
                 </p>
               )}
             </div>
@@ -292,7 +292,7 @@ export function FormSections({
           </div>
         </div>
         <div className="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-3">
-          {ingredientFields?.map((field, index) => (
+          {ingredientFields?.map((field: any, index: number) => (
             <MotionDiv
               key={field?.id}
               initial={{ opacity: 0, y: 10 }}
@@ -403,7 +403,9 @@ export function FormSections({
           <Switch
             dir="ltr"
             checked={watch("show")}
-            onCheckedChange={(checked) => setValue("show", checked)}
+            onCheckedChange={(checked) =>
+              setValue("show", checked, { shouldDirty: true })
+            }
             className="data-[state=checked]:bg-amber-500"
           />
         </div>

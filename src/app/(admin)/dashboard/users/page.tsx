@@ -7,7 +7,6 @@ import { columns } from "./columns";
 import {
   useAddUserToBlacklist,
   useChangeUserPermission,
-  useDeleteUser,
   useGetUserListAdmin,
   useUserOverview,
 } from "@/services";
@@ -29,12 +28,6 @@ export default function Users() {
     page: currentPage,
     limit: currentLimit,
   });
-
-  const {
-    mutate: deleteUser,
-    isPending: isDeleting,
-    variables: deleteVars,
-  } = useDeleteUser();
 
   const {
     mutate: changePermission,
@@ -99,9 +92,6 @@ export default function Users() {
         columns={columns({
           currentPage,
           currentLimit,
-          deleteUser,
-          isDeleting,
-          deleteVars,
           changePermission,
           isChangingPermission,
           changePermissionVars,

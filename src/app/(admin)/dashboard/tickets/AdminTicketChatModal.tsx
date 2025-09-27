@@ -29,6 +29,7 @@ import {
 import { AdminTicketChatSkeleton } from "@/components/skeleton/admin";
 import { useIsMobile } from "@/hooks/useMediaQuery";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import Image from "next/image";
 
 interface AdminTicketChatModalProps {
   ticketId: string | null;
@@ -122,7 +123,7 @@ export default function AdminTicketChatModal({
     <>
       <div className="p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex  items-center gap-3">
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-2">
                 <span className="text-2xl"> • </span>
@@ -130,7 +131,7 @@ export default function AdminTicketChatModal({
                   {messagesData?.data?.ticket?.subject || "تیکت"}
                 </span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col sm:flex-row items-center gap-2">
                 <Badge
                   className={`flex items-center gap-1 text-sm ${
                     config?.className || ""
@@ -190,10 +191,34 @@ export default function AdminTicketChatModal({
               </div>
 
               <div
-                className={`flex-1 max-w-xs sm:max-w-md ${
+                className={`flex-1 max-w-xs sm:max-w-md  ${
                   isAdminMessage(msg?.sender?.role) ? "text-right" : "text-left"
                 }`}
               >
+                <div
+                  className={`flex items-center gap-2 mb-1.5 ${
+                    isAdminMessage(msg?.sender?.role)
+                      ? "flex-row"
+                      : "flex-row-reverse"
+                  }`}
+                >
+                  {msg?.sender?.imageUrl ? (
+                    <Image
+                      src={msg?.sender?.imageUrl}
+                      alt={msg?.sender?.username}
+                      width={24}
+                      height={24}
+                      className="w-6 h-6 rounded-full object-cover"
+                    />
+                  ) : (
+                    <p className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center overflow-hidden text-white">
+                      {msg?.sender?.username[0]}
+                    </p>
+                  )}
+                  <span className="text-right text-sm font-medium text-gray-900 dark:text-gray-100">
+                    {msg?.sender?.username}
+                  </span>
+                </div>
                 <div
                   className={`p-3 rounded-lg min-h-[40px] sm:max-w-lg max-w-64 break-words ${
                     isAdminMessage(msg?.sender?.role)
@@ -258,7 +283,7 @@ export default function AdminTicketChatModal({
   if (isMobile) {
     return (
       <Drawer open={isOpen} onOpenChange={onClose}>
-        <DrawerContent className="!h-[100vh] !max-h-[90vh]  p-0">
+        <DrawerContent className="!h-full   p-0">
           <VisuallyHidden>
             <DrawerTitle>مشاهده تیکت</DrawerTitle>
             <DrawerDescription>مشاهده تیکت</DrawerDescription>

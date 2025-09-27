@@ -122,7 +122,6 @@ export default function AddressesPage() {
           </Button>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4 md:pb-8 pb-16">
             {addressesData?.length === 0 ? (
               <EmptyState onAddAddress={handleAddAddress} />
             ) : (
@@ -136,7 +135,6 @@ export default function AddressesPage() {
                 />
               ))
             )}
-          </div>
         </CardContent>
       </Card>
 
