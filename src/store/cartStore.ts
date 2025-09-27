@@ -16,6 +16,7 @@ export interface CartItem {
   };
   quantity?: number;
   isFav?: boolean;
+  isAvailable?: boolean;
 }
 
 export interface CartApiResponse {

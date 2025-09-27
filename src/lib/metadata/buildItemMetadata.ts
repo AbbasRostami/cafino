@@ -40,8 +40,8 @@ export function buildItemMetadata(
     };
   }
 
-  const title = item.title;
-  const description = item.description;
+  const title = item?.title;
+  const description = item?.description;
   const primaryImage = item.images?.[0]?.imageUrl;
   const ogImages = [
     ...(primaryImage
@@ -59,13 +59,13 @@ export function buildItemMetadata(
 
   const keywords = [
     title,
-    ...(item.ingredients || []),
+    ...(item?.ingredients || []),
     item.category?.title || "",
     "کافینو",
   ].filter(Boolean) as string[];
 
-  const price = item.price;
-  const discount = item.discount || 0;
+  const price = item?.price;
+  const discount = item?.discount || 0;
   const finalPrice = discount > 0 ? price - (price * discount) / 100 : price;
 
   return {
@@ -92,7 +92,7 @@ export function buildItemMetadata(
       "product:price:amount": String(finalPrice),
       "product:price:currency": "IRR",
       "product:availability": item?.quantity > 0 ? "in stock" : "out of stock",
-      "product:category": item?.category?.title || "",
+      "product:category": item?.category?.title || "محصول",
       "product:brand": "کافینو",
       "schema:product": JSON.stringify({
         "@context": "https://schema.org",

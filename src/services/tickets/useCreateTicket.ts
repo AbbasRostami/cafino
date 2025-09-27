@@ -9,6 +9,7 @@ export const useCreateTicket = () => {
     CreateTicketResponse,
     CreateTicketRequest
   >("/v1/ticket", (data) => data, {
+    gcTime: 0,
     onSuccess: () => {
       toast.success("تیکت با موفقیت ایجاد شد");
       queryClient.invalidateQueries({ queryKey: ["user-tickets"] });

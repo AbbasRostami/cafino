@@ -44,8 +44,12 @@ function buildCanonicalUrl(
   const url = new URL("/menu", baseUrl);
 
   if (searchParams) {
-    Object.entries(searchParams).forEach(([key, value]) => {
-      if (value !== undefined && value !== "") {
+    // Only include relevant SEO parameters in canonical URL
+    const seoParams = ["category", "search", "sortBy", "page"];
+
+    seoParams.forEach((key) => {
+      const value = searchParams[key];
+      if (value !== undefined && value !== "" && value !== "all") {
         if (Array.isArray(value)) {
           value.forEach((v) => url.searchParams.append(key, v));
         } else {
@@ -67,18 +71,28 @@ function buildPaginationLinks(
 ) {
   const links: { prev?: string; next?: string } = {};
 
+  const addParamsToUrl = (
+    url: URL,
+    params: { [key: string]: string | string[] | undefined }
+  ) => {
+    const seoParams = ["category", "search", "sortBy"];
+
+    seoParams.forEach((key) => {
+      const value = params[key];
+      if (value !== undefined && value !== "" && value !== "all") {
+        if (Array.isArray(value)) {
+          value.forEach((v) => url.searchParams.append(key, v));
+        } else {
+          url.searchParams.set(key, value);
+        }
+      }
+    });
+  };
+
   if (currentPage > 1) {
     const prevUrl = new URL("/menu", baseUrl);
     if (searchParams) {
-      Object.entries(searchParams).forEach(([key, value]) => {
-        if (value !== undefined && value !== "") {
-          if (Array.isArray(value)) {
-            value.forEach((v) => prevUrl.searchParams.append(key, v));
-          } else {
-            prevUrl.searchParams.set(key, value);
-          }
-        }
-      });
+      addParamsToUrl(prevUrl, searchParams);
     }
     prevUrl.searchParams.set("page", String(currentPage - 1));
     links.prev = prevUrl.toString();
@@ -87,15 +101,7 @@ function buildPaginationLinks(
   if (currentPage < totalPages) {
     const nextUrl = new URL("/menu", baseUrl);
     if (searchParams) {
-      Object.entries(searchParams).forEach(([key, value]) => {
-        if (value !== undefined && value !== "") {
-          if (Array.isArray(value)) {
-            value.forEach((v) => nextUrl.searchParams.append(key, v));
-          } else {
-            nextUrl.searchParams.set(key, value);
-          }
-        }
-      });
+      addParamsToUrl(nextUrl, searchParams);
     }
     nextUrl.searchParams.set("page", String(currentPage + 1));
     links.next = nextUrl.toString();
@@ -126,18 +132,43 @@ export function buildMenuMetadata(
     "منوی کامل کافینو با انواع نوشیدنی‌ها، غذاها و دسرهای خوشمزه";
 
   if (searchParams) {
-    const category = searchParams.category;
-    const search = searchParams.search;
-    const page = searchParams.page;
+    const category = searchParams?.category;
+    const search = searchParams?.search;
+    const page = searchParams?.page;
+    const sortBy = searchParams?.sortBy;
 
+    // Base title and description
     if (category) {
       title = `منوی ${category} - کافینو`;
       description = `انواع ${category} در کافینو با کیفیت عالی و قیمت مناسب`;
-    }
-
-    if (search) {
+    } else if (search) {
       title = `جستجو: ${search} - کافینو`;
       description = `نتایج جستجو برای "${search}" در منوی کافینو`;
+    }
+
+    // Add sorting information to title and description
+    if (sortBy) {
+      const sortLabels: { [key: string]: string } = {
+        newest: "جدیدترین",
+        topRated: "بیشترین امتیاز",
+        highestDiscount: "بیشترین تخفیف",
+        highestPrice: "گران‌ترین",
+        lowestPrice: "ارزان‌ترین",
+        all: "همه",
+      };
+
+      const sortLabel = sortLabels[sortBy as keyof typeof sortLabels] || sortBy;
+
+      if (category) {
+        title = `منوی ${category} - ${sortLabel} - کافینو`;
+        description = `انواع ${category} در کافینو مرتب شده بر اساس ${sortLabel} با کیفیت عالی و قیمت مناسب`;
+      } else if (search) {
+        title = `جستجو: ${search} - ${sortLabel} - کافینو`;
+        description = `نتایج جستجو برای "${search}" در منوی کافینو مرتب شده بر اساس ${sortLabel}`;
+      } else {
+        title = `منوی کافینو - ${sortLabel}`;
+        description = `منوی کامل کافینو مرتب شده بر اساس ${sortLabel} با انواع نوشیدنی‌ها، غذاها و دسرهای خوشمزه`;
+      }
     }
 
     if (page && Number(page) > 1) {
@@ -145,7 +176,7 @@ export function buildMenuMetadata(
     }
   }
 
-  const featuredImages = menuData.data.items
+  const featuredImages = menuData?.data?.items
     .slice(0, 3)
     .map((item: MenuItem) => ({
       url: item.images?.[0]?.imageUrl || "",
@@ -157,9 +188,9 @@ export function buildMenuMetadata(
 
   const ogImages = [...featuredImages, ...(parentImages || [])];
 
-  const totalItems = menuData.data.total || 0;
-  const currentPage = menuData.data.page || 1;
-  const totalPages = Math.ceil(totalItems / (menuData.data.limit || 6));
+  const totalItems = menuData?.data?.total || 0;
+  const currentPage = menuData?.data?.page || 1;
+  const totalPages = Math.ceil(totalItems / (menuData?.data?.limit || 6));
 
   const paginationLinks = buildPaginationLinks(
     siteUrl,
@@ -168,7 +199,7 @@ export function buildMenuMetadata(
     searchParams
   );
 
-  const limitedItems = menuData.data.items.slice(0, 8);
+  const limitedItems = menuData?.data?.items.slice(0, 8);
 
   return {
     title,
@@ -197,13 +228,27 @@ export function buildMenuMetadata(
       "menu:total_items": String(totalItems),
       "menu:current_page": String(currentPage),
       "menu:total_pages": String(totalPages),
-      "menu:items_per_page": String(menuData.data.limit || 6),
+      "menu:items_per_page": String(menuData?.data?.limit || 6),
       "schema:itemlist": JSON.stringify({
         "@context": "https://schema.org",
         "@type": "ItemList",
-        name: "منوی کافینو",
+        name: title,
         description: description,
         numberOfItems: limitedItems.length,
+        ...(searchParams?.sortBy && {
+          sortOrder:
+            searchParams.sortBy === "newest"
+              ? "desc"
+              : searchParams.sortBy === "topRated"
+              ? "desc"
+              : searchParams.sortBy === "highestDiscount"
+              ? "desc"
+              : searchParams.sortBy === "highestPrice"
+              ? "desc"
+              : searchParams.sortBy === "lowestPrice"
+              ? "asc"
+              : undefined,
+        }),
         itemListElement: limitedItems?.map((item: MenuItem, index: number) => ({
           "@type": "ListItem",
           position: index + 1,

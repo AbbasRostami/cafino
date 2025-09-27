@@ -2,10 +2,11 @@ import { fetchWithServer } from "@/hooks/fetchApiWithCookies";
 import { Items } from "@/types";
 
 export async function useGetItemsDetailsServer(
-  id: string
+  id: string,
+  slug: string
 ): Promise<Items | null> {
   try {
-    const res = await fetchWithServer(`/v1/item/${id}`, {
+    const res = await fetchWithServer(`/v1/item/item-${id}/${slug}`, {
       next: { revalidate: 60 },
     });
     const data = await res.json();

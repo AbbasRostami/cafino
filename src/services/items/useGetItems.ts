@@ -48,7 +48,6 @@ export const useGetItemsSuspense = (queryString: string) => {
     queryKey: ["items", queryString],
     queryFn: () =>
       fetchApi.get<MenuItemResponse>(`/v1/item?${queryString}`).then((res) => {
-        console.log("API result:", res);
         return res;
       }),
 

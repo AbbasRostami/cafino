@@ -1,7 +1,8 @@
 import { useGet } from "@/hooks/useReactQueryHooks";
-import { GetTicketsResponse, GetTicketsParams } from "@/types/Profile";
+import { TicketFilters } from "@/types/Profile";
+import { GetTicketMessagesResponse } from "@/types/Profile/tickets";
 
-export const useGetUserTickets = (params?: GetTicketsParams) => {
+export const useGetUserTickets = (params?: TicketFilters) => {
   const queryParams = new URLSearchParams();
 
   if (params?.limit) queryParams.append("limit", params.limit.toString());
@@ -15,7 +16,7 @@ export const useGetUserTickets = (params?: GetTicketsParams) => {
     queryParams.toString() ? `?${queryParams.toString()}` : ""
   }`;
 
-  return useGet<GetTicketsResponse>(endpoint, {
+  return useGet<GetTicketMessagesResponse>(endpoint, {
     queryKey: ["user-tickets", params],
   });
 };
