@@ -6,7 +6,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Heart, Star } from "lucide-react";
+import { ArrowLeft, EyeOff, Heart, Star } from "lucide-react";
 import Link from "next/link";
 import { AddToCartButtonStyled } from "@/lib/AddToCartButtonStyled";
 import { FavoriteItem } from "@/types/Profile";
@@ -18,6 +18,8 @@ export const PopularProducts = ({
 }: {
   favoritesData: FavoriteItem[];
 }) => {
+  console.log(favoritesData);
+  
   return (
     <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-xl rounded-2xl border-none">
       {favoritesData?.length ? (
@@ -47,7 +49,18 @@ export const PopularProducts = ({
                 </div>
               </div>
               <div className="flex items-center gap-2 ">
-                <AddToCartButtonStyled itemId={fav?.item?.id} />
+                {fav?.isAvailable ? (
+                  <AddToCartButtonStyled itemId={fav?.item?.id} />
+                ) : (
+                  <Button
+                    className="w-full bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg flex items-center justify-center gap-2"
+                    disabled
+                    variant="outline"
+                  >
+                    <EyeOff size={18} />
+                    <span className="font-medium text-sm">موجود نیست</span>
+                  </Button>
+                )}
               </div>
             </div>
           ))

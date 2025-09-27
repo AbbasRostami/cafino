@@ -3,11 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import {
   Drawer,
   DrawerTitle,
   DrawerHeader,
@@ -28,6 +23,8 @@ import { useIsMobile } from "@/hooks/useMediaQuery";
 import { DrawerContent } from "@/components/ui/drawer";
 import { useRouter } from "next/navigation";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import Image from "next/image";
+import { ImageDialog } from "@/app/(admin)/components/common/ImageDialog";
 
 export const OrderDetailsModal = ({
   order,
@@ -36,11 +33,10 @@ export const OrderDetailsModal = ({
 }: OrderDetailsModalProps) => {
   if (!order) return null;
   const isMobile = useIsMobile();
-
   const Content = () => {
     const router = useRouter();
     return (
-      <div className="max-h-[60vh] overflow-y-auto bg-gradient-to-br from-slate-50 to-gray-100 dark:from-slate-900 dark:to-gray-800 p-2 sm:p-6">
+      <div className="max-h-[60vh] overflow-y-auto p-2 sm:p-6">
         <div className="grid grid-cols-1 gap-6">
           <div className="max-h-[99vh] h-fit overflow-y-auto [&::-webkit-scrollbar]:hidden bg-gradient-to-br from-white/80 to-white/60 dark:from-gray-800/80 dark:to-gray-900/60 backdrop-blur-xl rounded-2xl border border-white/20 dark:border-gray-700/20 shadow-xl p-5">
             <div className="flex items-center gap-3 mb-5">
@@ -61,61 +57,37 @@ export const OrderDetailsModal = ({
                   <div className="flex gap-4">
                     <div className="flex-1">
                       <div className="flex justify-between items-start">
-                        <div>
-                          <h4 className="font-bold text-gray-800 dark:text-white text-lg">
-                            {item?.item?.title}
-                          </h4>
-                          <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
-                            تعداد: {item?.count}
-                          </p>
-                        </div>
-                        <div className="text-left">
-                          {item?.item?.discount > 0 && (
-                            <div className="text-gray-400 dark:text-gray-500 line-through text-sm">
-                              {formatCurrency(item?.item?.price)} تومان
-                            </div>
-                          )}
-                          <div className="font-bold text-gray-800 dark:text-white mt-1 text-lg">
-                            {formatCurrency(
-                              item?.item?.price *
-                                (1 - item?.item?.discount / 100)
-                            )}
-                            تومان
+                        <div className="flex items-center gap-4">
+                          <ImageDialog
+                            src={item?.item?.images?.[0]?.imageUrl || ""}
+                            alt={item?.item?.title}
+                          >
+                            <Image
+                              src={item?.item?.images?.[0]?.imageUrl || ""}
+                              alt={item?.item?.title || ""}
+                              width={100}
+                              height={100}
+                              className="w-16 h-16 cursor-pointer hover:scale-105 transition-all duration-300 bg-gray-100 dark:bg-gray-800 rounded-2xl object-cover border border-gray-200 dark:border-gray-700"
+                            />
+                          </ImageDialog>
+                          <div>
+                            <h4 className="font-bold text-gray-800 dark:text-white text-lg">
+                              {item?.item?.title}
+                            </h4>
+                            <p className="text-gray-500 dark:text-gray-400  text-md  font-medium mt-1">
+                              تعداد: {item?.count}
+                            </p>
                           </div>
                         </div>
-                      </div>
-                      <div className="mt-3">
-                        <p className="text-gray-600 dark:text-gray-300 text-sm mb-2">
-                          مواد تشکیل دهنده:
-                        </p>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <div className="flex flex-wrap gap-1 text-xs max-h-[50px] overflow-hidden">
-                              {item?.item?.ingredients
-                                ?.slice(0, 3)
-                                .map((ing: string, i: number) => (
-                                  <span
-                                    key={i}
-                                    className="bg-muted px-2 py-0.5 rounded-full text-xs text-muted-foreground truncate max-w-[100px]"
-                                  >
-                                    {ing}
-                                  </span>
-                                ))}
 
-                              {item?.item?.ingredients?.length > 3 && (
-                                <span className="bg-muted px-2 py-0.5 rounded-full text-xs text-muted-foreground">
-                                  +{item?.item?.ingredients?.length - 3}
-                                </span>
-                              )}
-                            </div>
-                          </TooltipTrigger>
-
-                          <TooltipContent>
-                            <div className="max-w-[200px] text-xs">
-                              {item?.item?.ingredients?.join(", ")}
-                            </div>
-                          </TooltipContent>
-                        </Tooltip>
+                        <div className="text-left">
+                          <div className=" flex items-center gap-1 font-bold  text-gray-800 dark:text-white mt-1 text-lg">
+                            {formatCurrency(item?.item?.price)}
+                            <span className="text-sm text-gray-500 dark:text-gray-400">
+                              تومان
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -157,10 +129,10 @@ export const OrderDetailsModal = ({
                 <Separator className="bg-gray-200 dark:bg-gray-700" />
                 <div className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-600 rounded-xl p-4">
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600 dark:text-gray-400">
+                    <span className="text-gray-600 dark:text-gray-300">
                       مبلغ پرداختی:
                     </span>
-                    <span className="text-xl font-bold text-gray-800 dark:text-white">
+                    <span className="text-xl font-bold text-gray-800 dark:text-amber-500">
                       {formatCurrency(order?.payment_amount)} تومان
                     </span>
                   </div>
@@ -176,10 +148,10 @@ export const OrderDetailsModal = ({
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-gray-600 dark:text-gray-400">
-                      شماره کارت:
+                      شماره پیگیری
                     </span>
                     <span className="font-mono font-medium text-gray-800 dark:text-white bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
-                      {order?.payments[0]?.card_pan || "نامشخص"}
+                      {order?.payments[0]?.ref_id || "نامشخص"}
                     </span>
                   </div>
                 </div>
@@ -212,7 +184,7 @@ export const OrderDetailsModal = ({
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex  items-center gap-3">
                   <div className="bg-gray-100 dark:bg-gray-800 p-2 rounded-xl">
                     <svg
                       className="h-5 w-5 text-gray-600 dark:text-gray-400"
@@ -277,10 +249,15 @@ export const OrderDetailsModal = ({
 
   return isMobile ? (
     <Drawer open={isOpen} onOpenChange={onClose}>
-      <DrawerContent className="max-h-[80vh]">
+      <DrawerContent className="max-h-[80vh] border-none">
         <DrawerHeader className="p-2">
-          <DrawerTitle>جزئیات سفارش</DrawerTitle>
-          <DrawerDescription>جزئیات سفارش</DrawerDescription>
+          <DrawerTitle className="flex justify-center items-center gap-3">
+            <Package size={25} className="text-amber-500 dark:text-amber-500" />
+            جزئیات سفارش
+          </DrawerTitle>
+          <VisuallyHidden>
+            <DrawerDescription>جزئیات سفارش</DrawerDescription>
+          </VisuallyHidden>
         </DrawerHeader>
         <Content />
       </DrawerContent>
@@ -290,11 +267,7 @@ export const OrderDetailsModal = ({
       <DialogContent
         showCloseButton={false}
         className="
-       overflow-hidden bg-gradient-to-br from-slate-50 to-gray-100 
-          dark:from-slate-900 dark:to-gray-800 border-0 shadow-2xl p-0
-            min-w-3xl rounded-3xl
-          max-h-[90vh] scrollbar-hide
-        "
+        overflow-hidden border-none shadow-2xl p-0 min-w-4xl rounded-3xl max-h-[90vh] scrollbar-hide"
       >
         <DialogHeader className="relative z-10 px-2 sm:px-6 py-2 sm:py-4 overflow-hidden bg-gradient-to-br from-amber-200/50 to-gray-100 dark:from-amber-600/ dark:to-gray-800">
           <DialogClose asChild>

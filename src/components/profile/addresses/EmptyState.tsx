@@ -14,7 +14,7 @@ interface EmptyStateProps {
 
 export const EmptyState = ({ onAddAddress }: EmptyStateProps) => {
   return (
-    <div className="flex flex-col items-center justify-center py-8 px-4 text-center">
+    <div className="max-h-[calc(100vh-100px)] flex flex-col items-center justify-center py-4 px-4 text-center">
       <div className="relative mb-10">
         <div className="w-32 h-32 mx-auto bg-gradient-to-br from-amber-100 to-amber-50 dark:from-amber-900/30 dark:to-amber-800/20 rounded-full flex items-center justify-center shadow-lg">
           <MapPin className="h-20 w-20 text-amber-500 dark:text-amber-400" />

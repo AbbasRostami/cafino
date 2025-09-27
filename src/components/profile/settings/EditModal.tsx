@@ -49,7 +49,6 @@ export const EditModal = ({
   } = useForm({
     mode: "onChange",
     defaultValues: {
-      username: "",
       first_name: "",
       last_name: "",
       birthday: "",
@@ -60,7 +59,6 @@ export const EditModal = ({
   useEffect(() => {
     if (user) {
       reset({
-        username: user?.username || "",
         first_name: user?.first_name || "",
         last_name: user?.last_name || "",
         birthday: user?.birthday || "",
@@ -102,13 +100,7 @@ export const EditModal = ({
         register={register}
         errors={errors}
       />
-      <InputBlock
-        label="نام کاربری"
-        name="username"
-        register={register}
-        errors={errors}
-        type="text"
-      />
+
       <div className="space-y-2">
         <Label className="block w-full text-sm font-medium text-gray-700 dark:text-gray-400">
           تاریخ تولد

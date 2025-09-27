@@ -29,8 +29,10 @@ export const OrdersPagination = ({
   return (
     <div className="flex flex-col sm:flex-row justify-between items-center mt-0 sm:mt-10 gap-4 p-2 sm:p-0 pb-14">
       <div className="text-sm space-x-1 text-gray-500 dark:text-gray-400">
-        نمایش {selectedLimit} از
-        {totalItems}
+        <span>نمایش</span>
+        <span>{selectedLimit}</span>
+        <span>از</span>
+        <span>{totalItems}</span>
       </div>
 
       <div className="flex flex-col sm:flex-row items-center gap-5">

@@ -5,7 +5,6 @@ import { User } from "@/types/Profile";
 import { formatJalaliDate } from "@/utils/formatters";
 
 export const Header = ({ user }: { user?: User | null }) => {
-
   return (
     <Card className="border-none relative overflow-hidden bg-gradient-to-r from-rose-600 to-amber-500 dark:from-rose-800 dark:to-amber-700 rounded-3xl shadow-2xl p-6 sm:p-8 text-white">
       <div className="relative z-10 flex flex-col xl:flex-row items-center justify-between gap-6">
@@ -13,7 +12,7 @@ export const Header = ({ user }: { user?: User | null }) => {
           <h1 className="text-3xl sm:text-4xl lg:text-4xl font-extrabold tracking-tight drop-shadow-md">
             داشبورد کاربری کافینو
           </h1>
-          <p className="mt-2 text-rose-100 dark:text-amber-200 text-sm sm:text-base lg:text-lg">
+          <p className="mt-2 text-rose-50 dark:text-amber-200 text-sm sm:text-base lg:text-lg">
             سلام {user?.first_name || "کاربر"} عزیز، به دنیای طعم و کیفیت خوش
             آمدید
           </p>
@@ -40,10 +39,6 @@ export const Header = ({ user }: { user?: User | null }) => {
               {user?.role === "admin" ? "مدیر سیستم" : "کاربر عادی"}
             </p>
             <div className="flex flex-col items-center sm:items-start gap-1 mt-2">
-              <div className="flex items-center gap-2 text-white dark:text-amber-200 text-sm">
-                <Mail size={16} />
-                <span>{user?.email || "ایمیل مشخص نیست"}</span>
-              </div>
               <div className="flex items-center gap-2 text-white dark:text-amber-200 text-sm">
                 <Phone size={16} />
                 <span>{user?.phone || "شماره تلفن مشخص نیست"}</span>

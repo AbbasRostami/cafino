@@ -20,7 +20,7 @@ interface EmptyStateProps {
 
 export function TicketsEmptyState({
   onAction,
-  actionText = "تیکت جدید",
+  actionText = "بازگشت به لیست تیکت ها",
 }: EmptyStateProps) {
   return (
     <MotionDiv
@@ -102,7 +102,7 @@ export function TicketsEmptyState({
 
 export function NoTicketsFoundState({
   onAction,
-  actionText = "تیکت جدید",
+  actionText = "بازگشت به لیست تیکت ها",
 }: EmptyStateProps) {
   return (
     <MotionDiv

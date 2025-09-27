@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Trash2, Star, Loader2 } from "lucide-react";
+import { Trash2, Star, Loader2, EyeOff } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -14,7 +14,7 @@ import { useDeleteFromFavorite } from "@/services";
 
 export const FavoriteCard = ({ favorite }: FavoriteCardProps) => {
   const { mutate: deleteFromFavorite, isPending } = useDeleteFromFavorite();
-
+  const isAvailable = favorite?.isAvailable;
   const handleDelete = async () => {
     const isConfirmed = await confirm({
       title: "آیا از حذف از علاقه مندی مطمئن هستید؟",
@@ -107,7 +107,7 @@ export const FavoriteCard = ({ favorite }: FavoriteCardProps) => {
                   </span>
                   <span
                     className={`font-bold ${
-                      favorite?.item?.quantity === 0
+                      !favorite?.isAvailable || favorite?.item?.quantity === 0
                         ? "text-red-500"
                         : favorite?.item?.quantity < 5
                         ? "text-amber-500"
@@ -116,14 +116,14 @@ export const FavoriteCard = ({ favorite }: FavoriteCardProps) => {
                         : "text-green-500"
                     }`}
                   >
-                    {favorite?.item?.quantity} عدد
+                    {!favorite?.isAvailable ? 0 : favorite?.item?.quantity} عدد
                   </span>
                 </div>
 
                 <div className="relative w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                   <div
                     className={`absolute top-0 left-0 h-2 rounded-full ${
-                      favorite?.item?.quantity === 0
+                      !favorite?.isAvailable || favorite?.item?.quantity === 0
                         ? "bg-red-300"
                         : favorite?.item?.quantity < 5
                         ? "bg-gradient-to-r from-amber-400 to-amber-600"
@@ -133,7 +133,7 @@ export const FavoriteCard = ({ favorite }: FavoriteCardProps) => {
                     }`}
                     style={{
                       width:
-                        favorite?.item?.quantity === 0
+                        !favorite?.isAvailable || favorite?.item?.quantity === 0
                           ? "0%"
                           : `${Math.min(
                               100,
@@ -165,7 +165,18 @@ export const FavoriteCard = ({ favorite }: FavoriteCardProps) => {
           </Button>
         </div>
         <div className="flex justify-center">
-          <AddToCartButtonStyled itemId={favorite?.item?.id} />
+          {isAvailable ? (
+            <AddToCartButtonStyled itemId={favorite?.item?.id} />
+          ) : (
+            <Button
+              className="w-full bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg flex items-center justify-center gap-2"
+              disabled
+              variant="outline"
+            >
+              <EyeOff size={18} />
+              <span className="font-medium text-sm">موجود نیست</span>
+            </Button>
+          )}
         </div>
       </div>
     </MotionDiv>

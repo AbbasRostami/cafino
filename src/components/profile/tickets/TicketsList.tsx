@@ -54,7 +54,12 @@ export default function TicketsList({
 
     if (hasActiveFilters) {
       return (
-        <div className="bg-white dark:bg-gray-900 rounded-2xl p-6">
+        <div className="space-y-6 bg-white dark:bg-gray-900 rounded-2xl p-6">
+          <TicketFilter
+            filters={filters}
+            onFilterChange={onFilterChange}
+            newTicket={newTicket}
+          />
           <NoTicketsFoundState onAction={newTicket} actionText="تیکت جدید" />
         </div>
       );

@@ -12,6 +12,7 @@ import {
   XCircle,
   Shield,
   ShieldUser,
+  User,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -23,6 +24,8 @@ import {
   AddMessageFormData,
 } from "@/schemas/profile/tickets";
 import { TicketChatSkeleton } from "@/components/skeleton";
+import Image from "next/image";
+import { P } from "node_modules/framer-motion/dist/types.d-Cjd591yU";
 
 const statusConfig: Record<
   string,
@@ -164,18 +167,32 @@ export default function TicketChat({ ticket, onBack }: TicketChatProps) {
                 <div
                   className={`${
                     isUserMessage(msg?.sender?.id)
-                      ? "justify-start"
+                      ? "justify-start "
                       : "justify-end"
-                  } flex items-center gap-2 mb-1`}
+                  } flex items-center gap-2 mb-1.5 `}
                 >
+                  <div className={`flex items-center gap-2 ${
+                    isUserMessage(msg?.sender?.id)
+                      ? "flex-row"
+                      : "flex-row-reverse"
+                  }`}>
+                  {msg?.sender?.imageUrl ? (
+                    <Image
+                      src={msg?.sender?.imageUrl}
+                      alt={msg?.sender?.username}
+                      width={24}
+                      height={24}
+                      className="w-6 h-6 rounded-full object-cover"
+                    />
+                  ) : (
+                    <p className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center overflow-hidden text-white">
+                      {msg?.sender?.username[0]}
+                    </p>
+                  )}
                   <span className="text-right text-sm font-medium text-gray-900 dark:text-gray-100">
                     {msg?.sender?.username}
                   </span>
-                  <span>
-                    {msg?.sender?.role === "admin" && (
-                      <ShieldUser size={12} className="text-amber-500" />
-                    )}
-                  </span>
+                  </div>
                 </div>
                 <div
                   className={`p-3 rounded-lg min-h-[40px] sm:max-w-lg max-w-64 break-words ${

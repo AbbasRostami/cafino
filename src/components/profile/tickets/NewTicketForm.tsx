@@ -118,7 +118,7 @@ export default function NewTicketForm({ list, onCancel }: NewTicketFormProps) {
                 </div>
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-2 max-w-md">
                 <Label
                   htmlFor="message"
                   className="text-sm font-medium text-gray-700 dark:text-gray-300"
@@ -130,14 +130,15 @@ export default function NewTicketForm({ list, onCancel }: NewTicketFormProps) {
                   id="message"
                   {...register("message")}
                   placeholder="پیام خود را به تفصیل بنویسید..."
-                  className={`min-h-[120px] resize-none ${
+                  className={`min-h-[120px] resize-none overflow-x-hidden break-words whitespace-normal text-wrap ${
                     errors?.message
                       ? "border-red-500 focus:border-red-500 focus:ring-red-500"
                       : ""
                   }`}
-                  maxLength={1000}
+                  maxLength={500}
                   onKeyDown={handleKeyPress}
                 />
+
                 <div className="flex justify-between items-center">
                   <p className="text-xs text-gray-500 dark:text-gray-400">
                     {watchedValues?.message?.length || 0}/500 کاراکتر
