@@ -14,6 +14,7 @@ export interface Item {
     title: string;
   };
   images: {
+    id: Key | null | undefined;
     image: string;
     imageUrl: string;
   }[];

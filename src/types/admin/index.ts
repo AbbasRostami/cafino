@@ -7,3 +7,4 @@ export * from "./orders";
 export * from "./discounts";
 export * from "./overview";
 export * from "./tickets";
+export * from "./rate-limit";

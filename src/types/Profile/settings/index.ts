@@ -31,7 +31,6 @@ export interface UpdateProfileRequest {
 }
 
 export interface ProfileFormData {
-  username: string;
   first_name: string;
   last_name: string;
   birthday: string;

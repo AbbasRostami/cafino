@@ -58,6 +58,9 @@ export interface OrderProfile {
       rate_count: number;
       show: boolean;
       createdAt: string;
+      images: {
+        imageUrl: string;
+      }[];
     };
   }[];
   payments: {

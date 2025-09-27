@@ -48,9 +48,6 @@ export interface ChangeUserPermissionRequest {
 export interface UserColumnsProps {
   currentPage: number;
   currentLimit: number;
-  deleteUser: (data: { phone: string }) => void;
-  isDeleting: boolean;
-  deleteVars?: { phone: string };
   changePermission: (data: { phone: string; role: string }) => void;
   isChangingPermission: boolean;
   changePermissionVars?: { phone: string; role: string };
@@ -58,8 +55,6 @@ export interface UserColumnsProps {
   isAddingToBlacklist: boolean;
   addToBlacklistVars?: { phone: string };
 }
-
-
 
 // BlackList Types
 

@@ -16,6 +16,7 @@ export interface CartItem {
   quantity: number;
   image?: string;
   images?: string[];
+  isAvailable?: boolean;
 }
 
 // Discount Types

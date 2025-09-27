@@ -23,10 +23,12 @@ export interface GetTicketsResponse {
   data: {
     total: number;
     tickets: Ticket[];
+    page: number;
+    limit: number;
   };
 }
 
-// Props 
+// Props
 export interface TicketColumnsProps {
   currentPage: number;
   currentLimit: number;

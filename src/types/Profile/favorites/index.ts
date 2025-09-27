@@ -1,5 +1,6 @@
 export interface FavoriteItem {
   id: string;
+  isAvailable: boolean;
   item: {
     id: string;
     title: string;

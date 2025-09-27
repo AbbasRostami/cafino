@@ -1,7 +1,6 @@
 export interface Categorys {
   id: string;
   title: string;
-  slug: string;
   image: string;
   imageUrl: string;
   show: boolean;

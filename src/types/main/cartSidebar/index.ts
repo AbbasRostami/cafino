@@ -6,13 +6,14 @@ export interface CartItemData {
   count: number;
   images: string[];
   price: number;
-  discount: number; 
-  finalPrice: number; 
+  discount: number;
+  finalPrice: number;
   category: {
     title: string;
   };
   quantity: any;
   isFav?: boolean;
+  isAvailable?: boolean;
 }
 
 export interface CartApiResponse {

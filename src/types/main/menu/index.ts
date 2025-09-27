@@ -1,5 +1,6 @@
 // Menu Item Types
 export interface MenuItem {
+  [x: string]: any;
   id: string;
   title: string;
   ingredients: string[];
@@ -31,7 +32,6 @@ export interface MenuItemResponse {
 export interface Category {
   id: string;
   title: string;
-  slug: string;
   image: string;
   imageUrl: string;
   show: boolean;
@@ -160,7 +160,7 @@ export interface PriceInputsProps {
 
 export type GenerateProps = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: string; slug: string }>;
 };
 
 export type MenuPageProps = {

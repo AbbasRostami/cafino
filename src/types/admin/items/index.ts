@@ -38,7 +38,7 @@ export interface ItemsResponse {
   quantity: number;
   rate: number;
   rate_count: number;
-  createdAt: string;
+  created_at: string;
   category: CategoryInfo;
   images: ItemImage[];
   show?: boolean;

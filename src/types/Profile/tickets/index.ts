@@ -6,6 +6,7 @@ export interface TicketUser {
   last_name: string;
   image: string;
   role: string;
+  imageUrl: string;
 }
 
 export interface Ticket {
@@ -20,7 +21,8 @@ export interface TicketMessage {
   id: string;
   message: string;
   created_at: string;
-  sender: TicketUser;
+  sender: TicketUser; 
+  
 }
 
 export interface CreateTicketRequest {
@@ -30,15 +32,6 @@ export interface CreateTicketRequest {
 
 export interface AddMessageRequest {
   message: string;
-}
-
-export interface GetTicketsResponse {
-  statusCode: number;
-  message: string;
-  data: {
-    total: number;
-    tickets: Ticket[];
-  };
 }
 
 export interface GetTicketMessagesResponse {
@@ -61,13 +54,6 @@ export interface CreateTicketResponse {
 export interface AddMessageResponse {
   statusCode: number;
   message: string;
-}
-
-export interface GetTicketsParams {
-  limit?: number;
-  page?: number;
-  sortBy?: string;
-  status?: string;
 }
 
 export interface TicketFilters {

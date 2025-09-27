@@ -1,7 +1,6 @@
 export interface CategoryAdmin {
   id: string;
   title: string;
-  slug: string;
   image: string;
   imageUrl: string;
   show: boolean;
@@ -39,11 +38,9 @@ export type CategoryModalProps = {
 export type CategoryData = {
   id?: string;
   title: string;
-  slug: string;
   imageUrl?: string;
   show: boolean;
 };
-
 
 // Props
 export interface ModalContentProps {
