@@ -5,23 +5,10 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "nestjs.storage.c2.liara.space",
-        port: "",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "storage.c2.liara.space",
-        port: "",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
         hostname: "cafino.storage.c2.liara.space",
         port: "",
         pathname: "/**",
       },
-
       {
         protocol: "https",
         hostname: "i.pinimg.com",
