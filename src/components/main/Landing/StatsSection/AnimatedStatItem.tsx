@@ -36,6 +36,7 @@ export const AnimatedStatItem = ({
 
   return (
     <MotionDiv
+      data-testid="stat-item"
       className="flex flex-col items-center gap-4"
       whileInView={{ opacity: 1 }}
       initial={{ opacity: 0 }}

@@ -74,7 +74,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
               </div>
             </div>
 
-            <div className="flex-1 py-4 px-3 space-y-2 overflow-y-auto scrollbar-hide">
+            <div data-testid="mobile-nav" className="flex-1 py-4 px-3 space-y-2 overflow-y-auto scrollbar-hide">
               {[
                 { href: "/", label: "صفحه اصلی", icon: Home },
                 { href: "/menu", label: "منو", icon: FileText },
@@ -136,6 +136,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
               {!isAuthenticated && (
                 <>
                   <Button
+                    data-testid="mobile-login-button"
                     className="w-full gap-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl shadow-lg transition-all"
                     onClick={() => setOpenMobileLoginDialog(true)}
                   >

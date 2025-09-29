@@ -26,7 +26,10 @@ const stats = [
 
 const StatsSection = () => {
   return (
-    <section className="flex flex-col md:flex-row items-center  justify-between gap-8 py-8 ">
+    <section
+      data-testid="stats-section"
+      className="flex flex-col md:flex-row items-center  justify-between gap-8 py-8 "
+    >
       <div className="flex-1 flex items-center justify-center">
         <Image
           src={Logo}

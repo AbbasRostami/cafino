@@ -76,6 +76,7 @@ const HeroContent = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <MotionSpan
+            data-testid="hero-title"
             className="bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent  dark:from-amber-400 dark:to-orange-400"
             animate={{
               backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
@@ -96,6 +97,7 @@ const HeroContent = () => {
         </MotionH1>
 
         <MotionP
+          data-testid="hero-description"
           className="text-lg sm:text-xl font-bold text-gray-600 dark:text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -114,6 +116,7 @@ const HeroContent = () => {
         {features.map((item, index) => (
           <MotionDiv
             key={index}
+            data-testid="feature-item"
             className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300 p-2 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm"
             whileHover={{ scale: 1.05, y: -2 }}
             transition={{ type: "spring", stiffness: 300 }}
@@ -132,6 +135,7 @@ const HeroContent = () => {
       >
         <MotionDiv whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Button
+            data-testid="order-online-button"
             onClick={() => router.push("/menu")}
             size="lg"
             className="relative overflow-hidden bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group"
@@ -184,6 +188,7 @@ const HeroContent = () => {
         {contactInfo?.map((item, index) => (
           <MotionDiv
             key={index}
+            data-testid="contact-info"
             className="flex items-center gap-2 p-2 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm"
             whileHover={{ x: 5 }}
           >

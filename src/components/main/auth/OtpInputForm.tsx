@@ -48,12 +48,12 @@ export const OtpInputForm: React.FC<OtpInputFormProps> = ({
   return (
     <div className="space-y-3">
       <div className="text-center space-y-2">
-        <h2 className="text-2xl font-bold bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 bg-clip-text text-transparent">
+        <h2 data-testid="otp-title" className="text-2xl font-bold bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 bg-clip-text text-transparent">
           تایید کد
         </h2>
         <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed flex justify-center gap-1">
           کد تایید به شماره
-          <strong className="text-amber-600 dark:text-amber-400">
+          <strong data-testid="phone-number" className="text-amber-600 dark:text-amber-400">
             {phoneNumber}
           </strong>
           ارسال شد
@@ -68,6 +68,7 @@ export const OtpInputForm: React.FC<OtpInputFormProps> = ({
               control={control}
               render={({ field }) => (
                 <InputOTP
+                  data-testid="otp-input"
                   maxLength={5}
                   value={field.value}
                   onComplete={() => handleSubmit(handleFormSubmit)()}
@@ -103,6 +104,7 @@ export const OtpInputForm: React.FC<OtpInputFormProps> = ({
 
         <div className="space-y-3">
           <Button
+            data-testid="verify-otp-button"
             type="submit"
             disabled={isVerifyOTPLoading || !otpValue || otpValue.length !== 5}
             className={cn(
@@ -118,6 +120,7 @@ export const OtpInputForm: React.FC<OtpInputFormProps> = ({
 
           <div className="w-full flex justify-center items-center  gap-2">
             <Button
+              data-testid="resend-otp-button"
               type="button"
               variant="outline"
               onClick={handleResend}
@@ -136,6 +139,7 @@ export const OtpInputForm: React.FC<OtpInputFormProps> = ({
                 : "ارسال مجدد کد"}
             </Button>
             <Button
+              data-testid="back-to-phone-input-button"
               type="button"
               variant="ghost"
               onClick={handleBack}

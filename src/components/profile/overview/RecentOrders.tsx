@@ -29,21 +29,20 @@ export const RecentOrders = ({
 }) => {
   return (
     <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-xl rounded-2xl border-none">
-       {ordersData?.orders?.length ? (
-       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="flex items-center gap-2 text-sm sm:text-xl font-bold text-gray-800 dark:text-white">
-          <Clock size={18} />
-          آخرین سفارش‌ها
-        </CardTitle>
-      </CardHeader>
-      ) : (
-        null
-      )}
+      {ordersData?.orders?.length ? (
+        <CardHeader className="flex flex-row items-center justify-between">
+          <CardTitle className="flex items-center gap-2 text-sm sm:text-xl font-bold text-gray-800 dark:text-white">
+            <Clock size={18} />
+            آخرین سفارش‌ها
+          </CardTitle>
+        </CardHeader>
+      ) : null}
       <CardContent className="space-y-4 min-h-[100px]">
         {ordersData?.orders?.length ? (
           ordersData?.orders?.slice(0, 3).map((order: any) => (
             <div
               key={order?.id}
+              data-testid="order-item"
               className="min-h-[100px] flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-gray-100/50 dark:bg-gray-700/50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
             >
               <div className="mb-3 sm:mb-0 flex flex-col gap-2 w-full">

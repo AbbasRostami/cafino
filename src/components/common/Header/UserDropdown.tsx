@@ -81,7 +81,7 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
 
   return (
     <Button
-      data-testid="login-button"
+      data-testid="user-dropdown-login-button"
       variant="outline"
       className="hidden sm:inline-flex rounded-full gap-2 cursor-pointer"
       onClick={onLoginClick}

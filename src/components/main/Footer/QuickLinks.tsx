@@ -27,6 +27,7 @@ const QuickLinks = ({ quickLinks }: QuickLinksProps) => {
             transition={{ duration: 0.5, delay: index * 0.1 }}
           >
             <Link
+              data-testid="footer-link"
               href={link.href}
               className="group flex items-center space-x-3 space-x-reverse text-gray-700 dark:text-gray-300 hover:text-amber-700 dark:hover:text-amber-400 transition-all duration-300 p-2 rounded-xl hover:bg-amber-50 dark:hover:bg-amber-900/10"
             >

@@ -97,6 +97,7 @@ const GalleryImagesSection = ({
         >
           <div className="relative h-full w-full group">
             <Image
+              data-testid="gallery-image"
               src={item?.image}
               alt={item.title}
               className="w-full h-full object-cover"

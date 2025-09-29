@@ -17,7 +17,7 @@ export const StatsCards = ({ data }: { data: ProfileOverview | undefined }) => {
           </div>
         </CardHeader>
         <CardContent className="">
-          <div className="text-2xl font-bold text-gray-900 dark:text-white">
+          <div data-testid="total-orders" className="text-2xl font-bold text-gray-900 dark:text-white">
             {data?.order?.active}
           </div>
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
@@ -38,7 +38,7 @@ export const StatsCards = ({ data }: { data: ProfileOverview | undefined }) => {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold text-gray-900 dark:text-white">
+          <div data-testid="total-spent" className="text-2xl font-bold text-gray-900 dark:text-white">
             {data?.order?.total}
           </div>
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
@@ -59,7 +59,7 @@ export const StatsCards = ({ data }: { data: ProfileOverview | undefined }) => {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold text-gray-900 dark:text-white">
+          <div data-testid="favorite-items" className="text-2xl font-bold text-gray-900 dark:text-white">
             {data?.favorite?.total}
           </div>
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
