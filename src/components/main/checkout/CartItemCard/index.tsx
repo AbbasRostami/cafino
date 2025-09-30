@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import CheckoutItemControls from "@/lib/CheckoutItemControls";
+import CheckoutItemControls from "@/components/main/checkout/CheckoutItemControls";
 import { CartItemCardProps } from "@/types/main";
 import { MotionDiv } from "@/utils/MotionWrapper";
 import { formatCurrency } from "@/utils/formatters";

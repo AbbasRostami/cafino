@@ -16,7 +16,10 @@ import {
 import { TicketListSkeleton } from "../../skeleton/Profile/tickets";
 import TicketFilter from "./TicketFilter";
 
-const statusConfig = {
+const statusConfig: Record<
+  string,
+  { label: string; icon: React.ReactNode; className: string }
+> = {
   open: {
     label: "در حال بررسی",
     icon: <AlertCircle size={16} />,
@@ -81,7 +84,7 @@ export default function TicketsList({
       />
 
       <div className="space-y-3">
-        {tickets?.map((ticket, index) => (
+        {tickets?.map((ticket: any, index: number) => (
           <MotionDiv
             key={ticket?.id}
             initial={{ opacity: 0, y: 20 }}

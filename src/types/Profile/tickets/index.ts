@@ -15,14 +15,14 @@ export interface Ticket {
   status: "open" | "answered" | "closed";
   created_at: string;
   user: TicketUser;
+  length: number;
 }
 
 export interface TicketMessage {
   id: string;
   message: string;
   created_at: string;
-  sender: TicketUser; 
-  
+  sender: TicketUser;
 }
 
 export interface CreateTicketRequest {
@@ -38,8 +38,9 @@ export interface GetTicketMessagesResponse {
   statusCode: number;
   message: string;
   data: {
-    ticket: Ticket;
+    tickets: Ticket;
     messages: TicketMessage[];
+    total: number;
   };
 }
 
@@ -72,7 +73,7 @@ export interface TicketsPaginationProps {
 }
 
 export interface TicketsListProps {
-  tickets: Ticket[];
+  tickets: any;
   newTicket: () => void;
   isLoading: boolean;
   onTicketSelect: (ticket: Ticket) => void;

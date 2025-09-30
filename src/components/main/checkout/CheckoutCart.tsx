@@ -1,7 +1,7 @@
 "use client";
 
 import { CheckoutCartProps } from "@/types/main";
-import { useCheckout } from "@/hooks/useCheckout";
+import { useCheckout } from "@/hooks/business/useCheckout";
 import {
   AddressSelector,
   CartItemCard,

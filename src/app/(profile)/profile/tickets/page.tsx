@@ -47,7 +47,7 @@ export default function TicketsPage() {
             totalPages={ticketsData?.data?.total || 0}
             filters={filters}
             onFilterChange={handleFilterChange}
-            tickets={ticketsData?.data?.tickets || []}
+            tickets={ticketsData?.data?.tickets as Ticket}
             isLoading={isLoading}
             newTicket={() => setView("new")}
             onTicketSelect={handleTicketSelect}

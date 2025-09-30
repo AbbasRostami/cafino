@@ -11,8 +11,6 @@ import {
   CheckCircle,
   XCircle,
   Shield,
-  ShieldUser,
-  User,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -25,7 +23,6 @@ import {
 } from "@/schemas/profile/tickets";
 import { TicketChatSkeleton } from "@/components/skeleton";
 import Image from "next/image";
-import { P } from "node_modules/framer-motion/dist/types.d-Cjd591yU";
 
 const statusConfig: Record<
   string,
@@ -57,7 +54,7 @@ export default function TicketChat({ ticket, onBack }: TicketChatProps) {
   const { mutate: addMessageMutation } = useAddTicketMessage(ticket);
 
   const messages = messagesData?.data?.messages || [];
-  const isClosed = messagesData?.data?.ticket?.status === "closed";
+  const isClosed = messagesData?.data?.tickets?.status === "closed";
 
   const {
     register,
@@ -93,10 +90,10 @@ export default function TicketChat({ ticket, onBack }: TicketChatProps) {
   };
 
   const isUserMessage = (senderId: string) => {
-    return senderId === messagesData?.data?.ticket?.user?.id;
+    return senderId === messagesData?.data?.tickets?.user?.id;
   };
 
-  const status = messagesData?.data?.ticket?.status as string;
+  const status = messagesData?.data?.tickets?.status as string;
   const config = statusConfig[status];
 
   return (
@@ -114,7 +111,7 @@ export default function TicketChat({ ticket, onBack }: TicketChatProps) {
           <div>
             <h2 className="flex items-start gap-2 font-semibold text-gray-900 dark:text-gray-100">
               <span className="text-2xl"> • </span>
-              {messagesData?.data?.ticket?.subject}
+              {messagesData?.data?.tickets?.subject}
             </h2>
             <div className="flex items-center gap-2">
               <Badge
@@ -127,7 +124,7 @@ export default function TicketChat({ ticket, onBack }: TicketChatProps) {
               </Badge>
               <span className="text-sm text-gray-500 dark:text-gray-400">
                 {formatJalaliDate(
-                  messagesData?.data?.ticket?.created_at as string
+                  messagesData?.data?.tickets?.created_at as string
                 )}
               </span>
             </div>
@@ -171,27 +168,29 @@ export default function TicketChat({ ticket, onBack }: TicketChatProps) {
                       : "justify-end"
                   } flex items-center gap-2 mb-1.5 `}
                 >
-                  <div className={`flex items-center gap-2 ${
-                    isUserMessage(msg?.sender?.id)
-                      ? "flex-row"
-                      : "flex-row-reverse"
-                  }`}>
-                  {msg?.sender?.imageUrl ? (
-                    <Image
-                      src={msg?.sender?.imageUrl}
-                      alt={msg?.sender?.username}
-                      width={24}
-                      height={24}
-                      className="w-6 h-6 rounded-full object-cover"
-                    />
-                  ) : (
-                    <p className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center overflow-hidden text-white">
-                      {msg?.sender?.username[0]}
-                    </p>
-                  )}
-                  <span className="text-right text-sm font-medium text-gray-900 dark:text-gray-100">
-                    {msg?.sender?.username}
-                  </span>
+                  <div
+                    className={`flex items-center gap-2 ${
+                      isUserMessage(msg?.sender?.id)
+                        ? "flex-row"
+                        : "flex-row-reverse"
+                    }`}
+                  >
+                    {msg?.sender?.imageUrl ? (
+                      <Image
+                        src={msg?.sender?.imageUrl}
+                        alt={msg?.sender?.username}
+                        width={24}
+                        height={24}
+                        className="w-6 h-6 rounded-full object-cover"
+                      />
+                    ) : (
+                      <p className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center overflow-hidden text-white">
+                        {msg?.sender?.username[0]}
+                      </p>
+                    )}
+                    <span className="text-right text-sm font-medium text-gray-900 dark:text-gray-100">
+                      {msg?.sender?.username}
+                    </span>
                   </div>
                 </div>
                 <div

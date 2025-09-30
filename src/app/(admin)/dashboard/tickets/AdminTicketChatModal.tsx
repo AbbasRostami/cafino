@@ -74,7 +74,7 @@ export default function AdminTicketChatModal({
   const { mutate: addMessageMutation } = useAddTicketMessage(ticketId || "");
 
   const messages = messagesData?.data?.messages || [];
-  const isClosed = messagesData?.data?.ticket?.status === "closed";
+  const isClosed = messagesData?.data?.tickets?.status === "closed";
 
   const {
     register,
@@ -116,8 +116,8 @@ export default function AdminTicketChatModal({
     return senderRole === "admin";
   };
 
-  const status = messagesData?.data?.ticket?.status as string;
-  const config = statusConfig[status];
+  const status = messagesData?.data?.tickets?.status;
+  const config = statusConfig[status as string];
 
   const ChatContent = () => (
     <>
@@ -128,7 +128,7 @@ export default function AdminTicketChatModal({
               <div className="flex items-center gap-2">
                 <span className="text-2xl"> • </span>
                 <span className="font-semibold text-gray-900 dark:text-gray-100">
-                  {messagesData?.data?.ticket?.subject || "تیکت"}
+                  {messagesData?.data?.tickets?.subject || "تیکت"}
                 </span>
               </div>
               <div className="flex flex-col sm:flex-row items-center gap-2">
@@ -142,7 +142,7 @@ export default function AdminTicketChatModal({
                 </Badge>
                 <span className="text-sm text-gray-500 dark:text-gray-400">
                   {formatJalaliDate(
-                    messagesData?.data?.ticket?.created_at as string
+                    messagesData?.data?.tickets?.created_at as string
                   )}
                 </span>
               </div>
@@ -151,7 +151,7 @@ export default function AdminTicketChatModal({
 
           <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
             <User size={16} />
-            <span>{messagesData?.data?.ticket?.user?.username}</span>
+              <span>{messagesData?.data?.tickets?.user?.username}</span>
           </div>
         </div>
       </div>

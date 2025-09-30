@@ -47,6 +47,9 @@ export interface OrderAdmin {
       rate: number;
       rate_count: number;
       show: boolean;
+      images: {
+        imageUrl: string;
+      }[];
       createdAt: string;
     };
   }[];
