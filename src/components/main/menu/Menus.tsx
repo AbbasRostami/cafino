@@ -2,11 +2,11 @@
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 import { useGetItems } from "@/services";
-import { getMenuQueryParams } from "@/lib/query";
+import { getMenuQueryParams } from "@/utils/queryParams";
 import { SearchBar } from "./filters/SearchBar";
 import { MenuControls } from "./filters/MenuControls";
 import { EmptyState, MenuGrid, MenuPagination } from ".";
-import { useMenuFilters } from "@/hooks/useMenuFilters";
+import { useMenuFilters } from "@/hooks/business/useMenuFilters";
 import { MenuItemResponse } from "@/types/main/menu";
 
 const MenuFiltersSidebar = dynamic(

@@ -7,7 +7,7 @@ import { AppHeader, AppSidebar, Backdrop } from "../layout";
 
 const ConfirmModal = dynamic(
   () =>
-    import("@/components/common/ConfirmModal").then((mod) => mod.ConfirmModal),
+    import("@/components/shared/ConfirmModal").then((mod) => mod.ConfirmModal),
   { ssr: false }
 );
 

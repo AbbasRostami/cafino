@@ -1,7 +1,7 @@
+import { ConfirmModal } from "@/components/shared/ConfirmModal";
+import Footer from "@/components/shared/Footer/Footer";
+import Navbar from "@/components/shared/Header";
 import { Toaster } from "@/components/ui/sonner";
-import Footer from "@/components/common/Footer/Footer";
-import { ConfirmModal } from "@/components/common/ConfirmModal";
-import Navbar from "@/components/common/Header";
 
 export default function MainLayout({
   children,

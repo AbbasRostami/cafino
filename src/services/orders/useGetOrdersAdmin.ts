@@ -1,4 +1,4 @@
-import { useGet } from "@/hooks/useReactQueryHooks";
+import { useGet } from "@/hooks/api/useReactQueryHooks";
 import { GetOrdersResponse } from "@/types/admin";
 
 export const useGetOrdersAdmin = ({

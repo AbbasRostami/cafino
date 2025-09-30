@@ -24,7 +24,7 @@ vi.mock("next/image", () => ({
   ),
 }));
 
-vi.mock("@/hooks/useMediaQuery", () => ({
+vi.mock("@/hooks/ui/useMediaQuery", () => ({
   useIsMobile: vi.fn(() => false),
 }));
 
@@ -63,7 +63,7 @@ vi.mock("@/services", () => ({
   }),
 }));
 
-vi.mock("@/hooks/useReactQueryHooks", () => ({
+vi.mock("@/hooks/api/useReactQueryHooks", () => ({
   usePost: vi.fn(() => ({
     mutate: vi.fn(),
     isPending: false,

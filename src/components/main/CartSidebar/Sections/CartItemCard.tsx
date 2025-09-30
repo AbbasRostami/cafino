@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { CartItemCardProps } from "@/types/main";
-import CartItemControls from "@/lib/CartItemControls";
+import CartItemControls from "@/components/main/CartSidebar/CartItemControlsSidebar";
 import { formatCurrency } from "@/utils/formatters";
 
 export const CartItemCard: React.FC<CartItemCardProps> = ({ item }) => {

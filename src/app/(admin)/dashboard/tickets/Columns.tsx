@@ -19,7 +19,7 @@ import {
   Reply,
   Trash2,
 } from "lucide-react";
-import { confirm } from "@/components/common/ConfirmModal";
+import { confirm } from "@/components/shared/ConfirmModal";
 import Image from "next/image";
 
 export const columns = ({

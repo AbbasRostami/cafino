@@ -10,13 +10,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CreateDiscountModal } from "./CreateDiscount";
+import dynamic from "next/dynamic";
 import { columns } from "./columns";
 import {
   useDeleteDiscount,
   useGetDiscounts,
   useUpdateDiscountStatus,
 } from "@/services";
+
+const CreateDiscountModal = dynamic(() => import("./create-discount"), {
+  ssr: false,
+});
 
 export default function Discounts() {
   const [currentPage, setCurrentPage] = useState(1);

@@ -1,4 +1,4 @@
-import { usePatch } from "@/hooks/useReactQueryHooks";
+import { usePatch } from "@/hooks/api/useReactQueryHooks";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 

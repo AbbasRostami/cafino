@@ -16,7 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formatJalaliDate } from "@/utils/formatters";
 import { ViewMessageModalProps } from "@/types/admin";
-import { useIsMobile } from "@/hooks/useMediaQuery";
+import { useIsMobile } from "@/hooks/ui/useMediaQuery";
 import {
   User,
   Mail,
@@ -28,12 +28,12 @@ import {
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { MotionDiv } from "@/utils/MotionWrapper";
 
-export const ViewMessageModal: React.FC<ViewMessageModalProps> = ({
+export default function ViewMessageModal({
   isOpen,
   onClose,
   contact,
   onReply,
-}) => {
+}: ViewMessageModalProps) {
   const isMobile = useIsMobile();
 
   if (!contact) return null;
@@ -56,7 +56,7 @@ export const ViewMessageModal: React.FC<ViewMessageModalProps> = ({
             <div>
               <p className="text-sm text-gray-500 dark:text-gray-400">نام</p>
               <p className="font-semibold text-gray-800 dark:text-white">
-                {contact?.name}
+                {contact?.name || ""}
               </p>
             </div>
           </div>
@@ -67,9 +67,9 @@ export const ViewMessageModal: React.FC<ViewMessageModalProps> = ({
               <p className="text-sm text-gray-500 dark:text-gray-400">ایمیل</p>
               <p
                 className="font-semibold text-gray-800 dark:text-white truncate max-w-[200px]"
-                title={contact?.email}
+                title={contact?.email || ""}
               >
-                {contact?.email}
+                {contact?.email || ""}
               </p>
             </div>
           </div>
@@ -81,7 +81,7 @@ export const ViewMessageModal: React.FC<ViewMessageModalProps> = ({
                 شماره تلفن
               </p>
               <p className="font-semibold text-gray-800 dark:text-white">
-                {contact?.phone}
+                {contact?.phone || ""}
               </p>
             </div>
           </div>
@@ -93,7 +93,7 @@ export const ViewMessageModal: React.FC<ViewMessageModalProps> = ({
                 تاریخ ارسال
               </p>
               <p className="font-semibold text-gray-800 dark:text-white">
-                {formatJalaliDate(contact?.created_at)}
+                {formatJalaliDate(contact?.created_at || "")}
               </p>
             </div>
           </div>
@@ -109,17 +109,17 @@ export const ViewMessageModal: React.FC<ViewMessageModalProps> = ({
         </div>
         <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
           <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
-            {contact?.message}
+            {contact?.message || ""}
           </p>
         </div>
       </div>
 
-      {contact?.replies && contact?.replies.length > 0 && (
+      {contact?.replies && contact?.replies?.length > 0 && (
         <div className="space-y-4">
           <h3 className="font-semibold text-gray-800 dark:text-white">
-            پاسخ‌های ارسالی ({contact?.replies.length})
+            پاسخ‌های ارسالی ({contact?.replies?.length})
           </h3>
-          {contact?.replies.map((reply, index) => (
+          {contact?.replies?.map((reply, index) => (
             <MotionDiv
               key={reply?.id}
               initial={{ opacity: 0, x: -20 }}
@@ -129,17 +129,17 @@ export const ViewMessageModal: React.FC<ViewMessageModalProps> = ({
             >
               <div className="flex items-center justify-between mb-2">
                 <h4 className="font-medium text-green-800 dark:text-green-300">
-                  {reply?.subject}
+                  {reply?.subject || ""}
                 </h4>
                 <Badge variant="success" className="text-xs">
                   پاسخ داده شده
                 </Badge>
               </div>
               <p className="text-green-700 dark:text-green-300 text-sm mb-2">
-                {reply?.message}
+                {reply?.message || ""}
               </p>
               <p className="text-xs text-green-600 dark:text-green-400">
-                {formatJalaliDate(reply?.created_at)}
+                {formatJalaliDate(reply?.created_at || "")}
               </p>
             </MotionDiv>
           ))}
@@ -195,4 +195,4 @@ export const ViewMessageModal: React.FC<ViewMessageModalProps> = ({
       </DialogContent>
     </Dialog>
   );
-};
+}

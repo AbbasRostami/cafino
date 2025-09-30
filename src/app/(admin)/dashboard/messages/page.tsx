@@ -12,8 +12,16 @@ import {
 } from "@/components/ui/select";
 import { columns } from "./columns";
 import { Contact } from "@/types/admin";
-import { ReplyModal } from "./ModalReply&Edit/ReplyModal";
-import { ViewMessageModal } from "./ModalReply&Edit/ViewMessageModal";
+import dynamic from "next/dynamic";
+
+const ReplyModal = dynamic(() => import("./modal-reply-and-edit/ReplyModal"), {
+  ssr: false,
+});
+
+const ViewMessageModal = dynamic(
+  () => import("./modal-reply-and-edit/ViewMessageModal"),
+  { ssr: false }
+);
 
 export default function Messages() {
   // Pagination and search states

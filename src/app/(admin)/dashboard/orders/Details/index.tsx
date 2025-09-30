@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import { useIsMobile } from "@/hooks/useMediaQuery";
+import { useIsMobile } from "@/hooks/ui/useMediaQuery";
 import { Eye } from "lucide-react";
 import { OrderContent } from "./OrderContent";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";

@@ -1,6 +1,6 @@
-import { useGet } from "@/hooks/useReactQueryHooks";
+import { useGet } from "@/hooks/api/useReactQueryHooks";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { fetchApi } from "@/hooks/useAuthToken";
+import { fetchApi } from "@/hooks/api/useAuthToken";
 import { Item, ItemResponse } from "@/types/main";
 import { MenuItemResponse } from "@/types/main/menu";
 

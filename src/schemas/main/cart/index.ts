@@ -24,7 +24,3 @@ export const cartApiResponseSchema = z.object({
   generalDiscount: z.any().optional(),
   statusCode: z.number().optional(),
 });
-
-export const cartSidebarPropsSchema = z.object({
-  // cartItems is now handled internally from cart store
-});

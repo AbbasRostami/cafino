@@ -23,7 +23,6 @@ import {
 import OrderDetails from "./Details";
 import { OrderAdmin, OrderColumnsProps } from "@/types/admin";
 import { OrderStatus } from "@/types";
-import { Span } from "next/dist/trace";
 
 export const columns = ({
   currentPage,

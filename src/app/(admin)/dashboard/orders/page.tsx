@@ -25,7 +25,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { columns } from "./Columns";
+import { columns } from "./columns";
 import { OrderAdmin } from "@/types/admin";
 import { StatisticsSkeleton } from "@/components/skeleton";
 import { StatisticsCard } from "../../components/common/StatisticsCard";

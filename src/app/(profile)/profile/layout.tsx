@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Sidebar from "@/components/profile/layout";
-import { ConfirmModal } from "@/components/common/ConfirmModal";
-import Navbar from "@/components/common/Header";
+import { ConfirmModal } from "@/components/shared/ConfirmModal";
+import Navbar from "@/components/shared/Header";
 
 export const metadata: Metadata = {
   title: "پنل کاربری | Cafino",

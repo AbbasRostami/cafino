@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import { ShoppingBag, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useGetItemsAdmin } from "@/services";
-import { ItemFormModal } from "@/app/(admin)/dashboard/items/AddandEditModal";
+import dynamic from "next/dynamic";
 import { useDebounce } from "use-debounce";
 import { columns } from "./columns";
 import {
@@ -14,6 +14,11 @@ import {
   SelectTrigger,
   SelectItem,
 } from "@/components/ui/select";
+
+const ItemFormModal = dynamic(
+  () => import("@/app/(admin)/dashboard/items/add-and-edit-modal"),
+  { ssr: false }
+);
 
 export default function Items() {
   const [currentPage, setCurrentPage] = useState(1);

@@ -2,8 +2,8 @@
 import { Star, ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { FavoriteToggleButton } from "@/lib/FavoriteToggleButton";
-import { AddToCartButtonStyled } from "@/lib/AddToCartButtonStyled";
+import { FavoriteToggleButton } from "@/components/ui/FavoriteToggleButton";
+import { AddToCartButtonStyled } from "@/components/ui/AddToCartButtonStyled";
 import {
   Item,
   ItemSectionClientProps,

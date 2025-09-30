@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
-import { useLoginLogic } from "../useLoginLogic";
+import { useLoginLogic } from "../business/useLoginLogic";
 import { useAuthStore } from "@/store/authStore";
 import { useCartStore } from "@/store/cartStore";
 
@@ -32,7 +32,7 @@ vi.mock("@/services", () => ({
     mutate: mockSendOTP,
     isPending: false,
   }),
-  useVerifyOTP: () => ({
+  useVerifyOTP: () => ({  
     mutate: mockVerifyOTP,
     isPending: false,
   }),

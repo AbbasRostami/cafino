@@ -5,7 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/utils/utils";
 import { Slider } from "@/components/ui/slider";
 import React, { useState, useEffect } from "react";
-import { useMenuFilters } from "@/hooks/useMenuFilters";
+import { useMenuFilters } from "@/hooks/business/useMenuFilters";
 import { MobileSheetProps } from "@/types";
 import { PriceInputs } from "./PriceInputs";
 

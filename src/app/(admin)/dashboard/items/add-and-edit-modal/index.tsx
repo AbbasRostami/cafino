@@ -1,6 +1,6 @@
 "use client";
 
-import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { useMediaQuery } from "@/hooks/ui/useMediaQuery";
 import {
   Dialog,
   DialogContent,
@@ -17,7 +17,7 @@ import { ItemFormModalContent } from "./ItemFormModalContent";
 import { ItemDetailsModalProps } from "@/types/admin";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
-export function ItemFormModal({
+export default function ItemFormModal({
   isOpen,
   onClose,
   item,

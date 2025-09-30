@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Loader2, ShieldUser, OctagonX } from "lucide-react";
 import { formatJalaliDate } from "@/utils/formatters";
-import { confirm } from "@/components/common/ConfirmModal";
+import { confirm } from "@/components/shared/ConfirmModal";
 import {
   TooltipContent,
   Tooltip,

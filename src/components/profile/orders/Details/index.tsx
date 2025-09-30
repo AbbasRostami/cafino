@@ -19,7 +19,7 @@ import {
 import { Package, CreditCard, MapPin, Download, Truck, X } from "lucide-react";
 import { formatCurrency } from "@/utils/formatters";
 import { OrderDetailsModalProps } from "@/types/Profile";
-import { useIsMobile } from "@/hooks/useMediaQuery";
+import { useIsMobile } from "@/hooks/ui/useMediaQuery";
 import { DrawerContent } from "@/components/ui/drawer";
 import { useRouter } from "next/navigation";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";

@@ -16,7 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { useMediaQuery } from "@/hooks/ui/useMediaQuery";
 import { MotionDiv } from "@/utils/MotionWrapper";
 import {
   X,
@@ -205,7 +205,7 @@ export function ItemDetailsModal({
                 قیمت اصلی:
               </span>
               <span className="text-lg font-medium text-gray-900 dark:text-white">
-                { formatCurrency(price)} تومان
+                {formatCurrency(price)} تومان
               </span>
             </div>
 
@@ -335,7 +335,10 @@ export function ItemDetailsModal({
                 تاریخ ثبت:
               </span>
               <span className="text-gray-900 dark:text-white font-medium">
-                {formatJalaliDate(new Date(created_at), "jYYYY/jMM/jDD - HH:MM")}
+                {formatJalaliDate(
+                  new Date(created_at),
+                  "jYYYY/jMM/jDD - HH:MM"
+                )}
               </span>
             </div>
 

@@ -1,5 +1,5 @@
 "use client";
-import { AddToCartButtonStyled } from "@/lib/AddToCartButtonStyled";
+import { AddToCartButtonStyled } from "@/components/ui/AddToCartButtonStyled";
 import { PriceSectionProps } from "@/types/main";
 import { MotionDiv } from "@/utils/MotionWrapper";
 import {

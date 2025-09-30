@@ -1,4 +1,4 @@
-import { useGet } from "@/hooks/useReactQueryHooks";
+import { useGet } from "@/hooks/api/useReactQueryHooks";
 import { useAuthStore } from "@/store/authStore";
 import { UserResponse } from "@/types/Profile";
 

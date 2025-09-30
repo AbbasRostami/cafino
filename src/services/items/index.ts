@@ -1,8 +1,5 @@
-// Main item hooks
 export { useGetItems, useGetItemsSuspense } from "./useGetItems";
 export { useGetItemDetails } from "./useGetItemDetails";
-
-// Admin item hooks
 export { useGetItemsAdmin } from "./useGetItemsAdmin";
 export { useDeleteItem } from "./useDeleteItem";
 export { useCreateItem } from "./useCreateItem";

@@ -36,6 +36,7 @@ export default function CheckoutHeader({
       </MotionButton>
 
       <MotionH1
+        data-testid="checkout-header-title"
         className="text-3xl sm:text-4xl font-extrabold text-center text-gray-900 dark:text-white"
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}

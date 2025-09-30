@@ -1,4 +1,4 @@
-import { usePost } from "@/hooks/useReactQueryHooks";
+import { usePost } from "@/hooks/api/useReactQueryHooks";
 import { CreateContactRequest, CreateContactResponse } from "@/types/admin";
 import { toast } from "sonner";
 

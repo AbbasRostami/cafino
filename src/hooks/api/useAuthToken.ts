@@ -68,7 +68,6 @@ export async function fetchWithAuth(url: string, options: RequestInit = {}) {
 
       console.log("🔄 Trying to refresh token...");
 
-      // Use the refreshToken function directly from the auth service
       const refreshResponse = await fetch(getApiUrl("/v1/auth/refresh"), {
         method: "GET",
         credentials: "include",

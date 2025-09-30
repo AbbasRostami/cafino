@@ -6,7 +6,7 @@ import { buildItemMetadata } from "@/lib/metadata";
 import { ItemDetailsSkeleton } from "@/components/skeleton";
 import { Suspense } from "react";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { getQueryClient } from "@/lib/queryClient";
+import { getQueryClient } from "@/components/providers/queryClient";
 
 export default async function MenuItemPage({ params }: MenuItemClientProps) {
   return (

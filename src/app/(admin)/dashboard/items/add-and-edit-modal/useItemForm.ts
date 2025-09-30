@@ -161,8 +161,8 @@ export function useItemForm({ isOpen, onClose, item }: UseItemFormProps) {
     };
 
     const fields = [
-      { key: "title", value: data.title },
-      { key: "description", value: data.description || "" },
+      { key: "title", value: data?.title },
+      { key: "description", value: data?.description || "" },
       { key: "price", value: data.price.toString() },
       { key: "discount", value: data.discount.toString() },
       { key: "quantity", value: data.quantity.toString() },
@@ -181,7 +181,7 @@ export function useItemForm({ isOpen, onClose, item }: UseItemFormProps) {
       }
     });
 
-    imageFiles.forEach((file) => formData.append("images", file));
+    imageFiles?.forEach((file) => formData.append("images", file));
 
     return formData;
   };

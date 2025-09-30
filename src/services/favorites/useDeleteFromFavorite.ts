@@ -1,4 +1,4 @@
-import { useDelete } from "@/hooks/useReactQueryHooks";
+import { useDelete } from "@/hooks/api/useReactQueryHooks";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 export const useDeleteFromFavorite = () => {

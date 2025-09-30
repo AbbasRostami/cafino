@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { Loader2, ShieldCheck, RotateCcw, Ban } from "lucide-react";
-import { confirm } from "@/components/common/ConfirmModal";
+import { confirm } from "@/components/shared/ConfirmModal";
 import { toast } from "sonner";
 
 export const columns = ({

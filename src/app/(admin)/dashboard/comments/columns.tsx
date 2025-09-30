@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Repeat1, SquareCheck, SquareX } from "lucide-react";
-import { confirm } from "@/components/common/ConfirmModal";
+import { confirm } from "@/components/shared/ConfirmModal";
 import { Button } from "@/components/ui/button";
 import {
   Tooltip,
@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/tooltip";
 import { formatJalaliDate } from "@/utils/formatters";
 import { ColumnsCommentsProps, CommentResponseAdmin } from "@/types/admin";
-import { AddCommentModal } from "./addComment";
+import { AddCommentModal } from "./add-comment";
 
 export const columns = ({
   currentPage,

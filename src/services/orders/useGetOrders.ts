@@ -1,4 +1,4 @@
-import { useGet } from "@/hooks/useReactQueryHooks";
+import { useGet } from "@/hooks/api/useReactQueryHooks";
 import { GetOrdersResponseProfile, GetOrdersParams } from "@/types/Profile";
 
 export const useGetOrders = (params?: GetOrdersParams) => {

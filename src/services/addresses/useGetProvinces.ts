@@ -7,7 +7,7 @@ export const useGetProvinces = () => {
       fetch("https://iranplacesapi.liara.run/api/provinces").then((res) =>
         res.json()
       ),
-    staleTime: 1000 * 60 * 60, // 1 ساعت
+    staleTime: 1000 * 60 * 60,
   });
 
   return { data, isLoading, isError };

@@ -1,4 +1,4 @@
-import { fetchWithServer } from "@/hooks/fetchApiWithCookies";
+import { fetchWithServer } from "@/hooks/api/fetchApiWithCookies";
 import { CategoryResponse } from "@/types/main";
 
 export const getCategories = async (): Promise<CategoryResponse> => {

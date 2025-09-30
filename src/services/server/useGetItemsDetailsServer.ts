@@ -1,4 +1,4 @@
-import { fetchWithServer } from "@/hooks/fetchApiWithCookies";
+import { fetchWithServer } from "@/hooks/api/fetchApiWithCookies";
 import { Items } from "@/types";
 
 export async function useGetItemsDetailsServer(

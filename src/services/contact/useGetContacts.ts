@@ -1,8 +1,5 @@
-import { useGet } from "@/hooks/useReactQueryHooks";
-import {
-  GetContactsResponse,
-  UseGetContactsProps,
-} from "@/types/admin";
+import { useGet } from "@/hooks/api/useReactQueryHooks";
+import { GetContactsResponse, UseGetContactsProps } from "@/types/admin";
 
 export const useGetContacts = ({
   page = 1,

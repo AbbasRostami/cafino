@@ -4,7 +4,7 @@ import DesktopSidebar from "./DesktopSidebar";
 import { useGetCategories } from "@/services";
 import { useState } from "react";
 import MobileSheet from "./MobileSheet";
-import { useMenuFilters } from "@/hooks/useMenuFilters";
+import { useMenuFilters } from "@/hooks/business/useMenuFilters";
 
 const MenuFiltersSidebar = () => {
   const { data: categories } = useGetCategories();

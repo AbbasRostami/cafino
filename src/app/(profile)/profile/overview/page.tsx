@@ -3,9 +3,6 @@
 import {
   Header,
   StatsCards,
-  RecentOrders,
-  PopularProducts,
-  PromotionalBanner,
   QuickActions,
 } from "@/components/profile/overview";
 import {
@@ -16,6 +13,7 @@ import {
   PromotionalBannerSkeleton,
   QuickActionsSkeleton,
 } from "@/components/skeleton";
+import dynamic from "next/dynamic";
 
 import {
   useUserProfile,
@@ -23,6 +21,25 @@ import {
   useGetOrders,
   useProfileOverview,
 } from "@/services";
+
+const RecentOrders = dynamic(
+  () => import("@/components/profile/overview").then((mod) => mod.RecentOrders),
+  { ssr: false }
+);
+
+const PopularProducts = dynamic(
+  () =>
+    import("@/components/profile/overview").then((mod) => mod.PopularProducts),
+  { ssr: false }
+);
+
+const PromotionalBanner = dynamic(
+  () =>
+    import("@/components/profile/overview").then(
+      (mod) => mod.PromotionalBanner
+    ),
+  { ssr: false }
+);
 
 export default function OverviewPage() {
   const { data: user, isLoading: userLoading } = useUserProfile();

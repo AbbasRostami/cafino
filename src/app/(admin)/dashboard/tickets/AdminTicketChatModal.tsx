@@ -27,7 +27,7 @@ import {
   AddMessageFormData,
 } from "@/schemas/profile/tickets";
 import { AdminTicketChatSkeleton } from "@/components/skeleton/admin";
-import { useIsMobile } from "@/hooks/useMediaQuery";
+import { useIsMobile } from "@/hooks/ui/useMediaQuery";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import Image from "next/image";
 

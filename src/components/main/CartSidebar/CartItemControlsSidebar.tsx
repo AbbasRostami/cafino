@@ -1,6 +1,6 @@
 import { Plus, Minus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useAddToCartButtonLogic } from "./AddToCartButton";
+import { useAddToCartButtonLogic } from "@/hooks/business/AddToCartButton";
 
 interface CartItemControlsProps {
   itemId: string;
@@ -8,7 +8,7 @@ interface CartItemControlsProps {
   className?: string;
 }
 
-export const CartItemControls: React.FC<CartItemControlsProps> = ({
+export const CartItemControlsSidebar: React.FC<CartItemControlsProps> = ({
   itemId,
   disabled = false,
   className = "",
@@ -73,4 +73,4 @@ export const CartItemControls: React.FC<CartItemControlsProps> = ({
   );
 };
 
-export default CartItemControls;
+export default CartItemControlsSidebar;

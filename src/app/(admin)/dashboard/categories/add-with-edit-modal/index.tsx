@@ -17,7 +17,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
-import { useIsMobile } from "@/hooks/useMediaQuery";
+import { useIsMobile } from "@/hooks/ui/useMediaQuery";
 import { ModalContent } from "./ModalContent";
 import { CategoryModalProps } from "@/types/admin";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";

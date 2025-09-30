@@ -1,7 +1,7 @@
 "use client";
 
-import { useIsMobile } from "@/hooks/useMediaQuery";
-import { useLoginLogic } from "@/hooks/useLoginLogic";
+import { useIsMobile } from "@/hooks/ui/useMediaQuery";
+import { useLoginLogic } from "@/hooks/business/useLoginLogic";
 import {
   Dialog,
   DialogContent,

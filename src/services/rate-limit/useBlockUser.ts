@@ -1,4 +1,4 @@
-import { usePost } from "@/hooks/useReactQueryHooks";
+import { usePost } from "@/hooks/api/useReactQueryHooks";
 import { BlockUserParams } from "@/types/admin";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";

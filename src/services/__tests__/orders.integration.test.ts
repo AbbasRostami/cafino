@@ -16,7 +16,7 @@ vi.mock("sonner", () => ({
   },
 }));
 
-vi.mock("@/hooks/useReactQueryHooks", () => ({
+vi.mock("@/hooks/api/useReactQueryHooks", () => ({
   useGet: vi.fn(() => ({
     data: null,
     isLoading: false,

@@ -13,7 +13,7 @@ import {
 import { Reply, Eye, Trash, Loader2 } from "lucide-react";
 import { formatJalaliDate } from "@/utils/formatters";
 import { Contact } from "@/types/admin";
-import { confirm } from "@/components/common/ConfirmModal";
+import { confirm } from "@/components/shared/ConfirmModal";
 
 export const columns = ({
   currentPage,

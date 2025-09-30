@@ -4,7 +4,7 @@ import {
   UseQueryOptions,
   UseMutationOptions,
 } from "@tanstack/react-query";
-import { fetchApi } from "@/hooks/useAuthToken";
+import { fetchApi } from "@/hooks/api/useAuthToken";
 
 type ServerError = Error;
 

@@ -1,4 +1,4 @@
-import { useGet } from "@/hooks/useReactQueryHooks";
+import { useGet } from "@/hooks/api/useReactQueryHooks";
 import { FavoriteListResponse, GetFavoritesParams } from "@/types/Profile";
 
 export const useGetFavorites = (params?: GetFavoritesParams) => {

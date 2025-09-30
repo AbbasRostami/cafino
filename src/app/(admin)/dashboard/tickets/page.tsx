@@ -11,10 +11,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import dynamic from "next/dynamic";
 
-import { columns } from "./Columns";
+import { columns } from "./columns";
 import { TicketFilters } from "@/types/Profile";
-import AdminTicketChatModal from "./AdminTicketChatModal";
+
+const AdminTicketChatModal = dynamic(
+  () => import("./AdminTicketChatModal").then((mod) => mod.default),
+  { ssr: false }
+);
 
 export default function Tickets() {
   const [searchValue, setSearchValue] = useState("");

@@ -1,6 +1,6 @@
 import { Plus, Minus, Trash2, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useAddToCartButtonLogic } from "./AddToCartButton";
+import { useAddToCartButtonLogic } from "@/hooks/business/AddToCartButton";
 import { CartItem } from "@/store/cartStore";
 import {
   MotionDiv,

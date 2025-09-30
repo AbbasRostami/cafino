@@ -1,4 +1,4 @@
-import { usePut } from "@/hooks/useReactQueryHooks";
+import { usePut } from "@/hooks/api/useReactQueryHooks";
 import { UpdateItemFormData } from "@/types/admin/items";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";

@@ -6,8 +6,8 @@ import {
   TooltipTrigger,
   TooltipProvider,
 } from "@/components/ui/tooltip";
-import { useAddToCartButtonLogic } from "./AddToCartButton";
 import { MotionDiv, MotionSpan } from "@/utils/MotionWrapper";
+import { useAddToCartButtonLogic } from "@/hooks/business/AddToCartButton";
 
 interface CheckoutItemControlsProps {
   itemId: string;

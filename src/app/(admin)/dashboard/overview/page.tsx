@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  CommentsMetrics,
-  ItemsMetrics,
-  LastestComments,
-  OrderMetrics,
-  RevenueMetrics,
-  Statistics,
-  UsersMetrics,
-} from "./components";
+import dynamic from "next/dynamic";
 import { useAdminOverview } from "@/services";
 import {
   StatisticsSkeleton,
@@ -19,6 +11,41 @@ import {
   CommentsMetricsSkeleton,
   LatestCommentsSkeleton,
 } from "@/components/skeleton";
+
+const Statistics = dynamic(
+  () => import("./components").then((mod) => mod.Statistics),
+  { ssr: false }
+);
+
+const UsersMetrics = dynamic(
+  () => import("./components").then((mod) => mod.UsersMetrics),
+  { ssr: false }
+);
+
+const OrderMetrics = dynamic(
+  () => import("./components").then((mod) => mod.OrderMetrics),
+  { ssr: false }
+);
+
+const RevenueMetrics = dynamic(
+  () => import("./components").then((mod) => mod.RevenueMetrics),
+  { ssr: false }
+);
+
+const ItemsMetrics = dynamic(
+  () => import("./components").then((mod) => mod.ItemsMetrics),
+  { ssr: false }
+);
+
+const CommentsMetrics = dynamic(
+  () => import("./components").then((mod) => mod.CommentsMetrics),
+  { ssr: false }
+);
+
+const LastestComments = dynamic(
+  () => import("./components").then((mod) => mod.LastestComments),
+  { ssr: false }
+);
 
 export default function Overview() {
   const { data, isLoading } = useAdminOverview();

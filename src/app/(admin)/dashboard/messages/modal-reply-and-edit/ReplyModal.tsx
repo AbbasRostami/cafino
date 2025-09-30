@@ -25,17 +25,17 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { ReplyModalProps } from "@/types/admin";
 import { useReplyToContact } from "@/services";
-import { useIsMobile } from "@/hooks/useMediaQuery";
+import { useIsMobile } from "@/hooks/ui/useMediaQuery";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { ReplyFormDataMessages, replySchema } from "@/schemas/admin";
 import { MotionDiv } from "@/utils/MotionWrapper";
 import { useState } from "react";
 
-export const ReplyModal: React.FC<ReplyModalProps> = ({
+export default function ReplyModal({
   isOpen,
   onClose,
   contact,
-}) => {
+}: ReplyModalProps) {
   const isMobile = useIsMobile();
   const { mutate: replyToContact, isPending } = useReplyToContact();
   const [replyMethod, setReplyMethod] = useState<"email" | "phone">("email");
@@ -277,4 +277,4 @@ export const ReplyModal: React.FC<ReplyModalProps> = ({
       </DialogContent>
     </Dialog>
   );
-};
+}

@@ -9,7 +9,7 @@ import {
   CartSidebarItems,
   CartSidebarTrigger,
 } from "..";
-import { useAddToCartButtonLogic } from "@/lib/AddToCartButton";
+import { useAddToCartButtonLogic } from "@/hooks/business/AddToCartButton";
 import {
   Sheet,
   SheetContent,

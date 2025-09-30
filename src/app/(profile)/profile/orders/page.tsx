@@ -12,7 +12,7 @@ import {
   OrderDetailsModal,
   OrderCard,
 } from "@/components/profile/orders";
-import { confirm } from "@/components/common/ConfirmModal";
+import { confirm } from "@/components/shared/ConfirmModal";
 
 export default function OrdersPage() {
   const [selectedOrder, setSelectedOrder] = useState<OrderAdmin | null>(null);

@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Mail, Phone, CalendarDays } from "lucide-react";
+import { Phone, CalendarDays } from "lucide-react";
 import { User } from "@/types/Profile";
 import { formatJalaliDate } from "@/utils/formatters";
 
@@ -32,7 +32,10 @@ export const Header = ({ user }: { user?: User | null }) => {
             <div className="absolute bottom-0 right-0 w-4 h-4 bg-green-400 rounded-full border-2 border-white dark:border-gray-800 shadow-sm"></div>
           </div>
           <div className="text-center sm:text-right space-y-1">
-            <p data-testid="user-name" className="font-semibold text-lg sm:text-xl">
+            <p
+              data-testid="user-name"
+              className="font-semibold text-lg sm:text-xl"
+            >
               {user?.first_name} {user?.last_name}
             </p>
             <p className="text-sm sm:text-base text-white dark:text-amber-200">
@@ -41,7 +44,9 @@ export const Header = ({ user }: { user?: User | null }) => {
             <div className="flex flex-col items-center sm:items-start gap-1 mt-2">
               <div className="flex items-center gap-2 text-white dark:text-amber-200 text-sm">
                 <Phone size={16} />
-                <span data-testid="user-phone">{user?.phone || "شماره تلفن مشخص نیست"}</span>
+                <span data-testid="user-phone">
+                  {user?.phone || "شماره تلفن مشخص نیست"}
+                </span>
               </div>
               <div className="flex items-center gap-2 text-white dark:text-amber-200 text-sm">
                 <CalendarDays size={16} />

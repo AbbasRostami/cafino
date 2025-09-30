@@ -1,4 +1,4 @@
-import { useGet } from "@/hooks/useReactQueryHooks";
+import { useGet } from "@/hooks/api/useReactQueryHooks";
 import { CommentsResponse, UseGetCommentsItemsProps } from "@/types/main";
 
 export const useGetCommentsItems = ({

@@ -1,4 +1,4 @@
-import { useDelete } from "@/hooks/useReactQueryHooks";
+import { useDelete } from "@/hooks/api/useReactQueryHooks";
 import { RemoveUserFromBlacklistRequest } from "@/types/admin";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";

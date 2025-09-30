@@ -1,4 +1,4 @@
-import { useGet } from "@/hooks/useReactQueryHooks";
+import { useGet } from "@/hooks/api/useReactQueryHooks";
 import { GetTicketMessagesResponse } from "@/types/Profile";
 
 export const useGetTicketMessages = (ticketId: string) => {

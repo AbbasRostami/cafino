@@ -10,7 +10,7 @@ import {
   EditModal,
 } from "@/components/profile/settings";
 
-import { useAvatar } from "@/hooks/useAvatar";
+import { useAvatar } from "@/hooks/ui/useAvatar";
 import { ProfileFormData } from "@/types/Profile";
 import { ProfileSkeleton } from "@/components/skeleton";
 

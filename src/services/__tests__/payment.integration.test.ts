@@ -11,7 +11,7 @@ vi.mock("sonner", () => ({
   },
 }));
 
-vi.mock("@/hooks/useReactQueryHooks", () => ({
+vi.mock("@/hooks/api/useReactQueryHooks", () => ({
   usePost: vi.fn(() => ({
     mutate: vi.fn(),
     isPending: false,

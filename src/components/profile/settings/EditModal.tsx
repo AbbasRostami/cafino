@@ -29,7 +29,7 @@ import {
 } from "@/components/ui/drawer";
 import { MotionForm } from "@/utils/MotionWrapper";
 import { profileFormSchema } from "@/schemas/profile";
-import { useIsMobile } from "@/hooks/useMediaQuery";
+import { useIsMobile } from "@/hooks/ui/useMediaQuery";
 import { DialogDescription } from "@radix-ui/react-dialog";
 
 export const EditModal = ({

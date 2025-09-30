@@ -5,10 +5,10 @@ import { useSidebar } from "../context/SidebarContext";
 import UserDropdown from "../components/Header/UserDropdown";
 import Messages from "../components/Header/TicketNavbar";
 
-import { ThemeSwitcher } from "@/components/common/ThemeToggle";
 import { PanelLeftOpen, PanelRightOpen } from "lucide-react";
 import { useUserProfile } from "@/services";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ThemeSwitcher } from "@/components/shared/ThemeToggle";
 
 const AppHeader: React.FC = () => {
   const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);

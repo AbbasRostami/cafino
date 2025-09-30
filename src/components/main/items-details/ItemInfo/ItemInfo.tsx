@@ -2,7 +2,7 @@
 import { StarIcon, Copy, Share2, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { FavoriteToggleButton } from "@/lib/FavoriteToggleButton";
+import { FavoriteToggleButton } from "@/components/ui/FavoriteToggleButton";
 import { ItemInfoProps } from "@/types/main";
 import { useState } from "react";
 import { MotionDiv } from "@/utils/MotionWrapper";

@@ -1,4 +1,4 @@
-import { useGet } from "@/hooks/useReactQueryHooks";
+import { useGet } from "@/hooks/api/useReactQueryHooks";
 import { TicketFilters } from "@/types/Profile";
 import { GetTicketMessagesResponse } from "@/types/Profile/tickets";
 

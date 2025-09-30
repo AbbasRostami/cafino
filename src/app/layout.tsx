@@ -3,7 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/context/Theme-Provider";
 import localFont from "next/font/local";
 import { Toaster } from "@/components/ui/sonner";
-import { QueryProvider } from "@/hooks/QueryProviders";
+import { QueryProvider } from "@/components/providers/QueryProviders";
 import { rootMetadata } from "@/lib/metadata/rootMetadata";
 import { StructuredDataScripts } from "@/lib/metadata/structuredData";
 

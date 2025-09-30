@@ -24,26 +24,26 @@ export function useAddToCartButtonLogic({
 }: AddToCartButtonLogicProps) {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
 
-  // برای کاربران لاگین شده از React Query استفاده کن
+  // for authenticated users
   const { cart: serverCart, isCartLoading, refetch } = useCart();
 
-  // برای مهمان‌ها از Zustand store استفاده کن
+  // for guest users
   const { cart: localCart, getCartItemCount } = useCartStore();
 
-  // انتخاب cart مناسب بر اساس وضعیت احراز هویت
+  // select cart based on authentication status
   const cart = isAuthenticated ? serverCart : localCart;
   const count = isAuthenticated
     ? cart?.cartItems?.find((i: any) => i.itemId === itemId)?.count || 0
     : getCartItemCount(itemId);
 
-  // React Query hooks برای کاربران لاگین شده
+  // React Query hooks for authenticated users
   const { mutate: addToCart, isPending: addLoading } = useAddToCart();
   const { mutate: incItem, isPending: incLoading } = useIncItem();
   const { mutate: decItem, isPending: decLoading } = useDecItem();
   const { mutate: removeItem, isPending: removeLoading } = useRemoveItem();
   const { mutate: clearCart, isPending: clearLoading } = useClearCart();
 
-  // Zustand store methods برای مهمان‌ها
+  // Zustand store methods for guest users
   const {
     addToCart: addToLocalCart,
     incItem: incLocalItem,
@@ -54,15 +54,11 @@ export function useAddToCartButtonLogic({
 
   const handleAdd = async () => {
     if (isAuthenticated) {
-      // برای کاربران لاگین شده
       try {
         await addToCart({ itemId });
         await refetch();
-      } catch (error) {
-        // مدیریت خطا در صورت نیاز
-      }
+      } catch (error) {}
     } else {
-      // برای مهمان‌ها
       if (itemData) {
         await addToLocalCart(itemData);
       } else {
@@ -73,15 +69,11 @@ export function useAddToCartButtonLogic({
 
   const handleInc = async () => {
     if (isAuthenticated) {
-      // برای کاربران لاگین شده
       try {
         await incItem({ itemId });
         await refetch();
-      } catch (error) {
-        // مدیریت خطا در صورت نیاز
-      }
+      } catch (error) {}
     } else {
-      // برای مهمان‌ها
       await incLocalItem(itemId);
     }
   };
@@ -91,15 +83,11 @@ export function useAddToCartButtonLogic({
       await handleRemove();
     } else {
       if (isAuthenticated) {
-        // برای کاربران لاگین شده
         try {
           await decItem({ itemId });
           await refetch();
-        } catch (error) {
-          // مدیریت خطا در صورت نیاز
-        }
+        } catch (error) {}
       } else {
-        // برای مهمان‌ها
         await decLocalItem(itemId);
       }
     }
@@ -107,30 +95,22 @@ export function useAddToCartButtonLogic({
 
   const handleRemove = async () => {
     if (isAuthenticated) {
-      // برای کاربران لاگین شده
       try {
         await removeItem({ itemId });
         await refetch();
-      } catch (error) {
-        // مدیریت خطا در صورت نیاز
-      }
+      } catch (error) {}
     } else {
-      // برای مهمان‌ها
       await removeLocalItem(itemId);
     }
   };
 
   const handleClearCart = async () => {
     if (isAuthenticated) {
-      // برای کاربران لاگین شده
       try {
         await clearCart();
         await refetch();
-      } catch (error) {
-        // مدیریت خطا در صورت نیاز
-      }
+      } catch (error) {}
     } else {
-      // برای مهمان‌ها
       await clearLocalCart();
     }
   };
@@ -150,6 +130,6 @@ export function useAddToCartButtonLogic({
     handleRemove,
     handleClearCart,
     isAuthenticated,
-    cartData: cart, // اضافه کردن cartData
+    cartData: cart,
   };
 }

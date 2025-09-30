@@ -2,14 +2,14 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { SubmitHandler } from "react-hook-form";
 import { useState } from "react";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { useMediaQuery } from "@/hooks/ui/useMediaQuery";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { ModalContentDiscount } from "./ModalContent";
 import { DiscountFormType } from "@/schemas/admin";
 import { useCreateDiscount } from "@/services";
 import { PlusSquare } from "lucide-react";
 
-export function CreateDiscountModal() {
+export default function CreateDiscountModal() {
   const [open, setOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const { mutate: createDiscount, isPending } = useCreateDiscount();

@@ -1,4 +1,4 @@
-import { usePost } from "@/hooks/useReactQueryHooks";
+import { usePost } from "@/hooks/api/useReactQueryHooks";
 import { ResetRateLimitParams } from "@/types/admin";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
@@ -11,7 +11,7 @@ export const useResetRateLimit = () => {
     {
       onSuccess: () => {
         toast.success("محدودیت با موفقیت ریست شد");
-        queryClient.invalidateQueries({ queryKey: ["rate-limit-records"] });  
+        queryClient.invalidateQueries({ queryKey: ["rate-limit-records"] });
       },
       onError: () => {
         toast.error("خطا در ریست کردن محدودیت");

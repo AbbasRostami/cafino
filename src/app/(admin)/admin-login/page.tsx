@@ -1,6 +1,6 @@
 "use client";
 
-import { useLoginLogic } from "@/hooks/useLoginLogic";
+import { useLoginLogic } from "@/hooks/business/useLoginLogic";
 import { LoginContent } from "@/components/main/auth/LoginContent";
 
 export default function LoginAdminPage() {

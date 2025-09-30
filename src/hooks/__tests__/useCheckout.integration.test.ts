@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
-import { useCheckout } from "../useCheckout";
+import { useCheckout } from "../business/useCheckout";
 
 vi.mock("sonner", () => ({
   toast: {
@@ -17,11 +17,11 @@ vi.mock("next/navigation", () => ({
   })),
 }));
 
-vi.mock("@/components/common/ConfirmModal", () => ({
+vi.mock("@/components/shared/ConfirmModal", () => ({
   confirm: vi.fn(() => Promise.resolve(true)),
 }));
 
-vi.mock("@/lib/AddToCartButton", () => ({
+vi.mock("@/hooks/business/AddToCartButton", () => ({
   useAddToCartButtonLogic: vi.fn(() => ({
     handleClearCart: vi.fn(),
     clearLoading: false,

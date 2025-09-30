@@ -22,7 +22,7 @@ vi.mock("@/store/authStore", () => ({
   }),
 }));
 
-vi.mock("@/hooks/useReactQueryHooks", () => ({
+vi.mock("@/hooks/api/useReactQueryHooks", () => ({
   usePost: vi.fn((getUrl, getBody, options) => ({
     mutate: vi.fn((data, mutationOptions) => {
       const url = typeof getUrl === "function" ? getUrl(data) : getUrl;

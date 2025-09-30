@@ -1,4 +1,4 @@
-import { useGet } from "@/hooks/useReactQueryHooks";
+import { useGet } from "@/hooks/api/useReactQueryHooks";
 import { MenuItemResponse } from "@/types/main";
 import { UseGetItemsAdminProps } from "@/types/admin";
 

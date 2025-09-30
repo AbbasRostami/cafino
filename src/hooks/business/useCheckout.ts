@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { confirm } from "@/components/common/ConfirmModal";
-import { useAddToCartButtonLogic } from "@/lib/AddToCartButton";
+import { confirm } from "@/components/shared/ConfirmModal";
+import { useAddToCartButtonLogic } from "@/hooks/business/AddToCartButton";
 import { Address } from "@/types/Profile";
 import { discountSchemaCheckout, DiscountFormValues } from "@/schemas/main";
 import {

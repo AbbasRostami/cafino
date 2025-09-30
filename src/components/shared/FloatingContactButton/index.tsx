@@ -31,7 +31,7 @@ import {
 } from "@/components/ui/drawer";
 import { contactFormSchema, ContactFormData } from "@/schemas/main";
 import { useCreateContact } from "@/services";
-import { useIsMobile } from "@/hooks/useMediaQuery";
+import { useIsMobile } from "@/hooks/ui/useMediaQuery";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 export const FloatingContactButton: React.FC = () => {

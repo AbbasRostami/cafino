@@ -8,7 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, EyeOff, Heart, Star } from "lucide-react";
 import Link from "next/link";
-import { AddToCartButtonStyled } from "@/lib/AddToCartButtonStyled";
+import { AddToCartButtonStyled } from "@/components/ui/AddToCartButtonStyled";
 import { FavoriteItem } from "@/types/Profile";
 import { MotionDiv } from "@/utils/MotionWrapper";
 import { formatCurrency } from "@/utils/formatters";

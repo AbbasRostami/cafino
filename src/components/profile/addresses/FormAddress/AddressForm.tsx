@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/drawer";
 import { X, MapPinHouse } from "lucide-react";
 import { AddressFormProps } from "@/types/Profile";
-import { useIsMobile } from "@/hooks/useMediaQuery";
+import { useIsMobile } from "@/hooks/ui/useMediaQuery";
 import { FormContent } from "./FormContent";
 
 export const AddressForm = ({

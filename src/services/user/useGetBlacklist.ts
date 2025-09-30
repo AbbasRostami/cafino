@@ -1,4 +1,4 @@
-import { useGet } from "@/hooks/useReactQueryHooks";
+import { useGet } from "@/hooks/api/useReactQueryHooks";
 import { BlacklistResponse, UseGetBlacklistProps } from "@/types/admin";
 
 export const useGetBlacklist = ({ page, limit }: UseGetBlacklistProps) => {

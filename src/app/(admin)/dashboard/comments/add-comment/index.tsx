@@ -17,7 +17,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { useMediaQuery } from "@/hooks/ui/useMediaQuery";
 import { CommentForm } from "./CommentForm";
 import { AddCommentModalProps } from "@/types";
 import { MessageSquareReply } from "lucide-react";

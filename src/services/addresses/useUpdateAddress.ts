@@ -1,4 +1,4 @@
-import { usePut } from "@/hooks/useReactQueryHooks";
+import { usePut } from "@/hooks/api/useReactQueryHooks";
 import { UpdateAddressRequest } from "@/types/Profile";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";

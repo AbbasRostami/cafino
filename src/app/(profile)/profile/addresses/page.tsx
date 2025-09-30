@@ -18,7 +18,7 @@ import {
   EmptyState,
 } from "@/components/profile/addresses";
 
-import { useAddressForm } from "@/hooks/useAddressForm";
+import { useAddressForm } from "@/hooks/business/useAddressForm";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Address, City, Province } from "@/types/Profile";
@@ -122,19 +122,19 @@ export default function AddressesPage() {
           </Button>
         </CardHeader>
         <CardContent>
-            {addressesData?.length === 0 ? (
-              <EmptyState onAddAddress={handleAddAddress} />
-            ) : (
-              addressesData?.map((address: any) => (
-                <AddressCard
-                  key={address?.id}
-                  address={address}
-                  onEdit={() => handleEdit(address)}
-                  onDelete={() => handleDelete(address?.id)}
-                  isDeleting={deletingVars?.id === address?.id && isDeleting}
-                />
-              ))
-            )}
+          {addressesData?.length === 0 ? (
+            <EmptyState onAddAddress={handleAddAddress} />
+          ) : (
+            addressesData?.map((address: any) => (
+              <AddressCard
+                key={address?.id}
+                address={address}
+                onEdit={() => handleEdit(address)}
+                onDelete={() => handleDelete(address?.id)}
+                isDeleting={deletingVars?.id === address?.id && isDeleting}
+              />
+            ))
+          )}
         </CardContent>
       </Card>
 

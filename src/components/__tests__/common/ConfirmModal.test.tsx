@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ConfirmModal, confirm } from "../../common/ConfirmModal";
+import { ConfirmModal, confirm } from "../../shared/ConfirmModal";
 import { useConfirmStore } from "../../../store/useConfirmStore";
 
 describe("ConfirmModal", () => {

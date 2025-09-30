@@ -2,10 +2,15 @@ import Link from "next/link";
 import { Home, FileText, Phone, Info } from "lucide-react";
 import { MotionSpan } from "@/utils/MotionWrapper";
 import { ThemeSwitcher } from "../ThemeToggle";
-import CartSidebar from "@/components/main/CartSidebar";
+import dynamic from "next/dynamic";
 import { LoginForm } from "@/components/main/auth";
 import UserDropdown from "./UserDropdown";
 import { DesktopNavbarProps } from "@/types/main";
+
+const CartSidebar = dynamic(
+  () => import("@/components/main/CartSidebar").then((mod) => mod.default),
+  { ssr: false }
+);
 
 const DesktopNavbar: React.FC<DesktopNavbarProps> = ({
   isAuthenticated,

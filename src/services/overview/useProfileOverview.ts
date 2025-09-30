@@ -1,4 +1,4 @@
-import { useGet } from "@/hooks/useReactQueryHooks";
+import { useGet } from "@/hooks/api/useReactQueryHooks";
 import { ProfileOverview } from "@/types/Profile";
 
 export const useProfileOverview = () => {

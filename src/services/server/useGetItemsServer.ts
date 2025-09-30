@@ -1,4 +1,4 @@
-import { fetchWithServer } from "@/hooks/fetchApiWithCookies";
+import { fetchWithServer } from "@/hooks/api/fetchApiWithCookies";
 import { MenuItemResponse } from "@/types/main/menu";
 
 type GetItemsParams = {

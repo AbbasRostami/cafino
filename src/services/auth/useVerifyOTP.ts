@@ -1,4 +1,4 @@
-import { usePost } from "@/hooks/useReactQueryHooks";
+import { usePost } from "@/hooks/api/useReactQueryHooks";
 import { useAuthStore } from "@/store/authStore";
 import { toast } from "sonner";
 

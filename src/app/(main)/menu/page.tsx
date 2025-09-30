@@ -1,7 +1,7 @@
 import {
   getMenuQueryParams,
   convertSearchParamsToURLSearchParams,
-} from "@/lib/query";
+} from "@/utils/queryParams";
 import { getItemsServer } from "@/services/server";
 import { Suspense } from "react";
 import Menus from "@/components/main/menu/Menus";

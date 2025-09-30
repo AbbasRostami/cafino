@@ -1,4 +1,4 @@
-import { useDelete } from "@/hooks/useReactQueryHooks";
+import { useDelete } from "@/hooks/api/useReactQueryHooks";
 import { DeleteAddressRequest } from "@/types/Profile";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";

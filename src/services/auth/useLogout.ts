@@ -1,5 +1,5 @@
 "use client";
-import { fetchApi } from "@/hooks/useAuthToken";
+import { fetchApi } from "@/hooks/api/useAuthToken";
 import { useAuthStore } from "@/store/authStore";
 import { useState } from "react";
 import { toast } from "sonner";

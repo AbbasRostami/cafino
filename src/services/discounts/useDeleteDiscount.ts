@@ -1,9 +1,9 @@
-import { useDelete } from "@/hooks/useReactQueryHooks";
+import { useDelete } from "@/hooks/api/useReactQueryHooks";
 import { DeleteDiscountRequest } from "@/types/admin/discounts";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-export const useDeleteDiscount = ( ) => {
+export const useDeleteDiscount = () => {
   const queryClient = useQueryClient();
 
   const { mutate, isPending, error, variables } =
