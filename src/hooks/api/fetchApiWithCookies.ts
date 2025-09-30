@@ -11,10 +11,11 @@ export const getServerToken = async (): Promise<string | null> => {
   }
 };
 export const getServerApiUrl = (endpoint: string) => {
-  const baseUrl = "http://localhost:3000";
-  return endpoint.startsWith("/api")
-    ? `${baseUrl}${endpoint}`
-    : `${baseUrl}/api${endpoint}`;
+  // از مسیر نسبی استفاده می‌کنیم تا rewrite/proxy های Next.js همیشه اعمال شوند
+  // مثال: "/v1/item" => "/api/v1/item"
+  if (endpoint.startsWith("/api")) return endpoint;
+  if (endpoint.startsWith("/")) return `/api${endpoint}`;
+  return `/api/${endpoint}`;
 };
 
 export const fetchWithServer = async (
