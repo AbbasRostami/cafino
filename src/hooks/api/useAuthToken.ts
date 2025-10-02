@@ -1,17 +1,12 @@
 import { useAuthStore } from "@/store/authStore";
 import { toast } from "sonner";
 
-// const getApiUrl = (endpoint: string) => {
-//   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-//   if (!baseUrl) {
-//     throw new Error("NEXT_PUBLIC_API_URL is not defined");
-//   }
-//   return baseUrl.endsWith("/")
-//     ? `${baseUrl}${endpoint.startsWith("/") ? endpoint.slice(1) : endpoint}`
-//     : `${baseUrl}${endpoint}`;
-// };
-
-export const getApiUrl = (endpoint: string) => {
+export const getApiUrl = (endpoint: string, isServer: boolean = false) => {
+  if (isServer) {
+    return endpoint.startsWith("http")
+      ? endpoint
+      : `${process.env.NEXT_PUBLIC_API_URL}${endpoint}`;
+  }
   return endpoint.startsWith("/api") ? endpoint : `/api${endpoint}`;
 };
 

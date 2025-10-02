@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { getApiUrl } from "./useAuthToken";
 
 export const getServerToken = async (): Promise<string | null> => {
   try {
@@ -10,13 +11,14 @@ export const getServerToken = async (): Promise<string | null> => {
     return null;
   }
 };
-export const getServerApiUrl = (endpoint: string) => {
-  // از مسیر نسبی استفاده می‌کنیم تا rewrite/proxy های Next.js همیشه اعمال شوند
-  // مثال: "/v1/item" => "/api/v1/item"
-  if (endpoint.startsWith("/api")) return endpoint;
-  if (endpoint.startsWith("/")) return `/api${endpoint}`;
-  return `/api/${endpoint}`;
-};
+// export const getServerApiUrl = (endpoint: string) => {
+//   const baseUrl = "http://localhost:3000";
+//   console.log("🔍 Base URL:", baseUrl);
+//   console.log("🔍 Endpoint:", endpoint);
+//   return endpoint.startsWith("/api")
+//     ? `${baseUrl}${endpoint}`
+//     : `${baseUrl}/api${endpoint}`;
+// };
 
 export const fetchWithServer = async (
   url: string,
@@ -24,9 +26,10 @@ export const fetchWithServer = async (
 ): Promise<Response> => {
   try {
     const token = await getServerToken();
-    const fullUrl = getServerApiUrl(url);
+    const fullUrl = getApiUrl(url, true);
     const cookieStore = await cookies();
     const allCookies = cookieStore.getAll();
+    console.log("🍪 All cookies:", allCookies);
     console.log("🔍 Server API call:", fullUrl);
     console.log("🔑 Token available:", token ? "✅ Yes" : "❌ No");
 
