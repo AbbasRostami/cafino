@@ -10,7 +10,7 @@ export const rootMetadata: Metadata = {
   metadataBase: new URL(siteUrl),
 
   title: {
-    default: ` | کافه و رستوران`,
+    default: `${siteName} | کافه و رستوران`,
     template: `%s`,
   },
   description: siteDescription,
@@ -31,7 +31,7 @@ export const rootMetadata: Metadata = {
     description: siteDescription,
     images: [
       {
-        url: "/Main-logo-512x512.webp",
+        url: "/favicon.ico",
         width: 1200,
         height: 630,
         alt: `${siteName} - کافه و رستوران`,
@@ -44,22 +44,22 @@ export const rootMetadata: Metadata = {
     card: "summary_large_image",
     title: `${siteName} | کافه و رستوران`,
     description: siteDescription,
-    images: ["/Main-logo-512x512.webp"],
+    images: ["/favicon.ico"],
   },
 
   manifest: "/manifest.json",
   icons: {
     icon: [
-      { url: "/Main-logo-512x512.webp", sizes: "32x32", type: "image/webp" },
-      { url: "/Main-logo-512x512.webp", sizes: "16x16", type: "image/webp" },
+      { url: "/favicon.ico", sizes: "32x32", type: "image/x-icon" },
+      { url: "/favicon.ico", sizes: "16x16", type: "image/x-icon" },
     ],
     apple: [
-      { url: "/Main-logo-512x512.webp", sizes: "180x180", type: "image/webp" },
+      { url: "/favicon.ico", sizes: "180x180", type: "image/x-icon" },
     ],
     other: [
       {
         rel: "mask-icon",
-        url: "/Main-logo-512x512.webp",
+        url: "/favicon.ico",
         color: "#8B4513",
       },
     ],
@@ -136,7 +136,7 @@ export function generatePageMetadata({
   const pageImages = [
     ...images,
     {
-      url: "/Main-logo-512x512.webp",
+      url: "/favicon.ico",
       width: 1200,
       height: 630,
       alt: fullTitle,
@@ -165,7 +165,7 @@ export function generatePageMetadata({
       images:
         pageImages?.length > 0
           ? [pageImages[0].url]
-          : ["/Main-logo-512x512.webp"],
+          : ["/favicon.ico"],
     },
     robots: noIndex
       ? {
