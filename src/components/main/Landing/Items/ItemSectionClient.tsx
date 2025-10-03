@@ -66,7 +66,7 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
     <>
       <div className="max-w-4xl mx-auto text-center mb-8">
         <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 relative inline-block">
-          <span className="bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent dark:from-amber-400 dark:to-orange-500 relative z-10">
+          <span className="text-amber-600 dark:text-amber-400 relative z-10">
             منوی محبوب
           </span>
           <span className="absolute -top-3 -right-4 text-amber-400 dark:text-amber-500 text-9xl opacity-20">

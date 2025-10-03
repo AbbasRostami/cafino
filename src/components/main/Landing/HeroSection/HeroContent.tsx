@@ -77,7 +77,7 @@ const HeroContent = () => {
         >
           <MotionSpan
             data-testid="hero-title"
-            className="bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent  dark:from-amber-400 dark:to-orange-400"
+            className="text-amber-600 dark:text-amber-400 font-bold relative z-10"
             animate={{
               backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
             }}

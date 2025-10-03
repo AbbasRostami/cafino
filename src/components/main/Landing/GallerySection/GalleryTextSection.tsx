@@ -81,7 +81,7 @@ const GalleryTextSection = ({
             <MapPin className="w-7 h-7 text-white" />
           </MotionDiv>
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-amber-700 via-amber-600 to-orange-600 dark:from-amber-300 dark:via-amber-200 dark:to-orange-300 bg-clip-text text-transparent">
+            <h2 className="text-3xl md:text-4xl font-bold text-amber-600 dark:text-amber-400">
               فضای منحصر به فرد کافینو
             </h2>
             <p className="text-amber-600/90 dark:text-amber-400/90 text-lg mt-2 font-medium">
