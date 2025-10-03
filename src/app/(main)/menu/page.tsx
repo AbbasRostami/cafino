@@ -29,7 +29,6 @@ export default async function MenuPage({ searchParams }: GenerateProps) {
 
 async function MenuContent({ queryString }: { queryString: string }) {
   const initialData = await getItemsServer({ queryString });
-  console.log("initialData PAGE MENU", initialData);
   return <Menus initialData={initialData} />;
 }
 

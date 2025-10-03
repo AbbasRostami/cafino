@@ -42,8 +42,6 @@ export default function Tickets() {
     ...filters,
   });
 
-  console.log("tickets", tickets);
-
   const {
     mutate: deleteTicket,
     isPending: isDeletingTicket,

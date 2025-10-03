@@ -187,8 +187,6 @@ export function useItemForm({ isOpen, onClose, item }: UseItemFormProps) {
   };
 
   const onSubmit: SubmitHandler<ItemFormData> = (data) => {
-    console.log(data);
-
     const formData = buildFormData(data, isEditing);
 
     if (isEditing && item) {

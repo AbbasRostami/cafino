@@ -12,39 +12,32 @@ import {
   LatestCommentsSkeleton,
 } from "@/components/skeleton";
 
-const Statistics = dynamic(
-  () => import("./components").then((mod) => mod.Statistics),
-  { ssr: false }
+const Statistics = dynamic(() =>
+  import("./components").then((mod) => mod.Statistics)
 );
 
-const UsersMetrics = dynamic(
-  () => import("./components").then((mod) => mod.UsersMetrics),
-  { ssr: false }
+const UsersMetrics = dynamic(() =>
+  import("./components").then((mod) => mod.UsersMetrics)
 );
 
-const OrderMetrics = dynamic(
-  () => import("./components").then((mod) => mod.OrderMetrics),
-  { ssr: false }
+const OrderMetrics = dynamic(() =>
+  import("./components").then((mod) => mod.OrderMetrics)
 );
 
-const RevenueMetrics = dynamic(
-  () => import("./components").then((mod) => mod.RevenueMetrics),
-  { ssr: false }
+const RevenueMetrics = dynamic(() =>
+  import("./components").then((mod) => mod.RevenueMetrics)
 );
 
-const ItemsMetrics = dynamic(
-  () => import("./components").then((mod) => mod.ItemsMetrics),
-  { ssr: false }
+const ItemsMetrics = dynamic(() =>
+  import("./components").then((mod) => mod.ItemsMetrics)
 );
 
-const CommentsMetrics = dynamic(
-  () => import("./components").then((mod) => mod.CommentsMetrics),
-  { ssr: false }
+const CommentsMetrics = dynamic(() =>
+  import("./components").then((mod) => mod.CommentsMetrics)
 );
 
-const LastestComments = dynamic(
-  () => import("./components").then((mod) => mod.LastestComments),
-  { ssr: false }
+const LastestComments = dynamic(() =>
+  import("./components").then((mod) => mod.LastestComments)
 );
 
 export default function Overview() {
