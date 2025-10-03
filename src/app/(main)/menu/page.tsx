@@ -18,7 +18,7 @@ export default async function MenuPage({ searchParams }: GenerateProps) {
   const { queryString } = getMenuQueryParams(urlSearchParams);
 
   return (
-    <div className="min-h-screen pt-20 md:pt-32 px-4 text-gray-800 dark:text-gray-200">
+    <div className="min-h-screen pt-28 md:pt-32 px-4 text-gray-800 dark:text-gray-200">
       <MenuHeader />
       <Suspense fallback={<MenuSkeleton />}>
         <MenuContent queryString={queryString} />

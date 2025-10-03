@@ -8,7 +8,7 @@ export const MenuHeader = () => {
       </div>
 
       <div className="relative w-full flex flex-col items-center gap-4 mb-12 animate-fade-in">
-        <h1 className="text-center text-2xl sm:text-6xl font-extrabold bg-gradient-to-r from-amber-500 via-orange-400 to-red-400 bg-clip-text text-transparent drop-shadow-xl tracking-tight">
+        <h1 className="text-center text-4xl sm:text-6xl font-extrabold bg-gradient-to-r from-amber-500 via-orange-400 to-red-400 bg-clip-text text-transparent drop-shadow-xl tracking-tight">
           منوی ویژه کافینو
         </h1>
         <p className="text-center text-sm sm:text-base text-gray-500 dark:text-gray-200 max-w-md">
