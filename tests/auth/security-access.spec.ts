@@ -178,7 +178,6 @@ test.describe("Security & Access Control", () => {
     await page.waitForLoadState("networkidle", { timeout: 30000 });
     const response = await page.request.get("/");
     const headers = response.headers();
-    console.log("Available headers:", Object.keys(headers));
     if (headers["x-frame-options"]) {
       expect(headers["x-frame-options"]).toBeDefined();
     }

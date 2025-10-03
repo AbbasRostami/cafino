@@ -18,8 +18,6 @@ export const PopularProducts = ({
 }: {
   favoritesData: FavoriteItem[];
 }) => {
-  console.log(favoritesData);
-  
   return (
     <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-xl rounded-2xl border-none">
       {favoritesData?.length ? (

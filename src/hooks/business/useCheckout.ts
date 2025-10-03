@@ -113,11 +113,8 @@ export const useCheckout = () => {
 
       paymentGatewayMutation.mutate(paymentData, {
         onSuccess: (response: any) => {
-          console.log("Payment gateway response:", response);
-
           if (response?.data?.gatewayURL) {
             toast.success("در حال انتقال به درگاه پرداخت...");
-
             const orderInfo = {
               addressId: selectedAddressId,
               cartTotal: cart?.paymentAmount,

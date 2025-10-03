@@ -19,6 +19,7 @@ export const useAddComment = () => {
         toast.success("بعد تایید توسط مدیریت نظر شما با موفقیت اضافه خواهد شد");
         queryClient.invalidateQueries({ queryKey: ["v1/item"] });
         queryClient.invalidateQueries({ queryKey: ["comments-admin"] });
+        queryClient.invalidateQueries({ queryKey: ["comments"] });
       },
       onError: () => {
         toast.error("خطا در اضافه کردن نظر");

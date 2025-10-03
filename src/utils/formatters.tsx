@@ -1,8 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { StockStatus } from "@/types/main/menu";
 import { OrderStatus } from "@/types/Profile";
-import moment from "moment-jalaali";
-moment.loadPersian({ dialect: "persian-modern", usePersianDigits: true });
+import moment from "jalali-moment";
 export const getStatusBadge = (status: OrderStatus) => {
   switch (status) {
     case "pending":
@@ -41,7 +40,7 @@ export const formatJalaliDate = (
   format = "jYYYY/jMM/jDD - HH:mm"
 ) => {
   if (!dateString) return "-";
-  return moment(dateString).format(format);
+  return moment(dateString).locale("fa").format(format);
 };
 
 export const getStockStatus = (quantity: number): StockStatus => {

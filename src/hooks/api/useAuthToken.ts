@@ -61,15 +61,12 @@ export async function fetchWithAuth(url: string, options: RequestInit = {}) {
         throw { status: 401, message: "کاربر لاگین نیست" };
       }
 
-      console.log("🔄 Trying to refresh token...");
-
       const refreshResponse = await fetch(getApiUrl("/v1/auth/refresh"), {
         method: "GET",
         credentials: "include",
       });
 
       if (refreshResponse.ok) {
-        console.log("✅ Token refreshed. Retrying original request...");
         useAuthStore.getState().setAuthenticated(true);
         const retry = await makeRequest(url, options);
         return await retry.json();

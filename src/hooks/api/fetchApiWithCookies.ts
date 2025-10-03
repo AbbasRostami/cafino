@@ -11,27 +11,14 @@ export const getServerToken = async (): Promise<string | null> => {
     return null;
   }
 };
-// export const getServerApiUrl = (endpoint: string) => {
-//   const baseUrl = "http://localhost:3000";
-//   console.log("🔍 Base URL:", baseUrl);
-//   console.log("🔍 Endpoint:", endpoint);
-//   return endpoint.startsWith("/api")
-//     ? `${baseUrl}${endpoint}`
-//     : `${baseUrl}/api${endpoint}`;
-// };
 
 export const fetchWithServer = async (
   url: string,
   options: RequestInit = {}
 ): Promise<Response> => {
   try {
-    const token = await getServerToken();
     const fullUrl = getApiUrl(url, true);
     const cookieStore = await cookies();
-    const allCookies = cookieStore.getAll();
-    console.log("🍪 All cookies:", allCookies);
-    console.log("🔍 Server API call:", fullUrl);
-    console.log("🔑 Token available:", token ? "✅ Yes" : "❌ No");
 
     const headers: Record<string, string> = {
       "Content-Type": "application/json",

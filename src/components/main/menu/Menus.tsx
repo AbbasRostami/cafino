@@ -62,7 +62,7 @@ export default function Menus({
             onClearFilters={clearFilters}
           />
 
-          {itemsList.length > 0 ? (
+          {itemsList?.length > 0 ? (
             <MenuGrid items={itemsList} viewMode={viewMode} />
           ) : (
             <EmptyState />
@@ -70,7 +70,7 @@ export default function Menus({
         </div>
       </div>
 
-      {itemsList && itemsList.length > 0 && (
+      {itemsList && itemsList?.length > 0 && (
         <MenuPagination
           currentPage={currentPage}
           totalPages={totalPages}

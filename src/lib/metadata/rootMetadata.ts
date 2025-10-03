@@ -31,7 +31,7 @@ export const rootMetadata: Metadata = {
     description: siteDescription,
     images: [
       {
-        url: "./../../assets/Logo/2.webp",
+        url: "/Main-logo-512x512.webp",
         width: 1200,
         height: 630,
         alt: `${siteName} - کافه و رستوران`,
@@ -44,22 +44,22 @@ export const rootMetadata: Metadata = {
     card: "summary_large_image",
     title: `${siteName} | کافه و رستوران`,
     description: siteDescription,
-    images: ["./../../assets/Logo/2.webp"],
+    images: ["/Main-logo-512x512.webp"],
   },
 
   manifest: "/manifest.json",
   icons: {
     icon: [
-      { url: "./../../assets/Logo/2.webp", sizes: "32x32", type: "image/webp" },
-      { url: "./../../assets/Logo/2.webp", sizes: "16x16", type: "image/webp" },
+      { url: "/Main-logo-512x512.webp", sizes: "32x32", type: "image/webp" },
+      { url: "/Main-logo-512x512.webp", sizes: "16x16", type: "image/webp" },
     ],
     apple: [
-      { url: "./../../assets/Logo/2.webp", sizes: "180x180", type: "image/webp" },
+      { url: "/Main-logo-512x512.webp", sizes: "180x180", type: "image/webp" },
     ],
     other: [
       {
         rel: "mask-icon",
-        url: "./../../assets/Logo/2.webp",
+        url: "/Main-logo-512x512.webp",
         color: "#8B4513",
       },
     ],
@@ -136,7 +136,7 @@ export function generatePageMetadata({
   const pageImages = [
     ...images,
     {
-      url: "./../../assets/Logo/2.webp",
+      url: "/Main-logo-512x512.webp",
       width: 1200,
       height: 630,
       alt: fullTitle,
@@ -165,7 +165,7 @@ export function generatePageMetadata({
       images:
         pageImages?.length > 0
           ? [pageImages[0].url]
-          : ["./../../assets/Logo/2.webp"],
+          : ["/Main-logo-512x512.webp"],
     },
     robots: noIndex
       ? {

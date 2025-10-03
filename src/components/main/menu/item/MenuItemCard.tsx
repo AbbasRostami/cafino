@@ -141,12 +141,12 @@ export const MenuItemCard = ({ item, viewMode }: MenuItemCardProps) => {
           <Tooltip>
             <TooltipTrigger asChild>
               <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-2 text-justify cursor-help">
-                {item?.description?.length > 45
-                  ? `${item?.description.slice(0, 45)}...`
+                {item?.description?.length > 42
+                  ? `${item?.description.slice(0, 42)}...`
                   : item?.description}
               </p>
             </TooltipTrigger>
-            {item?.description?.length > 45 && (
+            {item?.description?.length > 42 && (
               <TooltipContent side="top" className="max-w-xs">
                 <p className="text-sm">{item?.description}</p>
               </TooltipContent>
