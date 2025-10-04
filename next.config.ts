@@ -63,17 +63,8 @@ const nextConfig: NextConfig = {
   },
 };
 
-const getRevision = () => {
-  if (process.env.NODE_ENV === "development") {
-    return crypto.randomUUID();
-  }
-  return (
-    process.env.VERCEL_GIT_COMMIT_SHA || `build-${Date.now().toString(36)}`
-  );
-};
-
 export default async function () {
-  const revision = getRevision();
+  const revision = crypto.randomUUID();
   const withSerwist = (await import("@serwist/next")).default({
     swSrc: "src/app/sw.ts",
     swDest: "public/sw.js",
