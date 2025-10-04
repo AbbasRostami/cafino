@@ -8,6 +8,7 @@ declare global {
   }
 }
 declare const self: ServiceWorkerGlobalScope;
+const revision = crypto.randomUUID();
 
 const serwist = new Serwist({
   precacheEntries: self.__SW_MANIFEST,
@@ -20,7 +21,8 @@ const serwist = new Serwist({
       {
         url: "/offline",
         matcher({ request }) {
-          return request.destination === "document";
+          const match = request.destination === "document";
+          return match;
         },
       },
     ],

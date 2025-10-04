@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+import { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -53,7 +53,8 @@ const nextConfig: NextConfig = {
     ];
   },
 };
-const revision = "v1";
+const revision = crypto.randomUUID();
+
 export default async function () {
   const withSerwist = (await import("@serwist/next")).default({
     swSrc: "src/app/sw.ts",
@@ -63,7 +64,7 @@ export default async function () {
     reloadOnOnline: true,
     dontCacheBustURLsMatching:
       /^\/_next\/static\/(?:chunks|css)\/.*\.(?:js|css)$/,
-    additionalPrecacheEntries: [{ url: "/offline", revision }],
+    additionalPrecacheEntries: [{ url: "/offline", revision: revision }],
   });
 
   return withSerwist(nextConfig);

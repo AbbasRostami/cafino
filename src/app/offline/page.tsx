@@ -1,57 +1,37 @@
-// src/app/offline/page.tsx
 export const dynamic = "force-static";
 
 export default function OfflinePage() {
   return (
-    <html
-      dir="rtl"
-      lang="fa"
-      className="bg-amber-100 text-black h-screen flex items-center justify-center"
-    >
-      <head>
-        <title>آفلاین</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <style>{`
-            html, body {
-              margin: 0;
-              padding: 0;
-              height: 100%;
-              width: 100%;
-              background-color: #fafafa;
-              font-family: "Vazirmatn", sans-serif;
-              color: #222;
-            }
-            .container {
-              max-width: 600px;
-              width: 100%;
-              padding: 4rem;
-              text-align: center;
-              background: #fff;
-              border-radius: 1rem;
-              box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            h1 {
-              font-size: 3rem;
-              margin-bottom: 1.5rem;
-              color: #1a1a1a;
-              font-weight: 800;
-            }
-            p {
-              font-size: 1.1rem;
-              margin-bottom: 2rem;
-              color: #555;
-            }
-          `}</style>
-      </head>
-      <body>
-        <div className="container">
-          <h1>😔 آفلاین هستید</h1>
-          <p>
-            به نظر می رسد اینترنت شما قطع شده است. لطفاً اتصال خود را بررسی
-            کنید.
-          </p>
-          {/* <button onClick={() => location.reload()}>تلاش مجدد</button> */}
+    <div className="min-h-screen bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl p-8 max-w-md w-full text-center shadow-2xl">
+        <div className="text-6xl mb-4">📱</div>
+        <h1 className="text-3xl font-bold text-gray-800 mb-4">آفلاین هستید</h1>
+        <p className="text-gray-600 mb-6 leading-relaxed">
+          اتصال اینترنت شما قطع شده است. لطفاً اتصال خود را بررسی کنید و دوباره
+          تلاش کنید.
+        </p>
+        <button
+          onClick={() => window.location.reload()}
+          className="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+        >
+          تلاش مجدد
+        </button>
+
+        <div className="mt-6 text-sm text-gray-500">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <span>✅</span>
+            <span>منو و اطلاعات در دسترس</span>
+          </div>
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <span>✅</span>
+            <span>تصاویر از کش لود می‌شوند</span>
+          </div>
+          <div className="flex items-center justify-center gap-2">
+            <span>✅</span>
+            <span>تجربه آفلاین بهینه</span>
+          </div>
         </div>
-      </body>
-    </html>
+      </div>
+    </div>
   );
 }
