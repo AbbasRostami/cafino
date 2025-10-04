@@ -46,6 +46,7 @@ export const ContactInfoSection = () => {
         <div className="space-y-6">
           {contactInfo.map((info) => (
             <MotionDiv
+              key={info.title}
               className="flex items-center gap-2 space-x-3 space-x-reverse"
               whileHover={{ x: 5 }}
               transition={{ type: "spring", stiffness: 300 }}
