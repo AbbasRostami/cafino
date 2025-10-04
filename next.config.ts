@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  reactStrictMode: true,
   images: {
     remotePatterns: [
       {
@@ -11,8 +12,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-
-  // Proxy API requests to external API
   async rewrites() {
     return [
       {
@@ -21,25 +20,14 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-
-  // Security headers for PWA
   async headers() {
     return [
       {
         source: "/(.*)",
         headers: [
-          {
-            key: "X-Content-Type-Options",
-            value: "nosniff",
-          },
-          {
-            key: "X-Frame-Options",
-            value: "DENY",
-          },
-          {
-            key: "Referrer-Policy",
-            value: "strict-origin-when-cross-origin",
-          },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
         ],
       },
       {
@@ -56,12 +44,27 @@ const nextConfig: NextConfig = {
           {
             key: "Content-Security-Policy",
             value:
-              "default-src 'self'; script-src 'self'; img-src 'self' https://cafino.storage.c2.liara.space; connect-src 'self' https://cafino.storage.c2.liara.space",
+              process.env.NODE_ENV === "development"
+                ? "default-src 'self'; script-src 'self' 'unsafe-eval'; img-src 'self' https://cafino.storage.c2.liara.space; connect-src 'self' https://cafino.storage.c2.liara.space"
+                : "default-src 'self'; script-src 'self'; img-src 'self' https://cafino.storage.c2.liara.space; connect-src 'self' https://cafino.storage.c2.liara.space",
           },
         ],
       },
     ];
   },
 };
+const revision = "v1";
+export default async function () {
+  const withSerwist = (await import("@serwist/next")).default({
+    swSrc: "src/app/sw.ts",
+    swDest: "public/sw.js",
+    cacheOnNavigation: true,
+    register: true,
+    reloadOnOnline: true,
+    dontCacheBustURLsMatching:
+      /^\/_next\/static\/(?:chunks|css)\/.*\.(?:js|css)$/,
+    additionalPrecacheEntries: [{ url: "/offline", revision }],
+  });
 
-export default nextConfig;
+  return withSerwist(nextConfig);
+}
