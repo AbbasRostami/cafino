@@ -10,10 +10,7 @@ export default function OfflinePage() {
           اتصال اینترنت شما قطع شده است. لطفاً اتصال خود را بررسی کنید و دوباره
           تلاش کنید.
         </p>
-        <button
-          onClick={() => window.location.reload()}
-          className="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-lg font-medium transition-colors"
-        >
+        <button className="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-lg font-medium transition-colors">
           تلاش مجدد
         </button>
 
