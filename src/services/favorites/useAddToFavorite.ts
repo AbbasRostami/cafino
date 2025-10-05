@@ -1,17 +1,12 @@
 import { usePost } from "@/hooks/api/useReactQueryHooks";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { useAuthStore } from "@/store/authStore";
 
 export const useAddToFavorite = () => {
   const queryClient = useQueryClient();
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   return usePost<any, { itemId: string }>(
     (data) => {
-      if (!isAuthenticated) {
-        toast.error("لطفاً ابتدا وارد حساب کاربری خود شوید.");
-      }
       return `/v1/profile/favorite?itemId=${data.itemId}`;
     },
     undefined,

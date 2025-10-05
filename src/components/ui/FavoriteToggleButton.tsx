@@ -2,6 +2,8 @@
 
 import { Heart } from "lucide-react";
 import { useAddToFavorite, useDeleteFromFavorite } from "@/services";
+import { toast } from "sonner";
+import { useAuthStore } from "@/store/authStore";
 
 type Props = {
   itemId: string;
@@ -18,8 +20,13 @@ export const FavoriteToggleButton = ({
 }: Props) => {
   const addToFavoriteApi = useAddToFavorite();
   const deleteFromFavoriteApi = useDeleteFromFavorite();
-
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const handleClick = () => {
+    if (!isAuthenticated) {
+      toast.error("لطفاً ابتدا وارد حساب کاربری خود شوید.");
+      return;
+    }
+
     if (isFavorite) {
       deleteFromFavoriteApi.mutate({ itemId });
     } else {
