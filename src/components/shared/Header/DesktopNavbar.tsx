@@ -4,7 +4,7 @@ import { MotionSpan } from "@/utils/MotionWrapper";
 import { ThemeSwitcher } from "../ThemeToggle";
 import dynamic from "next/dynamic";
 import { LoginForm } from "@/components/main/auth";
-import UserDropdown from "./UserDropdown";
+import UserDropdown from "./UserLink";
 import { DesktopNavbarProps } from "@/types/main";
 
 const CartSidebar = dynamic(
