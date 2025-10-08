@@ -123,7 +123,7 @@ export function Pagination({
           <Select
             onValueChange={(value) => {
               onLimitChange(Number(value));
-              onPageChange(1);
+              // onPageChange(1);
             }}
             value={limit.toString()}
           >

@@ -77,9 +77,9 @@ export function DataTableHeader({
                   ))}
               </div>
 
-              <div className="p-3 border-t border-amber-100 dark:border-amber-900 flex justify-between">
+              <div className="p-1 border-t border-amber-100 dark:border-amber-900 flex justify-center">
                 <DropdownMenuItem
-                  className="text-xs text-blue-800 dark:text-amber-400 hover:bg-transparent cursor-pointer"
+                  className="w-full  text-center items-center justify-center text-xs text-blue-800 dark:text-amber-400 cursor-pointer"
                   onClick={() =>
                     table
                       .getAllColumns()
@@ -87,16 +87,6 @@ export function DataTableHeader({
                   }
                 >
                   انتخاب همه
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className="text-xs text-rose-600 dark:text-rose-400 hover:bg-transparent cursor-pointer"
-                  onClick={() =>
-                    table
-                      .getAllColumns()
-                      .forEach((column) => column.toggleVisibility(false))
-                  }
-                >
-                  لغو همه
                 </DropdownMenuItem>
               </div>
             </DropdownMenuContent>
