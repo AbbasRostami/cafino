@@ -12,6 +12,7 @@ export interface QuickLink {
 export interface ContactInfo {
   icon: string;
   text: string;
+  href?: string;
 }
 
 export interface SocialMedia {

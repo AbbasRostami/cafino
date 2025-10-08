@@ -97,4 +97,6 @@ export interface AddressSelectorProps {
   onAddressSelect: (addressId: string) => void;
   isLoading: boolean;
   onAddressAdded?: () => void;
+  orderDescription?: string;
+  onDescriptionChange?: (description: string) => void;
 }

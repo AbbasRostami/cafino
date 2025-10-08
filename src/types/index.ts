@@ -6,3 +6,6 @@ export * from "./main";
 
 // Profile types
 export * from "./Profile";
+
+// Shared types
+export * from "./shared";

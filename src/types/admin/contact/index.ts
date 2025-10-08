@@ -1,4 +1,4 @@
-  export interface ContactReply {
+export interface ContactReply {
   id: string;
   subject: string;
   message: string;
@@ -20,6 +20,9 @@ export interface GetContactsResponse {
   message: string;
   data: {
     contacts: Contact[];
+    total: number;
+    page: number;
+    limit: number;
   };
 }
 
@@ -55,7 +58,6 @@ export interface GetContactRepliesResponse {
   };
 }
 
-
 // Props
 
 export interface UseGetContactsProps {
@@ -66,7 +68,7 @@ export interface UseGetContactsProps {
   name?: string;
   email?: string;
   phone?: string;
-  hasReply?: boolean;
+  hasReply?: string;
 }
 
 export interface UseReplyToContactProps {

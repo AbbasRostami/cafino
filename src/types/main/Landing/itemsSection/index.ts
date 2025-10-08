@@ -2,6 +2,7 @@ export interface Item {
   item: any;
   id: string;
   title: string;
+  slug: string;
   ingredients: string[];
   description: string;
   price: number;
