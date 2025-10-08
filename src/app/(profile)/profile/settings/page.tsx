@@ -51,14 +51,13 @@ export default function SettingsPage() {
           onAvatarChange={handleAvatarChange}
           onRemoveImage={handleRemoveImage}
         />
-
-        <ProfileInfo user={user} />
         <Button
           onClick={() => setIsEditing(true)}
-          className="w-full mt-6  bg-gradient-to-r from-amber-500 to-orange-500 text-gray-700 hover:bg-amber-700"
+          className="w-full md:w-fit px-8 py-4 hover:scale-105 transition-all duration-300 bg-gradient-to-r from-amber-500 to-orange-500 text-gray-700 hover:bg-amber-700"
         >
           ویرایش
         </Button>
+        <ProfileInfo user={user} />
       </div>
 
       <EditModal

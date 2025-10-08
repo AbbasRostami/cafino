@@ -26,23 +26,24 @@ import { StatisticsSkeleton } from "@/components/skeleton";
 import { StatisticsCard } from "../../components/common/StatisticsCard";
 
 export default function Comments() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [currentLimit, setCurrentLimit] = useState(10);
-  const [searchValue, setSearchValue] = useState("");
-  const [acceptFilter, setAcceptFilter] = useState<string>("");
-  const [sortBy, setSortBy] = useState<string>("newest");
-
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: 10,
+    search: "",
+    accept: "",
+    sortBy: "newest",
+  });
   const { data, isLoading: isLoadingOverview } = useCommentOverview();
   const { comments, isLoading, total } = useGetCommentsAdmin({
-    page: currentPage,
-    limit: currentLimit,
+    page: filters.page,
+    limit: filters.limit,
     accept:
-      acceptFilter === "true"
+      filters.accept === "true"
         ? true
-        : acceptFilter === "false"
+        : filters.accept === "false"
         ? false
         : undefined,
-    sortBy: sortBy || undefined,
+    sortBy: filters.sortBy || undefined,
   });
 
   const {
@@ -57,13 +58,11 @@ export default function Comments() {
   } = useRejectComment();
 
   const handleAcceptFilterChange = (newAccept: string) => {
-    setAcceptFilter(newAccept);
-    setCurrentPage(1);
+    setFilters({ ...filters, accept: newAccept });
   };
 
   const handleSortByChange = (newSortBy: string) => {
-    setSortBy(newSortBy);
-    setCurrentPage(1);
+    setFilters({ ...filters, sortBy: newSortBy });
   };
 
   const headerProps = useMemo(
@@ -74,7 +73,7 @@ export default function Comments() {
       actions: (
         <div className="flex flex-col md:flex-row mt-2 md:mt-0 items-center gap-4">
           <div className="flex items-center gap-2">
-            <Select value={sortBy} onValueChange={handleSortByChange}>
+            <Select value={filters.sortBy} onValueChange={handleSortByChange}>
               <SelectTrigger className="w-48">
                 <SelectValue placeholder="مرتب‌سازی" />
               </SelectTrigger>
@@ -88,7 +87,7 @@ export default function Comments() {
           </div>
           <div className="flex items-center gap-2">
             <Select
-              value={acceptFilter}
+              value={filters.accept}
               onValueChange={handleAcceptFilterChange}
             >
               <SelectTrigger className="w-48">
@@ -103,7 +102,12 @@ export default function Comments() {
         </div>
       ),
     }),
-    [sortBy, handleSortByChange, acceptFilter, handleAcceptFilterChange]
+    [
+      filters.sortBy,
+      handleSortByChange,
+      filters.accept,
+      handleAcceptFilterChange,
+    ]
   );
 
   return (
@@ -136,8 +140,8 @@ export default function Comments() {
       <DataTable
         data={comments}
         columns={columns({
-          currentPage,
-          currentLimit,
+          currentPage: filters.page,
+          currentLimit: filters.limit,
           acceptComment,
           isAcceptingComment,
           acceptingVars,
@@ -150,18 +154,17 @@ export default function Comments() {
         emptyStateMessage="هیچ کامنتی یافت نشد"
         emptyStateDescription="کامنت‌های جدید در اینجا نمایش داده خواهند شد"
         enablePagination={true}
-        page={currentPage}
-        limit={currentLimit}
+        page={filters.page}
+        limit={filters.limit}
         totalCount={total}
-        onPageChange={setCurrentPage}
+        onPageChange={(page) => setFilters({ ...filters, page })}
         onLimitChange={(limit) => {
-          setCurrentLimit(limit);
-          setCurrentPage(1);
+          setFilters({ ...filters, limit, page: 1 });
         }}
         pageSizeOptions={[5, 10, 25, 50]}
         enableSearch={true}
-        searchValue={searchValue}
-        onSearchChange={setSearchValue}
+        searchValue={filters.search}
+        onSearchChange={(search) => setFilters({ ...filters, search })}
       />
     </>
   );

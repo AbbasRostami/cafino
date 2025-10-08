@@ -14,10 +14,12 @@ import { StatisticsSkeleton } from "@/components/skeleton";
 import { StatisticsCard } from "../../components/common/StatisticsCard";
 
 export default function Users() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [currentLimit, setCurrentLimit] = useState(10);
-  const [searchValue, setSearchValue] = useState("");
 
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: 10,
+    search: "",
+  });
   const { data, isLoading: isLoadingOverview } = useUserOverview();
 
   const {
@@ -25,8 +27,8 @@ export default function Users() {
     isLoading: isLoadingUsers,
     total,
   } = useGetUserListAdmin({
-    page: currentPage,
-    limit: currentLimit,
+    page: filters.page,
+    limit: filters.limit,
   });
 
   const {
@@ -90,8 +92,8 @@ export default function Users() {
       <DataTable
         data={users}
         columns={columns({
-          currentPage,
-          currentLimit,
+          currentPage: filters.page,
+          currentLimit: filters.limit,
           changePermission,
           isChangingPermission,
           changePermissionVars,
@@ -104,18 +106,17 @@ export default function Users() {
         emptyStateMessage="هیچ کاربری یافت نشد"
         emptyStateDescription="کاربران جدید در اینجا نمایش داده خواهند شد"
         enablePagination={true}
-        page={currentPage}
-        limit={currentLimit}
+        page={filters.page}
+        limit={filters.limit}
         totalCount={total}
-        onPageChange={setCurrentPage}
+        onPageChange={(page) => setFilters({ ...filters, page })}
         onLimitChange={(limit) => {
-          setCurrentLimit(limit);
-          setCurrentPage(1);
+          setFilters({ ...filters, limit, page: 1 });
         }}
         pageSizeOptions={[5, 10, 25, 50]}
         enableSearch={true}
-        searchValue={searchValue}
-        onSearchChange={setSearchValue}
+        searchValue={filters.search}
+        onSearchChange={(search) => setFilters({ ...filters, search })}
       />
     </>
   );

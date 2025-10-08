@@ -23,17 +23,19 @@ const CreateDiscountModal = dynamic(() => import("./create-discount"), {
 });
 
 export default function Discounts() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [currentLimit, setCurrentLimit] = useState(10);
-  const [searchValue, setSearchValue] = useState("");
-  const [isActiveFilter, setIsActiveFilter] = useState<string>("");
-  const [sortBy, setSortBy] = useState<string>("newest");
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: 10,
+    search: "",
+    isActive: "",
+    sortBy: "newest",
+  });
 
   const { discounts, isLoading, total } = useGetDiscounts({
-    page: currentPage,
-    limit: currentLimit,
-    isActive: isActiveFilter === "" ? undefined : isActiveFilter === "true",
-    sortBy: sortBy || undefined,
+    page: filters.page,
+    limit: filters.limit,
+    isActive: filters.isActive === "" ? undefined : filters.isActive === "true",
+    sortBy: filters.sortBy || undefined,
   });
 
   const {
@@ -49,13 +51,11 @@ export default function Discounts() {
   } = useUpdateDiscountStatus();
 
   const handleIsActiveFilterChange = (newIsActive: string) => {
-    setIsActiveFilter(newIsActive);
-    setCurrentPage(1);
+    setFilters({ ...filters, isActive: newIsActive });
   };
 
   const handleSortByChange = (newSortBy: string) => {
-    setSortBy(newSortBy);
-    setCurrentPage(1);
+    setFilters({ ...filters, sortBy: newSortBy });
   };
 
   const headerProps = useMemo(
@@ -66,7 +66,7 @@ export default function Discounts() {
       actions: (
         <div className="flex flex-col md:flex-row items-center gap-4">
           <div className="flex items-center gap-2">
-            <Select value={sortBy} onValueChange={handleSortByChange}>
+            <Select value={filters.sortBy} onValueChange={handleSortByChange}>
               <SelectTrigger className="w-48">
                 <SelectValue placeholder="مرتب‌سازی" />
               </SelectTrigger>
@@ -78,7 +78,7 @@ export default function Discounts() {
           </div>
           <div className="flex items-center gap-2">
             <Select
-              value={isActiveFilter}
+              value={filters.isActive}
               onValueChange={handleIsActiveFilterChange}
             >
               <SelectTrigger className="w-48">
@@ -94,15 +94,20 @@ export default function Discounts() {
         </div>
       ),
     }),
-    [sortBy, handleSortByChange, isActiveFilter, handleIsActiveFilterChange]
+    [
+      filters.sortBy,
+      handleSortByChange,
+      filters.isActive,
+      handleIsActiveFilterChange,
+    ]
   );
 
   return (
     <DataTable
       data={discounts}
       columns={columns({
-        currentPage,
-        currentLimit,
+        currentPage: filters.page,
+        currentLimit: filters.limit,
         deleteDiscount,
         isPendingDiscount,
         deletingVars,
@@ -115,18 +120,17 @@ export default function Discounts() {
       emptyStateMessage="هیچ کد تخفیفی یافت نشد"
       emptyStateDescription="برای افزودن کد تخفیف، روی دکمه افزودن کلیک کنید"
       enablePagination={true}
-      page={currentPage}
-      limit={currentLimit}
+      page={filters.page}
+      limit={filters.limit}
       totalCount={total}
-      onPageChange={setCurrentPage}
+      onPageChange={(page) => setFilters({ ...filters, page })}
       onLimitChange={(limit) => {
-        setCurrentLimit(limit);
-        setCurrentPage(1);
+        setFilters({ ...filters, limit, page: 1 });
       }}
       pageSizeOptions={[5, 10, 25, 50]}
       enableSearch={true}
-      searchValue={searchValue}
-      onSearchChange={setSearchValue}
+      searchValue={filters.search}
+      onSearchChange={(search) => setFilters({ ...filters, search })}
     />
   );
 }

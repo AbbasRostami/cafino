@@ -34,6 +34,7 @@ export default function CreateDiscountModal() {
         <Drawer open={open} onOpenChange={setOpen}>
           <DrawerTrigger asChild>
             <Button
+             onClick={(e) => e.currentTarget.blur()}
               variant="outline"
               className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 p-2 rounded-lg flex items-center gap-2"
             >
@@ -41,7 +42,7 @@ export default function CreateDiscountModal() {
               افزودن کد تخفیف
             </Button>
           </DrawerTrigger>
-          <DrawerContent className="p-4 border-none">
+          <DrawerContent className="h-fit overflow-y-auto p-4 border-none">
             <ModalContentDiscount onSubmit={onSubmit} isPending={isPending} />
           </DrawerContent>
         </Drawer>
@@ -49,6 +50,7 @@ export default function CreateDiscountModal() {
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button
+             onClick={(e) => e.currentTarget.blur()}
               variant="outline"
               className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 p-2 rounded-lg flex items-center gap-2"
             >

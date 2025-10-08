@@ -21,19 +21,22 @@ const ItemFormModal = dynamic(
 );
 
 export default function Items() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [currentLimit, setCurrentLimit] = useState(10);
-  const [search, setSearch] = useState("");
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: 10,
+    search: "",
+    sortBy: "newest",
+  });
+  console.log(filters);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<any>(null);
-  const [debouncedSearch] = useDebounce(search, 500);
+  const [debouncedSearch] = useDebounce(filters.search, 500);
 
-  const [sortBy, setSortBy] = useState<string>("newest");
   const { items, isLoading, total } = useGetItemsAdmin({
-    page: currentPage,
-    limit: currentLimit,
+    page: filters.page,
+    limit: filters.limit,
     search: debouncedSearch,
-    sortBy: sortBy,
+    sortBy: filters.sortBy,
   });
 
   const headerProps = useMemo(
@@ -44,7 +47,12 @@ export default function Items() {
       actions: (
         <>
           <div className="flex items-center gap-2">
-            <Select value={sortBy} onValueChange={(value) => setSortBy(value)}>
+            <Select
+              value={filters.sortBy}
+              onValueChange={(value) =>
+                setFilters({ ...filters, sortBy: value })
+              }
+            >
               <SelectTrigger className="w-48">
                 <SelectValue placeholder="مرتب‌سازی" />
               </SelectTrigger>
@@ -70,7 +78,7 @@ export default function Items() {
         </>
       ),
     }),
-    [sortBy]
+    [filters.sortBy]
   );
 
   const handleCloseModal = () => {
@@ -83,8 +91,8 @@ export default function Items() {
       <DataTable
         data={items}
         columns={columns({
-          currentPage,
-          currentLimit,
+          currentPage: filters.page,
+          currentLimit: filters.limit,
           setEditingItem,
           setIsModalOpen,
         })}
@@ -93,18 +101,17 @@ export default function Items() {
         emptyStateMessage="هیچ محصولی یافت نشد"
         emptyStateDescription="برای افزودن محصول، روی دکمه افزودن کلیک کنید"
         enablePagination={true}
-        page={currentPage}
-        limit={currentLimit}
+        page={filters.page}
+        limit={filters.limit}
         totalCount={total}
-        onPageChange={setCurrentPage}
+        onPageChange={(page) => setFilters({ ...filters, page })}
         onLimitChange={(limit) => {
-          setCurrentLimit(limit);
-          setCurrentPage(1);
+          setFilters({ ...filters, limit, page: 1 });
         }}
         pageSizeOptions={[5, 10, 25, 50]}
         enableSearch={true}
-        searchValue={search}
-        onSearchChange={setSearch}
+        searchValue={filters.search}
+        onSearchChange={(search) => setFilters({ ...filters, search, page: 1 })}
       />
 
       <ItemFormModal

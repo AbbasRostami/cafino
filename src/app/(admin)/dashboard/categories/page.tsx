@@ -8,13 +8,15 @@ import { columns } from "./columns";
 import { CategoryModal } from "./add-with-edit-modal";
 
 export default function Categories() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [currentLimit, setCurrentLimit] = useState(10);
-  const [searchValue, setSearchValue] = useState("");
-
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: 10,
+    search: "",
+  });
+  console.log(filters);
   const { categories, isLoading, total } = useGetCategoriesAdmin({
-    page: currentPage,
-    limit: currentLimit,
+    page: filters.page,
+    limit: filters.limit,
   });
   const {
     mutate: deleteCategory,
@@ -45,8 +47,8 @@ export default function Categories() {
     <DataTable
       data={categories}
       columns={columns({
-        currentPage,
-        currentLimit,
+        currentPage: filters.page,
+        currentLimit: filters.limit,
         deleteCategory,
         isDeleting,
         deletingVars,
@@ -56,18 +58,17 @@ export default function Categories() {
       emptyStateMessage="هیچ دسته‌بندی یافت نشد"
       emptyStateDescription="برای افزودن دسته‌بندی، روی دکمه افزودن کلیک کنید"
       enablePagination={true}
-      page={currentPage}
-      limit={currentLimit}
+      page={filters.page}
+      limit={filters.limit}
       totalCount={total}
-      onPageChange={setCurrentPage}
+      onPageChange={(page) => setFilters({ ...filters, page })}
       onLimitChange={(limit) => {
-        setCurrentLimit(limit);
-        setCurrentPage(1);
+        setFilters({ ...filters, limit, page: 1 });
       }}
       pageSizeOptions={[5, 10, 25, 50]}
       enableSearch={true}
-      searchValue={searchValue}
-      onSearchChange={setSearchValue}
+      searchValue={filters.search || ""}
+      onSearchChange={(search) => setFilters({ ...filters, search })}
       searchPlaceholder="جستجو در عنوان ها...."
     />
   );

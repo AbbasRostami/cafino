@@ -119,7 +119,7 @@ export const ModalContentDiscount = ({
                 hidden: { opacity: 0, y: 15 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
               }}
-              className="flex flex-col gap-2 flex-1"
+              className="flex-1 flex-col gap-2 space-y-2"
             >
               <Label>درصد تخفیف</Label>
               <Input
@@ -144,7 +144,7 @@ export const ModalContentDiscount = ({
                 hidden: { opacity: 0, y: 15 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
               }}
-              className="flex flex-col gap-2"
+              className="flex-1 flex-col gap-2 space-y-2"
             >
               <Label>مقدار تخفیف</Label>
               <Input

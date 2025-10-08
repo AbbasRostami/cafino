@@ -24,27 +24,25 @@ const ViewMessageModal = dynamic(
 );
 
 export default function Messages() {
-  // Pagination and search states
-  const [currentPage, setCurrentPage] = useState(1);
-  const [currentLimit, setCurrentLimit] = useState(10);
-  const [searchValue, setSearchValue] = useState("");
-
-  // Filter states
-  const [sortBy, setSortBy] = useState<string>("");
-  const [hasReply, setHasReply] = useState<string>("");
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: 10,
+    search: "",
+    sortBy: "newest",
+    hasReply: "",
+  });
 
   // Modal states
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isReplyModalOpen, setIsReplyModalOpen] = useState(false);
 
-  const { contacts, isLoading } = useGetContacts({
-    page: currentPage,
-    limit: currentLimit,
-    name: searchValue || undefined,
-    sortBy: sortBy || undefined,
-    hasReply:
-      hasReply === "true" ? true : hasReply === "false" ? false : undefined,
+  const { contacts, isLoading, total } = useGetContacts({
+    page: filters.page,
+    limit: filters.limit,
+    name: filters.search,
+    sortBy: filters.sortBy,
+    hasReply: filters.hasReply,
   });
 
   // delete contact
@@ -82,22 +80,11 @@ export default function Messages() {
 
   // Filter change handlers
   const handleSortChange = (newSortBy: string) => {
-    setCurrentPage(1);
-    setSortBy(newSortBy);
+    setFilters({ ...filters, sortBy: newSortBy });
   };
 
   const handleReplyFilterChange = (newHasReply: string) => {
-    setCurrentPage(1);
-    setHasReply(newHasReply);
-  };
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-
-  const handleLimitChange = (limit: number) => {
-    setCurrentLimit(limit);
-    setCurrentPage(1);
+    setFilters({ ...filters, hasReply: newHasReply });
   };
 
   const headerProps = useMemo(
@@ -108,7 +95,7 @@ export default function Messages() {
       actions: (
         <div className="flex flex-col md:flex-row items-center mt-2 md:mt-0 gap-4">
           <div className="flex items-center gap-2">
-            <Select value={sortBy} onValueChange={handleSortChange}>
+            <Select value={filters.sortBy} onValueChange={handleSortChange}>
               <SelectTrigger className="w-48">
                 <SelectValue placeholder="مرتب‌سازی بر اساس زمان" />
               </SelectTrigger>
@@ -119,7 +106,10 @@ export default function Messages() {
             </Select>
           </div>
           <div className="flex items-center gap-2">
-            <Select value={hasReply} onValueChange={handleReplyFilterChange}>
+            <Select
+              value={filters.hasReply}
+              onValueChange={handleReplyFilterChange}
+            >
               <SelectTrigger className="w-48">
                 <SelectValue placeholder="فیلتر بر اساس پاسخ" />
               </SelectTrigger>
@@ -132,7 +122,12 @@ export default function Messages() {
         </div>
       ),
     }),
-    [sortBy, hasReply, handleSortChange, handleReplyFilterChange]
+    [
+      filters.sortBy,
+      filters.hasReply,
+      handleSortChange,
+      handleReplyFilterChange,
+    ]
   );
 
   return (
@@ -140,8 +135,8 @@ export default function Messages() {
       <DataTable
         data={contacts}
         columns={columns({
-          currentPage,
-          currentLimit,
+          currentPage: filters.page,
+          currentLimit: filters.limit,
           onViewMessage: openViewModal,
           onReplyToMessage: openReplyModal,
           deleteContact,
@@ -153,15 +148,17 @@ export default function Messages() {
         emptyStateMessage="هیچ پیامی یافت نشد"
         emptyStateDescription="پیام‌های ارسالی از طریق فرم تماس با ما در اینجا نمایش داده می‌شوند"
         enablePagination={true}
-        page={currentPage}
-        limit={currentLimit}
-        totalCount={contacts.length}
-        onPageChange={handlePageChange}
-        onLimitChange={handleLimitChange}
+        page={filters.page}
+        limit={filters.limit}
+        totalCount={total}
+        onPageChange={(page) => setFilters({ ...filters, page })}
+        onLimitChange={(limit) => {
+          setFilters({ ...filters, limit, page: 1 });
+        }}
         pageSizeOptions={[5, 10, 25, 50]}
         enableSearch={true}
-        searchValue={searchValue}
-        onSearchChange={setSearchValue}
+        searchValue={filters.search}
+        onSearchChange={(search) => setFilters({ ...filters, search })}
       />
 
       {/* Modals */}

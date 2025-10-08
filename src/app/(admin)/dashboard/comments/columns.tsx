@@ -48,8 +48,8 @@ export const columns = ({
         header: "متن کامنت",
         cell: ({ row }) => {
           const value = row.getValue("text") as string;
-          const itemId = row.original.item.id;
-          const parent = row.original.id;
+          const itemId = row?.original?.item?.id;
+          const parent = row?.original?.id;
           return (
             <div className="flex items-center justify-between gap-2">
               <Tooltip>

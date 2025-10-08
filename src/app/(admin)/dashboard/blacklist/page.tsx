@@ -6,13 +6,15 @@ import { columns } from "./columns";
 import { useGetBlacklist, useRemoveUserFromBlacklist } from "@/services";
 
 export default function Blacklist() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [currentLimit, setCurrentLimit] = useState(10);
-  const [searchValue, setSearchValue] = useState("");
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: 10,
+    search: "",
+  });
 
   const { blacklist, isLoading, total } = useGetBlacklist({
-    page: currentPage,
-    limit: currentLimit,
+    page: filters.page,
+    limit: filters.limit,
   });
 
   const {
@@ -33,8 +35,8 @@ export default function Blacklist() {
     <DataTable
       data={blacklist}
       columns={columns({
-        currentPage,
-        currentLimit,
+        currentPage: filters.page,
+        currentLimit: filters.limit,
         removeFromBlacklist,
         isRemoving,
         removingVars,
@@ -44,18 +46,18 @@ export default function Blacklist() {
       emptyStateMessage="هیچ کاربری در لیست سیاه یافت نشد"
       emptyStateDescription="کاربران مسدود شده در اینجا نمایش داده خواهند شد"
       enablePagination={true}
-      page={currentPage}
-      limit={currentLimit}
+      page={filters.page}
+      limit={filters.limit}
       totalCount={total}
-      onPageChange={setCurrentPage}
+      onPageChange={(page) => setFilters({ ...filters, page })}
       onLimitChange={(limit) => {
-        setCurrentLimit(limit);
-        setCurrentPage(1);
+        setFilters({ ...filters, limit });
+        setFilters({ ...filters, page: 1 });
       }}
       pageSizeOptions={[5, 10, 25, 50]}
       enableSearch={true}
-      searchValue={searchValue}
-      onSearchChange={setSearchValue}
+      searchValue={filters.search || ""}
+      onSearchChange={(search) => setFilters({ ...filters, search })}
     />
   );
 }
