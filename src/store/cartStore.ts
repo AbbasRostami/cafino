@@ -76,10 +76,9 @@ interface CartState {
   syncCart: () => void;
   getCartItemCount: (itemId: string) => number;
 }
-
+  
 export const useCartStore = create<CartState>((set, get) => ({
   cart: getLocalCart(),
-
   addToCart: async (item) => {
     const prev = getLocalCart();
     const existing = prev.cartItems.find((i) => i.itemId === item.itemId);
@@ -99,22 +98,22 @@ export const useCartStore = create<CartState>((set, get) => ({
     }
 
     const totalAmount = newCartItems.reduce(
-      (sum, i) => sum + Number(i.finalPrice) * i.count,
+      (sum, i) => sum + Number(i.price) * i.count,
       0
     );
     const totalDiscount = newCartItems.reduce(
       (sum, i) => sum + (Number(i.price) - Number(i.finalPrice)) * i.count,
       0
     );
-
+    const paymentAmount = totalAmount - totalDiscount;
+    
     const cart: CartApiResponse = {
       ...prev,
       cartItems: newCartItems,
       totalAmount,
-      paymentAmount: totalAmount,
+      paymentAmount,
       totalDiscount,
     };
-
     setLocalCart(cart);
     set({ cart });
     toast.success("محصول با موفقیت به سبد خرید اضافه شد");

@@ -42,7 +42,7 @@ export function buildItemMetadata(
 
   const title = item?.title;
   const description = item?.description;
-  const primaryImage = item.images?.[0]?.imageUrl;
+  const primaryImage = item?.images?.[0]?.imageUrl;
   const ogImages = [
     ...(primaryImage
       ? [
@@ -60,7 +60,7 @@ export function buildItemMetadata(
   const keywords = [
     title,
     ...(item?.ingredients || []),
-    item.category?.title || "",
+    item?.category?.title || "",
     "کافینو",
   ].filter(Boolean) as string[];
 

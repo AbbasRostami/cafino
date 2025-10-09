@@ -1,68 +1,32 @@
-// shared types
-export interface TicketUser {
-  id: string;
-  username: string;
-  first_name: string;
-  last_name: string;
-  image: string;
-  role: string;
-  imageUrl: string;
-}
+// Import shared types
+import type {
+  TicketUser,
+  Ticket,
+  TicketMessage,
+  CreateTicketRequest,
+  CreateTicketResponse,
+  AddMessageRequest,
+  AddMessageResponse,
+  GetTicketMessagesResponse,
+  GetUserTicketsResponse,
+  TicketFilters,
+  TicketPaginationInfo,
+} from "@/types/shared";
 
-export interface Ticket {
-  id: string;
-  subject: string;
-  status: "open" | "answered" | "closed";
-  created_at: string;
-  user: TicketUser;
-  length: number;
-}
-
-export interface TicketMessage {
-  id: string;
-  message: string;
-  created_at: string;
-  sender: TicketUser;
-}
-
-export interface CreateTicketRequest {
-  subject: string;
-  message: string;
-}
-
-export interface AddMessageRequest {
-  message: string;
-}
-
-export interface GetTicketMessagesResponse {
-  statusCode: number;
-  message: string;
-  data: {
-    tickets: Ticket;
-    messages: TicketMessage[];
-    total: number;
-  };
-}
-
-export interface CreateTicketResponse {
-  statusCode: number;
-  message: string;
-  data?: {
-    ticket: Ticket;
-  };
-}
-
-export interface AddMessageResponse {
-  statusCode: number;
-  message: string;
-}
-
-export interface TicketFilters {
-  status?: "open" | "answered" | "closed";
-  sortBy?: "newest" | "oldest";
-  page?: number;
-  limit?: number;
-}
+// Re-export shared types
+export type {
+  TicketUser,
+  Ticket,
+  TicketMessage,
+  CreateTicketRequest,
+  CreateTicketResponse,
+  AddMessageRequest,
+  AddMessageResponse,
+  GetTicketMessagesResponse,
+  GetUserTicketsResponse,
+  TicketFilters,
+  TicketPaginationInfo,
+};
 
 // Props
 
