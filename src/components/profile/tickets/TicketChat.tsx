@@ -23,6 +23,7 @@ import {
 } from "@/schemas/profile/tickets";
 import { TicketChatSkeleton } from "@/components/skeleton";
 import Image from "next/image";
+import { Kbd, KbdGroup } from "@/components/ui/kbd";
 
 const statusConfig: Record<
   string,
@@ -93,8 +94,8 @@ export default function TicketChat({ ticket, onBack }: TicketChatProps) {
     return senderId === messagesData?.data?.tickets?.user?.id;
   };
 
-  const status = messagesData?.data?.tickets?.status as string;
-  const config = statusConfig[status];
+  const status = messagesData?.data?.tickets?.status;
+  const config = statusConfig[status as string];
 
   return (
     <div className="flex flex-col h-full lg:h-[calc(100vh-120px)] bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
@@ -239,7 +240,12 @@ export default function TicketChat({ ticket, onBack }: TicketChatProps) {
               </div>
             </div>
             <p className="hidden md:block text-xs font-medium text-gray-600 dark:text-gray-300 mt-2">
-              Enter برای ارسال • Shift+Enter برای خط جدید
+              <Kbd className="bg-gray-100 dark:bg-gray-800">Enter ⏎</Kbd> برای
+              ارسال •
+              <KbdGroup>
+                <Kbd>Shift</Kbd>+<Kbd>Enter</Kbd>
+              </KbdGroup>
+              برای خط جدید
             </p>
           </form>
         </div>

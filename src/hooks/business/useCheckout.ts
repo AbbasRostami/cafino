@@ -24,6 +24,7 @@ export const useCheckout = () => {
     null
   );
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
+  const [orderDescription, setOrderDescription] = useState("");
   const router = useRouter();
 
   const addDiscountMutation = useAddDiscount();
@@ -102,13 +103,17 @@ export const useCheckout = () => {
     }
   };
 
+  const handleDescriptionChange = (description: string) => {
+    setOrderDescription(description);
+  };
+
   const handleCompleteOrder = async () => {
     try {
       setIsCheckoutLoading(true);
 
       const paymentData = {
         addressId: selectedAddressId,
-        description: `سفارش از کافی‌نو - مبلغ: ${cart.paymentAmount} تومان`,
+        description: orderDescription,
       };
 
       paymentGatewayMutation.mutate(paymentData, {
@@ -178,5 +183,9 @@ export const useCheckout = () => {
     // Checkout
     isCheckoutLoading,
     handleCompleteOrder,
+
+    // Description
+    orderDescription,
+    handleDescriptionChange,
   };
 };

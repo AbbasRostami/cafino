@@ -26,8 +26,8 @@ const footerData = {
 
   contactInfo: [
     { icon: "MapPin", text: "تهران، خیابان ولیعصر، پلاک ۱۲۳" },
-    { icon: "Phone", text: "۰۲۱-۱۲۳۴۵۶۷۸" },
-    { icon: "Mail", text: "info@cafino.ir" },
+    { icon: "Phone", text: "۰۲۱-۱۲۳۴۵۶۷۸" , href: "tel:02112345678" },
+    { icon: "Mail", text: "info@cafino.ir" , href: "mailto:info@cafino.ir" },
     { icon: "Clock", text: "همه روزه: ۸ صبح تا ۱۱ شب" },
   ],
 
