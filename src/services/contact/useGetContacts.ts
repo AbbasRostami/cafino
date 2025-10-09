@@ -21,8 +21,7 @@ export const useGetContacts = ({
   if (name) queryParams.append("name", name);
   if (email) queryParams.append("email", email);
   if (phone) queryParams.append("phone", phone);
-  if (hasReply !== undefined)
-    queryParams.append("hasReply", hasReply.toString());
+  if (hasReply) queryParams.append("hasReply", hasReply);
 
   const { data, isLoading, error } = useGet<GetContactsResponse>(
     `/v1/contact?${queryParams.toString()}`,
@@ -43,6 +42,9 @@ export const useGetContacts = ({
 
   return {
     contacts: data?.data?.contacts || [],
+    total: data?.data?.total || 0,
+    page: data?.data?.page || 1,
+    limit: data?.data?.limit || limit,
     isLoading,
     error,
   };

@@ -8,12 +8,18 @@ export const useGetItemsAdmin = ({
   search,
   sortBy,
 }: UseGetItemsAdminProps) => {
+  const params = new URLSearchParams({
+    page: page.toString(),
+    limit: limit.toString(),
+    sortBy,
+    ...(search && { search: search }),
+  });
+
   const { data, isLoading, error } = useGet<MenuItemResponse>(
-    `/v1/item/admin?page=${page}&limit=${limit}&sortBy=${sortBy}`,
-    {
-      queryKey: ["items-admin", page, limit, search, sortBy],
-    }
+    `/v1/item/admin?${params.toString()}`,
+    { queryKey: ["items-admin", page, limit, search, sortBy] }
   );
+
   return {
     items: data?.data?.items || [],
     total: data?.data?.total || 0,

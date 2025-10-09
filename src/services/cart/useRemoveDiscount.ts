@@ -10,7 +10,6 @@ export const useRemoveDiscount = () => {
       onSuccess: () => {
         toast.success("کد تخفیف با موفقیت حذف شد");
         queryClient.invalidateQueries({ queryKey: ["/v1/cart"] });
-        queryClient.refetchQueries({ queryKey: ["/v1/cart"] });
       },
       onError: (error) => {
         toast.error("خطا در حذف کد تخفیف");

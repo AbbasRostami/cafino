@@ -4,14 +4,13 @@ import { toast } from "sonner";
 
 export const useAddToCart = () => {
   const queryClient = useQueryClient();
-  const { mutate, isPending, error } = usePost<any, { itemId: string }>(
+  const { mutateAsync, isPending, error } = usePost<any, { itemId: string }>(
     () => "/v1/cart/add",
     undefined,
     {
       onSuccess: () => {
         toast.success("محصول با موفقیت به سبد خرید اضافه شد");
         queryClient.invalidateQueries({ queryKey: ["/v1/cart"] });
-        queryClient.refetchQueries({ queryKey: ["/v1/cart"] });
       },
       onError: (error) => {
         const errorMessage = error?.message;
@@ -23,5 +22,5 @@ export const useAddToCart = () => {
       },
     }
   );
-  return { mutate, isPending, error };
+  return { mutateAsync, isPending, error };
 };

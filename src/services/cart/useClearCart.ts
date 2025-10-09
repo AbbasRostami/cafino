@@ -4,16 +4,18 @@ import { toast } from "sonner";
 
 export const useClearCart = () => {
   const queryClient = useQueryClient();
-  const { mutate, isPending, error } = useDelete<any, void>(() => "/v1/cart", {
-    onSuccess: () => {
-      toast.success("سبد خرید با موفقیت پاک شد");
-      queryClient.invalidateQueries({ queryKey: ["/v1/cart"] });
-      queryClient.refetchQueries({ queryKey: ["/v1/cart"] });
-    },
+  const { mutateAsync, isPending, error } = useDelete<any, void>(
+    () => "/v1/cart",
+    {
+      onSuccess: () => {
+        toast.success("سبد خرید با موفقیت پاک شد");
+        queryClient.invalidateQueries({ queryKey: ["/v1/cart"] });
+      },
 
-    onError: (error) => {
-      toast.error("خطا در پاک کردن سبد خرید");
-    },
-  });
-  return { mutate, isPending, error };
+      onError: (error) => {
+        toast.error("خطا در پاک کردن سبد خرید");
+      },
+    }
+  );
+  return { mutateAsync, isPending, error };
 };

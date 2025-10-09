@@ -4,13 +4,12 @@ import { toast } from "sonner";
 
 export const useRemoveItem = () => {
   const queryClient = useQueryClient();
-  const { mutate, isPending, error } = useDelete<{ itemId: string }>(
+  const { mutateAsync, isPending, error } = useDelete<{ itemId: string }>(
     () => "/v1/cart/remove",
     {
       onSuccess: () => {
         toast.success("محصول با موفقیت از سبد خرید حذف شد");
         queryClient.invalidateQueries({ queryKey: ["/v1/cart"] });
-        queryClient.refetchQueries({ queryKey: ["/v1/cart"] });
       },
 
       onError: (error) => {
@@ -18,5 +17,5 @@ export const useRemoveItem = () => {
       },
     }
   );
-  return { mutate, isPending, error };
+  return { mutateAsync, isPending, error };
 };

@@ -4,7 +4,7 @@ import { toast } from "sonner";
 
 export const useIncItem = () => {
   const queryClient = useQueryClient();
-  const { mutate, isPending, error } = usePatch<{ itemId: string }>(
+  const { mutateAsync, isPending, error } = usePatch<{ itemId: string }>(
     "/v1/cart/inc-item",
     undefined,
     {
@@ -21,5 +21,5 @@ export const useIncItem = () => {
       },
     }
   );
-  return { mutate, isPending, error };
+  return { mutateAsync, isPending, error };
 };
