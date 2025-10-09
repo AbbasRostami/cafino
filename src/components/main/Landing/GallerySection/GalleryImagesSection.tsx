@@ -81,7 +81,7 @@ const GalleryImagesSection = ({
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: false, amount: 0.3 }}
+      viewport={{ once: true, amount: 0.3 }}
       className="grid grid-cols-2 gap-4 order-1 lg:order-2"
     >
       {galleryItems.map((item, index) => (

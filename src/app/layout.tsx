@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { QueryProvider } from "@/components/providers/QueryProviders";
 import { rootMetadata } from "@/lib/metadata/rootMetadata";
 import { StructuredDataScripts } from "@/lib/metadata/structuredData";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 const vazirmatn = localFont({
   src: "./../assets/fonts/Vazirmatn-UI-FD-Regular.ttf",
@@ -34,7 +35,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Toaster position="top-right" richColors />
-            {children}
+            <NuqsAdapter>{children}</NuqsAdapter>
           </ThemeProvider>
         </QueryProvider>
       </body>

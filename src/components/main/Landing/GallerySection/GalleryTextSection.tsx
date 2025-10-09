@@ -48,7 +48,7 @@ const GalleryTextSection = ({
       className="space-y-8 order-2 lg:order-1 relative"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: false, amount: 0.3 }}
+      viewport={{ once: true, amount: 0.3 }}
       variants={{
         hidden: {},
         visible: { transition: { staggerChildren: 0.15 } },
