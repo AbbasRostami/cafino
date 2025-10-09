@@ -60,7 +60,7 @@ const FooterBackground = () => {
           } animate-pulse`}
           initial={{ opacity: 0, scale: 0 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: false }}
+          viewport={{ once: true }}
           transition={{ duration: 0.8, delay: index * 0.2 }}
           style={{ animationDelay: `${icon.delay}ms` }}
         >
@@ -74,7 +74,7 @@ const FooterBackground = () => {
         className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent"
         initial={{ scaleX: 0 }}
         whileInView={{ scaleX: 1 }}
-        viewport={{ once: false }}
+        viewport={{ once: true }}
         transition={{ duration: 1.2, ease: "easeOut" }}
       />
     </>

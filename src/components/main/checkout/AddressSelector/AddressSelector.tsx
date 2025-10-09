@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { MapPin, Plus, Check } from "lucide-react";
+import { MapPin, Plus, Check, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import { MotionDiv } from "@/utils/MotionWrapper";
 import AddAddressModal from "./AddAddressModal";
 import { AddressSelectorProps } from "@/types/main";
@@ -15,6 +17,8 @@ export default function AddressSelector({
   onAddressSelect,
   isLoading,
   onAddressAdded,
+  orderDescription,
+  onDescriptionChange,
 }: AddressSelectorProps) {
   const [showAddAddress, setShowAddAddress] = useState(false);
 
@@ -47,11 +51,7 @@ export default function AddressSelector({
   return (
     <>
       <Card className="rounded-2xl gap-4 shadow-lg border border-amber-200 dark:border-gray-800 bg-white/70 dark:bg-gray-900/80 backdrop-blur-lg">
-        <CardHeader className="flex flex-col sm:flex-row gap-4 items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-gray-800 dark:text-white">
-            <MapPin className="text-amber-600 dark:text-amber-400" size={20} />
-            انتخاب آدرس تحویل
-          </CardTitle>
+        <CardHeader className="flex flex-col sm:flex-row gap-4 items-center justify-end">
           <Button
             onClick={() => setShowAddAddress(true)}
             size="sm"
@@ -61,7 +61,7 @@ export default function AddressSelector({
             افزودن آدرس
           </Button>
         </CardHeader>
-        <CardContent className="space-y-3 !border-none">
+        <CardContent className="space-y-4 !border-none ">
           {addresses && addresses.length > 0 ? (
             addresses.map((address) => (
               <MotionDiv
@@ -122,6 +122,30 @@ export default function AddressSelector({
               </p>
             </div>
           )}
+
+          <div className="space-y-3 w-full">
+            <Label
+              htmlFor="order-description"
+              className="flex items-center gap-2 text-md font-bold text-gray-700 dark:text-gray-300"
+            >
+              <MessageSquare
+                size={16}
+                className=" text-amber-700 dark:text-amber-400"
+              />
+              توضیحات سفارش (اختیاری)
+            </Label>
+            <Textarea
+              id="order-description"
+              placeholder="توضیحات سفارش خود را اینجا بنویسید..."
+              value={orderDescription || ""}
+              onChange={(e) => onDescriptionChange?.(e.target.value)}
+              className="min-h-[80px] resize-none border-amber-200 dark:border-amber-800 focus:border-amber-400 dark:focus:border-amber-600 bg-white/50 dark:bg-gray-800/50"
+              maxLength={500}
+            />
+            <p className="text-xs text-gray-500 dark:text-gray-400 text-left">
+              {orderDescription?.length || 0}/500 کاراکتر
+            </p>
+          </div>
         </CardContent>
       </Card>
 

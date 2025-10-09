@@ -104,7 +104,6 @@ export default function OrderSummary({
 
         {renderAddressInfo()}
 
-        {/* هشدار برای آیتم‌های غیرفعال */}
         {hasUnavailableItems && (
           <div className="p-3 rounded-lg border-red-200 bg-red-50 dark:bg-red-950/20 dark:border-red-800">
             <div className="flex items-center gap-2">

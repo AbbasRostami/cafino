@@ -27,11 +27,9 @@ export default function CartItemCard({ item }: CartItemCardProps) {
         isUnavailable ? "opacity-75" : ""
       } border border-gray-100 dark:border-gray-700 hover:border-amber-200 dark:hover:border-amber-600 hover:shadow-xl`}
     >
-      {/* Decorative gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-amber-50/5 to-orange-50/5 dark:from-amber-900/5 dark:to-orange-900/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
 
       <div className="relative z-10 flex flex-col sm:flex-row">
-        {/* Image Section */}
         <div className="relative sm:w-2/5 lg:w-1/3 h-32 sm:h-52 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800">
           <Image
             src={item?.image || item?.images?.[0] || "/placeholder.jpg"}
@@ -42,7 +40,6 @@ export default function CartItemCard({ item }: CartItemCardProps) {
             className="object-cover transition-transform duration-700 group-hover:scale-105"
           />
 
-          {/* Discount Badge */}
           {item?.discount > 0 && (
             <div className="absolute top-4 left-4">
               <Badge className="bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg rounded-full px-3 py-1.5 flex items-center gap-1 border-2 border-white dark:border-gray-800">
@@ -53,7 +50,6 @@ export default function CartItemCard({ item }: CartItemCardProps) {
             </div>
           )}
 
-          {/* Unavailable Overlay */}
           {isUnavailable && (
             <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
               <Badge
@@ -66,7 +62,6 @@ export default function CartItemCard({ item }: CartItemCardProps) {
           )}
         </div>
 
-        {/* Content Section */}
         <div className="flex-1 p-6 flex flex-col justify-between">
           <div className="space-y-4">
             <div className="flex justify-between items-start gap-4">
@@ -88,7 +83,6 @@ export default function CartItemCard({ item }: CartItemCardProps) {
             </p>
           </div>
 
-          {/* Price and Controls */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-gray-100 dark:border-gray-700">
             <div className="space-y-1">
               <div className="flex items-baseline gap-3">

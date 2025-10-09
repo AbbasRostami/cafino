@@ -9,7 +9,7 @@ const QuickLinks = ({ quickLinks }: QuickLinksProps) => {
         className="relative pb-3 border-b border-amber-200 dark:border-amber-800/50"
         initial={{ opacity: 0, x: -20 }}
         whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: false }}
+        viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
         <h3 className="text-xl font-bold text-gray-900 dark:text-white relative inline-block">
@@ -23,7 +23,7 @@ const QuickLinks = ({ quickLinks }: QuickLinksProps) => {
             key={index}
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false }}
+            viewport={{ once: true }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
           >
             <Link

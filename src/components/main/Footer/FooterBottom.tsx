@@ -22,7 +22,7 @@ const FooterBottom = () => {
         className="pt-8 border-t border-amber-200 dark:border-amber-800/30 flex flex-col md:flex-row justify-between items-center"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false }}
+        viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
         <div className="text-center md:text-right mb-4 md:mb-0">
@@ -30,7 +30,7 @@ const FooterBottom = () => {
             className="text-gray-600 dark:text-gray-400 text-sm font-bold"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: false }}
+            viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             © {new Date().getFullYear()} کافینو
@@ -39,7 +39,7 @@ const FooterBottom = () => {
             className="text-gray-500 dark:text-gray-500 text-xs mt-1"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: false }}
+            viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             تمامی حقوق محفوظ است
@@ -50,7 +50,7 @@ const FooterBottom = () => {
           className="flex items-center gap-2 text-amber-600 dark:text-amber-400"
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: false }}
+          viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.6 }}
         >
           <span className="text-lg font-bold">ساخته شده با</span>

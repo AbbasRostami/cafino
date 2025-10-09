@@ -28,9 +28,6 @@ export default function SelectedAddressDisplay({
             آدرس تحویل انتخاب شده
           </CardTitle>
           <div className="flex items-center gap-2">
-            <Badge className="bg-amber-500 text-white text-xs p-1.5">
-              انتخاب شده
-            </Badge>
             <Button
               onClick={onEditAddress}
               variant="ghost"

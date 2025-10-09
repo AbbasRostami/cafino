@@ -14,16 +14,19 @@ export const ContactInfoSection = () => {
       title: "تلفن تماس",
       description: "۰۲۱-۱۲۳۴۵۶۷۸",
       color: "text-green-700 dark:text-green-300",
+      href: "tel:02112345678",
     },
     {
       icon: Mailbox,
       title: "ایمیل",
       description: "info@cafino.com",
       color: "text-purple-700 dark:text-purple-300",
+      href: "mailto:info@cafino.com",
     },
     {
       icon: MapPin,
       title: "آدرس",
+      href: "https://maps.app.goo.gl/1234567890",
       description: "تهران، خیابان ولیعصر، کوچه فلان، پلاک ۱۲۳",
       color: "text-yellow-700 dark:text-yellow-300",
     },
@@ -58,9 +61,18 @@ export const ContactInfoSection = () => {
                 <h3 className="font-semibold text-gray-800 dark:text-gray-200 mb-1">
                   {info.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  {info.description}
-                </p>
+                {info.href ? (
+                  <a
+                    href={info.href}
+                    className="text-gray-600 dark:text-gray-400 hover:text-amber-600 transition-colors"
+                  >
+                    {info.description}
+                  </a>
+                ) : (
+                  <p className="text-gray-600 dark:text-gray-400">
+                    {info.description}
+                  </p>
+                )}
               </div>
             </MotionDiv>
           ))}
