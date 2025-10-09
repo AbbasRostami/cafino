@@ -48,12 +48,18 @@ export const OtpInputForm: React.FC<OtpInputFormProps> = ({
   return (
     <div className="space-y-3">
       <div className="text-center space-y-2">
-        <h2 data-testid="otp-title" className="text-2xl font-bold bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 bg-clip-text text-transparent">
+        <h2
+          data-testid="otp-title"
+          className="text-2xl font-bold bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 bg-clip-text text-transparent"
+        >
           تایید کد
         </h2>
         <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed flex justify-center gap-1">
           کد تایید به شماره
-          <strong data-testid="phone-number" className="text-amber-600 dark:text-amber-400">
+          <strong
+            data-testid="phone-number"
+            className="text-amber-600 dark:text-amber-400"
+          >
             {phoneNumber}
           </strong>
           ارسال شد
@@ -82,7 +88,7 @@ export const OtpInputForm: React.FC<OtpInputFormProps> = ({
                   }}
                   containerClassName="justify-center !flex !gap-3 !text-center"
                 >
-                  <InputOTPGroup className="!flex !justify-center !text-center">
+                  <InputOTPGroup className="gap-2 *:data-[slot=input-otp-slot]:rounded-md *:data-[slot=input-otp-slot]:border">
                     {[0, 1, 2, 3, 4].map((index) => (
                       <InputOTPSlot
                         key={index}
@@ -102,7 +108,7 @@ export const OtpInputForm: React.FC<OtpInputFormProps> = ({
           </div>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-3 px-4">
           <Button
             data-testid="verify-otp-button"
             type="submit"
@@ -110,7 +116,7 @@ export const OtpInputForm: React.FC<OtpInputFormProps> = ({
             className={cn(
               "w-full h-12 cursor-pointer text-lg font-bold",
               "bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600",
-              "text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 rounded-xl",
+              "text-white shadow-lg hover:shadow-xl rounded-xl",
               "disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             )}
           >
