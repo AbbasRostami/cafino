@@ -25,7 +25,7 @@ export function useAddToCartButtonLogic({
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
 
   // for authenticated users
-  const { cart: serverCart, isCartLoading, refetch } = useCart();
+  const { cart: serverCart, isCartLoading } = useCart();
 
   // for guest users
   const { cart: localCart, getCartItemCount } = useCartStore();
@@ -37,11 +37,11 @@ export function useAddToCartButtonLogic({
     : getCartItemCount(itemId);
 
   // React Query hooks for authenticated users
-  const { mutate: addToCart, isPending: addLoading } = useAddToCart();
-  const { mutate: incItem, isPending: incLoading } = useIncItem();
-  const { mutate: decItem, isPending: decLoading } = useDecItem();
-  const { mutate: removeItem, isPending: removeLoading } = useRemoveItem();
-  const { mutate: clearCart, isPending: clearLoading } = useClearCart();
+  const { mutateAsync: addToCart, isPending: addLoading } = useAddToCart();
+  const { mutateAsync: incItem, isPending: incLoading } = useIncItem();
+  const { mutateAsync: decItem, isPending: decLoading } = useDecItem();
+  const { mutateAsync: removeItem, isPending: removeLoading } = useRemoveItem();
+  const { mutateAsync: clearCart, isPending: clearLoading } = useClearCart();
 
   // Zustand store methods for guest users
   const {
@@ -52,66 +52,47 @@ export function useAddToCartButtonLogic({
     clearCart: clearLocalCart,
   } = useCartStore();
 
-  const handleAdd = async () => {
+  const handleAdd = () => {
     if (isAuthenticated) {
-      try {
-        await addToCart({ itemId });
-        await refetch();
-      } catch (error) {}
+      addToCart({ itemId });
     } else {
-      if (itemData) {
-        await addToLocalCart(itemData);
-      } else {
-        console.error("Item data is required for guest users");
-      }
+      addToLocalCart(itemData as CartItem);
     }
   };
 
-  const handleInc = async () => {
+  const handleInc = () => {
     if (isAuthenticated) {
-      try {
-        await incItem({ itemId });
-        await refetch();
-      } catch (error) {}
+      incItem({ itemId });
     } else {
-      await incLocalItem(itemId);
+      incLocalItem(itemId);
     }
   };
 
-  const handleDec = async () => {
+  const handleDec = () => {
     if (count === 1) {
-      await handleRemove();
+      handleRemove();
     } else {
       if (isAuthenticated) {
-        try {
-          await decItem({ itemId });
-          await refetch();
-        } catch (error) {}
+        decItem({ itemId });
       } else {
-        await decLocalItem(itemId);
+        decLocalItem(itemId);
       }
     }
   };
 
-  const handleRemove = async () => {
+  const handleRemove = () => {
     if (isAuthenticated) {
-      try {
-        await removeItem({ itemId });
-        await refetch();
-      } catch (error) {}
+      removeItem({ itemId });
     } else {
-      await removeLocalItem(itemId);
+      removeLocalItem(itemId);
     }
   };
 
-  const handleClearCart = async () => {
+  const handleClearCart = () => {
     if (isAuthenticated) {
-      try {
-        await clearCart();
-        await refetch();
-      } catch (error) {}
+      clearCart();
     } else {
-      await clearLocalCart();
+      clearLocalCart();
     }
   };
 
