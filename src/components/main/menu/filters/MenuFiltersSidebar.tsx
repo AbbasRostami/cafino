@@ -4,22 +4,21 @@ import DesktopSidebar from "./DesktopSidebar";
 import { useGetCategories } from "@/services";
 import { useState } from "react";
 import MobileSheet from "./MobileSheet";
-import { useMenuFilters } from "@/hooks/business/useMenuFilters";
+import { useMenuFiltersNuqs } from "@/hooks/business/useMenuFiltersNuqs";
 
 const MenuFiltersSidebar = () => {
   const { data: categories } = useGetCategories();
 
   const [isOpen, setIsOpen] = useState(false);
+
   const {
     filters,
-    updateFilter,
-    resetFilters,
+    setFilters,
+    clearFilters,
     hasActiveFilters,
     DEFAULT_MIN,
     DEFAULT_MAX,
-    handleMinPriceInputChange,
-    handleMaxPriceInputChange,
-  } = useMenuFilters();
+  } = useMenuFiltersNuqs();
 
   const FilterSectionHeader = ({ title }: { title: string }) => (
     <div className="flex items-center gap-3 mb-4">
@@ -37,24 +36,24 @@ const MenuFiltersSidebar = () => {
       <DesktopSidebar
         categories={categories?.data || []}
         filters={filters}
-        updateFilter={updateFilter}
-        resetFilters={resetFilters}
+        updateFilter={setFilters}
+        resetFilters={clearFilters}
         hasActiveFilters={hasActiveFilters}
         FilterSectionHeader={FilterSectionHeader}
-        DEFAULT_MIN={DEFAULT_MIN || 0}
-        DEFAULT_MAX={DEFAULT_MAX || 200000}
-        handleMinPriceInputChange={handleMinPriceInputChange}
-        handleMaxPriceInputChange={handleMaxPriceInputChange}
+        DEFAULT_MIN={DEFAULT_MIN}
+        DEFAULT_MAX={DEFAULT_MAX}
+        handleMinPriceInputChange={() => {}}
+        handleMaxPriceInputChange={() => {}}
       />
       <MobileSheet
         categories={categories?.data || []}
         FilterSectionHeader={FilterSectionHeader}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        handleMinPriceInputChange={handleMinPriceInputChange}
-        handleMaxPriceInputChange={handleMaxPriceInputChange}
-        DEFAULT_MIN={DEFAULT_MIN || 0}
-        DEFAULT_MAX={DEFAULT_MAX || 200000}
+        handleMinPriceInputChange={() => {}}
+        handleMaxPriceInputChange={() => {}}
+        DEFAULT_MIN={DEFAULT_MIN}
+        DEFAULT_MAX={DEFAULT_MAX}
       />
     </>
   );

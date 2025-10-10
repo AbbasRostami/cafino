@@ -57,7 +57,7 @@ export interface MenuItemCardProps {
 }
 
 export interface SearchBarProps {
-  input: string ;
+  input: string;
   handleSearchChange: (value: string) => void;
 }
 
@@ -175,3 +175,15 @@ export interface MenusWrapperProps {
     limit: number;
   };
 }
+
+// Menu Filters Types
+export type MenuFilters = {
+  search?: string;
+  page?: number;
+  limit?: number;
+  category?: string | null;
+  sortBy?: string | null;
+  minPrice?: number | null;
+  maxPrice?: number | null;
+  availableOnly?: string | null;
+};

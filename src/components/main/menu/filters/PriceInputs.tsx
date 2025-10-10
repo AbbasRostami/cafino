@@ -13,16 +13,6 @@ export const PriceInputs = ({
   defaultMax,
   className,
 }: PriceInputsProps) => {
-  const handleMinPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value) || defaultMin;
-    onMinPriceChange(Math.max(defaultMin, Math.min(value, maxPrice)));
-  };
-
-  const handleMaxPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value) || defaultMax;
-    onMaxPriceChange(Math.max(minPrice, Math.min(value, defaultMax)));
-  };
-
   return (
     <div className={cn("space-y-3", className)}>
       <div className="grid grid-cols-2 gap-3">
@@ -38,7 +28,7 @@ export const PriceInputs = ({
               id="max-price"
               type="number"
               value={maxPrice === defaultMax ? "" : maxPrice}
-              onChange={handleMaxPriceChange}
+              onChange={(e) => onMaxPriceChange(Number(e.target.value))}
               placeholder={String(defaultMax)}
               className="pr-8 text-sm [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               min={minPrice}
@@ -62,8 +52,8 @@ export const PriceInputs = ({
               id="min-price"
               type="number"
               value={minPrice === defaultMin ? "" : minPrice}
-              onChange={handleMinPriceChange}
               placeholder={String(defaultMin)}
+              onChange={(e) => onMinPriceChange(Number(e.target.value))}
               className="pr-8 text-sm [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               min={defaultMin}
               max={maxPrice}

@@ -1,8 +1,3 @@
-import {
-  getMenuQueryParams,
-  convertSearchParamsToURLSearchParams,
-} from "@/utils/queryParams";
-import { getItemsServer } from "@/services/server";
 import { Suspense } from "react";
 import Menus from "@/components/main/menu/Menus";
 import type { Metadata, ResolvingMetadata } from "next";
@@ -10,12 +5,13 @@ import { buildMenuMetadata } from "@/lib/metadata";
 import { GenerateProps } from "@/types/main";
 import { MenuSkeleton } from "@/components/skeleton";
 import { MenuHeader } from "@/components/main/menu";
+import { loadMenuSearchParams } from "@/utils/menuSearchParams";
+import { buildQueryString } from "@/utils/menuSearchParams";
+import { getItemsServer } from "@/services/server";
 
 export default async function MenuPage({ searchParams }: GenerateProps) {
-  const resolvedSearchParams = await searchParams;
-  const urlSearchParams =
-    convertSearchParamsToURLSearchParams(resolvedSearchParams);
-  const { queryString } = getMenuQueryParams(urlSearchParams);
+  const filters = await loadMenuSearchParams(searchParams);
+  const queryString = buildQueryString(filters);
 
   return (
     <div className="min-h-screen pt-28 md:pt-32 px-4 text-gray-800 dark:text-gray-200">
@@ -38,10 +34,8 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const resolvedSearchParams = await searchParams;
-  const urlSearchParams =
-    convertSearchParamsToURLSearchParams(resolvedSearchParams);
-
-  const { queryString } = getMenuQueryParams(urlSearchParams);
+  const filters = await loadMenuSearchParams(searchParams);
+  const queryString = buildQueryString(filters);
 
   const menuData = await getItemsServer({ queryString });
   const previousImages = (await parent).openGraph?.images || [];

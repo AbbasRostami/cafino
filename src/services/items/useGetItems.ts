@@ -14,6 +14,7 @@ export const useGetItems = (
   return useGet<MenuItemResponse>(endpoint, {
     queryKey: ["items", queryString],
     initialData: initialData,
+    staleTime: 0,
   });
 };
 

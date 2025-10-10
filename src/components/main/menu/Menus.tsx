@@ -1,13 +1,11 @@
 "use client";
 import dynamic from "next/dynamic";
-import { useSearchParams } from "next/navigation";
 import { useGetItems } from "@/services";
-import { getMenuQueryParams } from "@/utils/queryParams";
 import { SearchBar } from "./filters/SearchBar";
 import { MenuControls } from "./filters/MenuControls";
 import { EmptyState, MenuGrid, MenuPagination } from ".";
-import { useMenuFilters } from "@/hooks/business/useMenuFilters";
 import { MenuItemResponse } from "@/types/main/menu";
+import { useMenuFiltersNuqs } from "@/hooks/business/useMenuFiltersNuqs";
 
 const MenuFiltersSidebar = dynamic(
   () => import("./filters/MenuFiltersSidebar"),
@@ -21,32 +19,28 @@ export default function Menus({
 }: {
   initialData: MenuItemResponse;
 }) {
-  const searchParams = useSearchParams();
-  const { queryString } = getMenuQueryParams(searchParams);
-
-  const { data: items } = useGetItems(queryString, initialData);
-
   const {
+    filters,
+    queryString,
+    setFilters,
     viewMode,
-    input,
-    setInput,
-    selectedSortBy,
-    pageParam,
-    limitParam,
-    handleSortChange,
     handleViewModeChange,
-    goToPage,
     clearFilters,
-  } = useMenuFilters();
+    handleSearchChange,
+  } = useMenuFiltersNuqs();
+  const { data: items } = useGetItems(queryString, initialData);
 
   const itemsList = items?.data?.items || [];
   const totalParam = Number(items?.data?.total || 0);
-  const totalPages = Math.max(1, Math.ceil(totalParam / limitParam));
-  const currentPage = pageParam;
+  const totalPages = Math.max(1, Math.ceil(totalParam / filters.limit));
+  const currentPage = filters.page;
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <SearchBar input={input} setInput={setInput} />
+      <SearchBar
+        input={filters.search}
+        handleSearchChange={handleSearchChange}
+      />
 
       <div className="flex flex-col xl:flex-row gap-6">
         <div className="h-full shrink-0">
@@ -55,8 +49,8 @@ export default function Menus({
 
         <div className="flex-1">
           <MenuControls
-            selectedSortBy={selectedSortBy}
-            onSortChange={handleSortChange}
+            selectedSortBy={filters.sortBy || ""}
+            onSortChange={(value) => setFilters({ sortBy: value, page: 1 })}
             viewMode={viewMode}
             onViewModeChange={handleViewModeChange}
             onClearFilters={clearFilters}
@@ -74,7 +68,7 @@ export default function Menus({
         <MenuPagination
           currentPage={currentPage}
           totalPages={totalPages}
-          onPageChange={goToPage}
+          onPageChange={(page) => setFilters({ page })}
         />
       )}
     </div>
