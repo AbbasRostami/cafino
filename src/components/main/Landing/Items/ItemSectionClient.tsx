@@ -308,7 +308,7 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
                                 stockStatus?.isOutOfStock
                                   ? "text-red-500"
                                   : stockStatus?.isLowStock
-                                  ? "text-amber-500"
+                                  ? "text-red-500"
                                   : stockStatus?.isMediumStock
                                   ? "text-yellow-500"
                                   : "text-green-500"

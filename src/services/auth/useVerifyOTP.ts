@@ -7,7 +7,7 @@ export const useVerifyOTP = () => {
   const { mutate, isPending, error } = usePost<
     any,
     { phone: string; otpCode: string }
-  >(() => "/v1/auth/verfiy-otp", undefined, {
+  >(() => "/v1/auth/verify-otp", undefined, {
     onSuccess: () => {
       setAuthenticated(true);
       toast.success("با موفقیت وارد شدید!");

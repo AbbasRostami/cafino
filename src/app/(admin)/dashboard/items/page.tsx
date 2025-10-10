@@ -27,7 +27,6 @@ export default function Items() {
     search: "",
     sortBy: "newest",
   });
-  console.log(filters);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<any>(null);
   const [debouncedSearch] = useDebounce(filters.search, 500);

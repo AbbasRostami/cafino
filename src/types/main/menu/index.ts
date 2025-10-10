@@ -57,8 +57,8 @@ export interface MenuItemCardProps {
 }
 
 export interface SearchBarProps {
-  input: string;
-  setInput: (value: string) => void;
+  input: string ;
+  handleSearchChange: (value: string) => void;
 }
 
 export interface MenuControlsProps {

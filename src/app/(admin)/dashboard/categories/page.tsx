@@ -13,7 +13,6 @@ export default function Categories() {
     limit: 10,
     search: "",
   });
-  console.log(filters);
   const { categories, isLoading, total } = useGetCategoriesAdmin({
     page: filters.page,
     limit: filters.limit,
