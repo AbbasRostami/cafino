@@ -77,6 +77,11 @@ export async function fetchWithAuth(url: string, options: RequestInit = {}) {
       }
     }
 
+    if (response.status === 403) {
+      toast.error("دسترسی شما به این بخش محدود شده است");
+      throw { status: 403, message: "دسترسی محدود شده" };
+    }
+
     if (response.ok) {
       return await response.json();
     }

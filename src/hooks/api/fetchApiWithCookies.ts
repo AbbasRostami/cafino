@@ -35,6 +35,9 @@ export const fetchWithServer = async (
       next: options.next ?? { revalidate: 3600 },
     });
 
+    if (response.status === 403) {
+      throw new Error("دسترسی شما به این بخش محدود شده است");
+    }
     return response;
   } catch (error) {
     console.error("❌ Server API error:", error);

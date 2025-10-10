@@ -51,7 +51,7 @@ export async function middleware(request: NextRequest) {
   const role = await fetchRole(request);
 
   if (!role || !requiredRoles.includes(role)) {
-    return NextResponse.redirect(new URL("/", request.url));
+    return NextResponse.rewrite(new URL("/forbidden", request.url));
   }
 
   return NextResponse.next();
