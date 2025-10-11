@@ -34,10 +34,15 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Content-Security-Policy",
-            value:
-              process.env.NODE_ENV === "development"
-                ? "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src *; img-src 'self' data: https://cafino.storage.c2.liara.space; font-src 'self' data:; object-src 'none'; frame-ancestors 'none';"
-                : "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://cafino.storage.c2.liara.space https://api.cafinoo.com; img-src 'self' https://cafino.storage.c2.liara.space data:; font-src 'self' data:; object-src 'none'; frame-ancestors 'none';",
+            value: `
+              default-src 'self';
+              script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cafino.storage.c2.liara.space https://api.cafinoo.com;
+              style-src 'self' 'unsafe-inline';
+              img-src 'self' data: blob: https://cafino.storage.c2.liara.space;
+              connect-src 'self' https://api.cafinoo.com https://cafino.storage.c2.liara.space;
+              font-src 'self' data:;
+              frame-ancestors 'none';
+            `.replace(/\n/g, ""),
           },
         ],
       },
