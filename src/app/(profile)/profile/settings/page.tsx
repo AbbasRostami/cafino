@@ -39,7 +39,7 @@ export default function SettingsPage() {
   if (isLoading) return <ProfileSkeleton />;
 
   return (
-    <div className="py-8">
+    <div className="py-8 pb-16">
       <SettingsHeader />
 
       <div className="bg-white/90 dark:bg-gray-900/90 border border-gray-200 dark:border-gray-800 mt-4 px-4 py-6 rounded-2xl space-y-4">
@@ -51,13 +51,15 @@ export default function SettingsPage() {
           onAvatarChange={handleAvatarChange}
           onRemoveImage={handleRemoveImage}
         />
-        <Button
-          onClick={() => setIsEditing(true)}
-          className="w-full md:w-fit px-8 py-4 hover:scale-105 transition-all duration-300 bg-gradient-to-r from-amber-500 to-orange-500 text-gray-700 hover:bg-amber-700"
-        >
-          ویرایش
-        </Button>
         <ProfileInfo user={user} />
+        <div className="flex justify-end">
+          <Button
+            onClick={() => setIsEditing(true)}
+            className="w-full md:w-fit px-8 py-4 hover:scale-105 transition-all duration-300 bg-gradient-to-r from-amber-500 to-orange-500 text-gray-700 hover:bg-amber-700"
+          >
+            ویرایش
+          </Button>
+        </div>
       </div>
 
       <EditModal

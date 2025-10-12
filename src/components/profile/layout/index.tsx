@@ -110,8 +110,12 @@ export default function Sidebar() {
             >
               {user?.first_name} {user?.last_name}
             </MotionH3>
-            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-              عضویت: {formatJalaliDate(user?.created_at as unknown as string)}
+            <p className="text-sm font-medium text-gray-500 dark:text-gray-400 space-x-1">
+              <span className="font-bold">عضویت:</span>
+              <span className="font-medium">
+                {" "}
+                {formatJalaliDate(user?.created_at as string, "jYYYY/jMM/jDD")}
+              </span>
             </p>
           </div>
         </div>

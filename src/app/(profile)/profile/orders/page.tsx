@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useCancelOrder, useGetOrders } from "@/services";
+import { useGetOrders } from "@/services";
 import { OrderSkeleton } from "@/components/skeleton";
 import { GetOrdersParams } from "@/types/Profile";
 import { OrderAdmin } from "@/types/admin";
@@ -12,7 +12,6 @@ import {
   OrderDetailsModal,
   OrderCard,
 } from "@/components/profile/orders";
-import { confirm } from "@/components/shared/ConfirmModal";
 
 export default function OrdersPage() {
   const [selectedOrder, setSelectedOrder] = useState<OrderAdmin | null>(null);
@@ -34,12 +33,6 @@ export default function OrdersPage() {
   };
 
   const { data: orders, isLoading, total, page, limit } = useGetOrders(filters);
-
-  const {
-    mutate: CancelOrder,
-    isPending,
-    cancellingOrderId,
-  } = useCancelOrder();
 
   const totalPages = Math?.max(1, Math?.ceil(total / limit));
   const currentPage = page;
@@ -65,19 +58,6 @@ export default function OrdersPage() {
     setSelectedOrder(null);
   };
 
-  const handleCancelOrder = async (orderId: string) => {
-    const confirmed = await confirm({
-      title: "لغو سفارش",
-      description: "آیا مطمئن هستید که می‌خواهید این سفارش را لغو کنید؟",
-      confirmText: "لغو سفارش",
-      cancelText: "انصراف",
-    });
-
-    if (confirmed) {
-      CancelOrder(orderId);
-    }
-  };
-
   if (isLoading) {
     return <OrderSkeleton />;
   }
@@ -92,9 +72,6 @@ export default function OrdersPage() {
 
       <div className="flex flex-col gap-4 p-4 bg-white/90 dark:bg-gray-900/90 border border-gray-200 dark:border-gray-800 rounded-lg shadow-md">
         <OrderCard
-          isPending={isPending}
-          cancellingOrderId={cancellingOrderId}
-          CancelOrder={handleCancelOrder}
           orders={orders?.orders || []}
           onViewDetails={handleViewDetails}
         />

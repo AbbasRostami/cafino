@@ -16,6 +16,7 @@ export interface AddressFormProps {
   filteredCities: City[];
   formData: AddressFormData;
   onFormDataChange: (data: AddressFormData) => void;
+  isAdding: boolean;
 }
 // Address related types
 export interface Address {
@@ -87,4 +88,5 @@ export interface FormContentAddressProps {
   formData: AddressFormData;
   onFormDataChange: (data: AddressFormData) => void;
   onCancel: () => void;
+  isAdding: boolean;
 }

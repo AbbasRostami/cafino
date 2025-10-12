@@ -6,6 +6,7 @@ import FooterBottom from "../../main/Footer/FooterBottom";
 import FooterBackground from "../../main/Footer/FooterBackground";
 import { footerStructuredData } from "@/lib/metadata/footer";
 import Script from "next/script";
+import { Grid2X2, Home, Info, Menu, Phone } from "lucide-react";
 
 const footerData = {
   workingHours: [
@@ -15,19 +16,18 @@ const footerData = {
     { day: "چهار و پنجشنبه", time: "۹:۰۰ صبح – ۵:۰۰ عصر" },
     { day: "جمعه", time: "بسته" },
   ],
-
   quickLinks: [
-    { href: "/", text: "صفحه اصلی", icon: "🏠" },
-    { href: "/category", text: "دسته بندی", icon: "🍽️" },
-    { href: "/menu", text: "منو", icon: "📝" },
-    { href: "/about-us", text: "درباره ما", icon: "ℹ️" },
-    { href: "/contact-us", text: "تماس با ما", icon: "📞" },
+    { href: "/", text: "صفحه اصلی", icon: Home },
+    { href: "/category", text: "دسته بندی", icon: Grid2X2 },
+    { href: "/menu", text: "منو", icon: Menu },
+    { href: "/about-us", text: "درباره ما", icon: Info },
+    { href: "/contact-us", text: "تماس با ما", icon: Phone },
   ],
 
   contactInfo: [
     { icon: "MapPin", text: "تهران، خیابان ولیعصر، پلاک ۱۲۳" },
-    { icon: "Phone", text: "۰۲۱-۱۲۳۴۵۶۷۸" , href: "tel:02112345678" },
-    { icon: "Mail", text: "info@cafino.ir" , href: "mailto:info@cafino.ir" },
+    { icon: "Phone", text: "۰۲۱-۱۲۳۴۵۶۷۸", href: "tel:02112345678" },
+    { icon: "Mail", text: "info@cafino.ir", href: "mailto:info@cafino.ir" },
     { icon: "Clock", text: "همه روزه: ۸ صبح تا ۱۱ شب" },
   ],
 

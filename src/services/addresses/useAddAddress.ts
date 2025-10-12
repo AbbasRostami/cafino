@@ -14,8 +14,10 @@ export const useAddAddress = () => {
         toast.success("آدرس با موفقیت اضافه شد");
         queryClient.invalidateQueries({ queryKey: ["addresses"] });
       },
-      onError: () => {
-        toast.error("خطا در اضافه کردن آدرس");
+      onError: (error: any) => {
+        if (error.statusCode === 409) {
+          toast.error("شما به حداکثر تعداد آدرس های ذخیره شده رسیده اید.");
+        }
       },
     }
   );

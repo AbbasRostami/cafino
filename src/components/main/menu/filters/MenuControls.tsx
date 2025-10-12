@@ -40,16 +40,16 @@ export const MenuControls = ({
           </button>
         ))}
       </div>
-      <div className="items-center gap-1 justify-center md:justify-end hidden md:flex">
+      <div className="w-fit hidden md:flex justify-center md:justify-end items-center gap-2.5">
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
               variant="outline"
               onClick={() => onViewModeChange("grid")}
-              className={`p-5 rounded-xl transition-all shadow-md cursor-pointer hover:scale-105 ${
+              className={`w-fit h-fit px-6 py-3 rounded-xl transition-all shadow-md cursor-pointer hover:scale-105 ${
                 viewMode === "grid"
                   ? "bg-gradient-to-tr from-amber-500 to-orange-500 text-white"
-                  : "bg-white/70 dark:bg-gray-700/40 text-gray-700 dark:text-gray-200"
+                  : "bg-white/70 dark:bg-gray-700/60 te4t-gray-700 dark:text-gray-200"
               }`}
             >
               <Grid size={30} />
@@ -62,7 +62,7 @@ export const MenuControls = ({
             <Button
               variant="outline"
               onClick={() => onViewModeChange("list")}
-              className={`p-5 rounded-xl transition-all shadow-md cursor-pointer hover:scale-105 ${
+              className={`w-fit h-fit px-6 py-3 rounded-xl transition-all shadow-md cursor-pointer hover:scale-105 ${
                 viewMode === "list"
                   ? "bg-gradient-to-tr from-amber-500 to-orange-500 text-white"
                   : "bg-white/70 dark:bg-gray-700/40 text-gray-700 dark:text-gray-200"

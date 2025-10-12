@@ -37,7 +37,7 @@ export default function AddressesPage() {
   } = useDeleteAddress();
 
   const { mutate: updateAddress } = useUpdateAddress();
-  const { mutate: addAddress } = useAddAddress();
+  const { mutate: addAddress, isPending: isAdding } = useAddAddress();
   const { data: provincesData } = useGetProvinces();
   const { data: citiesData } = useGetCities();
 
@@ -121,7 +121,7 @@ export default function AddressesPage() {
             افزودن آدرس
           </Button>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-3">
           {addressesData?.length === 0 ? (
             <EmptyState onAddAddress={handleAddAddress} />
           ) : (
@@ -147,6 +147,7 @@ export default function AddressesPage() {
         filteredCities={filteredCities}
         formData={formData}
         onFormDataChange={updateFormData}
+        isAdding={isAdding}
       />
     </div>
   );

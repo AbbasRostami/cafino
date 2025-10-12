@@ -20,8 +20,9 @@ import {
   CommandList,
   CommandInput,
 } from "@/components/ui/command";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, Save } from "lucide-react";
 import { cn } from "@/utils/utils";
+import { Spinner } from "@/components/ui/spinner";
 
 export const FormContent = ({
   onSubmit,
@@ -31,6 +32,7 @@ export const FormContent = ({
   formData,
   onFormDataChange,
   onCancel,
+  isAdding,
 }: FormContentAddressProps) => {
   const form = useForm<AddressFormData>({
     resolver: zodResolver(addressFormSchema),
@@ -99,7 +101,7 @@ export const FormContent = ({
               <ChevronsUpDown className="opacity-50 h-4 w-4" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-full p-0">
+          <PopoverContent className="w-full p-0 border-none">
             <Command>
               <CommandInput placeholder="جستجوی استان..." className="h-9" />
               <CommandList className="max-h-56 overflow-y-auto">
@@ -151,7 +153,7 @@ export const FormContent = ({
               <ChevronsUpDown className="opacity-50 h-4 w-4" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-full p-0">
+          <PopoverContent className="w-full p-0 border-none">
             <Command>
               <CommandInput placeholder="جستجوی شهر..." className="h-9" />
               <CommandList className="max-h-56 overflow-y-auto">
@@ -196,17 +198,22 @@ export const FormContent = ({
           انصراف
         </Button>
         <Button
-          disabled={
-            !form.watch("address") ||
-            !form.watch("province") ||
-            !form.watch("city") ||
-            form?.formState?.isSubmitting
-          }
+          disabled={isAdding}
           type="submit"
           variant="default"
           className="rounded-lg bg-gradient-to-r from-amber-400 to-yellow-500 hover:to-yellow-600 text-gray-900 font-semibold shadow-md transition-all gap-2"
         >
-          {editingId ? "ذخیره تغییرات" : "افزودن آدرس"}
+          {isAdding ? (
+            <>
+              <Spinner />
+              <span>در حال ذخیره...</span>
+            </>
+          ) : (
+            <>
+              <Save />
+              <span>افزودن آدرس</span>
+            </>
+          )}
         </Button>
       </div>
     </MotionForm>

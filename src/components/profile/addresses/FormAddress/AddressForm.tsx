@@ -26,6 +26,7 @@ export const AddressForm = ({
   filteredCities,
   formData,
   onFormDataChange,
+  isAdding,
 }: AddressFormProps) => {
   const isMobile = useIsMobile();
 
@@ -43,6 +44,7 @@ export const AddressForm = ({
       formData={formData}
       onFormDataChange={onFormDataChange}
       onCancel={handleCancel}
+      isAdding={isAdding}
     />
   );
 

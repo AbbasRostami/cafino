@@ -85,17 +85,9 @@ export interface GetOrdersResponseProfile {
   limit: number;
 }
 
-export interface ChangeOrderStatusRequest {
-  id: string;
-  status: OrderStatus;
-}
-
 export interface OrderCardProps {
   orders: OrderProfile[];
   onViewDetails: (order: OrderAdmin) => void;
-  isPending: boolean;
-  cancellingOrderId: string | null;
-  CancelOrder: (orderId: string) => void;
 }
 
 export interface OrderDetailsModalProps {

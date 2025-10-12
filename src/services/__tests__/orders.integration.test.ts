@@ -6,7 +6,6 @@ import {
   useGetOrders,
   useGetOrdersAdmin,
   useChangeOrderStatus,
-  useCancelOrder,
 } from "../orders";
 
 vi.mock("sonner", () => ({
@@ -174,37 +173,6 @@ describe("Orders Services Integration", () => {
     });
   });
 
-  describe("useCancelOrder - لغو سفارش", () => {
-    it("باید hook را بدون خطا اجرا کند", () => {
-      const { result } = renderHook(() => useCancelOrder(), {
-        wrapper: createWrapper(),
-      });
-
-      expect(result.current).toBeDefined();
-      expect(result.current.mutate).toBeDefined();
-      expect(result.current.isPending).toBeDefined();
-      expect(result.current.error).toBeDefined();
-      expect(result.current.cancellingOrderId).toBeDefined();
-    });
-
-    it("باید mutate function را فراهم کند", () => {
-      const { result } = renderHook(() => useCancelOrder(), {
-        wrapper: createWrapper(),
-      });
-
-      expect(typeof result.current.mutate).toBe("function");
-    });
-
-    it("باید loading state را مدیریت کند", () => {
-      const { result } = renderHook(() => useCancelOrder(), {
-        wrapper: createWrapper(),
-      });
-
-      expect(result.current.isPending).toBe(false);
-      expect(result.current.cancellingOrderId).toBeNull();
-    });
-  });
-
   describe("Orders Management Integration - یکپارچگی مدیریت سفارشات", () => {
     it("باید تمام hooks را بدون خطا اجرا کند", () => {
       const { result: getOrdersResult } = renderHook(() => useGetOrders(), {
@@ -225,14 +193,9 @@ describe("Orders Services Integration", () => {
         }
       );
 
-      const { result: cancelOrderResult } = renderHook(() => useCancelOrder(), {
-        wrapper: createWrapper(),
-      });
-
       expect(getOrdersResult.current).toBeDefined();
       expect(getOrdersAdminResult.current).toBeDefined();
       expect(changeStatusResult.current).toBeDefined();
-      expect(cancelOrderResult.current).toBeDefined();
     });
 
     it("باید state management را درست مدیریت کند", () => {
@@ -258,12 +221,7 @@ describe("Orders Services Integration", () => {
         wrapper: createWrapper(),
       });
 
-      const { result: cancelOrderResult } = renderHook(() => useCancelOrder(), {
-        wrapper: createWrapper(),
-      });
-
       expect(getOrdersResult.current.error).toBeNull();
-      expect(cancelOrderResult.current.error).toBeNull();
     });
   });
 
@@ -275,17 +233,6 @@ describe("Orders Services Integration", () => {
       expect(result.current.mutate).toBeDefined();
       expect(typeof result.current.mutate).toBe("function");
       expect(result.current.variables).toBeDefined();
-    });
-
-    it("باید لغو سفارش را مدیریت کند", () => {
-      const { result } = renderHook(() => useCancelOrder(), {
-        wrapper: createWrapper(),
-      });
-
-      expect(result.current.mutate).toBeDefined();
-      expect(typeof result.current.mutate).toBe("function");
-
-      expect(result.current.cancellingOrderId).toBeNull();
     });
   });
 

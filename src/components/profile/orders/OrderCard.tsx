@@ -16,12 +16,7 @@ import {
 } from "@/utils/formatters";
 import { OrderCardProps, OrderProfile } from "@/types/Profile";
 
-export const OrderCard = ({
-  orders,
-  onViewDetails,
-  cancellingOrderId,
-  CancelOrder,
-}: OrderCardProps) => {
+export const OrderCard = ({ orders, onViewDetails }: OrderCardProps) => {
   return (
     <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
       {orders?.map((order: OrderProfile) => (
@@ -109,19 +104,6 @@ export const OrderCard = ({
               onClick={() => onViewDetails(order)}
             >
               مشاهده جزئیات
-            </Button>
-            <Button
-              variant="destructive"
-              className="w-full lg:w-auto bg-gradient-to-r from-rose-500 to-red-500 hover:from-rose-600 hover:to-red-600 hover:text-white border-0 shadow-lg hover:shadow-xl hover:shadow-rose-500/25 dark:hover:shadow-rose-400/20 transition-all duration-300 hover:scale-105 font-medium"
-              size="sm"
-              disabled={
-                cancellingOrderId === order?.id || order?.status === "canceled"
-              }
-              onClick={() => {
-                CancelOrder(order?.id);
-              }}
-            >
-              {cancellingOrderId === order?.id ? "در حال لغو..." : "لغو سفارش"}
             </Button>
           </CardFooter>
         </Card>

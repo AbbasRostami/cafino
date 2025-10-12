@@ -1,3 +1,5 @@
+import { LucideIcon } from "lucide-react";
+
 export interface WorkingHour {
   day: string;
   time: string;
@@ -6,7 +8,7 @@ export interface WorkingHour {
 export interface QuickLink {
   href: string;
   text: string;
-  icon: string;
+  icon: LucideIcon;
 }
 
 export interface ContactInfo {

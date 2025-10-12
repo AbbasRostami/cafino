@@ -29,10 +29,10 @@ const QuickLinks = ({ quickLinks }: QuickLinksProps) => {
             <Link
               data-testid="footer-link"
               href={link.href}
-              className="group flex items-center space-x-3 space-x-reverse text-gray-700 dark:text-gray-300 hover:text-amber-700 dark:hover:text-amber-400 transition-all duration-300 p-2 rounded-xl hover:bg-amber-50 dark:hover:bg-amber-900/10"
+              className="group flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-amber-700 dark:hover:text-amber-400 transition-all duration-300 p-2 rounded-xl hover:bg-amber-50 dark:hover:bg-amber-900/10"
             >
               <span className="text-lg transition-all duration-300 transform group-hover:scale-125 group-hover:text-amber-500">
-                {link.icon}
+                <link.icon />
               </span>
               <span className="relative text-base font-medium pb-1">
                 {link.text}

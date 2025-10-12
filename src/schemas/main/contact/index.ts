@@ -5,7 +5,7 @@ export const contactFormSchema = z.object({
     .string()
     .trim()
     .min(2, { message: "نام باید حداقل 2 کاراکتر باشد" })
-    .max(30, { message: "نام نمی‌تواند بیشتر از 30 کاراکتر باشد" }),
+    .max(100, { message: "نام نمی‌تواند بیشتر از 100 کاراکتر باشد" }),
   email: z.string().trim().email({ message: "ایمیل معتبر نیست" }),
   phone: z
     .string()
@@ -15,7 +15,7 @@ export const contactFormSchema = z.object({
     .string()
     .trim()
     .min(10, { message: "پیام باید حداقل 10 کاراکتر باشد" })
-    .max(100, { message: "پیام نمی‌تواند بیشتر از 100 کاراکتر باشد" }),
+    .max(1000, { message: "پیام نمی‌تواند بیشتر از 1000 کاراکتر باشد" }),
 });
 
 export type ContactFormData = z.infer<typeof contactFormSchema>;

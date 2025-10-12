@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Pencil, Trash2 } from "lucide-react";
+import { Loader2, Pencil, Trash2 } from "lucide-react";
 import { AddressCardProps } from "@/types/Profile";
 
 export const AddressCard = ({
@@ -33,8 +33,17 @@ export const AddressCard = ({
             onClick={() => onDelete()}
             className="rounded-lg gap-1"
           >
-            <Trash2 size={16} />
-            حذف
+            {isDeleting ? (
+              <>
+                <Loader2 className="animate-spin" size={16} />
+                <span className="font-medium text-sm">در حال حذف</span>
+              </>
+            ) : (
+              <>
+                <Trash2 size={16} />
+                <span className="font-medium text-sm">حذف</span>
+              </>
+            )}
           </Button>
         </div>
       </div>
