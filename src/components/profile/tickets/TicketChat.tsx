@@ -55,7 +55,7 @@ export default function TicketChat({ ticket, onBack }: TicketChatProps) {
   const { mutate: addMessageMutation } = useAddTicketMessage(ticket);
 
   const messages = messagesData?.data?.messages || [];
-  const isClosed = messagesData?.data?.tickets?.status === "closed";
+  const isClosed = messagesData?.data?.ticket?.status === "closed";
 
   const {
     register,
@@ -90,11 +90,7 @@ export default function TicketChat({ ticket, onBack }: TicketChatProps) {
     }
   };
 
-  const isUserMessage = (senderId: string) => {
-    return senderId === messagesData?.data?.tickets?.user?.id;
-  };
-
-  const status = messagesData?.data?.tickets?.status;
+  const status = messagesData?.data?.ticket?.status;
   const config = statusConfig[status as string];
 
   return (
@@ -112,7 +108,7 @@ export default function TicketChat({ ticket, onBack }: TicketChatProps) {
           <div>
             <h2 className="flex items-start gap-2 font-semibold text-gray-900 dark:text-gray-100">
               <span className="text-2xl"> • </span>
-              {messagesData?.data?.tickets?.subject}
+              {messagesData?.data?.ticket?.subject}
             </h2>
             <div className="flex items-center gap-2">
               <Badge
@@ -125,7 +121,7 @@ export default function TicketChat({ ticket, onBack }: TicketChatProps) {
               </Badge>
               <span className="text-sm text-gray-500 dark:text-gray-400">
                 {formatJalaliDate(
-                  messagesData?.data?.tickets?.created_at as string
+                  messagesData?.data?.ticket?.created_at as string
                 )}
               </span>
             </div>
@@ -137,81 +133,80 @@ export default function TicketChat({ ticket, onBack }: TicketChatProps) {
         {isLoading ? (
           <TicketChatSkeleton />
         ) : (
-          messages?.map((msg: TicketMessage) => (
-            <MotionDiv
-              key={msg?.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className={`flex gap-3 ${
-                isUserMessage(msg?.sender?.id) ? "flex-row" : "flex-row-reverse"
-              }`}
-            >
-              <div className="hidden sm:flex-shrink-0">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center overflow-hidden">
-                  {msg?.sender?.role === "admin" ? (
-                    <Shield size={16} className="text-white" />
-                  ) : (
-                    <p className="text-white">{msg?.sender?.username[0]}</p>
-                  )}
-                </div>
-              </div>
-
-              <div
-                className={`flex-1 max-w-xs sm:max-w-md ${
-                  isUserMessage(msg?.sender?.id) ? "text-right" : "text-left"
+          messages?.map((msg: TicketMessage) => {
+            const isUser = msg?.sender?.role === "user";
+            return (
+              <MotionDiv
+                key={msg?.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className={`flex gap-3 ${
+                  isUser ? "flex-row" : "flex-row-reverse"
                 }`}
               >
-                <div
-                  className={`${
-                    isUserMessage(msg?.sender?.id)
-                      ? "justify-start "
-                      : "justify-end"
-                  } flex items-center gap-2 mb-1.5 `}
-                >
-                  <div
-                    className={`flex items-center gap-2 ${
-                      isUserMessage(msg?.sender?.id)
-                        ? "flex-row"
-                        : "flex-row-reverse"
-                    }`}
-                  >
-                    {msg?.sender?.imageUrl ? (
-                      <Image
-                        src={msg?.sender?.imageUrl}
-                        alt={msg?.sender?.username}
-                        width={24}
-                        height={24}
-                        className="w-6 h-6 rounded-full object-cover"
-                      />
+                <div className="hidden sm:flex-shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center overflow-hidden">
+                    {msg?.sender?.role === "admin" ? (
+                      <Shield size={16} className="text-white" />
                     ) : (
-                      <p className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center overflow-hidden text-white">
-                        {msg?.sender?.username[0]}
-                      </p>
+                      <p className="text-white">{msg?.sender?.username[0]}</p>
                     )}
-                    <span className="text-right text-sm font-medium text-gray-900 dark:text-gray-100">
-                      {msg?.sender?.username}
-                    </span>
                   </div>
                 </div>
+
                 <div
-                  className={`p-3 rounded-lg min-h-[40px] sm:max-w-lg max-w-64 break-words ${
-                    isUserMessage(msg?.sender?.id)
-                      ? "bg-gradient-to-r from-amber-500 to-orange-500 text-white"
-                      : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                  className={`flex-1 max-w-xs sm:max-w-md ${
+                    isUser ? "text-right" : "text-left"
                   }`}
                 >
-                  <p className="text-sm whitespace-pre-wrap text-justify">
-                    {msg?.message}
-                  </p>
-                </div>
+                  <div
+                    className={`${
+                      isUser ? "justify-start " : "justify-end"
+                    } flex items-center gap-2 mb-1.5 `}
+                  >
+                    <div
+                      className={`flex items-center gap-2 ${
+                        isUser ? "flex-row" : "flex-row-reverse"
+                      }`}
+                    >
+                      {msg?.sender?.imageUrl ? (
+                        <Image
+                          src={msg?.sender?.imageUrl}
+                          alt={msg?.sender?.username}
+                          width={24}
+                          height={24}
+                          className="w-6 h-6 rounded-full object-cover"
+                        />
+                      ) : (
+                        <p className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center overflow-hidden text-white">
+                          {msg?.sender?.username[0]}
+                        </p>
+                      )}
+                      <span className="text-right text-sm font-medium text-gray-900 dark:text-gray-100">
+                        {msg?.sender?.username}
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    className={`p-3 rounded-lg min-h-[40px] sm:max-w-lg max-w-64 break-words ${
+                      isUser
+                        ? "bg-gradient-to-r from-amber-500 to-orange-500 text-white"
+                        : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                    }`}
+                  >
+                    <p className="text-sm whitespace-pre-wrap text-justify">
+                      {msg?.message}
+                    </p>
+                  </div>
 
-                <span className="text-xs text-gray-500 dark:text-gray-400 mt-1 block">
-                  {formatJalaliDate(msg?.created_at)}
-                </span>
-              </div>
-            </MotionDiv>
-          ))
+                  <span className="text-xs text-gray-500 dark:text-gray-400 mt-1 block">
+                    {formatJalaliDate(msg?.created_at)}
+                  </span>
+                </div>
+              </MotionDiv>
+            );
+          })
         )}
         <div ref={messagesEndRef} />
       </div>

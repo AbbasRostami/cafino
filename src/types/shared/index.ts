@@ -77,7 +77,7 @@ export interface GetTicketMessagesResponse {
   message: string;
   data: {
     total: number;
-    tickets: Ticket;
+    ticket: Ticket;
     messages: TicketMessage[];
   };
 }

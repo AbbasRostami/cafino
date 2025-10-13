@@ -108,7 +108,7 @@ export default function NewTicketForm({ list, onCancel }: NewTicketFormProps) {
                 />
                 <div className="flex justify-between items-center">
                   <p className="text-xs text-gray-500 dark:text-gray-400">
-                    {watchedValues?.subject?.length || 0}/50 کاراکتر
+                    {watchedValues?.subject?.length || 0}/100 کاراکتر
                   </p>
                   {errors?.subject && (
                     <p className="text-xs text-red-500 dark:text-red-400">
@@ -135,13 +135,13 @@ export default function NewTicketForm({ list, onCancel }: NewTicketFormProps) {
                       ? "border-red-500 focus:border-red-500 focus:ring-red-500"
                       : ""
                   }`}
-                  maxLength={500}
+                  maxLength={1000}
                   onKeyDown={handleKeyPress}
                 />
 
                 <div className="flex justify-between items-center">
                   <p className="text-xs text-gray-500 dark:text-gray-400">
-                    {watchedValues?.message?.length || 0}/500 کاراکتر
+                    {watchedValues?.message?.length || 0}/1000 کاراکتر
                   </p>
                   {errors?.message && (
                     <p className="text-xs text-red-500 dark:text-red-400">

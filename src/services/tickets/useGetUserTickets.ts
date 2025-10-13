@@ -1,6 +1,6 @@
 import { useGet } from "@/hooks/api/useReactQueryHooks";
 import { TicketFilters } from "@/types/Profile";
-import { GetTicketMessagesResponse } from "@/types/Profile/tickets";
+import { GetUserTicketsResponse } from "@/types/Profile/tickets";
 
 export const useGetUserTickets = (params?: TicketFilters) => {
   const queryParams = new URLSearchParams();
@@ -16,7 +16,7 @@ export const useGetUserTickets = (params?: TicketFilters) => {
     queryParams.toString() ? `?${queryParams.toString()}` : ""
   }`;
 
-  return useGet<GetTicketMessagesResponse>(endpoint, {
+  return useGet<GetUserTicketsResponse>(endpoint, {
     queryKey: ["user-tickets", params],
   });
 };
