@@ -74,7 +74,7 @@ export default function AdminTicketChatModal({
   const { mutate: addMessageMutation } = useAddTicketMessage(ticketId || "");
 
   const messages = messagesData?.data?.messages || [];
-  const isClosed = messagesData?.data?.tickets?.status === "closed";
+  const isClosed = messagesData?.data?.ticket?.status === "closed";
 
   const {
     register,
@@ -112,23 +112,19 @@ export default function AdminTicketChatModal({
     }
   };
 
-  const isAdminMessage = (senderRole: string) => {
-    return senderRole === "admin";
-  };
-
-  const status = messagesData?.data?.tickets?.status;
+  const status = messagesData?.data?.ticket?.status;
   const config = statusConfig[status as string];
 
   const ChatContent = () => (
-    <>
-      <div className="p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+    <div className="flex flex-col h-full max-h-[90vh] overflow-hidden">
+      <div className="p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 flex-shrink-0">
         <div className="flex items-center justify-between">
           <div className="flex  items-center gap-3">
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-2">
                 <span className="text-2xl"> • </span>
                 <span className="font-semibold text-gray-900 dark:text-gray-100">
-                  {messagesData?.data?.tickets?.subject || "تیکت"}
+                  {messagesData?.data?.ticket?.subject || "تیکت"}
                 </span>
               </div>
               <div className="flex flex-col sm:flex-row items-center gap-2">
@@ -142,7 +138,7 @@ export default function AdminTicketChatModal({
                 </Badge>
                 <span className="text-sm text-gray-500 dark:text-gray-400">
                   {formatJalaliDate(
-                    messagesData?.data?.tickets?.created_at as string
+                    messagesData?.data?.ticket?.created_at as string
                   )}
                 </span>
               </div>
@@ -151,119 +147,127 @@ export default function AdminTicketChatModal({
 
           <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
             <User size={16} />
-              <span>{messagesData?.data?.tickets?.user?.username}</span>
+            <span>{messagesData?.data?.ticket?.user?.username}</span>
           </div>
         </div>
       </div>
 
-      <div className="flex-1  max-h-[210px] md:max-h-[360px] overflow-y-auto p-4 space-y-4 bg-white dark:bg-gray-900">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-white dark:bg-gray-900 min-h-0">
         {isLoading ? (
           <AdminTicketChatSkeleton />
         ) : (
-          messages?.map((msg: TicketMessage) => (
-            <MotionDiv
-              key={msg?.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className={`flex gap-3 ${
-                isAdminMessage(msg?.sender?.role)
-                  ? "flex-row"
-                  : "flex-row-reverse"
-              }`}
-            >
-              <div className="hidden sm:flex-shrink-0">
-                <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center overflow-hidden ${
-                    isAdminMessage(msg?.sender?.role)
-                      ? "bg-gradient-to-br from-blue-500 to-purple-600"
-                      : "bg-gradient-to-br from-amber-400 to-orange-500"
-                  }`}
-                >
-                  {isAdminMessage(msg?.sender?.role) ? (
-                    <Shield size={16} className="text-white" />
-                  ) : (
-                    <p className="text-white text-sm font-medium">
-                      {msg?.sender?.username[0]}
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              <div
-                className={`flex-1 max-w-xs sm:max-w-md  ${
-                  isAdminMessage(msg?.sender?.role) ? "text-right" : "text-left"
+          messages?.map((msg: TicketMessage) => {
+            const isAdminMessage = msg?.sender?.role === "admin";
+            return (
+              <MotionDiv
+                key={msg?.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className={`flex gap-3 ${
+                  isAdminMessage ? "flex-row" : "flex-row-reverse"
                 }`}
               >
-                <div
-                  className={`flex items-center gap-2 mb-1.5 ${
-                    isAdminMessage(msg?.sender?.role)
-                      ? "flex-row"
-                      : "flex-row-reverse"
-                  }`}
-                >
-                  {msg?.sender?.imageUrl ? (
-                    <Image
-                      src={msg?.sender?.imageUrl}
-                      alt={msg?.sender?.username}
-                      width={24}
-                      height={24}
-                      className="w-6 h-6 rounded-full object-cover"
-                    />
-                  ) : (
-                    <p className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center overflow-hidden text-white">
-                      {msg?.sender?.username[0]}
-                    </p>
-                  )}
-                  <span className="text-right text-sm font-medium text-gray-900 dark:text-gray-100">
-                    {msg?.sender?.username}
-                  </span>
-                </div>
-                <div
-                  className={`p-3 rounded-lg min-h-[40px] sm:max-w-lg max-w-64 break-words ${
-                    isAdminMessage(msg?.sender?.role)
-                      ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
-                      : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100"
-                  }`}
-                >
-                  <p className="text-sm whitespace-pre-wrap text-justify">
-                    {msg?.message}
-                  </p>
+                <div className="hidden sm:flex-shrink-0">
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center overflow-hidden ${
+                      isAdminMessage
+                        ? "bg-gradient-to-br from-blue-500 to-purple-600"
+                        : "bg-gradient-to-br from-amber-400 to-orange-500"
+                    }`}
+                  >
+                    {isAdminMessage ? (
+                      <Shield size={16} className="text-white" />
+                    ) : (
+                      <p className="text-white text-sm font-medium">
+                        {msg?.sender?.username[0]}
+                      </p>
+                    )}
+                  </div>
                 </div>
 
-                <span className="text-xs text-gray-500 dark:text-gray-400 mt-1 block">
-                  {formatJalaliDate(msg?.created_at)}
-                </span>
-              </div>
-            </MotionDiv>
-          ))
+                <div
+                  className={`flex-1 max-w-xs sm:max-w-md  ${
+                    isAdminMessage ? "text-right" : "text-left"
+                  }`}
+                >
+                  <div
+                    className={`flex items-center gap-2 mb-1.5 ${
+                      isAdminMessage ? "flex-row" : "flex-row-reverse"
+                    }`}
+                  >
+                    {msg?.sender?.imageUrl ? (
+                      <Image
+                        src={msg?.sender?.imageUrl}
+                        alt={msg?.sender?.username}
+                        width={24}
+                        height={24}
+                        className="w-6 h-6 rounded-full object-cover"
+                      />
+                    ) : (
+                      <p className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center overflow-hidden text-white">
+                        {msg?.sender?.username[0]}
+                      </p>
+                    )}
+                    <span className="text-right text-sm font-medium text-gray-900 dark:text-gray-100">
+                      {msg?.sender?.username}
+                    </span>
+                  </div>
+                  <div
+                    className={`p-3 rounded-lg min-h-[40px] sm:max-w-lg max-w-64 break-words ${
+                      isAdminMessage
+                        ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
+                        : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                    }`}
+                  >
+                    <p className="text-sm whitespace-pre-wrap text-justify">
+                      {msg?.message}
+                    </p>
+                  </div>
+
+                  <span className="text-xs text-gray-500 dark:text-gray-400 mt-1 block">
+                    {formatJalaliDate(msg?.created_at)}
+                  </span>
+                </div>
+              </MotionDiv>
+            );
+          })
         )}
         <div ref={messagesEndRef} />
       </div>
 
       {!isClosed ? (
-        <div className="p-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex gap-3">
-              <div className="flex-1 space-y-2">
-                <Textarea
-                  {...register("message")}
-                  onKeyDown={handleKeyPress}
-                  placeholder="پاسخ خود را بنویسید..."
-                  className={`min-h-[40px] max-h-32 resize-none ${
-                    errors?.message
-                      ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-                      : ""
-                  }`}
-                  disabled={isSubmitting}
-                />
+        <div className="p-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 flex-shrink-0">
+          <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+            <div className="w-full space-y-2">
+              <Textarea
+                {...register("message")}
+                onKeyDown={handleKeyPress}
+                placeholder="پاسخ خود را بنویسید..."
+                className={`w-full min-h-[40px] max-h-32 resize-none overflow-y-auto ${
+                  errors?.message
+                    ? "border-red-500 focus:border-red-500 focus:ring-red-500"
+                    : ""
+                }`}
+                disabled={isSubmitting}
+                style={{
+                  minHeight: "40px",
+                  maxHeight: "128px",
+                  overflowY: "auto",
+                }}
+                onFocus={(e) => {
+                  e.stopPropagation();
+                }}
+                onBlur={(e) => {
+                  e.stopPropagation();
+                }}
+              />
 
-                {errors?.message && (
-                  <p className="text-xs text-red-500 dark:text-red-400">
-                    {errors?.message?.message}
-                  </p>
-                )}
-              </div>
+              {errors?.message && (
+                <p className="text-xs text-red-500 dark:text-red-400">
+                  {errors?.message?.message}
+                </p>
+              )}
             </div>
             <p className="hidden md:block text-xs font-medium text-gray-600 dark:text-gray-300 mt-2">
               Enter برای ارسال • Shift+Enter برای خط جدید
@@ -277,17 +281,18 @@ export default function AdminTicketChatModal({
           </p>
         </div>
       )}
-    </>
+    </div>
   );
 
   if (isMobile) {
     return (
       <Drawer open={isOpen} onOpenChange={onClose}>
-        <DrawerContent className="!h-full   p-0">
+        <DrawerContent className="!h-full p-0 border-none flex flex-col focus:outline-none focus-visible:outline-none">
           <VisuallyHidden>
             <DrawerTitle>مشاهده تیکت</DrawerTitle>
             <DrawerDescription>مشاهده تیکت</DrawerDescription>
           </VisuallyHidden>
+
           <ChatContent />
         </DrawerContent>
       </Drawer>
@@ -298,12 +303,14 @@ export default function AdminTicketChatModal({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
         showCloseButton={false}
-        className="min-w-4xl h-[90vh] p-0 overflow-hidden"
+        className="min-w-4xl h-[90vh] border-none p-0 gap-0 rounded-2xl flex flex-col focus:outline-none focus-visible:outline-none"
+        onOpenAutoFocus={(e) => e.preventDefault()}
       >
         <VisuallyHidden>
           <DialogTitle>مشاهده تیکت</DialogTitle>
           <DialogDescription>مشاهده تیکت</DialogDescription>
         </VisuallyHidden>
+
         <ChatContent />
       </DialogContent>
     </Dialog>

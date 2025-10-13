@@ -45,8 +45,8 @@ export default function ViewMessageModal({
       transition={{ duration: 0.3 }}
       className="space-y-4"
     >
-      <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 space-y-3">
-        <h3 className="font-semibold text-gray-800 dark:text-white mb-3">
+      <div className="rounded-lg p-2 space-y-3">
+        <h3 className="font-semibold text-gray-800 dark:text-white mb-3 text-center">
           اطلاعات تماس
         </h3>
 
@@ -100,14 +100,14 @@ export default function ViewMessageModal({
         </div>
       </div>
 
-      <div className="bg-white rounded-lg dark:bg-gray-700 p-4 border-t border-gray-200 dark:border-gray-600">
+      <div className="p-4 border-t">
         <div className="flex items-center gap-2 mb-3">
           <MessageSquare className="h-5 w-5 text-amber-600" />
           <h3 className="font-semibold text-gray-800 dark:text-white">
             متن پیام
           </h3>
         </div>
-        <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+        <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
           <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
             {contact?.message || ""}
           </p>
@@ -146,7 +146,7 @@ export default function ViewMessageModal({
         </div>
       )}
 
-      <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-600">
+      <div className="flex justify-end gap-3 pt-4 border-t">
         <Button variant="outline" onClick={onClose}>
           بستن
         </Button>

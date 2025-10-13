@@ -83,9 +83,9 @@ export default function ReplyModal({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="space-y-4"
+      className="space-y-4 !border-none"
     >
-      <div className="rounded-lg p-4">
+      <div className="rounded-lg">
         <h3 className="font-semibold text-gray-800 dark:text-white mb-2">
           پاسخ به: {contact?.name}
         </h3>
@@ -266,14 +266,16 @@ export default function ReplyModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent showCloseButton={false} className="max-w-2xl">
+      <DialogContent showCloseButton={false} className="max-w-2xl !border-none">
         <DialogHeader>
           <VisuallyHidden>
             <DialogTitle>پاسخ به پیام</DialogTitle>
             <DialogDescription>پاسخ به پیام</DialogDescription>
           </VisuallyHidden>
         </DialogHeader>
-        <ModalContent />
+        <div className="px-4 pb-4 overflow-y-auto">
+          <ModalContent />
+        </div>
       </DialogContent>
     </Dialog>
   );
