@@ -43,6 +43,28 @@ export const formatJalaliDate = (
   return moment(dateString).locale("fa").format(format);
 };
 
+export const formatRetryAfter = (retryAfter: number): string => {
+  const hours = Math.floor(retryAfter / 3600);
+  const minutes = Math.ceil((retryAfter % 3600) / 60);
+
+  if (hours > 0) {
+    return minutes > 0 ? `${hours} ساعت و ${minutes} دقیقه` : `${hours} ساعت`;
+  }
+
+  return `${minutes} دقیقه`;
+};
+
+export const formatBlockType = (blockType: string): string => {
+  switch (blockType?.toLowerCase()) {
+    case "temporary":
+      return "موقت";
+    case "permanent":
+      return "دائمی";
+    default:
+      return "نامشخص";
+  }
+};
+
 export const getStockStatus = (quantity: number): StockStatus => {
   const isOutOfStock = quantity === 0;
   const isLowStock = quantity > 0 && quantity <= 3;
@@ -58,8 +80,7 @@ export const getStockStatus = (quantity: number): StockStatus => {
     progressColor = "bg-red-300";
   } else if (isLowStock) {
     stockMessage = `فقط ${quantity} عدد باقی مانده!`;
-    stockColor =
-      "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300";
+    stockColor = "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300";
     progressColor = "bg-gradient-to-r from-red-400 to-red-600";
   } else if (isMediumStock) {
     stockMessage = `موجودی محدود! فقط ${quantity} عدد در انبار`;

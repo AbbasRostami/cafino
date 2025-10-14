@@ -27,6 +27,17 @@ export const useLoginLogic = ({
           setStep("otp");
           setResendTimer(120);
         },
+        onError: (error: any) => {
+          if (error?.statusCode === 409) {
+            setPhoneValue(phone);
+            setStep("otp");
+            if (error?.retryAfter) {
+              setResendTimer(error.retryAfter);
+            } else {
+              setResendTimer(120);
+            }
+          }
+        },
       }
     );
   };

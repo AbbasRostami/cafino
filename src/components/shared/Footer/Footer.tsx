@@ -6,7 +6,21 @@ import FooterBottom from "../../main/Footer/FooterBottom";
 import FooterBackground from "../../main/Footer/FooterBackground";
 import { footerStructuredData } from "@/lib/metadata/footer";
 import Script from "next/script";
-import { Grid2X2, Home, Info, Menu, Phone } from "lucide-react";
+import {
+  Clock,
+  Facebook,
+  Grid2X2,
+  Home,
+  Info,
+  Instagram,
+  Mail,
+  MapPin,
+  Menu,
+  Phone,
+  Send,
+  Twitter,
+  Youtube,
+} from "lucide-react";
 
 const footerData = {
   workingHours: [
@@ -25,24 +39,24 @@ const footerData = {
   ],
 
   contactInfo: [
-    { icon: "MapPin", text: "تهران، خیابان ولیعصر، پلاک ۱۲۳" },
-    { icon: "Phone", text: "۰۲۱-۱۲۳۴۵۶۷۸", href: "tel:02112345678" },
-    { icon: "Mail", text: "info@cafino.ir", href: "mailto:info@cafino.ir" },
-    { icon: "Clock", text: "همه روزه: ۸ صبح تا ۱۱ شب" },
+    { icon: MapPin, text: "تهران، خیابان ولیعصر، پلاک ۱۲۳" },
+    { icon: Phone, text: "۰۲۱-۱۲۳۴۵۶۷۸", href: "tel:02112345678" },
+    { icon: Mail, text: "info@cafino.ir", href: "mailto:info@cafino.ir" },
+    { icon: Clock, text: "همه روزه: ۸ صبح تا ۱۱ شب" },
   ],
 
   socialMedia: [
-    { icon: "Facebook", color: "bg-blue-600", hover: "bg-blue-700", href: "#" },
+    { icon: Facebook, color: "bg-blue-600", hover: "bg-blue-700", href: "#" },
     {
-      icon: "Instagram",
+      icon: Instagram,
       color: "bg-gradient-to-r from-purple-500 to-pink-500",
       hover: "from-purple-600 to-pink-600",
       href: "#",
     },
-    { icon: "Twitter", color: "bg-blue-400", hover: "bg-blue-500", href: "#" },
-    { icon: "Youtube", color: "bg-red-600", hover: "bg-red-700", href: "#" },
+    { icon: Twitter, color: "bg-blue-400", hover: "bg-blue-500", href: "#" },
+    { icon: Youtube, color: "bg-red-600", hover: "bg-red-700", href: "#" },
     {
-      icon: "RiTelegram2Fill",
+      icon: Send,
       color: "bg-blue-600",
       hover: "bg-blue-700",
       href: "#",

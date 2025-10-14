@@ -6,7 +6,7 @@ import { formatJalaliDate } from "@/utils/formatters";
 
 export const Header = ({ user }: { user?: User | null }) => {
   return (
-    <Card className="border-none relative overflow-hidden bg-gradient-to-r from-rose-600 to-amber-500 dark:from-rose-800 dark:to-amber-700 rounded-3xl shadow-2xl p-6 sm:p-8 text-white">
+    <Card className="border-none relative overflow-hidden bg-gradient-to-r from-rose-600 to-amber-500 dark:from-rose-800 dark:to-amber-700 rounded-4xl shadow-2xl p-6 sm:p-8 text-white">
       <div className="relative z-10 flex flex-col xl:flex-row items-center justify-between gap-6">
         <div className="flex flex-col items-center md:items-start text-center md:text-right">
           <h1 className="text-3xl sm:text-4xl lg:text-4xl font-extrabold tracking-tight drop-shadow-md">

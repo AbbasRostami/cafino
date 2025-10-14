@@ -12,13 +12,13 @@ export interface QuickLink {
 }
 
 export interface ContactInfo {
-  icon: string;
+  icon: LucideIcon;
   text: string;
   href?: string;
 }
 
 export interface SocialMedia {
-  icon: string;
+  icon: LucideIcon;
   color: string;
   hover: string;
   href: string;

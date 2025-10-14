@@ -37,11 +37,11 @@ export function useAddToCartButtonLogic({
     : getCartItemCount(itemId);
 
   // React Query hooks for authenticated users
-  const { mutateAsync: addToCart, isPending: addLoading } = useAddToCart();
-  const { mutateAsync: incItem, isPending: incLoading } = useIncItem();
-  const { mutateAsync: decItem, isPending: decLoading } = useDecItem();
-  const { mutateAsync: removeItem, isPending: removeLoading } = useRemoveItem();
-  const { mutateAsync: clearCart, isPending: clearLoading } = useClearCart();
+  const { mutate: addToCart, isPending: addLoading } = useAddToCart();
+  const { mutate: incItem, isPending: incLoading } = useIncItem();
+  const { mutate: decItem, isPending: decLoading } = useDecItem();
+  const { mutate: removeItem, isPending: removeLoading } = useRemoveItem();
+  const { mutate: clearCart, isPending: clearLoading } = useClearCart();
 
   // Zustand store methods for guest users
   const {

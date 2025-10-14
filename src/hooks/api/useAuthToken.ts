@@ -47,6 +47,8 @@ const onError = async (response: Response, url: string) => {
   (customError as any).timestamp = errorData.timestamp;
   (customError as any).path = errorData.path || url;
   (customError as any).response = { data: errorData };
+  (customError as any).retryAfter = errorData.retryAfter;
+  (customError as any).blockType = errorData.blockType;
 
   throw customError;
 };

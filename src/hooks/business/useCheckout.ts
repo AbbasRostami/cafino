@@ -46,6 +46,7 @@ export const useCheckout = () => {
     reset,
     formState: { errors },
   } = useForm<DiscountFormValues>({
+    mode: "onChange",
     resolver: zodResolver(discountSchemaCheckout),
   });
 
