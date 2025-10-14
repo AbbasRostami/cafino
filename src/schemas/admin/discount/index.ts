@@ -2,7 +2,10 @@ import { z } from "zod";
 
 export const discountSchema = z
   .object({
-    code: z.string().min(1, "کد تخفیف الزامی است"),
+    code: z
+      .string()
+      .min(1, "کد تخفیف الزامی است")
+      .max(100, "کد تخفیف نمی‌تواند بیش از ۱۰۰ کاراکتر باشد"),
     discountType: z.enum(["percent", "amount"]),
     percent: z
       .union([
@@ -11,10 +14,16 @@ export const discountSchema = z
       ])
       .optional(),
     amount: z
-      .union([z.number().min(0, "مقدار نباید منفی باشد"), z.nan()])
+      .union([z.number().min(1000, "مقدار نباید کمتر از ۱۰۰۰ باشد"), z.nan()])
       .optional(),
-    expires_in: z.number().min(1, "تاریخ انقضا باید حداقل ۱ روز باشد"),
-    limit: z.number().min(0, "محدودیت نباید منفی باشد"),
+    expires_in: z
+      .number()
+      .min(1, "تاریخ انقضا باید حداقل ۱ روز باشد")
+      .max(1000, "تاریخ انقضا نمی‌تواند بیش از ۱۰۰۰ روز باشد"),
+    limit: z
+      .number()
+      .min(1, "محدودیت نباید کمتر از ۱ باشد")
+      .max(100, "محدودیت نمی‌تواند بیش از ۱۰۰ باشد"),
   })
   .refine(
     (data) => {
@@ -34,4 +43,4 @@ export const discountSchema = z
     }
   );
 
-  export  type DiscountFormType = z.infer<typeof discountSchema>;
+export type DiscountFormType = z.infer<typeof discountSchema>;
