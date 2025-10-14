@@ -12,16 +12,8 @@ import {
 } from "@/components/ui/select";
 import { columns } from "./columns";
 import { Contact } from "@/types/admin";
-import dynamic from "next/dynamic";
-
-const ReplyModal = dynamic(() => import("./modal-reply-and-edit/ReplyModal"), {
-  ssr: false,
-});
-
-const ViewMessageModal = dynamic(
-  () => import("./modal-reply-and-edit/ViewMessageModal"),
-  { ssr: false }
-);
+import ViewMessageModal from "./modal-reply-and-view/ViewMessageModal";
+import ReplyModal from "./modal-reply-and-view/ReplyModal";
 
 export default function Messages() {
   const [filters, setFilters] = useState({

@@ -55,7 +55,7 @@ export const columns = ({
                   alt="تصویر کاربر"
                   width={24}
                   height={24}
-                  className="rounded-full object-cover"
+                  className="w-8 h-8 rounded-full object-cover"
                 />
               </div>
             </>
@@ -64,7 +64,7 @@ export const columns = ({
               <div className="flex justify-center items-center gap-2">
                 <CircleUserRound
                   size={24}
-                  className="text-gray-500 dark:text-gray-400 rounded-full object-cover"
+                  className="text-gray-500 dark:text-gray-400 w-8 h-8 rounded-full object-cover"
                 />
               </div>
             </>

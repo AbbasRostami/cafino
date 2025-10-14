@@ -4,10 +4,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import { Send } from "lucide-react";
 import { useAddCommentAdmin } from "@/services";
 import { CommentSchema, FormValues } from "@/schemas/admin";
 import { CommentFormAdminProps } from "@/types/admin";
+import { Spinner } from "@/components/ui/spinner";
 
 export function CommentForm({
   itemId,
@@ -60,8 +61,17 @@ export function CommentForm({
           disabled={!isDirty || isPending || !isValid}
           className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600   text-white shadow-lg hover:shadow-xl transition-all duration-300 p-2 rounded-lg w-1/2"
         >
-          {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
-          {isPending ? "در حال ارسال..." : "ارسال نظر"}
+          {isPending ? (
+            <>
+              <Spinner />
+              درحال ارسال...
+            </>
+          ) : (
+            <>
+              <Send />
+              ارسال نظر
+            </>
+          )}
         </Button>
       </div>
     </form>

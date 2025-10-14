@@ -28,6 +28,7 @@ export const ModalContentDiscount = ({
     setValue,
   } = useForm<DiscountFormType>({
     resolver: zodResolver(discountSchema),
+    mode: "onChange",
     defaultValues: {
       code: "",
       discountType: "percent",
@@ -128,6 +129,10 @@ export const ModalContentDiscount = ({
                 type="number"
                 {...register("percent", {
                   setValueAs: (v) => (v === "" ? NaN : Number(v)),
+                  onChange: (e) => {
+                    const value = Number(e.target.value);
+                    if (value > 100) e.target.value = "100";
+                  },
                 })}
               />
               {errors?.percent && (

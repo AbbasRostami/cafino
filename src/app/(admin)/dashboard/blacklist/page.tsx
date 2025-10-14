@@ -22,6 +22,7 @@ export default function Blacklist() {
     isPending: isRemoving,
     variables: removingVars,
   } = useRemoveUserFromBlacklist();
+  
   const headerProps = useMemo(
     () => ({
       title: "لیست سیاه",
