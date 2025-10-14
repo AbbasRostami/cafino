@@ -38,7 +38,6 @@ export default function TicketsPage() {
     setView("list");
     setSelectedTicket(null);
   };
-  console.log("ticketsData", ticketsData?.data);
   return (
     <>
       <div className="h-full mb-12 ">

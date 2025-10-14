@@ -32,6 +32,9 @@ export const compressImage = async (
     const img = new Image();
 
     img.onload = () => {
+      const originalWidth = img.width;
+      const originalHeight = img.height;
+
       let { width, height } = img;
 
       if (width > height) {
@@ -45,7 +48,6 @@ export const compressImage = async (
           height = maxHeight;
         }
       }
-
       canvas.width = width;
       canvas.height = height;
 
@@ -58,6 +60,7 @@ export const compressImage = async (
               type: file.type,
               lastModified: Date.now(),
             });
+
             resolve(compressedFile);
           } else {
             reject(new Error("خطا در فشرده‌سازی تصویر"));

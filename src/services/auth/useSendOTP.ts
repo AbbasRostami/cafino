@@ -11,8 +11,6 @@ export const useSendOTP = () => {
         toast.success("کد تایید با موفقیت ارسال شد");
       },
       onError: (error: any) => {
-        console.log(error.blockType);
-
         switch (error?.statusCode) {
           case 403:
             toast.error("شماره تلفن شما در لیست سیاه قرار دارد");

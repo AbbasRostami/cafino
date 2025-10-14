@@ -67,7 +67,7 @@ export function ModalContent({ initialData, onClose }: ModalContentProps) {
     if (!selectedFile) return;
 
     const validationError = validateImageFile(selectedFile);
-    if (validationError) {  
+    if (validationError) {
       toast.error(validationError);
       return;
     }

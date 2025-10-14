@@ -3,8 +3,9 @@ import { MotionA, MotionDiv } from "@/utils/MotionWrapper";
 
 const ContactInfo = ({ contactInfo, socialMedia }: ContactInfoProps) => {
   return (
-    <div className="space-y-3 items-start h-full">
+    <div aria-label="اطلاعات تماس" className="space-y-3 items-start h-full">
       <MotionDiv
+        aria-label="اطلاعات تماس"
         className="relative pb-3 border-b border-amber-200 dark:border-amber-800/50"
         initial={{ opacity: 0, x: -20 }}
         whileInView={{ opacity: 1, x: 0 }}
@@ -21,6 +22,7 @@ const ContactInfo = ({ contactInfo, socialMedia }: ContactInfoProps) => {
           const IconComponent = contact.icon;
           return (
             <MotionDiv
+              aria-label={contact.text}
               key={index}
               className="group flex items-center gap-5 p-2 rounded-xl transition-all duration-300 hover:bg-amber-50 dark:hover:bg-amber-900/10"
               initial={{ opacity: 0, y: 20 }}
@@ -34,6 +36,7 @@ const ContactInfo = ({ contactInfo, socialMedia }: ContactInfoProps) => {
               <span className="text-gray-700 dark:text-gray-200 text-sm font-medium leading-relaxed">
                 {contact.href ? (
                   <a
+                    aria-label={contact.href}
                     href={contact.href}
                     className="hover:text-amber-600 transition-colors"
                   >
@@ -58,6 +61,7 @@ const ContactInfo = ({ contactInfo, socialMedia }: ContactInfoProps) => {
             const IconComponent = social.icon;
             return (
               <MotionA
+                aria-label={social.href}
                 key={index}
                 href={social.href}
                 className={`${social.color} w-10 h-10 rounded-full flex items-center justify-center text-white transition-all duration-300 hover:${social.hover} hover:scale-110 shadow-lg hover:shadow-xl`}

@@ -82,7 +82,6 @@ export default function OverviewPage() {
       </div>
 
       {userLoading ? <PromotionalBannerSkeleton /> : <PromotionalBanner />}
-
       {userLoading ? <QuickActionsSkeleton /> : <QuickActions />}
     </div>
   );

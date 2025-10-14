@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import {
   Trash2,
   Plus,
@@ -23,6 +24,9 @@ import { Badge } from "@/components/ui/badge";
 import { MotionDiv } from "@/utils/MotionWrapper";
 import { FormSectionsProps } from "@/types/admin";
 
+const MAX_DISCOUNT = 100;
+const IMAGE_SLOTS_COUNT = 5;
+
 export function FormSections({
   register,
   watch,
@@ -38,60 +42,62 @@ export function FormSections({
   removeImage,
   categories,
 }: FormSectionsProps) {
-  const imageSlots = Array.from({ length: 5 }, (_, index) => {
-    const hasImage = index < imagePreview?.length;
-    const imageUrl = hasImage ? imagePreview[index] : null;
-    const fileName = hasImage ? imageFiles?.[index]?.name : null;
+  const imageSlots = useMemo(() => {
+    return Array.from({ length: IMAGE_SLOTS_COUNT }, (_, index) => {
+      const hasImage = index < imagePreview?.length;
+      const imageUrl = hasImage ? imagePreview[index] : null;
+      const fileName = hasImage ? imageFiles?.[index]?.name : null;
 
-    return (
-      <MotionDiv
-        key={index}
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: index * 0.1 }}
-        className={`relative group border-2 border-dashed rounded-lg transition-all duration-300 ${
-          hasImage
-            ? "border-green-500 bg-green-50 dark:bg-green-950/20"
-            : "border-gray-300 dark:border-gray-600 hover:border-primary/50"
-        }`}
-      >
-        {hasImage ? (
-          <>
-            <Image
-              src={imageUrl || ""}
-              alt={`تصویر ${index + 1}`}
-              width={200}
-              height={200}
-              className="w-full h-32 object-cover rounded-lg"
-            />
-            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center gap-2">
-              <Button
-                type="button"
-                variant="destructive"
-                size="sm"
-                onClick={() => removeImage?.(index)}
-                className="h-8 w-8 rounded-full"
-              >
-                <Trash2 size={16} />
-              </Button>
+      return (
+        <MotionDiv
+          key={index}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: index * 0.1 }}
+          className={`relative group border-2 border-dashed rounded-lg transition-all duration-300 ${
+            hasImage
+              ? "border-green-500 bg-green-50 dark:bg-green-950/20"
+              : "border-gray-300 dark:border-gray-600 hover:border-primary/50"
+          }`}
+        >
+          {hasImage ? (
+            <>
+              <Image
+                src={imageUrl || ""}
+                alt={`تصویر ${index + 1}`}
+                width={200}
+                height={200}
+                className="w-full h-32 object-cover rounded-lg"
+              />
+              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center gap-2">
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => removeImage?.(index)}
+                  className="h-8 w-8 rounded-full"
+                >
+                  <Trash2 size={16} />
+                </Button>
+              </div>
+              <div className="absolute top-2 left-2">
+                <Badge variant="secondary" className="text-xs">
+                  {fileName?.slice(0, 15)}...
+                </Badge>
+              </div>
+            </>
+          ) : (
+            <div className="flex flex-col items-center justify-center h-32 p-4 text-center">
+              <ImageIcon className="w-8 h-8 text-gray-400 mb-2" />
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                تصویر {index + 1}
+              </p>
             </div>
-            <div className="absolute top-2 left-2">
-              <Badge variant="secondary" className="text-xs">
-                {fileName?.slice(0, 15)}...
-              </Badge>
-            </div>
-          </>
-        ) : (
-          <div className="flex flex-col items-center justify-center h-32 p-4 text-center">
-            <ImageIcon className="w-8 h-8 text-gray-400 mb-2" />
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              تصویر {index + 1}
-            </p>
-          </div>
-        )}
-      </MotionDiv>
-    );
-  });
+          )}
+        </MotionDiv>
+      );
+    });
+  }, [imagePreview, imageFiles, removeImage]);
 
   return (
     <>
@@ -230,7 +236,7 @@ export function FormSections({
                 placeholder="0"
                 className="text-right h-12 border-2 focus:border-blue-500 transition-colors"
                 min="0"
-                max="100"
+                max={MAX_DISCOUNT}
               />
               {errors?.discount && (
                 <p className="text-sm text-red-500 text-right flex items-center gap-1">

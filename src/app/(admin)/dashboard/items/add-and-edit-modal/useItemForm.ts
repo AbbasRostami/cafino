@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-
 import { itemFormSchema, ItemFormData } from "@/schemas/admin";
 import { useGetCategoriesAdmin } from "@/services";
 import { useCreateItem, useUpdateItem } from "@/services";
 import { compressImage, validateImageFile } from "@/lib/imageUtils";
 import { UseItemFormProps } from "@/types/admin";
+
+const MAX_IMAGES = 5;
+const MAX_CATEGORIES_LIMIT = 100;
 
 export function useItemForm({ isOpen, onClose, item }: UseItemFormProps) {
   const [imagePreview, setImagePreview] = useState<string[]>([]);
@@ -16,7 +18,7 @@ export function useItemForm({ isOpen, onClose, item }: UseItemFormProps) {
 
   const { categories } = useGetCategoriesAdmin({
     page: 1,
-    limit: 100,
+    limit: MAX_CATEGORIES_LIMIT,
   });
 
   const { mutate: createItem, isPending: isCreating } = useCreateItem();
@@ -60,6 +62,16 @@ export function useItemForm({ isOpen, onClose, item }: UseItemFormProps) {
   });
 
   useEffect(() => {
+    return () => {
+      imagePreview.forEach((url) => {
+        if (url.startsWith("blob:")) {
+          URL.revokeObjectURL(url);
+        }
+      });
+    };
+  }, [imagePreview]);
+
+  useEffect(() => {
     if (!isOpen) return;
     if (!categories?.length) return;
 
@@ -96,60 +108,88 @@ export function useItemForm({ isOpen, onClose, item }: UseItemFormProps) {
     }
   };
 
-  const resetFormState = () => {
+  const resetFormState = useCallback(() => {
+    imagePreview.forEach((url) => {
+      if (url.startsWith("blob:")) {
+        URL.revokeObjectURL(url);
+      }
+    });
+
     reset();
     setImagePreview([]);
     setImageFiles([]);
-  };
+  }, [imagePreview, reset]);
 
   const handleClose = () => {
     resetFormState();
     onClose();
   };
 
-  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-    if (!files.length) return;
-    if (imageFiles.length + files.length > 5) {
-      toast.error("حداکثر 5 تصویر مجاز است");
-      return;
-    }
+  const handleImageChange = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const files = Array.from(e.target.files || []);
+      if (!files.length) return;
 
-    setIsCompressing(true);
+      if (imageFiles.length + files.length > MAX_IMAGES) {
+        toast.error(`حداکثر ${MAX_IMAGES} تصویر مجاز است`);
+        return;
+      }
 
-    const compressed = await Promise.all(
-      files.map(async (file) => {
-        const err = validateImageFile(file);
-        if (err) {
-          toast.error(err);
-          return null;
+      setIsCompressing(true);
+
+      try {
+        const compressed = await Promise.all(
+          files.map(async (file) => {
+            const err = validateImageFile(file);
+            if (err) {
+              toast.error(err);
+              return null;
+            }
+
+            try {
+              const compressedFile = await compressImage(file);
+              toast.success(`تصویر ${file.name} فشرده شد`);
+              return compressedFile;
+            } catch (error) {
+              console.error(`خطا در فشرده‌سازی ${file.name}:`, error);
+              toast.error(`خطا در فشرده‌سازی ${file.name}`);
+              return file;
+            }
+          })
+        );
+
+        const validFiles = compressed?.filter(Boolean) as File[];
+
+        if (validFiles.length > 0) {
+          setImageFiles((prev) => [...prev, ...validFiles]);
+          setImagePreview((prev) => [
+            ...prev,
+            ...validFiles?.map((f) => URL.createObjectURL(f)),
+          ]);
         }
-        try {
-          const compressedFile = await compressImage(file);
-          toast.success(`تصویر ${file.name} فشرده شد`);
-          return compressedFile;
-        } catch {
-          toast.error(`خطا در فشرده‌سازی ${file.name}`);
-          return file;
-        }
-      })
-    );
+      } catch (error) {
+        console.error("Error in handleImageChange:", error);
+        toast.error("خطا در پردازش تصاویر");
+      } finally {
+        setIsCompressing(false);
+      }
+    },
+    [imageFiles.length]
+  );
 
-    const validFiles = compressed?.filter(Boolean) as File[];
-    setImageFiles((prev) => [...prev, ...validFiles]);
-    setImagePreview((prev) => [
-      ...prev,
-      ...validFiles?.map((f) => URL.createObjectURL(f)),
-    ]);
+  const removeImage = useCallback(
+    (index: number) => {
+      const urlToRemove = imagePreview[index];
+      if (urlToRemove && urlToRemove.startsWith("blob:")) {
+        URL.revokeObjectURL(urlToRemove);
+      }
 
-    setIsCompressing(false);
-  };
-
-  const removeImage = (index: number) => {
-    const newFiles = imageFiles?.filter((_, i) => i !== index);
-    setImageFiles(newFiles);
-    setImagePreview((prev) => prev.filter((_, i) => i !== index));
-  };
+      const newFiles = imageFiles?.filter((_, i) => i !== index);
+      setImageFiles(newFiles);
+      setImagePreview((prev) => prev.filter((_, i) => i !== index));
+    },
+    [imageFiles, imagePreview]
+  );
 
   const buildFormData = (data: ItemFormData, isEditing: boolean) => {
     const formData = new FormData();
