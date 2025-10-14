@@ -82,7 +82,6 @@ export interface CitiesResponse {
 
 export interface FormContentAddressProps {
   onSubmit: (data: AddressFormData) => void;
-  editingId?: string | null;
   provinces: Province[];
   filteredCities: any[];
   formData: AddressFormData;

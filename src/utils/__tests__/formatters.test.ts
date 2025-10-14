@@ -31,19 +31,19 @@ describe("توابع فرمت کردن", () => {
     it("باید تاریخ را درست فرمت کند", () => {
       const date = "2024-01-01T12:00:00Z";
       const result = formatJalaliDate(date);
-      expect(result).toContain("۱۴۰۲");
+      expect(result).toContain("1402");
     });
 
     it("باید فرمت پیش‌فرض را استفاده کند", () => {
       const date = "2024-01-01T12:00:00Z";
       const result = formatJalaliDate(date);
-      expect(result).toMatch(/۱۴۰۲\/[۰-۹]{2}\/[۰-۹]{2} - [۰-۹]{2}:[۰-۹]{2}/);
+      expect(result).toMatch(/1402\/[0-9]{2}\/[0-9]{2} - [0-9]{2}:[0-9]{2}/);
     });
 
     it("باید فرمت سفارشی را بپذیرد", () => {
       const date = "2024-01-01T12:00:00Z";
       const result = formatJalaliDate(date, "jYYYY/jMM/jDD");
-      expect(result).toMatch(/۱۴۰۲\/[۰-۹]{2}\/[۰-۹]{2}/);
+      expect(result).toMatch(/1402\/[0-9]{2}\/[0-9]{2}/);
     });
 
     it("باید برای تاریخ خالی - برگرداند", () => {
