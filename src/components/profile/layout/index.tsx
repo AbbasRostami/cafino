@@ -68,7 +68,7 @@ export default function Sidebar() {
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.4 }}
-        className="hidden md:block w-full md:w-64 flex-shrink-0 rounded-2xl border border-gray-300 dark:border-gray-700 shadow-xl h-fit sticky top-24 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950 overflow-hidden"
+        className="hidden md:block w-full md:w-64 flex-shrink-0 rounded-3xl border border-gray-300 dark:border-gray-700 shadow-xl h-fit sticky top-24 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950 overflow-hidden"
         style={{
           boxShadow:
             "0 10px 30px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.03)",

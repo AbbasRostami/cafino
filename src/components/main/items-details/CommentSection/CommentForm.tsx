@@ -7,6 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@/utils/utils";
 import { commentFormSchema, CommentFormData } from "@/schemas/main";
 import { MotionDiv } from "@/utils/MotionWrapper";
+import { Spinner } from "@/components/ui/spinner";
+import { Send } from "lucide-react";
 
 export const CommentForm = ({
   itemId,
@@ -39,7 +41,7 @@ export const CommentForm = ({
   };
 
   const textLength = watch("text")?.length || 0;
-  const maxLength = 50;
+  const maxLength = 500;
 
   return (
     <div className="space-y-6">
@@ -94,6 +96,7 @@ export const CommentForm = ({
           نظر شما
         </label>
         <Textarea
+          maxLength={maxLength}
           {...register("text")}
           placeholder="نظر خود را در مورد این محصول بنویسید..."
           className={cn(
@@ -121,7 +124,17 @@ export const CommentForm = ({
           onClick={handleSubmit(handleFormSubmit)}
           className="w-full py-6 text-lg bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isPending ? "در حال ثبت نظر..." : "ثبت نظر"}
+          {isPending ? (
+            <>
+              <Spinner />
+              درحال ثبت نظر...
+            </>
+          ) : (
+            <>
+              <Send />
+              ثبت نظر
+            </>
+          )}
         </Button>
       </MotionDiv>
     </div>

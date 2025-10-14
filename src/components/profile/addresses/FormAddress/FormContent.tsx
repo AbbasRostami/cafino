@@ -26,7 +26,6 @@ import { Spinner } from "@/components/ui/spinner";
 
 export const FormContent = ({
   onSubmit,
-  editingId,
   provinces,
   filteredCities,
   formData,

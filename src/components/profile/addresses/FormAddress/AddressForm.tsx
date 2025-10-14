@@ -38,7 +38,6 @@ export const AddressForm = ({
   const FormContentComponent = (
     <FormContent
       onSubmit={onSubmit}
-      editingId={editingId}
       provinces={provinces}
       filteredCities={filteredCities}
       formData={formData}

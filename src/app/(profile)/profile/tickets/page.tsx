@@ -38,7 +38,7 @@ export default function TicketsPage() {
     setView("list");
     setSelectedTicket(null);
   };
-
+  console.log("ticketsData", ticketsData?.data);
   return (
     <>
       <div className="h-full mb-12 ">
@@ -47,7 +47,7 @@ export default function TicketsPage() {
             totalPages={ticketsData?.data?.total || 0}
             filters={filters}
             onFilterChange={handleFilterChange}
-            tickets={ticketsData?.data?.tickets as Ticket}
+            tickets={ticketsData?.data?.tickets as Ticket[]}
             isLoading={isLoading}
             newTicket={() => setView("new")}
             onTicketSelect={handleTicketSelect}

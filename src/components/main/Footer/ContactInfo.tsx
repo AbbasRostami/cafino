@@ -1,26 +1,5 @@
 import { ContactInfoProps } from "@/types";
 import { MotionA, MotionDiv } from "@/utils/MotionWrapper";
-import {
-  MapPin,
-  Phone,
-  Mail,
-  Clock,
-  Facebook,
-  Instagram,
-  Twitter,
-  Youtube,
-} from "lucide-react";
-
-const iconMap = {
-  MapPin,
-  Phone,
-  Mail,
-  Clock,
-  Facebook,
-  Instagram,
-  Twitter,
-  Youtube,
-};
 
 const ContactInfo = ({ contactInfo, socialMedia }: ContactInfoProps) => {
   return (
@@ -39,7 +18,7 @@ const ContactInfo = ({ contactInfo, socialMedia }: ContactInfoProps) => {
 
       <div className="space-y-2">
         {contactInfo.map((contact, index) => {
-          const IconComponent = iconMap[contact.icon as keyof typeof iconMap];
+          const IconComponent = contact.icon;
           return (
             <MotionDiv
               key={index}
@@ -50,13 +29,14 @@ const ContactInfo = ({ contactInfo, socialMedia }: ContactInfoProps) => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
               <div className="w-10 h-10 bg-gradient-to-br from-amber-100 to-amber-50 dark:from-amber-900/30 dark:to-amber-800/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-all duration-300 shadow-sm">
-                {IconComponent && (
-                  <IconComponent className="w-5 h-5 text-amber-600 dark:text-amber-400" />
-                )}
+                {IconComponent && <IconComponent />}
               </div>
               <span className="text-gray-700 dark:text-gray-200 text-sm font-medium leading-relaxed">
                 {contact.href ? (
-                  <a href={contact.href} className="hover:text-amber-600 transition-colors">
+                  <a
+                    href={contact.href}
+                    className="hover:text-amber-600 transition-colors"
+                  >
                     {contact.text}
                   </a>
                 ) : (
@@ -75,7 +55,7 @@ const ContactInfo = ({ contactInfo, socialMedia }: ContactInfoProps) => {
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           {socialMedia.map((social, index) => {
-            const IconComponent = iconMap[social.icon as keyof typeof iconMap];
+            const IconComponent = social.icon;
             return (
               <MotionA
                 key={index}
@@ -88,7 +68,7 @@ const ContactInfo = ({ contactInfo, socialMedia }: ContactInfoProps) => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
-                {IconComponent && <IconComponent className="w-5 h-5" />}
+                {IconComponent && <IconComponent />}
               </MotionA>
             );
           })}
