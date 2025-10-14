@@ -1,12 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { MapPin, Plus, Check, MessageSquare } from "lucide-react";
+import { MapPin, Plus, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { MotionDiv } from "@/utils/MotionWrapper";
 import AddAddressModal from "./AddAddressModal";
 import { AddressSelectorProps } from "@/types/main";
@@ -17,8 +15,6 @@ export default function AddressSelector({
   onAddressSelect,
   isLoading,
   onAddressAdded,
-  orderDescription,
-  onDescriptionChange,
 }: AddressSelectorProps) {
   const [showAddAddress, setShowAddAddress] = useState(false);
 
@@ -122,30 +118,6 @@ export default function AddressSelector({
               </p>
             </div>
           )}
-
-          <div className="space-y-3 w-full">
-            <Label
-              htmlFor="order-description"
-              className="flex items-center gap-2 text-md font-bold text-gray-700 dark:text-gray-300"
-            >
-              <MessageSquare
-                size={16}
-                className=" text-amber-700 dark:text-amber-400"
-              />
-              توضیحات سفارش (اختیاری)
-            </Label>
-            <Textarea
-              id="order-description"
-              placeholder="توضیحات سفارش خود را اینجا بنویسید..."
-              value={orderDescription || ""}
-              onChange={(e) => onDescriptionChange?.(e.target.value)}
-              className="min-h-[80px] resize-none border-amber-200 dark:border-amber-800 focus:border-amber-400 dark:focus:border-amber-600 bg-white/50 dark:bg-gray-800/50"
-              maxLength={500}
-            />
-            <p className="text-xs text-gray-500 dark:text-gray-400 text-left">
-              {orderDescription?.length || 0}/500 کاراکتر
-            </p>
-          </div>
         </CardContent>
       </Card>
 

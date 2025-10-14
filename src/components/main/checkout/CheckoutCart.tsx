@@ -79,6 +79,8 @@ export default function CheckoutCart({ cart }: CheckoutCartProps) {
                 <SelectedAddressDisplay
                   selectedAddress={selectedAddress}
                   onEditAddress={handleEditAddress}
+                  orderDescription={orderDescription}
+                  onDescriptionChange={handleDescriptionChange}
                 />
               ) : (
                 <AddressSelector
@@ -87,8 +89,6 @@ export default function CheckoutCart({ cart }: CheckoutCartProps) {
                   onAddressSelect={handleAddressSelect}
                   isLoading={addressesLoading}
                   onAddressAdded={handleAddressAdded}
-                  orderDescription={orderDescription}
-                  onDescriptionChange={handleDescriptionChange}
                 />
               )}
 

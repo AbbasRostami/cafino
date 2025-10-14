@@ -83,6 +83,8 @@ export interface DiscountSectionProps {
 export interface SelectedAddressDisplayProps {
   selectedAddress: Address | null;
   onEditAddress: () => void;
+  orderDescription?: string;
+  onDescriptionChange?: (description: string) => void;
 }
 
 export interface AddAddressModalProps {
@@ -97,6 +99,4 @@ export interface AddressSelectorProps {
   onAddressSelect: (addressId: string) => void;
   isLoading: boolean;
   onAddressAdded?: () => void;
-  orderDescription?: string;
-  onDescriptionChange?: (description: string) => void;
 }

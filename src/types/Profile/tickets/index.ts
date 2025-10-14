@@ -1,4 +1,3 @@
-// Import shared types
 import type {
   TicketUser,
   Ticket,
@@ -13,7 +12,6 @@ import type {
   TicketPaginationInfo,
 } from "@/types/shared";
 
-// Re-export shared types
 export type {
   TicketUser,
   Ticket,

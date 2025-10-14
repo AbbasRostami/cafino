@@ -1,4 +1,3 @@
-// Base user interface from API response
 export interface TicketUser {
   id: string;
   username: string;
@@ -8,7 +7,6 @@ export interface TicketUser {
   role: "user" | "admin";
 }
 
-// Ticket interface based on API response
 export interface Ticket {
   id: string;
   subject: string;
@@ -25,8 +23,6 @@ export interface TicketMessage {
 
   sender: TicketUser;
 }
-
-// API Request/Response types
 
 // POST /v1/ticket - Create new ticket
 export interface CreateTicketRequest {
@@ -104,7 +100,6 @@ export interface DeleteTicketResponse {
   message: string;
 }
 
-// Filter and pagination types
 export interface TicketFilters {
   status?: "open" | "answered" | "closed";
   sortBy?: "newest" | "oldest";
@@ -112,7 +107,6 @@ export interface TicketFilters {
   limit?: number;
 }
 
-// Pagination info
 export interface TicketPaginationInfo {
   total: number;
   page: number;

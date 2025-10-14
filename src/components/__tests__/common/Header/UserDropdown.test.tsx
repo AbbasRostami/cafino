@@ -43,7 +43,6 @@ describe("UserDropdown - کامپوننت منوی کاربر", () => {
       },
     });
 
-    // Default mock for useUserProfile
     mockUseUserProfile.mockReturnValue({
       data: null,
       isLoading: false,
