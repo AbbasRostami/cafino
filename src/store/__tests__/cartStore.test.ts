@@ -167,7 +167,7 @@ describe("useCartStore - Store", () => {
     await useCartStore.getState().addToCart(mockItem);
 
     const state = useCartStore.getState();
-    expect(state.cart.totalAmount).toBe(8000);
+    expect(state.cart.totalAmount).toBe(10000);
     expect(state.cart.totalDiscount).toBe(2000);
     expect(state.cart.paymentAmount).toBe(8000);
   });

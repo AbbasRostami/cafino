@@ -33,19 +33,18 @@ describe("discountSchemaCheckout - Validation Discount Code", () => {
     }
   );
 
-  it.each([
-    "VERYLONGCODE123", // 15 Character
-    "SUPERLONGCODE456", // 16 Character
-    "EXTREMELONGCODE789", // 18 Character
-  ])("باید کد تخفیف بلند '%s' را رد کند", (code) => {
-    const result = discountSchemaCheckout.safeParse({ code });
-    expect(result.success).toBe(false);
-    if (!result.success) {
-      expect(result.error.issues[0].message).toBe(
-        "کد تخفیف باید حداکثر ۱۰ کاراکتر باشد"
-      );
+  it.each(["A".repeat(101), "B".repeat(150)])(
+    "باید کد تخفیف بلند '%s' را رد کند",
+    (code) => {
+      const result = discountSchemaCheckout.safeParse({ code });
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.issues[0].message).toBe(
+          "کد تخفیف باید حداکثر ۱۰۰ کاراکتر باشد"
+        );
+      }
     }
-  });
+  );
 
   it.each(["SAVE-10", "DISCOUNT_20", "WELCOME@", "NEW#USER", "SUMMER$2024"])(
     "باید کد تخفیف با کاراکتر غیرمجاز '%s' را رد کند",

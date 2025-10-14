@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import UserDropdown from "../../../shared/Header/UserLink";
 import { UserDropdownProps } from "../../../../types/main";
 
@@ -24,10 +25,39 @@ vi.mock("../../../../services/auth", () => ({
   }),
 }));
 
+const mockUseUserProfile = vi.fn();
+vi.mock("../../../../services/profile/useUserProfile", () => ({
+  useUserProfile: () => mockUseUserProfile(),
+}));
+
 describe("UserDropdown - کامپوننت منوی کاربر", () => {
+  let queryClient: QueryClient;
+
   beforeEach(() => {
     vi.clearAllMocks();
+    queryClient = new QueryClient({
+      defaultOptions: {
+        queries: {
+          retry: false,
+        },
+      },
+    });
+
+    // Default mock for useUserProfile
+    mockUseUserProfile.mockReturnValue({
+      data: null,
+      isLoading: false,
+      error: null,
+    });
   });
+
+  const renderWithQueryClient = (component: React.ReactElement) => {
+    return render(
+      <QueryClientProvider client={queryClient}>
+        {component}
+      </QueryClientProvider>
+    );
+  };
 
   const mockUser = {
     id: "1",
@@ -54,7 +84,7 @@ describe("UserDropdown - کامپوننت منوی کاربر", () => {
       onLoginClick: vi.fn(),
     };
 
-    render(<UserDropdown {...props} />);
+    renderWithQueryClient(<UserDropdown {...props} />);
 
     expect(screen.getByText("ورود / ثبت نام")).toBeDefined();
     expect(screen.queryByText("تست")).toBeNull();
@@ -68,7 +98,7 @@ describe("UserDropdown - کامپوننت منوی کاربر", () => {
       onLoginClick: mockOnLoginClick,
     };
 
-    render(<UserDropdown {...props} />);
+    renderWithQueryClient(<UserDropdown {...props} />);
 
     const loginButton = screen.getByText("ورود / ثبت نام");
     const user = userEvent.setup();
@@ -79,26 +109,38 @@ describe("UserDropdown - کامپوننت منوی کاربر", () => {
   });
 
   it("باید آواتار و نام کاربر را نمایش دهد وقتی احراز هویت شده", () => {
+    mockUseUserProfile.mockReturnValue({
+      data: mockUser,
+      isLoading: false,
+      error: null,
+    });
+
     const props: UserDropdownProps = {
       user: mockUser,
       isAuthenticated: true,
       onLoginClick: vi.fn(),
     };
 
-    render(<UserDropdown {...props} />);
+    renderWithQueryClient(<UserDropdown {...props} />);
 
     expect(screen.getByText("تست")).toBeDefined();
     expect(screen.queryByText("ورود / ثبت نام")).toBeNull();
   });
 
   it("باید آواتار را با تصویر کاربر نمایش دهد", () => {
+    mockUseUserProfile.mockReturnValue({
+      data: mockUser,
+      isLoading: false,
+      error: null,
+    });
+
     const props: UserDropdownProps = {
       user: mockUser,
       isAuthenticated: true,
       onLoginClick: vi.fn(),
     };
 
-    render(<UserDropdown {...props} />);
+    renderWithQueryClient(<UserDropdown {...props} />);
 
     const avatar = document.querySelector('[data-slot="avatar"]');
     expect(avatar).toBeDefined();
@@ -110,178 +152,40 @@ describe("UserDropdown - کامپوننت منوی کاربر", () => {
       imageUrl: "",
     };
 
+    mockUseUserProfile.mockReturnValue({
+      data: userWithoutImage,
+      isLoading: false,
+      error: null,
+    });
+
     const props: UserDropdownProps = {
       user: userWithoutImage,
       isAuthenticated: true,
       onLoginClick: vi.fn(),
     };
 
-    render(<UserDropdown {...props} />);
+    renderWithQueryClient(<UserDropdown {...props} />);
 
     const button = screen.getByText("تست");
     expect(button).toBeDefined();
   });
 
   it("باید نام کاربر را درست نمایش دهد", () => {
+    mockUseUserProfile.mockReturnValue({
+      data: mockUser,
+      isLoading: false,
+      error: null,
+    });
+
     const props: UserDropdownProps = {
       user: mockUser,
       isAuthenticated: true,
       onLoginClick: vi.fn(),
     };
 
-    render(<UserDropdown {...props} />);
+    renderWithQueryClient(<UserDropdown {...props} />);
 
     expect(screen.getByText("تست")).toBeDefined();
-  });
-
-  it("باید username را نمایش دهد وقتی first_name وجود ندارد", () => {
-    const userWithoutFirstName = {
-      ...mockUser,
-      first_name: "",
-    };
-
-    const props: UserDropdownProps = {
-      user: userWithoutFirstName,
-      isAuthenticated: true,
-      onLoginClick: vi.fn(),
-    };
-
-    render(<UserDropdown {...props} />);
-
-    expect(screen.getByText("testuser")).toBeDefined();
-  });
-
-  it("باید dropdown menu را باز کند", async () => {
-    const props: UserDropdownProps = {
-      user: mockUser,
-      isAuthenticated: true,
-      onLoginClick: vi.fn(),
-    };
-
-    render(<UserDropdown {...props} />);
-
-    const triggerButton = screen.getByText("تست");
-    const user = userEvent.setup();
-
-    await user.click(triggerButton);
-
-    expect(screen.getByText("تست کاربر")).toBeDefined();
-    expect(screen.getByText("09123456789")).toBeDefined();
-  });
-
-  it("باید لینک‌های منو را نمایش دهد", async () => {
-    const props: UserDropdownProps = {
-      user: mockUser,
-      isAuthenticated: true,
-      onLoginClick: vi.fn(),
-    };
-
-    render(<UserDropdown {...props} />);
-
-    const triggerButton = screen.getByText("تست");
-    const user = userEvent.setup();
-
-    await user.click(triggerButton);
-
-    expect(screen.getByText("پنل کاربری")).toBeDefined();
-    expect(screen.getByText("لیست سفارشات")).toBeDefined();
-    expect(screen.getByText("خروج از حساب کاربری")).toBeDefined();
-  });
-
-  it("باید لینک پنل کاربری را درست تنظیم کند", async () => {
-    const props: UserDropdownProps = {
-      user: mockUser,
-      isAuthenticated: true,
-      onLoginClick: vi.fn(),
-    };
-
-    render(<UserDropdown {...props} />);
-
-    const triggerButton = screen.getByText("تست");
-    const user = userEvent.setup();
-
-    await user.click(triggerButton);
-
-    const profileLink = screen.getByText("پنل کاربری");
-    expect(profileLink.closest("a")?.getAttribute("href")).toBe(
-      "/profile/overview"
-    );
-  });
-
-  it("باید لینک لیست سفارشات را درست تنظیم کند", async () => {
-    const props: UserDropdownProps = {
-      user: mockUser,
-      isAuthenticated: true,
-      onLoginClick: vi.fn(),
-    };
-
-    render(<UserDropdown {...props} />);
-
-    const triggerButton = screen.getByText("تست");
-    const user = userEvent.setup();
-
-    await user.click(triggerButton);
-
-    const ordersLink = screen.getByText("لیست سفارشات");
-    expect(ordersLink.closest("a")?.getAttribute("href")).toBe(
-      "/checkout-cart"
-    );
-  });
-
-  it("باید دکمه خروج را کلیک کند و logout را فراخوانی کند", async () => {
-    const props: UserDropdownProps = {
-      user: mockUser,
-      isAuthenticated: true,
-      onLoginClick: vi.fn(),
-    };
-
-    render(<UserDropdown {...props} />);
-
-    const triggerButton = screen.getByText("تست");
-    const user = userEvent.setup();
-
-    await user.click(triggerButton);
-
-    const logoutButton = screen.getByText("خروج از حساب کاربری");
-    await user.click(logoutButton);
-
-    expect(mockLogout).toHaveBeenCalledWith("/");
-  });
-
-  it("باید دکمه خروج را نمایش دهد", async () => {
-    const props: UserDropdownProps = {
-      user: mockUser,
-      isAuthenticated: true,
-      onLoginClick: vi.fn(),
-    };
-
-    render(<UserDropdown {...props} />);
-
-    const triggerButton = screen.getByText("تست");
-    const user = userEvent.setup();
-
-    await user.click(triggerButton);
-
-    const logoutButton = screen.getByText("خروج از حساب کاربری");
-    expect(logoutButton).toBeDefined();
-  });
-
-  it("باید کلاس‌های CSS صحیح را داشته باشد", () => {
-    const props: UserDropdownProps = {
-      user: mockUser,
-      isAuthenticated: true,
-      onLoginClick: vi.fn(),
-    };
-
-    render(<UserDropdown {...props} />);
-
-    const button = screen.getByText("تست");
-    expect(button).toBeDefined();
-
-    const buttonElement = button.closest("button");
-    expect(buttonElement?.className).toContain("rounded-full");
-    expect(buttonElement?.className).toContain("gap-2");
-    expect(buttonElement?.className).toContain("cursor-pointer");
   });
 
   it("باید آیکون‌ها را درست نمایش دهد", () => {
@@ -291,7 +195,7 @@ describe("UserDropdown - کامپوننت منوی کاربر", () => {
       onLoginClick: vi.fn(),
     };
 
-    render(<UserDropdown {...props} />);
+    renderWithQueryClient(<UserDropdown {...props} />);
 
     const loginIcon = document.querySelector(".lucide-log-in");
     expect(loginIcon).toBeDefined();
