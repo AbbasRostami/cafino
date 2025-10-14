@@ -4,7 +4,7 @@ import { toast } from "sonner";
 
 export const useAddToCart = () => {
   const queryClient = useQueryClient();
-  const { mutateAsync, isPending, error } = usePost<any, { itemId: string }>(
+  const { mutate, isPending, error } = usePost<any, { itemId: string }>(
     () => "/v1/cart/add",
     undefined,
     {
@@ -22,5 +22,5 @@ export const useAddToCart = () => {
       },
     }
   );
-  return { mutateAsync, isPending, error };
+  return { mutate, isPending, error };
 };

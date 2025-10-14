@@ -4,7 +4,7 @@ import { toast } from "sonner";
 
 export const useRemoveItem = () => {
   const queryClient = useQueryClient();
-  const { mutateAsync, isPending, error } = useDelete<{ itemId: string }>(
+  const { mutate, isPending, error } = useDelete<{ itemId: string }>(
     () => "/v1/cart/remove",
     {
       onSuccess: () => {
@@ -17,5 +17,5 @@ export const useRemoveItem = () => {
       },
     }
   );
-  return { mutateAsync, isPending, error };
+  return { mutate, isPending, error };
 };

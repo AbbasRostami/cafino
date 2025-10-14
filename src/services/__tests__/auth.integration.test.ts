@@ -179,7 +179,7 @@ describe("Authentication Services Integration", () => {
         result.current.mutate({ phone, otpCode });
       });
 
-      expect(mockFetchApi.post).toHaveBeenCalledWith("/v1/auth/verfiy-otp", {
+      expect(mockFetchApi.post).toHaveBeenCalledWith("/v1/auth/verify-otp", {
         phone,
         otpCode,
       });
@@ -207,7 +207,7 @@ describe("Authentication Services Integration", () => {
         }
       });
 
-      expect(mockFetchApi.post).toHaveBeenCalledWith("/v1/auth/verfiy-otp", {
+      expect(mockFetchApi.post).toHaveBeenCalledWith("/v1/auth/verify-otp", {
         phone,
         otpCode,
       });
@@ -235,7 +235,7 @@ describe("Authentication Services Integration", () => {
         } catch (error) {}
       });
 
-      expect(mockFetchApi.post).toHaveBeenCalledWith("/v1/auth/verfiy-otp", {
+      expect(mockFetchApi.post).toHaveBeenCalledWith("/v1/auth/verify-otp", {
         phone,
         otpCode,
       });
@@ -263,7 +263,7 @@ describe("Authentication Services Integration", () => {
         }
       });
 
-      expect(mockFetchApi.post).toHaveBeenCalledWith("/v1/auth/verfiy-otp", {
+      expect(mockFetchApi.post).toHaveBeenCalledWith("/v1/auth/verify-otp", {
         phone,
         otpCode,
       });
@@ -289,7 +289,7 @@ describe("Authentication Services Integration", () => {
         } catch (error) {}
       });
 
-      expect(mockFetchApi.post).toHaveBeenCalledWith("/v1/auth/verfiy-otp", {
+      expect(mockFetchApi.post).toHaveBeenCalledWith("/v1/auth/verify-otp", {
         phone,
         otpCode,
       });
@@ -458,7 +458,7 @@ describe("Authentication Services Integration", () => {
         }
       });
 
-      expect(mockFetchApi.post).toHaveBeenCalledWith("/v1/auth/verfiy-otp", {
+      expect(mockFetchApi.post).toHaveBeenCalledWith("/v1/auth/verify-otp", {
         phone,
         otpCode,
       });

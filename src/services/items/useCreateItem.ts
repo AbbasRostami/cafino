@@ -15,8 +15,24 @@ export const useCreateItem = () => {
         queryClient.invalidateQueries({ queryKey: ["items-admin"] });
         queryClient.invalidateQueries({ queryKey: ["admin-overview"] });
       },
-      onError: () => {
-        toast.error("خطا در ایجاد محصول");
+      onError: (error: any) => {
+        switch (error?.statusCode) {
+          case 403:
+            toast.error("دسترسی غیرمجاز: شما اجازه ایجاد محصول را ندارید");
+            break;
+          case 404:
+            toast.error("دسته‌بندی یافت نشد");
+            break;
+          case 409:
+            toast.error("محصول با عنوان یا جایگزینی قبلاً وجود دارد");
+            break;
+          case 410:
+            toast.error("دسته‌بندی مجاز به نمایش نیست");
+            break;
+          default:
+            toast.error("خطا در ایجاد محصول");
+            break;
+        }
       },
     }
   );

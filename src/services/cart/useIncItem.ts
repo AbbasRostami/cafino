@@ -4,10 +4,11 @@ import { toast } from "sonner";
 
 export const useIncItem = () => {
   const queryClient = useQueryClient();
-  const { mutateAsync, isPending, error } = usePatch<{ itemId: string }>(
+  const { mutate, isPending, error } = usePatch<{ itemId: string }>(
     "/v1/cart/inc-item",
     undefined,
     {
+    
       onSuccess: () => {
         toast.success("تعداد محصول با موفقیت افزایش یافت");
         queryClient.invalidateQueries({ queryKey: ["/v1/cart"] });
@@ -21,5 +22,5 @@ export const useIncItem = () => {
       },
     }
   );
-  return { mutateAsync, isPending, error };
+  return { mutate, isPending, error };
 };

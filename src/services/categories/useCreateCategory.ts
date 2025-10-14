@@ -14,8 +14,18 @@ export const useCreateCategory = () => {
         toast.success("دسته بندی جدید با موفقیت ایجاد شد.");
         queryClient.invalidateQueries({ queryKey: ["categories-admin"] });
       },
-      onError: () => {
-        toast.error("خطا در ایجاد دسته بندی");
+      onError: (error: any) => {
+        switch (error?.statusCode) {
+          case 403:
+            toast.error("دسترسی غیرمجاز: شما اجازه ایجاد دسته بندی را ندارید");
+            break;
+          case 409:
+            toast.error("دسته بندی با عنوان قبلاً وجود دارد");
+            break;
+          default:
+            toast.error("خطا در ایجاد دسته بندی");
+            break;
+        }
       },
     }
   );

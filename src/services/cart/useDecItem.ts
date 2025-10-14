@@ -4,7 +4,7 @@ import { toast } from "sonner";
 
 export const useDecItem = () => {
   const queryClient = useQueryClient();
-  const { mutateAsync, isPending, error } = usePatch<{ itemId: string }>(
+  const { mutate, isPending, error } = usePatch<{ itemId: string }>(
     "/v1/cart/dec-item",
     undefined,
     {
@@ -18,5 +18,5 @@ export const useDecItem = () => {
     }
   );
 
-  return { mutateAsync, isPending, error };
+  return { mutate, isPending, error };
 };

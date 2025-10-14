@@ -1,5 +1,4 @@
 import { usePost } from "@/hooks/api/useReactQueryHooks";
-import { ChangeOrderStatusRequest } from "@/types/Profile";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -8,7 +7,7 @@ export const useChangeOrderStatus = () => {
 
   const { mutate, isPending, variables } = usePost(
     ({ id }) => `/v1/order/status?id=${id}`,
-    ({ status }: ChangeOrderStatusRequest) => ({ status }),
+    ({ status }: { id: string; status: string }) => ({ status }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["orders-admin"] });

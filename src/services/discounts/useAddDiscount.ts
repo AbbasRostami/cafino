@@ -15,10 +15,19 @@ export const useAddDiscount = () => {
       },
 
       onError: (error: any) => {
-        if (error?.statusCode === 400) {
-          toast.error("این کد تخفیف منقضی شده است");
-        } else {
-          toast.error("خطا در اضافه کردن کد تخفیف");
+        switch (error?.statusCode) {
+          case 404:
+            toast.error("کد تخفیف یافت نشد");
+            break;
+          case 409:
+            toast.error("این کد تخفیف قبلاً استفاده شده است");
+            break;
+          case 410:
+            toast.error("کد تخفیف منقضی شده است");
+            break;
+          default:
+            toast.error("خطا در اضافه کردن کد تخفیف");
+            break;
         }
       },
     }
