@@ -1,6 +1,6 @@
 import { usePost } from "@/hooks/api/useReactQueryHooks";
 import { useAuthStore } from "@/store/authStore";
-import { formatBlockType, formatRetryAfter } from "@/utils/formatters";
+import { formatRetryAfter } from "@/utils/formatters";
 import { toast } from "sonner";
 
 export const useVerifyOTP = () => {

@@ -1,5 +1,5 @@
 import { usePost } from "@/hooks/api/useReactQueryHooks";
-import { formatBlockType, formatRetryAfter } from "@/utils/formatters";
+import { formatRetryAfter } from "@/utils/formatters";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 

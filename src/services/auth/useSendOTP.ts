@@ -1,6 +1,6 @@
 import { usePost } from "@/hooks/api/useReactQueryHooks";
 import { toast } from "sonner";
-import { formatRetryAfter, formatBlockType } from "@/utils/formatters";
+import { formatRetryAfter } from "@/utils/formatters";
 
 export const useSendOTP = () => {
   const { mutate, isPending, error } = usePost<any, { phone: string }>(

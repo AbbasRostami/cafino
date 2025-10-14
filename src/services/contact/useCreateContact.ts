@@ -1,6 +1,6 @@
 import { usePost } from "@/hooks/api/useReactQueryHooks";
 import { CreateContactRequest, CreateContactResponse } from "@/types/admin";
-import { formatBlockType, formatRetryAfter } from "@/utils/formatters";
+import { formatRetryAfter } from "@/utils/formatters";
 import { toast } from "sonner";
 
 export const useCreateContact = () => {

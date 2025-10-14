@@ -1,5 +1,6 @@
 import { usePost } from "@/hooks/api/useReactQueryHooks";
 import { AddMessageRequest, AddMessageResponse } from "@/types/Profile";
+import { formatRetryAfter } from "@/utils/formatters";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -31,10 +32,33 @@ export const useAddTicketMessage = (ticketId: string) => {
           toast.error("تیکت بسته شده است");
           break;
         case 429:
-          if (error?.retryAfter) {
-            const minutes = Math.ceil(error?.retryAfter / 60);
+          const blockType429 = error?.blockType || "temporary";
+
+          if (blockType429 === "permanent") {
             toast.error(
-              `تعداد درخواست‌های شما بیش از حد مجاز است. دوباره در ${minutes} دقیقه دیگر تلاش کنید.`
+              "دسترسی شما به سیستم محدود شده است. برای رفع این مشکل با پشتیبانی تماس بگیرید.",
+              {
+                duration: 10000,
+                action: {
+                  label: "تماس با پشتیبانی",
+                  actionButtonStyle: {
+                    backgroundColor: "red",
+                    color: "white",
+                  },
+                  onClick: () => {
+                    window.location.href = "/contact-us";
+                  },
+                },
+              }
+            );
+          } else if (error?.retryAfter) {
+            const timeText = formatRetryAfter(error.retryAfter);
+            toast.error(
+              `تعداد درخواست‌ها بیش از حد مجاز است. دوباره در ${timeText} دیگر تلاش کنید.`
+            );
+          } else {
+            toast.error(
+              "تعداد درخواست‌های شما بیش از حد مجاز است. لطفاً بعداً تلاش کنید."
             );
           }
           break;
