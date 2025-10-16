@@ -17,26 +17,28 @@ const Logo: React.FC<LogoProps> = ({
   const router = useRouter();
   return (
     <>
-      <Image
-        data-testid="logo"
-        priority
-        src={CafeinLogoLight}
-        alt="Cafein Logo Light"
-        className={`block dark:hidden object-contain cursor-pointer ${className}`}
-        width={width}
-        onClick={() => router.push("/")}
-        sizes={sizes}
-      />
-      <Image
-        data-testid="logo"
-        priority
-        src={CafeinLogoDark}
-        alt="Cafein Logo Dark"
-        className={`hidden dark:block object-contain cursor-pointer ${className}`}
-        width={width}
-        onClick={() => router.push("/")}
-        sizes={sizes}
-      />
+      <div className="flex items-center gap-2">
+        <Image
+          data-testid="logo"
+          priority
+          src={CafeinLogoLight}
+          alt="Cafein Logo Light"
+          className={`block dark:hidden object-contain cursor-pointer ${className}`}
+          width={width}
+          onClick={() => router.push("/")}
+          sizes={sizes}
+        />
+        <Image
+          data-testid="logo"
+          priority
+          src={CafeinLogoDark}
+          alt="Cafein Logo Dark"
+          className={`hidden dark:block object-contain cursor-pointer ${className}`}
+          width={width}
+          onClick={() => router.push("/")}
+          sizes={sizes}
+        />
+      </div>
     </>
   );
 };

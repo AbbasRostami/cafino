@@ -1,24 +1,9 @@
 import Link from "next/link";
 import { Home, FileText, Phone, Info } from "lucide-react";
 import { MotionSpan } from "@/utils/MotionWrapper";
-import { ThemeSwitcher } from "../ThemeToggle";
-import dynamic from "next/dynamic";
-import { LoginForm } from "@/components/main/auth";
-import UserDropdown from "./UserLink";
 import { DesktopNavbarProps } from "@/types/main";
 
-const CartSidebar = dynamic(
-  () => import("@/components/main/CartSidebar").then((mod) => mod.default),
-  { ssr: false }
-);
-
-const DesktopNavbar: React.FC<DesktopNavbarProps> = ({
-  isAuthenticated,
-  user,
-  pathname,
-  openLoginDialog,
-  setOpenLoginDialog,
-}) => {
+const DesktopNavbar: React.FC<DesktopNavbarProps> = ({ pathname }) => {
   const links = [
     { href: "/", label: "صفحه اصلی", icon: Home },
     { href: "/menu", label: "منو", icon: FileText },
@@ -57,23 +42,6 @@ const DesktopNavbar: React.FC<DesktopNavbarProps> = ({
             </Link>
           );
         })}
-      </div>
-
-      <div className="flex items-center gap-3">
-        <div className="hidden md:block">
-          <ThemeSwitcher />
-        </div>
-        <CartSidebar />
-        <UserDropdown
-          user={user}
-          isAuthenticated={isAuthenticated}
-          onLoginClick={() => setOpenLoginDialog(true)}
-        />
-        <LoginForm
-          open={openLoginDialog}
-          onOpenChange={setOpenLoginDialog}
-          onSuccess={() => setOpenLoginDialog(false)}
-        />
       </div>
     </>
   );
