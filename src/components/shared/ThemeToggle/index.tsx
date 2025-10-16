@@ -16,8 +16,9 @@ export function ThemeSwitcher() {
   if (!mounted) return null;
 
   return (
-    <div className="relative group">
+    <div aria-label="تغییر تم" className="relative group">
       <button
+        aria-label="تغییر تم"
         data-testid="theme-toggle"
         onClick={(e) => {
           const root = document.documentElement;
@@ -51,10 +52,10 @@ export function ThemeSwitcher() {
       <div className="absolute z-[999999] left-1/2 transform -translate-x-1/2 mt-2 opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300 flex space-x-2 bg-white dark:bg-neutral-800 p-2 rounded-lg shadow-lg border border-gray-300 dark:border-gray-600">
         {["light", "dark", "system"].map((t) => (
           <button
+            aria-label={t}
             key={t}
             onClick={(e) => {
               const root = document.documentElement;
-
               const nextTheme =
                 theme === "light"
                   ? "dark"

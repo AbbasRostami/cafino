@@ -15,9 +15,5 @@ export interface UserDropdownProps {
 }
 
 export interface DesktopNavbarProps {
-  isAuthenticated: boolean;
-  user: any;
   pathname: string;
-  openLoginDialog: boolean;
-  setOpenLoginDialog: (open: boolean) => void;
 }

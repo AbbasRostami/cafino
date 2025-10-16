@@ -32,7 +32,6 @@ export const useMenuFiltersNuqs = () => {
       if (key === "minPrice" && value === DEFAULT_MIN) return;
       if (key === "maxPrice" && value === DEFAULT_MAX) return;
       if (key === "page" && value === 1) return;
-      if (key === "limit" && value === 6) return;
 
       params.set(key, String(value));
     });
