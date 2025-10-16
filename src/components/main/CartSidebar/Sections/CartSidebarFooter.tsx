@@ -24,7 +24,8 @@ export const CartSidebarFooter: React.FC<CartSidebarFooterProps> = ({
             <span className="text-sm text-gray-600 dark:text-gray-200">
               مجموع قیمت:
             </span>
-            <p className="font-bold text-xl space-x-1">
+            
+            <p className="font-bold text-base space-x-1">
               <span className="text-gray-800 dark:text-gray-100">
                 {formatCurrency(cartData?.totalAmount)}
               </span>

@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "cafino.storage.c2.liara.space",
+        hostname: process.env.NEXT_PUBLIC_HOSTNAME_URL || "",
         port: "",
         pathname: "/**",
       },
@@ -37,8 +37,8 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value:
               process.env.NODE_ENV === "development"
-                ? "default-src 'self'; script-src 'self' 'unsafe-eval'; img-src 'self' https://cafino.storage.c2.liara.space; connect-src 'self' https://cafino.storage.c2.liara.space"
-                : "default-src 'self'; script-src 'self'; img-src 'self' https://cafino.storage.c2.liara.space; connect-src 'self' https://cafino.storage.c2.liara.space",
+                ? `default-src 'self'; script-src 'self' 'unsafe-eval'; img-src 'self' ${process.env.NEXT_PUBLIC_SITE_URL}; connect-src 'self' ${process.env.NEXT_PUBLIC_API_URL}`
+                : `default-src 'self'; script-src 'self'; img-src 'self' ${process.env.NEXT_PUBLIC_SITE_URL}; connect-src 'self' ${process.env.NEXT_PUBLIC_API_URL}`,
           },
         ],
       },

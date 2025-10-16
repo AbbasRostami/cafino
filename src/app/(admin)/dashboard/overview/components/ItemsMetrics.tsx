@@ -69,7 +69,7 @@ export function ItemsMetrics({ data }: { data?: ItemOverview }) {
                       {index + 1}
                     </div>
                     <span className="font-semibold text-gray-800 dark:text-gray-200 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
-                      {item?.title}
+                      {item?.title.slice(0, 14)}...
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5">
@@ -114,7 +114,7 @@ export function ItemsMetrics({ data }: { data?: ItemOverview }) {
                       !
                     </div>
                     <span className="font-semibold text-gray-800 dark:text-gray-200 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors">
-                      {item?.title}
+                      {item?.title.slice(0, 14)}...
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5">

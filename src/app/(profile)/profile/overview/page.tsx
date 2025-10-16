@@ -57,7 +57,7 @@ export default function OverviewPage() {
   return (
     <div
       data-testid="profile-overview"
-      className="space-y-8 p-4 sm:p-6 lg:p-4 bg-gradient-to-br from-rose-50/50 to-amber-50/50 dark:from-gray-900 dark:to-gray-800 min-h-screen"
+      className="space-y-8 p-4 sm:p-6 lg:p-4 bg-gradient-to-br from-rose-50/50 to-amber-50/50 dark:from-gray-900 dark:to-gray-800 rounded-3xl min-h-screen"
     >
       {userLoading ? <HeaderSkeleton /> : <Header user={user} />}
 
