@@ -89,7 +89,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
             ]?.map(({ href, label, icon: Icon }) => {
               const isActive = pathname === href;
               return (
-                <SheetClose asChild key={label}>
+                <SheetClose asChild key={href}>
                   <Link
                     href={href}
                     className={`relative flex items-center gap-3 p-4 rounded-xl transition-all duration-300 ${
