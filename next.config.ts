@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: process.env.NEXT_PUBLIC_HOSTNAME_URL as string,
+        hostname: "cafino.storage.c2.liara.space",
         port: "",
         pathname: "/**",
       },
