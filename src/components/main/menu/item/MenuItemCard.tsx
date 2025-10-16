@@ -120,8 +120,11 @@ export const MenuItemCard = ({ item, viewMode }: MenuItemCardProps) => {
         )}
       >
         <div className="flex justify-between items-start gap-2">
-          <div className="flex-1 min-w-0">
-            <h3 className="text-base sm:text-lg font-bold text-gray-800 dark:text-white line-clamp-1">
+          <div
+            onClick={() => router.push(`/menu/${item?.id}/${item?.slug}`)}
+            className="flex-1 min-w-0 cursor-pointer"
+          >
+            <h3 className="text-base sm:text-lg group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-all duration-300 font-bold text-gray-800 dark:text-white line-clamp-1">
               {item?.title}
             </h3>
             <span className="text-xs text-amber-600 dark:text-amber-400 mt-1 block">

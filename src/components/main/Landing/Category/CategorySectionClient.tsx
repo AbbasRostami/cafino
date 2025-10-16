@@ -63,18 +63,16 @@ const CategorySectionClient: React.FC<CategorySectionClientProps> = ({
           {categories?.map((item: Category) => (
             <SwiperSlide className="py-7 px-4" key={item?.id}>
               <div
-                className="rounded-[30px] hover:scale-105 transition duration-300 h-full"
+                onClick={() => {
+                  router.push(`/menu?category=${item?.title}`);
+                }}
+                className="rounded-[30px] hover:scale-105 transition duration-300 h-full cursor-pointer"
                 role="button"
                 tabIndex={0}
                 aria-label={`دسته‌بندی ${item?.title}`}
               >
                 <div className="bg-[#18181c] dark:bg-[#18181c] bg-gradient-to-r from-amber-500 to-amber-700 dark:bg-none w-full h-72 rounded-xl relative flex flex-col justify-center items-center">
-                  <div
-                    onClick={() => {
-                      router.push(`/menu?category=${item?.title}`);
-                    }}
-                    className="top-radius absolute top-0 -right-0.5 w-auto px-3 h-14 bg-orange-50 dark:bg-[#23232a] rounded-bl-2xl rounded-tr-2xl flex justify-center items-center "
-                  >
+                  <div className="top-radius absolute top-0 -right-0.5 w-auto px-3 h-14 bg-orange-50 dark:bg-[#23232a] rounded-bl-2xl rounded-tr-2xl flex justify-center items-center ">
                     <CircleArrowOutUpRight className="text-gray-600 dark:text-gray-200 w-8 h-8 sm:w-10 sm:h-10  z-10" />
                   </div>
 

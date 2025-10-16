@@ -25,6 +25,7 @@ import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import { SkeletonItemSection } from "@/components/skeleton";
 import { useGetItemsLanding } from "@/services/items/useGetItems";
+import { useRouter } from "next/navigation";
 
 const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
   const { data: itemsResponse, isLoading } = useGetItemsLanding(
@@ -62,6 +63,7 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
       </section>
     );
   }
+  const router = useRouter();
   return (
     <>
       <div className="max-w-4xl mx-auto text-center mb-8">
@@ -222,8 +224,13 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
 
                   <div className="p-4 flex flex-col gap-3">
                     <div className="flex justify-between items-start">
-                      <div>
-                        <h3 className="text-lg font-bold text-gray-800 dark:text-white line-clamp-1">
+                      <div
+                        onClick={() =>
+                          router.push(`/menu/${item?.id}/${item?.slug}`)
+                        }
+                        className="cursor-pointer"
+                      >
+                        <h3 className="text-lg group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-all duration-300 font-bold text-gray-800 dark:text-white line-clamp-1">
                           {item?.title}
                         </h3>
                         <span className="text-xs text-amber-600 dark:text-amber-400 mt-1 block">
