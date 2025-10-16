@@ -9,7 +9,7 @@ export const StatsCards = ({ data }: { data: ProfileOverview | undefined }) => {
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="text-sm font-medium text-gray-500 dark:text-gray-400">
-              سفارش‌های فعال
+              سفارشات فعال
             </CardTitle>
             <div className="p-2 rounded-full bg-amber-100 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400">
               <ShoppingBag size={20} />
@@ -30,7 +30,7 @@ export const StatsCards = ({ data }: { data: ProfileOverview | undefined }) => {
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="text-sm font-medium text-gray-500 dark:text-gray-400">
-              مجموع سفارش‌ها
+              مجموع سفارشات
             </CardTitle>
             <div className="p-2 rounded-full bg-emerald-100 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400">
               <ShoppingCart size={20} />

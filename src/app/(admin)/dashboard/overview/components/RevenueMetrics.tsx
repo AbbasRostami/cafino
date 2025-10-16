@@ -117,7 +117,7 @@ export function RevenueMetrics({ revenue }: { revenue?: RevenueOverview }) {
       <CardFooter className="flex flex-col items-start gap-2 text-sm w-full">
         <div className="flex flex-col sm:flex-row gap-2 w-full items-center justify-between">
           <span className="text-green-600 dark:text-green-400 text-base font-semibold">
-            میانگین ارزش سفارش‌ها:
+            میانگین ارزش سفارشات:
           </span>
 
           <div className="flex items-center gap-1 text-green-600 dark:text-green-400 font-bold">

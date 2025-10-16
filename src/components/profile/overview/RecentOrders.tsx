@@ -33,7 +33,7 @@ export const RecentOrders = ({
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-sm sm:text-xl font-bold text-gray-800 dark:text-white">
             <Clock size={18} />
-            آخرین سفارش‌ها
+            آخرین سفارشات
           </CardTitle>
         </CardHeader>
       ) : null}
@@ -133,7 +133,7 @@ export const RecentOrders = ({
               هنوز سفارشی ثبت نکرده‌اید
             </h3>
             <p className="text-gray-500 dark:text-gray-400 text-sm max-w-xs mb-4">
-              سفارش‌های شما اینجا نمایش داده خواهند شد
+              سفارشات شما اینجا نمایش داده خواهند شد
             </p>
 
             <MotionDiv whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
@@ -158,7 +158,7 @@ export const RecentOrders = ({
             className="w-full text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-800 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded-lg text-sm sm:text-base"
             asChild
           >
-            <Link href="/profile/orders">مشاهده همه سفارش‌ها</Link>
+            <Link href="/profile/orders">مشاهده همه سفارشات</Link>
           </Button>
         </CardFooter>
       )}

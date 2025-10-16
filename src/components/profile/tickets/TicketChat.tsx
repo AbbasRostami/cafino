@@ -95,38 +95,37 @@ export default function TicketChat({ ticket, onBack }: TicketChatProps) {
 
   return (
     <div className="flex flex-col h-full lg:h-[calc(100vh-120px)] bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
-        <div className="flex items-center gap-3">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onBack}
-            className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
-          >
-            <ArrowLeft size={16} />
-          </Button>
-          <div>
-            <h2 className="flex items-start gap-2 font-semibold text-gray-900 dark:text-gray-100">
-              <span className="text-2xl"> • </span>
-              {messagesData?.data?.ticket?.subject}
-            </h2>
-            <div className="flex items-center gap-2">
-              <Badge
-                className={`flex items-center gap-1 text-sm ${
-                  config?.className || ""
-                }`}
-              >
-                {config?.icon}
-                {config?.label}
-              </Badge>
-              <span className="text-sm text-gray-500 dark:text-gray-400">
-                {formatJalaliDate(
-                  messagesData?.data?.ticket?.created_at as string
-                )}
-              </span>
-            </div>
+      <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+        <div>
+          <h2 className="flex items-start gap-2 font-semibold text-gray-900 dark:text-gray-100">
+            <span className="text-2xl"> • </span>
+            {messagesData?.data?.ticket?.subject}
+          </h2>
+          <div className="flex items-center gap-2">
+            <Badge
+              className={`flex items-center gap-1 text-sm ${
+                config?.className || ""
+              }`}
+            >
+              {config?.icon}
+              {config?.label}
+            </Badge>
+            <span className="text-sm text-gray-500 dark:text-gray-400">
+              {formatJalaliDate(
+                messagesData?.data?.ticket?.created_at as string
+              )}
+            </span>
           </div>
         </div>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={onBack}
+          className="w-fit "
+        >
+          <ArrowLeft size={16} />
+          <span className="hidden xsm:block text-sm">بازگشت</span>
+        </Button>
       </div>
 
       <div className="flex-1 max-h-[100vh] overflow-y-auto  p-4 space-y-4">
@@ -189,7 +188,7 @@ export default function TicketChat({ ticket, onBack }: TicketChatProps) {
                     </div>
                   </div>
                   <div
-                    className={`p-3 rounded-lg min-h-[40px] sm:max-w-lg max-w-64 break-words ${
+                    className={`p-3 rounded-lg min-h-[40px] max-w-xs sm:max-w-lg break-words ${
                       isUser
                         ? "bg-gradient-to-r from-amber-500 to-orange-500 text-white"
                         : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100"

@@ -6,7 +6,7 @@ import Navbar from "@/components/shared/Header";
 export const metadata: Metadata = {
   title: "پنل کاربری | Cafino",
   description:
-    "مدیریت حساب کاربری، سفارش‌ها، آدرس‌ها و تنظیمات در کافه رستوران کافینو.",
+    "مدیریت حساب کاربری، سفارشات، آدرس‌ها و تنظیمات در کافه رستوران کافینو.",
   authors: [{ name: "Cafino" }],
 };
 

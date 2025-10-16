@@ -34,7 +34,7 @@ const navItems = [
   {
     href: "/profile/orders",
     icon: <ShoppingBag size={20} />,
-    label: "سفارش‌ها",
+    label: "سفارشات",
   },
   {
     href: "/profile/favorites",

@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-type Role = "user" | "admin";
+type Role = "user" | "admin" | "super_admin";
 
 function getRequiredRoles(pathname: string): Role[] | null {
   if (pathname.startsWith("/profile")) return ["user", "admin"];
-  if (pathname.startsWith("/dashboard")) return ["admin"];
+  if (pathname.startsWith("/dashboard")) return ["admin", "super_admin"];
   return null;
 }
+
 
 async function fetchRole(
   request: NextRequest,
