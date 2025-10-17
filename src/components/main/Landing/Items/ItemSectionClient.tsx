@@ -41,7 +41,7 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
         <div className="max-w-4xl mx-auto text-center mb-8">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 relative inline-block">
             <span className="text-amber-600 dark:text-amber-400 relative z-10">
-              منوی محبوب
+              محبوب ترین ها
             </span>
             <span className="absolute -top-3 -right-4 text-amber-400 dark:text-amber-500 text-9xl opacity-20">
               ✨
@@ -69,7 +69,7 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
       <div className="max-w-4xl mx-auto text-center mb-8">
         <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 relative inline-block">
           <span className="text-amber-600 dark:text-amber-400 relative z-10">
-            منوی محبوب
+            محبوب ترین ها
           </span>
           <span className="absolute -top-3 -right-4 text-amber-400 dark:text-amber-500 text-9xl opacity-20">
             ✨

@@ -15,6 +15,7 @@ import { aboutUsMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = aboutUsMetadata;
 
+
 export default function AboutUs() {
   return (
     <section className="pb-8 pt-28 px-4 md:px-8 lg:px-16 overflow-hidden">

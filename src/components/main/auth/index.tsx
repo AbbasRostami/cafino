@@ -18,7 +18,7 @@ import {
   DrawerDescription,
 } from "@/components/ui/drawer";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { LoginContent } from "./LoginContent";
+import { LoginContent, LogoComponent } from "./LoginContent";
 import { LoginFormProps } from "@/types/main";
 import { X } from "lucide-react";
 
@@ -45,7 +45,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   if (isMobile) {
     return (
       <Drawer open={open} onOpenChange={onOpenChange}>
-        <DrawerContent className="max-h-[90vh] border-none">
+        <DrawerContent className="h-auto border-none">
           <DrawerHeader className="text-center">
             <VisuallyHidden>
               <DrawerTitle>فرم ورود و ثبت نام</DrawerTitle>
@@ -93,6 +93,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           <DialogTitle>فرم ورود و ثبت نام</DialogTitle>
           <DialogDescription>فرم ورود و ثبت نام</DialogDescription>
         </VisuallyHidden>
+        <LogoComponent />
         <LoginContent
           step={step}
           isSendOTPLoading={isSendOTPLoading}

@@ -11,10 +11,18 @@ import { FavoriteCardProps } from "@/types/Profile";
 import { MotionDiv } from "@/utils/MotionWrapper";
 import { formatCurrency } from "@/utils/formatters";
 import { useDeleteFromFavorite } from "@/services";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { EffectFade, Pagination, Autoplay } from "swiper/modules";
+import Image from "next/image";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/effect-fade";
 
 export const FavoriteCard = ({ favorite }: FavoriteCardProps) => {
   const { mutate: deleteFromFavorite, isPending } = useDeleteFromFavorite();
   const isAvailable = favorite?.isAvailable;
+
   const handleDelete = async () => {
     const isConfirmed = await confirm({
       title: "آیا از حذف از علاقه مندی مطمئن هستید؟",
@@ -37,6 +45,51 @@ export const FavoriteCard = ({ favorite }: FavoriteCardProps) => {
       exit={{ opacity: 0, scale: 0.95 }}
       layout
     >
+      <div className="relative aspect-[4/3] w-full overflow-hidden">
+        <Swiper
+          modules={[Pagination, EffectFade, Autoplay]}
+          effect="fade"
+          speed={3000}
+          fadeEffect={{ crossFade: true }}
+          pagination={{
+            clickable: true,
+            bulletClass: "swiper-pagination-bullet !bg-white/50 !opacity-50",
+            bulletActiveClass:
+              "swiper-pagination-bullet-active !bg-red-500 !opacity-100",
+          }}
+          autoplay={{
+            delay: 4000,
+            disableOnInteraction: false,
+          }}
+          loop={(favorite?.item as any)?.images?.length > 1}
+          className="h-full w-full"
+        >
+          {(favorite?.item as any)?.images?.length > 0 ? (
+            (favorite?.item as any)?.images?.map((img: any) => (
+              <SwiperSlide key={img?.id}>
+                <Image
+                  src={img.imageUrl || "/images/default.png"}
+                  alt={favorite?.item?.title}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                />
+              </SwiperSlide>
+            ))
+          ) : (
+            <SwiperSlide>
+              <Image
+                src="/images/default.png"
+                alt={favorite?.item?.title}
+                fill
+                className="object-cover"
+                sizes="100vw"
+              />
+            </SwiperSlide>
+          )}
+        </Swiper>
+      </div>
+
       <div className="p-5 space-y-4">
         <div className="flex justify-between items-center">
           <h3 className="font-bold text-[17px] text-gray-800 dark:text-white leading-tight group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-all duration-300">
@@ -164,6 +217,7 @@ export const FavoriteCard = ({ favorite }: FavoriteCardProps) => {
             )}
           </Button>
         </div>
+
         <div className="flex justify-center">
           {isAvailable ? (
             <AddToCartButtonStyled itemId={favorite?.item?.id} />

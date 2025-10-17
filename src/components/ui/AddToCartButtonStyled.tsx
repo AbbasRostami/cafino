@@ -52,12 +52,12 @@ export const AddToCartButtonStyled: React.FC<AddToCartButtonStyledProps> = ({
       <MotionDiv
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        className={`w-full ${className}`}
+        className={`w-full  ${className}`}
       >
         <Button
           onClick={handleAdd}
           disabled={isCartLoading || isDisabled || addLoading}
-          className="w-full py-5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-lg shadow-amber-300/50 dark:shadow-amber-700/30 flex items-center gap-2 relative overflow-hidden"
+          className="w-full py-3 md:py-5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-lg shadow-amber-300/50 dark:shadow-amber-700/30 flex items-center gap-2 relative overflow-hidden"
         >
           <MotionAnimatePresence mode="wait">
             {addLoading ? (
