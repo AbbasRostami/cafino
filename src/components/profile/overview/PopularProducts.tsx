@@ -47,7 +47,7 @@ export const PopularProducts = ({
                   امتیاز: {fav?.item?.rate || "5"}
                 </div>
               </div>
-              <div className="flex items-center gap-2 ">
+              <div className="flex items-center  gap-2 ">
                 {fav?.isAvailable ? (
                   <AddToCartButtonStyled itemId={fav?.item?.id} />
                 ) : (

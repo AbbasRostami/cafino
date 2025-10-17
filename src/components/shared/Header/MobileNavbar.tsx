@@ -115,30 +115,19 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
             })}
 
             {isAuthenticated && user && (
-              <>
-                <SheetClose asChild>
-                  <Link
-                    href="/profile/overview"
-                    className="flex items-center gap-3 p-4 rounded-xl border border-amber-600 text-amber-700 dark:text-amber-300 bg-amber-100/50 dark:bg-amber-900/20 hover:bg-amber-200/50 dark:hover:bg-amber-800/40 transition-all"
-                  >
-                    <User className="w-5 h-5" />
-                    <span> ورود به پنل کاربری</span>
-                  </Link>
-                </SheetClose>
-                <button
-                  onClick={() => logout("/")}
-                  disabled={isPending}
-                  className="flex items-center gap-3 p-4 rounded-xl border border-transparent hover:bg-red-50 dark:hover:bg-red-900/20 hover:border-red-200 dark:hover:border-red-800 text-red-600 dark:text-red-400 transition-all w-full disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <LogOut className="w-5 h-5" />
-                  <span>{isPending ? "در حال خروج..." : "خروج"}</span>
-                </button>
-              </>
+              <button
+                onClick={() => logout("/")}
+                disabled={isPending}
+                className="flex items-center gap-3 p-4 rounded-xl border border-transparent hover:bg-red-50 dark:hover:bg-red-900/20 hover:border-red-200 dark:hover:border-red-800 text-red-600 dark:text-red-400 transition-all w-full disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <LogOut className="w-5 h-5" />
+                <span>{isPending ? "در حال خروج..." : "خروج"}</span>
+              </button>
             )}
           </div>
 
           <div className="border-t border-amber-100/60 dark:border-zinc-800/60 pt-6 pb-6 px-4 space-y-4">
-            {!isAuthenticated && (
+            {!isAuthenticated ? (
               <>
                 <Button
                   data-testid="mobile-login-button"
@@ -154,6 +143,16 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
                   onSuccess={() => setOpenMobileLoginDialog(false)}
                 />
               </>
+            ) : (
+              <SheetClose asChild>
+                <Link
+                  href="/profile/overview"
+                  className="flex items-center justify-center gap-2 w-full bg-amber-600 hover:bg-amber-700 text-white rounded-xl shadow-lg transition-all p-2"
+                >
+                  <User className="w-4 h-4" />
+                  ورود به پنل کاربری
+                </Link>
+              </SheetClose>
             )}
           </div>
         </div>

@@ -20,26 +20,8 @@ export const LoginContent: React.FC<LoginContentProps> = ({
   resendTimer,
   formatTime,
 }) => {
-  const LogoComponent = () => (
-    <div className="flex flex-col items-center gap-4 mb-3">
-      <Image
-        src={LogoDark}
-        alt="Logo Website"
-        width={150}
-        className="block dark:hidden"
-      />
-      <Image
-        src={LogoLight}
-        alt="Logo Website"
-        width={150}
-        className="hidden dark:block"
-      />
-    </div>
-  );
-
   return (
     <>
-      <LogoComponent />
       {step === "phone" ? (
         <PhoneInputForm onSubmit={handleSendOTP} isLoading={isSendOTPLoading} />
       ) : (
@@ -57,3 +39,20 @@ export const LoginContent: React.FC<LoginContentProps> = ({
     </>
   );
 };
+
+export const LogoComponent = () => (
+  <div className="flex flex-col items-center gap-4 mb-3">
+    <Image
+      src={LogoDark}
+      alt="Logo Website"
+      width={150}
+      className="block dark:hidden"
+    />
+    <Image
+      src={LogoLight}
+      alt="Logo Website"
+      width={150}
+      className="hidden dark:block"
+    />
+  </div>
+);

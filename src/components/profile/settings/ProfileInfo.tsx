@@ -14,11 +14,7 @@ export const ProfileInfo = ({ user }: ProfileInfoProps) => {
         : "---",
       icon: "🎂",
     },
-    {
-      label: "وضعیت",
-      value: user?.status === "normal" ? "فعال" : "غیر فعال",
-      icon: "⚙️",
-    },
+
     {
       label: "تاریخ ثبت نام",
       value: user?.created_at

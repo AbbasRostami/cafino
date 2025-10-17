@@ -89,8 +89,6 @@ const MobileSheet = ({
         )}
       </div>
       <SheetContent
-        onPointerDownOutside={(e) => e.preventDefault()}
-        onInteractOutside={(e) => e.preventDefault()}
         aria-describedby="filters-sidebar"
         side="right"
         className="w-[90vw] max-w-md p-0 border-none bg-white/95 dark:bg-gray-800/50 backdrop-blur-xl"
@@ -105,6 +103,13 @@ const MobileSheet = ({
               <h2 className="text-2xl font-bold dark:text-white bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent">
                 فیلتر‌ها
               </h2>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsOpen(false)}
+              >
+                <X className="w-6 h-6" />
+              </Button>
             </div>
             <div className="space-y-8">
               <div>

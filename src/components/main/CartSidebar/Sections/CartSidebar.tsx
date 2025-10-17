@@ -51,8 +51,8 @@ const CartSidebar = () => {
     setIsOpen(true);
   };
 
-  const handleClearCartAndClose = async () => {
-    await handleClearCart();
+  const handleClearCartAndClose = () => {
+    handleClearCart();
     setIsOpen(false);
   };
 
