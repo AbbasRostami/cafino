@@ -13,6 +13,7 @@ export const FavoriteHeader = () => {
         <Heart size={32} className="text-rose-500" />
         لیست علاقه‌مندی‌های شما
       </h1>
+
       <p className="text-gray-600 dark:text-gray-400 mt-2">
         تمام محصولات و غذاهای مورد علاقه‌تان در یکجا جمع‌آوری شده‌اند. هر زمان
         که خواستید می‌توانید به راحتی آنها را سفارش دهید.

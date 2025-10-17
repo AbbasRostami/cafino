@@ -14,7 +14,6 @@ export const useGetUserListAdmin = ({
       queryKey: ["user-list-admin", page, limit],
     }
   );
-
   return {
     users: data?.data?.users || [],
     total: data?.data?.total || 0,

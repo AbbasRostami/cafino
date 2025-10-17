@@ -19,7 +19,7 @@ export const useAddUserToBlacklist = () => {
         if (error?.statusCode === 403) {
           toast.error("شما اجازه اضافه کردن کاربر به لیست سیاه را ندارید");
         } else if (error?.statusCode === 409) {
-          toast.error("ادمین قابل اضافه کردن به لیست سیاه نیست");
+          toast.error("ادمین ها قابل تغییر نیست");
         } else if (error?.statusCode === 422) {
           toast.error("کاربر قبلاً در لیست سیاه است");
         } else {
