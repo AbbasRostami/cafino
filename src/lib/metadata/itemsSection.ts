@@ -4,7 +4,7 @@ export const generateItemsSectionStructuredData = (items: Item[]) => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "منوی محبوب",
+    name: "محبوب ترین ها",
     description: "بهترین انتخاب‌های ما از میان صدها غذای خوشمزه",
     url: "https://cafinoo.vercel.app/menu",
     numberOfItems: items.length,

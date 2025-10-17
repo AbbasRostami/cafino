@@ -13,6 +13,11 @@ export interface FavoriteItem {
     rate_count: number;
     show: boolean;
     createdAt: string;
+    images?: {
+      id: string;
+      image: string;
+      imageUrl: string;
+    }[];
   };
 }
 export interface FavoriteListResponse {

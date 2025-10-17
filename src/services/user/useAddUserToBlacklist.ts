@@ -15,8 +15,16 @@ export const useAddUserToBlacklist = () => {
         queryClient.invalidateQueries({ queryKey: ["user-list-admin"] });
         queryClient.invalidateQueries({ queryKey: ["blacklist"] });
       },
-      onError: () => {
-        toast.error("خطا در اضافه کردن کاربر به لیست سیاه");
+      onError: (error: any) => {
+        if (error?.statusCode === 403) {
+          toast.error("شما اجازه اضافه کردن کاربر به لیست سیاه را ندارید");
+        } else if (error?.statusCode === 409) {
+          toast.error("ادمین قابل اضافه کردن به لیست سیاه نیست");
+        } else if (error?.statusCode === 422) {
+          toast.error("کاربر قبلاً در لیست سیاه است");
+        } else {
+          toast.error("خطا در اضافه کردن کاربر به لیست سیاه");
+        }
       },
     }
   );

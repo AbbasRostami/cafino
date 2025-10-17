@@ -12,9 +12,16 @@ export const useChangeUserPermission = () => {
         toast.success("نقش کاربر با موفقیت تغییر کرد.");
         queryClient.invalidateQueries({ queryKey: ["user-list-admin"] });
       },
-      onError: () => {
-        toast.error("خطا در تغییر نقش کاربر");
+      onError: (error: any) => {
+        if (error?.statusCode === 403) {
+          toast.error("شما اجازه تغییر نقش کاربر را ندارید");
+        } else if (error?.statusCode === 409) {
+          toast.error("نقش کاربر قابل تغییر نیست");
+        } else {
+          toast.error("خطا در تغییر نقش کاربر");
+        }
       },
     });
+
   return { mutate, isPending, variables };
 };
