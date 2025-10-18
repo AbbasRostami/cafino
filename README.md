@@ -57,7 +57,6 @@
 
 ## 📋 Table of Contents
 
-
 - [Project Overview](#-project-overview)
 - [Key Features](#-key-features)
 - [Authentication & Authorization Features](#-authentication--authorization-features)
@@ -69,12 +68,23 @@
 - [Available Scripts](#-available-scripts)
 - [License](#-license)
 
-
 ---
 
 ## 🎯 Project Overview
 
 **Cafino (کافی‌نو)** is a comprehensive and modern platform for cafe and restaurant management, developed using the latest web technologies. This project consists of two main parts: **Frontend** (Next.js) and **Backend** (Nest.js).
+
+### 🔧 **Backend:**
+
+- **Developer**: [alireza-msvi13](https://github.com/alireza-msvi13)
+- **Repository**: [alireza-msvi13/cafino](https://github.com/alireza-msvi13/cafino)
+
+### 🎨 **Frontend & UI/UX:**
+
+- **Developer**: [AbbasRostami](https://github.com/AbbasRostami)
+- **Repository**: [AbbasRostami/cafino](https://github.com/AbbasRostami/cafino)
+
+---
 
 ## ✨ Key Features
 
@@ -163,6 +173,7 @@ Playwright tests cover critical user flows:
 - **Shopping and checkout process** - Add to cart, checkout, payment
 - **Admin panel operations** - Dashboard, item management
 - **Navigation testing** - Menu navigation, responsive design
+
 ---
 
 ### 🔒 Security Features
@@ -173,6 +184,7 @@ Playwright tests cover critical user flows:
 - **Rate Limiting**: API rate limiting support
 - **Input Validation**: Zod schema validation on all forms
 - **Cookie Security**: HttpOnly cookies for token storage
+
 ---
 
 ## 🛠️ Technology Stack <a id="tech-stack"></a>
