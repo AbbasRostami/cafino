@@ -107,7 +107,7 @@ export default function AddressesPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-16">
       <AddressHeader />
 
       <Card className="rounded-3xl shadow-md border border-muted bg-white/90 dark:bg-gray-900/90">

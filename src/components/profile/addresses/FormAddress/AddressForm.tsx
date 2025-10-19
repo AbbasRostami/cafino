@@ -51,7 +51,7 @@ export const AddressForm = ({
     return (
       <Drawer open={open} onOpenChange={onOpenChange}>
         <DrawerContent className="p-0 border-none">
-          <div className="flex flex-col max-h-[100dvh]">
+          <div className="flex flex-col !h-auto !max-h-[90vh]">
             <DrawerHeader className="p-4">
               <DrawerTitle className="flex justify-center items-center gap-2">
                 <MapPinHouse size={20} />

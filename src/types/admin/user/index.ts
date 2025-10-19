@@ -6,6 +6,8 @@ export interface AddressAdmin {
   created_at: string;
 }
 
+export type UserRole = "user" | "admin" | "manager";
+
 export interface UserAdmin {
   id: string;
   username: string;
@@ -15,7 +17,7 @@ export interface UserAdmin {
   image: string;
   phone: string;
   email: string;
-  role: string;
+  role: UserRole;
   is_email_verified: boolean;
   status: string;
   created_at: string;
@@ -40,7 +42,7 @@ export interface DeleteUserRequest {
 
 export interface ChangeUserPermissionRequest {
   phone: string;
-  role: string;
+  role: UserRole;
 }
 
 // Props
@@ -48,9 +50,9 @@ export interface ChangeUserPermissionRequest {
 export interface UserColumnsProps {
   currentPage: number;
   currentLimit: number;
-  changePermission: (data: { phone: string; role: string }) => void;
+  changePermission: (data: { phone: string; role: UserRole }) => void;
   isChangingPermission: boolean;
-  changePermissionVars?: { phone: string; role: string };
+  changePermissionVars?: { phone: string; role: UserRole };
   addToBlacklist: (data: { phone: string }) => void;
   isAddingToBlacklist: boolean;
   addToBlacklistVars?: { phone: string };
@@ -85,7 +87,7 @@ export interface UserBlacklist {
   imageUrl: string | null;
   phone: string;
   email: string | null;
-  role: "user" | "admin" | string;
+  role: UserRole;
   new_email: string | null;
   new_phone: string | null;
   is_email_verified: boolean;

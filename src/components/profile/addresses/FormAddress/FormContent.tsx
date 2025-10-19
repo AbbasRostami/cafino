@@ -84,7 +84,7 @@ export const FormContent = ({
         )}
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-2 col-span-2 md:col-span-1">
         <Label htmlFor="province">استان</Label>
         <Popover>
           <PopoverTrigger asChild>
@@ -135,7 +135,7 @@ export const FormContent = ({
         )}
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-2 col-span-2 md:col-span-1">
         <Label htmlFor="city">شهر</Label>
         <Popover>
           <PopoverTrigger asChild>
