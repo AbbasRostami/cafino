@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-type Role = "user" | "admin" | "super_admin";
+type Role = "user" | "admin" | "manager";
 
 function getRequiredRoles(pathname: string): Role[] | null {
-  if (pathname.startsWith("/profile")) return ["user", "admin", "super_admin"];
-  if (pathname.startsWith("/dashboard")) return ["admin", "super_admin"];
+  if (pathname.startsWith("/profile")) return ["user", "admin", "manager"];
+  if (pathname.startsWith("/dashboard")) return ["admin", "manager"];
   return null;
 }
 
