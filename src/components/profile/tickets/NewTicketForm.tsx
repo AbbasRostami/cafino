@@ -60,9 +60,9 @@ export default function NewTicketForm({ list, onCancel }: NewTicketFormProps) {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3 }}
-      className="w-full mb-16  "
+      className="w-full mb-16"
     >
-      <Card className="bg-white dark:bg-gray-900  border-gray-200 px-4 py-8 dark:border-gray-700 shadow-lg">
+      <Card className="bg-white dark:bg-gray-900 border-gray-200 px-4 py-8 dark:border-gray-700 shadow-lg">
         <CardHeader className=" flex justify-between items-center px-0 md:px-4 text-center pb-4">
           <CardTitle className=" flex items-center gap-2 text-sm  md:text-xl font-bold text-gray-900 dark:text-gray-100">
             <MessageSquare size={20} className="mr-2" />
@@ -82,8 +82,8 @@ export default function NewTicketForm({ list, onCancel }: NewTicketFormProps) {
           </div>
         </CardHeader>
 
-        <CardContent className="flex flex-col xl:flex-row justify-between items-center gap-6 lg:gap-4 px-0 md:px-4">
-          <div className="flex-1 w-full">
+        <CardContent className="flex flex-col xl:flex-row justify-between items-center gap-6 lg:gap-9 px-0 md:px-4">
+          <div className="flex-1 w-full xl:w-1/2 ">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div className="space-y-2">
                 <Label
@@ -118,7 +118,7 @@ export default function NewTicketForm({ list, onCancel }: NewTicketFormProps) {
                 </div>
               </div>
 
-              <div className="space-y-2 max-w-md">
+              <div className="space-y-2 ">
                 <Label
                   htmlFor="message"
                   className="text-sm font-medium text-gray-700 dark:text-gray-300"
@@ -216,3 +216,5 @@ export default function NewTicketForm({ list, onCancel }: NewTicketFormProps) {
     </MotionDiv>
   );
 }
+
+

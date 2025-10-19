@@ -24,6 +24,12 @@ import {
 import { TicketChatSkeleton } from "@/components/skeleton";
 import Image from "next/image";
 import { Kbd, KbdGroup } from "@/components/ui/kbd";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const statusConfig: Record<
   string,
@@ -99,7 +105,20 @@ export default function TicketChat({ ticket, onBack }: TicketChatProps) {
         <div>
           <h2 className="flex items-start gap-2 font-semibold text-gray-900 dark:text-gray-100">
             <span className="text-2xl"> • </span>
-            {messagesData?.data?.ticket?.subject}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <span className="truncate max-w-[200px]  sm:max-w-fit font-semibold  text-gray-900 dark:text-gray-100 mb-1 line-clamp-2 cursor-default">
+                    {messagesData?.data?.ticket?.subject}
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p className="text-sm text-justify line-clamp-2">
+                    {messagesData?.data?.ticket?.subject}
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </h2>
           <div className="flex items-center gap-2">
             <Badge
