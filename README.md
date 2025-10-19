@@ -1,6 +1,6 @@
 <div align="center">
 
-# ☕ Cafino (کافی‌نو) - Modern Cafe & Restaurant Management Platform
+# ☕ Cafino (کافینو) - Modern Cafe & Restaurant Management Platform
 
 <h3><strong>Core Technologies & Frameworks</strong></h3>
 <div>
@@ -375,3 +375,5 @@ cafino/
 ## 📄 License
 
 This project is private and proprietary. All rights reserved.
+
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/AbbasRostami/cafino)
