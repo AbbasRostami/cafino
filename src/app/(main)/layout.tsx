@@ -10,7 +10,7 @@ export default function MainLayout({
 }>) {
   return (
     <div>
-      <Toaster position="top-right" richColors />
+      <Toaster position="top-right" expand={true} richColors />
       <Navbar />
       <ConfirmModal />
       {children}

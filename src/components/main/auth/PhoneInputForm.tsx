@@ -41,7 +41,7 @@ export const PhoneInputForm: React.FC<PhoneInputFormProps> = ({
     },
     {
       id: "invalid-phone",
-      text: "شماره معتبر نیست",
+      text: "شماره باید فقط شامل اعداد باشد",
       isChecked: phoneValue.length > 0,
       isValid: /^09\d{9}$/.test(phoneValue),
     },

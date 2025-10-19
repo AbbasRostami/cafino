@@ -34,7 +34,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Toaster position="top-right" richColors />
+            <Toaster position="top-right" expand={true} richColors />
             <NuqsAdapter>{children}</NuqsAdapter>
           </ThemeProvider>
         </QueryProvider>

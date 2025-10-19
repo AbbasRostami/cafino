@@ -24,26 +24,12 @@ export const CartSidebarFooter: React.FC<CartSidebarFooterProps> = ({
             <span className="text-sm text-gray-600 dark:text-gray-200">
               مجموع قیمت:
             </span>
-            
+
             <p className="font-bold text-base space-x-1">
               <span className="text-gray-800 dark:text-gray-100">
                 {formatCurrency(cartData?.totalAmount)}
               </span>
               <span className="text-sm text-gray-500 dark:text-gray-400">
-                تومان
-              </span>
-            </p>
-          </div>
-
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600 dark:text-gray-200">
-              مجموع پرداختی:
-            </span>
-            <p className="font-bold text-xl text-amber-600 dark:text-amber-400 space-x-1">
-              <span className="text-amber-600 dark:text-amber-400">
-                {formatCurrency(cartData?.paymentAmount)}
-              </span>
-              <span className="text-sm text-amber-600 dark:text-amber-400">
                 تومان
               </span>
             </p>
@@ -64,6 +50,20 @@ export const CartSidebarFooter: React.FC<CartSidebarFooterProps> = ({
               </p>
             </div>
           )}
+
+          <div className="flex justify-between items-center">
+            <span className="text-sm text-gray-600 dark:text-gray-200">
+              مجموع پرداختی:
+            </span>
+            <p className="font-bold text-xl text-amber-600 dark:text-amber-400 space-x-1">
+              <span className="text-amber-600 dark:text-amber-400">
+                {formatCurrency(cartData?.paymentAmount)}
+              </span>
+              <span className="text-sm text-amber-600 dark:text-amber-400">
+                تومان
+              </span>
+            </p>
+          </div>
         </div>
 
         {isAuthenticated ? (

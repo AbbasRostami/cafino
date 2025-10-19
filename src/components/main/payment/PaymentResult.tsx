@@ -75,7 +75,7 @@ const SuccessPayment = ({ orderInfo }: { orderInfo: any }) => (
     initial={{ opacity: 0, scale: 0.95, y: 20 }}
     animate={{ opacity: 1, scale: 1, y: 0 }}
     transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-    className="relative text-center space-y-8 max-w-2xl mx-auto p-4"
+    className="relative text-center space-y-6 max-w-2xl mx-auto p-4"
   >
     <div className="absolute inset-0 -z-10 overflow-hidden">
       <div className="absolute top-0 left-1/4 w-72 h-72 bg-green-500/10 rounded-full blur-3xl"></div>
@@ -86,9 +86,9 @@ const SuccessPayment = ({ orderInfo }: { orderInfo: any }) => (
       <div className="absolute inset-0 -z-10">
         <div className="w-28 h-28 mx-auto bg-gradient-to-r from-green-500/40 to-emerald-600/40 rounded-full blur-xl"></div>
       </div>
-      <div className="w-24 h-24 mx-auto bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center shadow-2xl shadow-green-500/30 ring-2 ring-green-400/20 ring-offset-2 ring-offset-white/80 dark:ring-offset-gray-900/80 backdrop-blur-sm">
+      <div className="w-18 md:w-24 h-18 md:h-24 mx-auto bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center shadow-2xl shadow-green-500/30 ring-2 ring-green-400/20 ring-offset-2 ring-offset-white/80 dark:ring-offset-gray-900/80 backdrop-blur-sm">
         <div className="relative">
-          <CheckCircle className="w-14 h-14 text-white" />
+          <CheckCircle className="w-11 md:w-14 h-11 md:h-14 text-white" />
           <div className="absolute inset-0 bg-white/10 rounded-full animate-ping opacity-20"></div>
         </div>
       </div>
@@ -157,6 +157,7 @@ const SuccessPayment = ({ orderInfo }: { orderInfo: any }) => (
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.35, duration: 0.5 }}
+      className="hidden md:block"
     >
       <Card className="max-w-md mx-auto bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 border-green-200 dark:border-green-800 rounded-2xl shadow-md">
         <CardHeader className="pb-2">
@@ -199,7 +200,7 @@ const SuccessPayment = ({ orderInfo }: { orderInfo: any }) => (
         >
           <div className="absolute inset-0 bg-green-500/10 -z-10 transform scale-0 group-hover:scale-100 transition-transform duration-300 origin-center"></div>
           <ArrowRight className="ml-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-          سفارش جدید
+          صفحه اصلی
         </Button>
       </Link>
     </MotionDiv>
@@ -222,9 +223,9 @@ const FailedPayment = () => (
       <div className="absolute inset-0 -z-10">
         <div className="w-28 h-28 mx-auto bg-gradient-to-r from-red-500/40 to-pink-600/40 rounded-full blur-xl"></div>
       </div>
-      <div className="w-24 h-24 mx-auto bg-gradient-to-r from-red-500 to-pink-600 rounded-full flex items-center justify-center shadow-2xl shadow-red-500/30 ring-2 ring-red-400/20 ring-offset-2 ring-offset-white/80 dark:ring-offset-gray-900/80 backdrop-blur-sm">
+      <div className="w-18 md:w-24 h-18 md:h-24 mx-auto bg-gradient-to-r from-red-500 to-pink-600 rounded-full flex items-center justify-center shadow-2xl shadow-red-500/30 ring-2 ring-red-400/20 ring-offset-2 ring-offset-white/80 dark:ring-offset-gray-900/80 backdrop-blur-sm">
         <div className="relative">
-          <XCircle className="w-14 h-14 text-white" />
+          <XCircle className="w-11 md:w-14 h-11 md:h-14 text-white" />
           <div className="absolute inset-0 bg-white/10 rounded-full animate-ping opacity-20"></div>
         </div>
       </div>
@@ -249,6 +250,7 @@ const FailedPayment = () => (
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3, duration: 0.5 }}
+      className="hidden md:block"
     >
       <Card className="max-w-md py-3 gap-2 mx-auto bg-gradient-to-br from-red-50/70 to-pink-50/70 dark:from-red-950/40 dark:to-pink-950/40 border border-red-200/50 dark:border-red-800/50 backdrop-blur-md rounded-2xl shadow-lg shadow-red-500/10 overflow-hidden">
         <CardHeader className="pb-1 relative z-10">
@@ -268,16 +270,16 @@ const FailedPayment = () => (
             راهنمایی
           </CardTitle>
         </CardHeader>
-        <CardContent className="text-right space-y-3 relative z-10">
-          <p className="text-sm text-red-700 dark:text-red-300 flex items-center gap-2 justify-end">
+        <CardContent className="text-left space-y-3 relative z-10">
+          <p className="text-sm text-red-700 dark:text-red-300 flex items-center gap-2 justify-start">
             <span className="w-2 h-2 bg-red-500 rounded-full flex-shrink-0"></span>
             بررسی کنید که کارت بانکی شما فعال باشد
           </p>
-          <p className="text-sm text-red-700 dark:text-red-300 flex items-center gap-2 justify-end">
+          <p className="text-sm text-red-700 dark:text-red-300 flex items-center gap-2 justify-start">
             <span className="w-2 h-2 bg-red-500 rounded-full flex-shrink-0"></span>
             موجودی کافی در حساب خود داشته باشید
           </p>
-          <p className="text-sm text-red-700 dark:text-red-300 flex items-center gap-2 justify-end">
+          <p className="text-sm text-red-700 dark:text-red-300 flex items-center gap-2 justify-start">
             <span className="w-2 h-2 bg-red-500 rounded-full flex-shrink-0"></span>
             در صورت تکرار مشکل، با پشتیبانی تماس بگیرید
           </p>
@@ -291,11 +293,11 @@ const FailedPayment = () => (
       transition={{ delay: 0.4, duration: 0.5 }}
       className="flex flex-col sm:flex-row gap-4 justify-center pt-2"
     >
-      <Link href="/menu">
+      <Link href="/profile/tickets">
         <Button className="relative overflow-hidden group bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5">
           <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
           <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-          تلاش مجدد
+          تماس با پشتیبانی
         </Button>
       </Link>
       <Link href="/">
@@ -305,7 +307,7 @@ const FailedPayment = () => (
         >
           <div className="absolute inset-0 bg-red-500/10 -z-10 transform scale-0 group-hover:scale-100 transition-transform duration-300 origin-center"></div>
           <Home className="ml-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-          بازگشت به خانه
+          صفحه اصلی
         </Button>
       </Link>
     </MotionDiv>

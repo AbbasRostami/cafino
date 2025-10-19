@@ -4,7 +4,22 @@ import { useMemo } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Loader2, ShieldUser, OctagonX } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Loader2,
+  ShieldUser,
+  OctagonX,
+  CircleUserRound,
+  ChevronDown,
+} from "lucide-react";
 import { formatJalaliDate } from "@/utils/formatters";
 import { confirm } from "@/components/shared/ConfirmModal";
 import {
@@ -13,7 +28,32 @@ import {
   TooltipTrigger,
   TooltipProvider,
 } from "@/components/ui/tooltip";
-import { AddressAdmin, UserAdmin, UserColumnsProps } from "@/types/admin";
+import {
+  AddressAdmin,
+  UserAdmin,
+  UserColumnsProps,
+  UserRole,
+} from "@/types/admin";
+import Image from "next/image";
+
+// Helper function to get role display info
+const getRoleInfo = (role: UserRole) => {
+  switch (role) {
+    case "admin":
+      return { label: "مدیر", variant: "pending" as const };
+    case "manager":
+      return { label: "مدیر اصلی", variant: "success" as const };
+    case "user":
+    default:
+      return { label: "کاربر", variant: "default" as const };
+  }
+};
+// Available roles for selection
+const availableRoles: { value: UserRole; label: string }[] = [
+  { value: "user", label: "کاربر" },
+  { value: "admin", label: "مدیر" },
+  { value: "manager", label: "مدیر اصلی" },
+];
 
 export const columns = ({
   currentPage,
@@ -37,6 +77,36 @@ export const columns = ({
         header: "نام کاربری",
         accessorKey: "username",
         cell: (info) => info?.getValue() || "-",
+        enableSorting: true,
+      },
+      {
+        accessorKey: "imageUrl",
+        header: "تصویر",
+        cell: (info) => {
+          const imageUrl = info.getValue() as string;
+          return imageUrl ? (
+            <>
+              <div className="flex justify-center items-center gap-2">
+                <Image
+                  src={imageUrl}
+                  alt="تصویر کاربر"
+                  width={24}
+                  height={24}
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex justify-center items-center gap-2">
+                <CircleUserRound
+                  size={24}
+                  className="text-gray-500 dark:text-gray-400 w-8 h-8 rounded-full object-cover"
+                />
+              </div>
+            </>
+          );
+        },
         enableSorting: true,
       },
       {
@@ -81,12 +151,7 @@ export const columns = ({
         },
         enableSorting: false,
       },
-      {
-        header: "تلفن همراه",
-        accessorKey: "phone",
-        cell: (info) => info.getValue() || "-",
-        enableSorting: true,
-      },
+
       {
         header: "تایید ایمیل",
         accessorKey: "is_email_verified",
@@ -101,15 +166,19 @@ export const columns = ({
         enableSorting: true,
       },
       {
-        header: "نقش",
-        accessorKey: "role",
+        header: "تلفن همراه",
+        accessorKey: "phone",
+        cell: (info) => info.getValue() || "-",
+        enableSorting: true,
+      },
+
+      {
+        header: "تاریخ ایجاد",
+        accessorKey: "created_at",
         cell: (info) => {
-          const role = info.getValue() as string;
-          return (
-            <Badge variant={role === "admin" ? "success" : "default"}>
-              {role === "admin" ? "مدیر" : "کاربر"}
-            </Badge>
-          );
+          return info?.getValue()
+            ? formatJalaliDate(info?.getValue() as string, "jYYYY/jMM/jDD")
+            : "-";
         },
         enableSorting: true,
       },
@@ -126,65 +195,73 @@ export const columns = ({
         },
         enableSorting: true,
       },
-      {
-        header: "تاریخ ثبت",
-        accessorKey: "created_at",
-        cell: (info) => {
-          return info?.getValue()
-            ? formatJalaliDate(info?.getValue() as string, "jYYYY/jMM/jDD")
-            : "-";
-        },
-        enableSorting: true,
-      },
+
       {
         id: "actions",
-        header: "عملیات",
+        header: "عملیات/نقش",
         cell: ({ row }) => {
           const user = row?.original;
-          const userPhone = user?.phone;
 
-          const isCurrentUserChangingPermission =
-            changePermissionVars?.phone === userPhone && isChangingPermission;
           const isCurrentUserAddingToBlacklist =
-            addToBlacklistVars?.phone === userPhone && isAddingToBlacklist;
+            addToBlacklistVars?.phone === user?.phone && isAddingToBlacklist;
 
           return (
             <div className="flex justify-center items-center gap-2">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      disabled={isChangingPermission}
-                      className="h-8 w-8 rounded-full dark:bg-blue-900/30 dark:hover:bg-blue-900/50 transition-all duration-200 hover:scale-110"
-                      onClick={() => {
-                        const newRole =
-                          user.role === "admin" ? "user" : "admin";
-                        changePermission({ phone: user?.phone, role: newRole });
-                      }}
-                    >
-                      {isCurrentUserChangingPermission ? (
-                        <Loader2 className="animate-spin" size={20} />
-                      ) : (
-                        <ShieldUser
-                          className="text-blue-600 dark:text-blue-400"
-                          size={20}
-                          strokeWidth={2.2}
-                        />
-                      )}
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>
-                      {user.role === "admin"
-                        ? "حذف دسترسی مدیر"
-                        : "اعطای دسترسی مدیر"}
-                    </p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              {/* Role Selection Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={isChangingPermission}
+                    className="h-8 min-w-[120px] border-none shadow-none justify-between text-xs hover:bg-transparent"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Badge
+                        variant={getRoleInfo(user?.role).variant}
+                        className="text-xs"
+                      >
+                        {getRoleInfo(user?.role).label}
+                      </Badge>
+                    </div>
+                    <ChevronDown className="h-3 w-3 opacity-50" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-48 border-none shadow-none">
+                  <DropdownMenuLabel className="text-right">
+                    تغییر نقش کاربر
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuRadioGroup
+                    value={user?.role}
+                    onValueChange={(newRole: string) => {
+                      const role = newRole as UserRole;
+                      if (role !== user?.role) {
+                        changePermission({ phone: user?.phone, role });
+                      }
+                    }}
+                  >
+                    {availableRoles.map((role) => (
+                      <DropdownMenuRadioItem
+                        key={role?.value}
+                        value={role?.value}
+                        className="text-right justify-end"
+                      >
+                        <div className="flex items-center gap-2 justify-end w-full">
+                          <Badge
+                            variant={getRoleInfo(role?.value).variant}
+                            className="text-xs"
+                          >
+                            {role?.label}
+                          </Badge>
+                        </div>
+                      </DropdownMenuRadioItem>
+                    ))}
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
 
+              {/* Blacklist Button */}
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -231,8 +308,9 @@ export const columns = ({
     [
       currentPage,
       currentLimit,
-      changePermissionVars,
+      changePermission,
       isChangingPermission,
+      addToBlacklist,
       addToBlacklistVars,
       isAddingToBlacklist,
     ]

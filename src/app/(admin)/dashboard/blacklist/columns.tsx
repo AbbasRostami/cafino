@@ -15,6 +15,7 @@ import {
   TooltipProvider,
 } from "@/components/ui/tooltip";
 import { ColumnsBlackListProps } from "@/types/admin";
+import Image from "next/image";
 
 export const columns = ({
   currentPage,
@@ -47,17 +48,33 @@ export const columns = ({
         enableSorting: true,
       },
       {
-        header: "تصویر",
         accessorKey: "imageUrl",
-        cell: (info) =>
-          info.getValue() || (
-            <div className="flex justify-center">
-              <CircleUserRound
-                size={24}
-                className="text-gray-500 dark:text-gray-400"
-              />
-            </div>
-          ),
+        header: "تصویر",
+        cell: (info) => {
+          const imageUrl = info.getValue() as string;
+          return imageUrl ? (
+            <>
+              <div className="flex justify-center items-center gap-2">
+                <Image
+                  src={imageUrl}
+                  alt="تصویر کاربر"
+                  width={24}
+                  height={24}
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex justify-center items-center gap-2">
+                <CircleUserRound
+                  size={24}
+                  className="text-gray-500 dark:text-gray-400 w-8 h-8 rounded-full object-cover"
+                />
+              </div>
+            </>
+          );
+        },
         enableSorting: true,
       },
       {
@@ -128,7 +145,6 @@ export const columns = ({
         cell: ({ row }) => {
           const user = row?.original;
           return (
-          
             <div className="flex justify-center items-center gap-2">
               <TooltipProvider>
                 <Tooltip>

@@ -45,14 +45,16 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   if (isMobile) {
     return (
       <Drawer open={open} onOpenChange={onOpenChange}>
-        <DrawerContent className="h-auto border-none">
-          <DrawerHeader className="text-center">
+        <DrawerContent className="border-none !h-auto !max-h-[90vh]">
+          <DrawerHeader className="text-center pb-2">
             <VisuallyHidden>
               <DrawerTitle>فرم ورود و ثبت نام</DrawerTitle>
               <DrawerDescription>فرم ورود و ثبت نام</DrawerDescription>
             </VisuallyHidden>
           </DrawerHeader>
-          <div className="px-4 pb-4 overflow-y-auto scrollbar-hide">
+          <div className="px-4 pb-4">
+            <LogoComponent />
+
             <LoginContent
               step={step}
               isSendOTPLoading={isSendOTPLoading}
