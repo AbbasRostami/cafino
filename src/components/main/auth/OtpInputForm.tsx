@@ -34,6 +34,7 @@ export const OtpInputForm: React.FC<OtpInputFormProps> = ({
 
   const handleFormSubmit = (data: { otp: string }) => {
     onSubmit(data.otp, phoneNumber);
+    
   };
 
   const handleResend = () => {
@@ -112,7 +113,7 @@ export const OtpInputForm: React.FC<OtpInputFormProps> = ({
           <Button
             data-testid="verify-otp-button"
             type="submit"
-            disabled={isVerifyOTPLoading || !otpValue || otpValue.length !== 5}
+            disabled={isVerifyOTPLoading || !otpValue}
             className={cn(
               "w-full h-12 cursor-pointer text-lg font-bold",
               "bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600",

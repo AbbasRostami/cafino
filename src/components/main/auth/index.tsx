@@ -40,7 +40,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     handleResendOTP,
     goBackToPhone,
     formatTime,
-  } = useLoginLogic({ onSuccess, onClose: () => onOpenChange(false) });
+  } = useLoginLogic({
+    onSuccess: () => {
+      onSuccess?.();
+      onOpenChange(false);
+    },
+    onClose: () => onOpenChange(false),
+  });
 
   if (isMobile) {
     return (

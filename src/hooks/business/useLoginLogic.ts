@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from "react";
 import { migrateGuestCartToServer } from "@/store/cartStore";
 import { useAddToCartMultiple, useCart } from "@/services";
@@ -49,12 +50,16 @@ export const useLoginLogic = ({
         onSuccess: () => {
           // Migrate guest cart to server
           migrateGuestCartToServer(addToCartMultiple, refetchCart);
-          if (onClose) {
-            onClose();
-          } else if (onSuccess) {
+
+          setStep("phone");
+          setPhoneValue("");
+          setResendTimer(0);
+          if (onSuccess) {
             onSuccess();
           }
-          setStep("phone");
+          if (onClose) {
+            onClose();
+          }
         },
       }
     );
