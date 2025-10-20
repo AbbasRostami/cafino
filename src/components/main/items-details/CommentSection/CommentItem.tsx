@@ -6,7 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { formatJalaliDate } from "@/utils/formatters";
+import { formatRelativeTime } from "@/utils/formatters";
 import { CommentItemProps } from "@/types/main";
 import { ReplyForm } from "./ReplyForm";
 import { useState } from "react";
@@ -54,8 +54,8 @@ export const CommentItem = ({
   };
 
   const renderRating = (rating: number) => (
-    <span className="inline-flex items-center gap-1 rounded-full bg-yellow-100 px-2 py-1 text-sm font-semibold text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300 shadow-sm">
-      <StarIcon className="w-4 h-4 fill-current" />
+    <span className="inline-flex items-center gap-1 rounded-full bg-yellow-100 px-2 py-1 text-xs md:text-sm font-semibold text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300 shadow-sm">
+      <StarIcon className="w-2.5 h-2.5 md:w-4 md:h-4 fill-current" />
       {rating}
     </span>
   );
@@ -77,10 +77,10 @@ export const CommentItem = ({
     <AccordionItem
       dir="rtl"
       value={comment?.id}
-      className="overflow-hidden rounded-2xl bg-white/80 dark:bg-gray-800/50 backdrop-blur-sm border border-amber-100 dark:border-amber-800/50 shadow-lg transition-all duration-300 hover:shadow-xl"
+      className="rounded-2xl bg-white/80 dark:bg-gray-800/50 backdrop-blur-sm border border-amber-100 dark:border-amber-800/50 shadow-lg transition-all duration-300 hover:shadow-xl"
     >
-      <div className="p-5 bg-gradient-to-r from-amber-50/50 to-orange-50/50 dark:from-amber-900/10 dark:to-orange-900/10">
-        <div className="space-y-4">
+      <div className="p-5 bg-gradient-to-r from-amber-50/50 to-orange-50/50 dark:from-amber-900/10 dark:to-orange-900/10 min-h-0">
+        <div className="space-y-4 min-h-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               {renderUserAvatar(comment?.user?.username)}
@@ -89,17 +89,19 @@ export const CommentItem = ({
                   {comment?.user?.username}
                 </p>
                 <span className="text-sm text-gray-700 dark:text-gray-300">
-                  {formatJalaliDate(comment?.created_at)}
+                  {formatRelativeTime(comment?.created_at)}
                 </span>
               </div>
             </div>
             {comment?.star && renderRating(comment?.star)}
           </div>
-          <div className="flex items-start justify-between gap-4">
-            <p className="text-sm font-medium text-gray-700 dark:text-gray-300 leading-relaxed flex-1">
+          <div className="space-y-3">
+            <p className="text-sm font-medium text-gray-700 dark:text-gray-300 leading-relaxed break-words whitespace-pre-wrap">
               {comment.text}
             </p>
-            {renderReplyButton(comment?.id, isReplyFormVisible)}
+            <div className="flex justify-end">
+              {renderReplyButton(comment?.id, isReplyFormVisible)}
+            </div>
           </div>
           {isReplyFormVisible && activeReplyId === comment?.id && (
             <ReplyForm
@@ -117,38 +119,38 @@ export const CommentItem = ({
           <AccordionTrigger className="text-sm px-5 py-3 text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300">
             {`مشاهده ${comment?.children?.length} پاسخ`}
           </AccordionTrigger>
-          <AccordionContent className="px-5 pb-4 space-y-4 border-t pt-4 border-amber-200 dark:border-amber-800/30">
+          <AccordionContent className="px-5 pb-4 space-y-4 border-t pt-4 border-amber-200 dark:border-amber-800/30 overflow-visible">
             {comment?.children?.map((reply: any) => (
               <div
                 key={reply.id}
                 className="bg-white dark:bg-gray-800 p-4 rounded-xl border-2 border-amber-100 dark:border-amber-700"
               >
                 <div className="space-y-3">
-                  <div className="flex justify-between items-start">
-                    <div className="flex items-center gap-3">
-                      {renderUserAvatar(
-                        reply?.user?.username ||
+                  <div className="flex items-center gap-3">
+                    {renderUserAvatar(
+                      reply?.user?.username ||
+                        `${reply?.user?.first_name || ""} ${
+                          reply?.user?.last_name || ""
+                        }`.trim() ||
+                        "کاربر",
+                      "sm"
+                    )}
+                    <div>
+                      <p className="font-medium text-gray-800 dark:text-white text-sm">
+                        {reply?.user?.username ||
                           `${reply?.user?.first_name || ""} ${
                             reply?.user?.last_name || ""
                           }`.trim() ||
-                          "کاربر",
-                        "sm"
-                      )}
-                      <div>
-                        <p className="font-medium text-gray-800 dark:text-white text-sm">
-                          {reply?.user?.username ||
-                            `${reply?.user?.first_name || ""} ${
-                              reply?.user?.last_name || ""
-                            }`.trim() ||
-                            "کاربر"}
-                        </p>
-                      </div>
+                          "کاربر"}
+                      </p>
                     </div>
-                    {renderReplyButton(reply?.id, activeReplyId === reply?.id)}
                   </div>
-                  <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <p className="text-sm font-medium text-gray-700 dark:text-gray-300 break-words whitespace-pre-wrap">
                     {reply?.text}
                   </p>
+                  <div className="flex justify-end">
+                    {renderReplyButton(reply?.id, activeReplyId === reply?.id)}
+                  </div>
                   {activeReplyId === reply?.id && (
                     <ReplyForm
                       itemId={itemId}

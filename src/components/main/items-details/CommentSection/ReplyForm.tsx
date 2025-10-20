@@ -15,6 +15,7 @@ export const ReplyForm = ({
   isPending,
   onCancel,
 }: ReplyFormProps) => {
+
   const {
     register,
     handleSubmit,
@@ -40,7 +41,7 @@ export const ReplyForm = ({
   };
 
   const textLength = watch("text")?.length || 0;
-  const maxLength = 50;
+  const maxLength = 500;
 
   return (
     <MotionDiv

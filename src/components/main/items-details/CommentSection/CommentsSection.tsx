@@ -165,7 +165,7 @@ export const CommentsSection = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.8 }}
-      className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl p-6 shadow-xl border border-white dark:border-gray-700"
+      className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl p-3 md:p-6 shadow-xl border border-white dark:border-gray-700"
     >
       <Tabs defaultValue="comments">
         <TabsList className="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 backdrop-blur-sm grid w-full grid-cols-2">
