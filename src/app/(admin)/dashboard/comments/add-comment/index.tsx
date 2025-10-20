@@ -12,7 +12,6 @@ import {
 import {
   Drawer,
   DrawerContent,
-  DrawerHeader,
   DrawerDescription,
   DrawerTitle,
   DrawerTrigger,
@@ -26,6 +25,7 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 export function AddCommentModal({
   itemId,
   parentId,
+  parentComment,
   trigger,
 }: AddCommentModalProps) {
   const [open, setOpen] = useState(false);
@@ -38,7 +38,7 @@ export function AddCommentModal({
           <DialogTrigger asChild>{trigger}</DialogTrigger>
           <DialogContent
             showCloseButton={false}
-            className="max-w-2xl max-h-[90vh] p-4 rounded-lg space-y-4 shadow-lg  overflow-y-auto"
+            className="max-w-3xl max-h-[90vh] p-4 rounded-lg space-y-4 shadow-lg"
           >
             <DialogHeader>
               <DialogTitle className="text-gray-900 dark:text-gray-100 text-start flex items-center gap-2 pb-4">
@@ -49,30 +49,34 @@ export function AddCommentModal({
                 <DialogDescription>ارسال پاسخ</DialogDescription>
               </VisuallyHidden>
             </DialogHeader>
-            <CommentForm
-              itemId={itemId}
-              parentId={parentId}
-              closeModal={() => setOpen(false)}
-            />
+            <div className="p-2 overflow-y-auto scrollbar-hide">
+              <CommentForm
+                itemId={itemId}
+                parentId={parentId}
+                parentComment={parentComment}
+                closeModal={() => setOpen(false)}
+              />
+            </div>
           </DialogContent>
         </Dialog>
       ) : (
         <Drawer open={open} onOpenChange={setOpen}>
           <DrawerTrigger asChild>{trigger}</DrawerTrigger>
           <DrawerContent className="max-h-[90vh] border-none p-4 rounded-t-lg space-y-4 shadow-lg">
-            <DrawerHeader>
+            <VisuallyHidden>
               <DrawerTitle className="text-gray-900 dark:text-gray-100 text-center">
                 ارسال پاسخ
               </DrawerTitle>
-              <VisuallyHidden>
-                <DrawerDescription>ارسال پاسخ</DrawerDescription>
-              </VisuallyHidden>
-            </DrawerHeader>
-            <CommentForm
-              itemId={itemId}
-              parentId={parentId}
-              closeModal={() => setOpen(false)}
-            />
+              <DrawerDescription>ارسال پاسخ</DrawerDescription>
+            </VisuallyHidden>
+            <div className="p-2 overflow-y-auto scrollbar-hide">
+              <CommentForm
+                itemId={itemId}
+                parentId={parentId}
+                parentComment={parentComment}
+                closeModal={() => setOpen(false)}
+              />
+            </div>
           </DrawerContent>
         </Drawer>
       )}

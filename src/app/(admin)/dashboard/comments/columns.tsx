@@ -48,34 +48,19 @@ export const columns = ({
         header: "متن کامنت",
         cell: ({ row }) => {
           const value = row.getValue("text") as string;
-          const itemId = row?.original?.item?.id;
-          const parent = row?.original?.id;
           return (
-            <div className="flex items-center justify-between gap-2">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <span className="block truncate max-w-[200px] cursor-pointer">
-                    {value.length > 100 ? value.slice(0, 100) + "..." : value}
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p className="max-w-xs">{value}</p>
-                </TooltipContent>
-              </Tooltip>
-              <AddCommentModal
-                trigger={
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 p-2 rounded-lg flex items-center gap-2"
-                  >
-                    <Repeat1 className="w-5 h-5" />
-                  </Button>
-                }
-                itemId={itemId}
-                parentId={parent}
-              />
-            </div>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span className="block truncate max-w-[250px] cursor-pointer text-sm leading-relaxed">
+                  {value.length > 130 ? value.slice(0, 130) + "..." : value}
+                </span>
+              </TooltipTrigger>
+              <TooltipContent className="max-w-md">
+                <p className="whitespace-pre-wrap break-words text-sm leading-relaxed">
+                  {value}
+                </p>
+              </TooltipContent>
+            </Tooltip>
           );
         },
         enableSorting: false,
@@ -104,7 +89,7 @@ export const columns = ({
         header: "تاریخ ثبت",
         cell: (info) => {
           const date = new Date(info.getValue() as string);
-          return formatJalaliDate(date, "jYYYY/jMM/jDD");
+          return formatJalaliDate(date);
         },
         enableSorting: true,
       },
@@ -130,23 +115,39 @@ export const columns = ({
         enableSorting: true,
       },
       {
-        id: "accept/reject",
-        header: "تایید / رد",
+        id: "actions",
+        header: "عملیات",
         cell: ({ row }) => {
           const commentId = row?.original?.id;
+          const itemId = row?.original?.item?.id;
+          const parent = row?.original?.id;
           return (
-            <>
+            <div className="flex items-center gap-2">
+              <AddCommentModal
+                trigger={
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-8 w-8 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 rounded-lg"
+                  >
+                    <Repeat1 className="w-4 h-4" />
+                  </Button>
+                }
+                itemId={itemId}
+                parentId={parent}
+                parentComment={row?.original}
+              />
               <Button
-                variant="ghost"
+                variant="outline"
                 size="icon"
                 disabled={
                   (acceptingVars?.id === commentId && isAcceptingComment) ||
                   row?.original?.accept === true
                 }
-                className={` rounded-full dark:bg-red-900/30 dark:hover:bg-red-900/50 transition-all duration-200 ${
+                className={`h-8 w-8 rounded-lg transition-all duration-200 ${
                   acceptingVars?.id !== commentId && !isAcceptingComment
-                    ? "hover:scale-110"
-                    : "opacity-60 cursor-not-allowed"
+                    ? "bg-green-50 hover:bg-green-100 border-green-200 hover:border-green-300 hover:scale-105"
+                    : "opacity-60 cursor-not-allowed bg-gray-50"
                 }`}
                 onClick={async () => {
                   const isConfirmed = await confirm({
@@ -159,25 +160,25 @@ export const columns = ({
                 }}
               >
                 {acceptingVars?.id === commentId && isAcceptingComment ? (
-                  <Loader2 className="!w-6 !h-6 animate-spin text-green-600 dark:text-green-400" />
+                  <Loader2 className="w-4 h-4 animate-spin text-green-600" />
                 ) : (
                   <SquareCheck
-                    className="!w-6 !h-6 text-green-600 dark:text-green-400"
-                    strokeWidth={2.2}
+                    className="w-4 h-4 text-green-600"
+                    strokeWidth={2.5}
                   />
                 )}
               </Button>
               <Button
-                variant="ghost"
+                variant="outline"
                 size="icon"
                 disabled={
                   (rejectingVars?.id === commentId && isRejectingComment) ||
                   row?.original?.accept === false
                 }
-                className={` rounded-full dark:bg-red-900/30 dark:hover:bg-red-900/50 transition-all duration-200 ${
+                className={`h-8 w-8 rounded-lg transition-all duration-200 ${
                   rejectingVars?.id !== commentId && !isRejectingComment
-                    ? "hover:scale-110"
-                    : "opacity-60 cursor-not-allowed"
+                    ? "bg-red-50 hover:bg-red-100 border-red-200 hover:border-red-300 hover:scale-105"
+                    : "opacity-60 cursor-not-allowed bg-gray-50"
                 }`}
                 onClick={async () => {
                   const isConfirmed = await confirm({
@@ -190,15 +191,12 @@ export const columns = ({
                 }}
               >
                 {rejectingVars?.id === commentId && isRejectingComment ? (
-                  <Loader2 className="!w-6 !h-6 animate-spin text-red-600 dark:text-red-400" />
+                  <Loader2 className="w-4 h-4 animate-spin text-red-600" />
                 ) : (
-                  <SquareX
-                    className="!w-6 !h-6 text-red-600 dark:text-red-400"
-                    strokeWidth={2.2}
-                  />
+                  <SquareX className="w-4 h-4 text-red-600" strokeWidth={2.5} />
                 )}
               </Button>
-            </>
+            </div>
           );
         },
         enableSorting: false,
