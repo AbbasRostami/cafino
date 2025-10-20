@@ -45,11 +45,13 @@ export interface ColumnsCommentsProps {
 export interface AddCommentModalProps {
   itemId: string;
   parentId?: string;
+  parentComment?: CommentResponseAdmin;
   trigger?: React.ReactNode;
 }
 
 export interface CommentFormAdminProps {
   itemId: string;
   parentId?: string;
+  parentComment?: CommentResponseAdmin;
   closeModal: () => void;
 }

@@ -23,6 +23,7 @@ import {
 import { Check, ChevronsUpDown, Save } from "lucide-react";
 import { cn } from "@/utils/utils";
 import { Spinner } from "@/components/ui/spinner";
+import { useState } from "react";
 
 export const FormContent = ({
   onSubmit,
@@ -33,6 +34,8 @@ export const FormContent = ({
   onCancel,
   isAdding,
 }: FormContentAddressProps) => {
+  const [provinceOpen, setProvinceOpen] = useState(false);
+  const [cityOpen, setCityOpen] = useState(false);
   const form = useForm<AddressFormData>({
     resolver: zodResolver(addressFormSchema),
     defaultValues: formData,
@@ -86,7 +89,7 @@ export const FormContent = ({
 
       <div className="space-y-2 col-span-2 md:col-span-1">
         <Label htmlFor="province">استان</Label>
-        <Popover>
+        <Popover open={provinceOpen} onOpenChange={setProvinceOpen}>
           <PopoverTrigger asChild>
             <Button
               variant="outline"
@@ -110,7 +113,10 @@ export const FormContent = ({
                     <CommandItem
                       key={province?.id}
                       value={province?.name}
-                      onSelect={() => handleProvinceChange(province?.name)}
+                      onSelect={() => {
+                        handleProvinceChange(province?.name);
+                        setProvinceOpen(false);
+                      }}
                     >
                       {province?.name}
                       <Check
@@ -137,7 +143,7 @@ export const FormContent = ({
 
       <div className="space-y-2 col-span-2 md:col-span-1">
         <Label htmlFor="city">شهر</Label>
-        <Popover>
+        <Popover open={cityOpen} onOpenChange={setCityOpen}>
           <PopoverTrigger asChild>
             <Button
               variant="outline"
@@ -162,7 +168,10 @@ export const FormContent = ({
                     <CommandItem
                       key={city?.id}
                       value={city?.name}
-                      onSelect={() => handleCityChange(city?.name)}
+                      onSelect={() => {
+                        handleCityChange(city?.name);
+                        setCityOpen(false);
+                      }}
                     >
                       {city?.name}
                       <Check

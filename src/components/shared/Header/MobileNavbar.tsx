@@ -21,7 +21,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { ThemeSwitcher } from "../ThemeToggle";
-import { LoginForm } from "@/components/main/auth";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import Logo from "./Logo";
 import { MotionDiv } from "@/utils/MotionWrapper";
@@ -33,7 +32,6 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
   user,
   pathname,
   openMobileMenu,
-  openMobileLoginDialog,
   setOpenMobileLoginDialog,
 }) => {
   const { logout, isPending } = useLogout();
@@ -66,7 +64,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
         </VisuallyHidden>
 
         <div className="flex flex-col h-full">
-          <div className="flex  justify-evenly items-center  border-b border-amber-100/60 dark:border-zinc-800/60 py-4 mb-4">
+          <div className="flex justify-evenly gap-10 items-center  border-b border-amber-100/60 dark:border-zinc-800/60 py-4 mb-4">
             <Logo />
             <div className="flex md:hidden justify-center">
               <ThemeSwitcher />
@@ -125,7 +123,6 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
               </button>
             )}
           </div>
-
           <div className="border-t border-amber-100/60 dark:border-zinc-800/60 pt-6 pb-6 px-4 space-y-4">
             {!isAuthenticated ? (
               <>
@@ -137,11 +134,6 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
                   <LogIn className="w-4 h-4" />
                   ورود / ثبت نام
                 </Button>
-                <LoginForm
-                  open={openMobileLoginDialog}
-                  onOpenChange={setOpenMobileLoginDialog}
-                  onSuccess={() => setOpenMobileLoginDialog(false)}
-                />
               </>
             ) : (
               <SheetClose asChild>

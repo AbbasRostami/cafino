@@ -37,7 +37,7 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
 
   if (isLoading || !itemsResponse?.data?.items?.length) {
     return (
-      <section className="container mx-auto px-2 py-12 pb-16">
+      <section className="container mx-auto px-2 py-12 pb-16 ">
         <div className="max-w-4xl mx-auto text-center mb-8">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 relative inline-block">
             <span className="text-amber-600 dark:text-amber-400 relative z-10">
@@ -66,7 +66,7 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
   const router = useRouter();
   return (
     <>
-      <div className="max-w-4xl mx-auto text-center mb-8">
+      <div className="max-w-4xl mx-auto text-center mt-12 mb-8">
         <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 relative inline-block">
           <span className="text-amber-600 dark:text-amber-400 relative z-10">
             محبوب ترین ها

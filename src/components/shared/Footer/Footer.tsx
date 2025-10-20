@@ -8,7 +8,6 @@ import { footerStructuredData } from "@/lib/metadata/footer";
 import Script from "next/script";
 import {
   Clock,
-  Facebook,
   Grid2X2,
   Home,
   Info,
@@ -18,7 +17,6 @@ import {
   Menu,
   Phone,
   Send,
-  Twitter,
   Youtube,
 } from "lucide-react";
 
@@ -46,14 +44,12 @@ const footerData = {
   ],
 
   socialMedia: [
-    { icon: Facebook, color: "bg-blue-600", hover: "bg-blue-700", href: "#" },
     {
       icon: Instagram,
       color: "bg-gradient-to-r from-purple-500 to-pink-500",
       hover: "from-purple-600 to-pink-600",
       href: "#",
     },
-    { icon: Twitter, color: "bg-blue-400", hover: "bg-blue-500", href: "#" },
     { icon: Youtube, color: "bg-red-600", hover: "bg-red-700", href: "#" },
     {
       icon: Send,

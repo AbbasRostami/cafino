@@ -28,6 +28,7 @@ export default function Menus({
     clearFilters,
     handleSearchChange,
   } = useMenuFiltersNuqs();
+  
   const { data: items } = useGetItems(queryString, initialData);
 
   const itemsList = items?.data?.items || [];

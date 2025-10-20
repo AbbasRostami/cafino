@@ -50,12 +50,15 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/utils/utils";
+import { useState } from "react";
 
 export default function AddAddressModal({
   open,
   onOpenChange,
   onSuccess,
 }: AddAddressModalProps) {
+  const [provinceOpen, setProvinceOpen] = useState(false);
+  const [cityOpen, setCityOpen] = useState(false);
   const isMobile = useIsMobile();
 
   const { data: provincesData } = useGetProvinces();
@@ -115,7 +118,7 @@ export default function AddAddressModal({
     >
       <div className="space-y-2">
         <Label htmlFor="province">استان</Label>
-        <Popover>
+        <Popover open={provinceOpen} onOpenChange={setProvinceOpen}>
           <PopoverTrigger asChild>
             <Button
               variant="outline"
@@ -139,7 +142,10 @@ export default function AddAddressModal({
                     <CommandItem
                       key={province?.id}
                       value={province?.name}
-                      onSelect={() => handleProvinceChange(province?.name)}
+                      onSelect={() => {
+                        handleProvinceChange(province?.name);
+                        setProvinceOpen(false);
+                      }}
                     >
                       {province?.name}
                       <Check
@@ -166,7 +172,7 @@ export default function AddAddressModal({
 
       <div className="space-y-2">
         <Label htmlFor="city">شهر</Label>
-        <Popover>
+        <Popover open={cityOpen} onOpenChange={setCityOpen}>
           <PopoverTrigger asChild>
             <Button
               variant="outline"
@@ -191,7 +197,10 @@ export default function AddAddressModal({
                     <CommandItem
                       key={city?.id}
                       value={city?.name}
-                      onSelect={() => handleCityChange(city?.name)}
+                      onSelect={() => {
+                        handleCityChange(city?.name);
+                        setCityOpen(false);
+                      }}
                     >
                       {city?.name}
                       <Check
