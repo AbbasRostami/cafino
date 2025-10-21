@@ -12,12 +12,22 @@ export const useAddToCart = () => {
         toast.success("محصول با موفقیت به سبد خرید اضافه شد");
         queryClient.invalidateQueries({ queryKey: ["/v1/cart"] });
       },
-      onError: (error) => {
-        const errorMessage = error?.message;
-        if (errorMessage === "item is already in your cart") {
-          toast.error("محصول قبلاً در سبد خرید شما وجود دارد");
-        } else {
-          toast.error("خطا در اضافه کردن محصول به سبد خرید");
+      onError: (error: any) => {
+        switch (error?.statusCode) {
+          case 404:
+            toast.error("محصول یافت نشد.");
+            break;
+          case 409:
+            toast.error("محصول قبلاً در سبد خرید شما وجود دارد.");
+            break;
+          case 422:
+            toast.error(
+              `${error?.message?.item}, موجودی این محصول ${error?.message?.available_quantity} .عدد است`
+            );
+            break;
+          default:
+            toast.error("خطا در اضافه کردن محصول به سبد خرید.");
+            break;
         }
       },
     }

@@ -13,6 +13,7 @@ interface AddToCartButtonStyledProps {
   itemData?: CartItem;
   disabled?: boolean;
   className?: string;
+  title?: string;
 }
 
 export const AddToCartButtonStyled: React.FC<AddToCartButtonStyledProps> = ({
@@ -20,6 +21,7 @@ export const AddToCartButtonStyled: React.FC<AddToCartButtonStyledProps> = ({
   itemData,
   disabled = false,
   className = "",
+  title = "افزودن به سبد خرید",
 }) => {
   const logic = useAddToCartButtonLogic({ itemId, itemData, disabled });
   const {
@@ -85,7 +87,7 @@ export const AddToCartButtonStyled: React.FC<AddToCartButtonStyledProps> = ({
             animate={{ opacity: 1, x: 0 }}
             className="text-base font-medium"
           >
-            افزودن به سبد خرید
+            {title}
           </MotionSpan>
         </Button>
       </MotionDiv>
