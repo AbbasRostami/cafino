@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { CartSidebarFooterProps } from "@/types/main/cartSidebar";
 import { formatCurrency } from "@/utils/formatters";
 import { ShoppingCart } from "lucide-react";
@@ -50,7 +51,7 @@ export const CartSidebarFooter: React.FC<CartSidebarFooterProps> = ({
               </p>
             </div>
           )}
-
+         <div className="h-0.5 bg-gradient-to-r from-transparent via-amber-400 to-transparent"></div>
           <div className="flex justify-between items-center">
             <span className="text-sm text-gray-600 dark:text-gray-200">
               مجموع پرداختی:

@@ -15,20 +15,18 @@ const FooterBrand = () => {
       >
         <div className="absolute -inset-2 blur-md opacity-70 group-hover:opacity-100 transition-all duration-500"></div>
         <Image
-            src={CafeinLogoLight}
+          src={CafeinLogoLight}
           alt="کافینو - لوگو روشن | کافه و رستوران مدرن"
-          className="block dark:hidden object-contain relative z-10"
+          className="block dark:hidden h-40 sm:h-auto object-contain relative z-10"
           width={300}
           priority
-          style={{ height: "auto" }}
         />
         <Image
           src={CafeinLogoDark}
           alt="کافینو - لوگو تیره | کافه و رستوران مدرن"
-          className="hidden dark:block object-contain relative z-10"
+          className="hidden dark:block h-40 sm:h-auto object-contain relative z-10"
           width={300}
           priority
-          style={{ height: "auto" }}
         />
       </MotionDiv>
 

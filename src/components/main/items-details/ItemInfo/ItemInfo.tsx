@@ -15,34 +15,45 @@ export const ItemInfo = ({ item }: ItemInfoProps) => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-3xl p-6 md:p-8 shadow-2xl border border-white/70 dark:border-gray-700/50 relative overflow-hidden"
+      className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-3xl p-4 md:p-8 shadow-2xl border border-white/70 dark:border-gray-700/50 relative overflow-hidden"
     >
       <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-gradient-to-r from-amber-300/20 to-orange-300/20 dark:from-amber-700/10 dark:to-orange-700/10 blur-xl"></div>
       <div className="absolute -bottom-12 -left-12 w-32 h-32 rounded-full bg-gradient-to-r from-amber-200/20 to-orange-200/20 dark:from-amber-800/10 dark:to-orange-800/10 blur-xl"></div>
       <div className="flex flex-col md:flex-row justify-between items-start gap-6 mb-6 relative z-10">
         <div className="flex-1">
-          <div className="flex flex-wrap items-center gap-3 mb-4">
-            <span className="px-4 py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-full text-sm font-medium shadow-md">
-              {item?.category?.title}
-            </span>
-
-            <div className="flex items-center gap-1 bg-amber-100 dark:bg-amber-900/30 px-3 py-1 rounded-full">
-              <div className="flex items-center">
-                {[...Array(5)].map((_, i) => (
-                  <StarIcon
-                    key={i}
-                    className={`w-4 h-4 ${
-                      i < (item?.rate || 4)
-                        ? "text-amber-500 fill-amber-500"
-                        : "text-gray-300 dark:text-gray-600"
-                    }`}
-                  />
-                ))}
-              </div>
-              <span className="text-sm font-bold text-amber-700 dark:text-amber-300 ml-1">
-                {item?.rate || 4.8}
+          <div className="flex flex-wrap justify-between items-center gap-3 mb-4">
+            <div className="flex items-center gap-2">
+              <span className="px-4 py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-full text-sm font-medium shadow-md">
+                {item?.category?.title}
               </span>
+
+              <div className="flex items-center gap-1 bg-amber-100 dark:bg-amber-900/30 px-3 py-1 rounded-full">
+                <div className="flex items-center">
+                  {[...Array(5)].map((_, i) => (
+                    <StarIcon
+                      key={i}
+                      className={`w-4 h-4 ${
+                        i < (item?.rate || 4)
+                          ? "text-amber-500 fill-amber-500"
+                          : "text-gray-300 dark:text-gray-600"
+                      }`}
+                    />
+                  ))}
+                </div>
+                <span className="text-sm font-bold text-amber-700 dark:text-amber-300 ml-1">
+                  {item?.rate || 4.8}
+                </span>
+              </div>
             </div>
+
+            <FavoriteToggleButton
+              itemId={item?.id}
+              isFavorite={item?.isFav}
+              iconSize={38}
+              className={`rounded-full flex items-center justify-center ${
+                item?.isFav ? "text-amber-500" : "text-gray-900 dark:text-white"
+              }`}
+            />
           </div>
 
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white mb-3">
@@ -60,15 +71,6 @@ export const ItemInfo = ({ item }: ItemInfoProps) => {
             </p>
           </MotionDiv>
         </div>
-
-        <FavoriteToggleButton
-          itemId={item?.id}
-          isFavorite={item?.isFav}
-          iconSize={38}
-          className={`rounded-full flex items-center justify-center ${
-            item?.isFav ? "text-amber-500" : "text-gray-900 dark:text-white"
-          }`}
-        />
       </div>
 
       <MotionDiv

@@ -337,7 +337,7 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
                       </div>
 
                       <div
-                        className={`mt-2 hidden sm:block text-xs px-3 py-1.5 rounded-full text-center ${stockStatus.stockColor}`}
+                        className={`mt-2 !min-h-[30px] hidden md:block text-xs px-3 py-1.5 rounded-full text-center ${stockStatus.stockColor}`}
                       >
                         <span>{stockStatus?.stockMessage}</span>
                       </div>

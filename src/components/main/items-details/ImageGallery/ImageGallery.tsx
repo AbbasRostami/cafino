@@ -196,7 +196,7 @@ export const ImageGallery = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6 }}
-        className="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-3xl p-6 border border-amber-200 dark:border-amber-800/30 shadow-lg"
+        className="hidden md:block bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-3xl p-6 border border-amber-200 dark:border-amber-800/30 shadow-lg"
       >
         <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-4 text-center">
           اطلاعات تکمیلی

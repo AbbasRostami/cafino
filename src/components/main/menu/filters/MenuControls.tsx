@@ -24,12 +24,12 @@ export const MenuControls = ({
   ];
 
   return (
-    <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-6 mb-6">
-      <div className="flex overflow-x-auto scrollbar-hide gap-3 justify-center md:justify-start">
+    <div className="w-full flex flex-col md:flex-row md:justify-between md:items-center gap-6 mb-6">
+      <div className="w-full flex  overflow-x-auto justify-start scrollbar-hide gap-3 ">
         {sortOptions.map((category) => (
           <button
             key={category.value}
-            className={`px-3 sm:px-5 py-1 sm:py-2 text-xs sm:text-sm font-medium cursor-pointer rounded-3xl shadow-sm transition-all duration-200 backdrop-blur-md border ${
+            className={`px-3 sm:px-5 py-2 text-xs sm:text-sm font-medium cursor-pointer rounded-3xl shadow-sm transition-all duration-200 backdrop-blur-md border whitespace-nowrap ${
               selectedSortBy === category.value
                 ? "bg-gradient-to-r from-amber-500 to-orange-500 text-white border-amber-400"
                 : "bg-white/70 dark:bg-gray-800/40 border-gray-300 dark:border-gray-700 hover:bg-amber-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200"

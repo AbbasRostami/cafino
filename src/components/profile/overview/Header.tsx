@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Phone, CalendarDays } from "lucide-react";
+import { Phone, CalendarHeart, CalendarArrowDown } from "lucide-react";
 import { User } from "@/types/Profile";
 import { formatJalaliDate } from "@/utils/formatters";
 
@@ -44,18 +44,35 @@ export const Header = ({ user }: { user?: User | null }) => {
             <div className="flex flex-col items-center sm:items-start gap-1 mt-2">
               <div className="flex items-center gap-2 text-white dark:text-amber-200 text-sm">
                 <Phone size={16} />
-                <span data-testid="user-phone">
+                <span
+                  className="cursor-pointer"
+                  onClick={() =>
+                    navigator.clipboard.writeText(user?.phone || "")
+                  }
+                  data-testid="user-phone"
+                >
                   {user?.phone || "شماره تلفن مشخص نیست"}
                 </span>
               </div>
-              <div className="flex items-center gap-2 text-white dark:text-amber-200 text-sm">
-                <CalendarDays size={16} />
-                <span>
-                  تاریخ تولد:{" "}
-                  {user?.birthday
-                    ? formatJalaliDate(user?.birthday, "jYYYY/jMM/jDD")
-                    : "تاریخ تولد مشخص نیست"}
-                </span>
+              <div className="flex flex-col md:flex-row items-center gap-2 text-white dark:text-amber-200 text-sm">
+                <p className="flex items-center gap-1">
+                  <CalendarHeart size={16} />
+                  <span>تاریخ تولد:</span>
+                  <span>
+                    {user?.birthday
+                      ? formatJalaliDate(user?.birthday, "jYYYY/jMM/jDD")
+                      : "مشخص نیست"}
+                  </span>
+                </p>
+                <p className="flex items-center gap-1 md:hidden">
+                  <CalendarArrowDown size={16} />
+                  <span>تاریخ عضویت:</span>
+                  <span>
+                    {user?.created_at
+                      ? formatJalaliDate(user?.created_at, "jYYYY/jMM/jDD")
+                      : "مشخص نیست"}
+                  </span>
+                </p>
               </div>
             </div>
           </div>

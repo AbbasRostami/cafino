@@ -12,6 +12,7 @@ import { AddToCartButtonStyled } from "@/components/ui/AddToCartButtonStyled";
 import { FavoriteItem } from "@/types/Profile";
 import { MotionDiv } from "@/utils/MotionWrapper";
 import { formatCurrency } from "@/utils/formatters";
+import Image from "next/image";
 
 export const PopularProducts = ({
   favoritesData,
@@ -34,32 +35,54 @@ export const PopularProducts = ({
             <div
               key={fav?.item?.id}
               data-testid="favorite-item"
-              className=" min-h-[100px] flex flex-col sm:flex-row items-center gap-4 py-2 px-4 bg-gray-100/50 dark:bg-gray-700/50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
+              className="!min-h-[110px] group flex gap-3 bg-gray-100/50 dark:bg-gray-700/50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden"
             >
-              <div className="flex-1 flex flex-col gap-1">
-                <div className="font-medium text-gray-800 dark:text-white text-md sm:text-base truncate max-w-[200px]">
-                  {fav?.item?.title}
-                </div>
-                <div className="text-rose-600 dark:text-rose-400 font-medium text-md sm:text-base">
-                  {formatCurrency(fav?.item?.price)} تومان
-                </div>
-                <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                  امتیاز: {fav?.item?.rate || "5"}
-                </div>
+              <div className="w-20 !h-[120px] bg-gray-50 dark:bg-gray-800 overflow-hidden flex items-center justify-center">
+                <Image
+                  src={fav?.item?.images?.[0]?.imageUrl || ""}
+                  alt={fav?.item?.title}
+                  width={150}
+                  height={150}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-all duration-300"
+                />
               </div>
-              <div className="flex items-center  gap-2 ">
-                {fav?.isAvailable ? (
-                  <AddToCartButtonStyled itemId={fav?.item?.id} />
-                ) : (
-                  <Button
-                    className="w-full bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg flex items-center justify-center gap-2"
-                    disabled
-                    variant="outline"
-                  >
-                    <EyeOff size={18} />
-                    <span className="font-medium text-sm">موجود نیست</span>
-                  </Button>
-                )}
+
+              <div className="flex-1 flex flex-col justify-between min-w-0 p-3">
+                <div className="flex justify-between items-start gap-2 mb-2">
+                  <h3 className="font-semibold group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-all duration-300 text-gray-800 dark:text-white text-sm sm:text-base truncate flex-1">
+                    {fav?.item?.title}
+                  </h3>
+                  <div className="flex items-center gap-1 text-xs sm:text-sm text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 px-2 py-1 rounded-full">
+                    <Star size={12} className="fill-current" />
+                    <span>{fav?.item?.rate || "5"}</span>
+                  </div>
+                </div>
+
+                <div className="flex flex-col lg:flex-row justify-between items-center gap-2">
+                  <div className="flex items-center gap-1 text-gray-500 dark:text-gray-400 font-normal text-sm">
+                    <span className="text-red-600 dark:text-red-400 font-semibold text-base">
+                      {formatCurrency(fav?.item?.price)}
+                    </span>
+                    <span className="text-gray-500 dark:text-gray-400 font-normal text-sm">
+                      تومان
+                    </span>
+                  </div>
+                  <div className="flex-shrink-0">
+                    {fav?.isAvailable ? (
+                      <AddToCartButtonStyled itemId={fav?.item?.id} />
+                    ) : (
+                      <Button
+                        className="bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg flex items-center justify-center gap-1 px-3 py-1.5"
+                        disabled
+                        variant="outline"
+                        size="sm"
+                      >
+                        <EyeOff size={14} />
+                        <span className="font-medium text-xs">موجود نیست</span>
+                      </Button>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           ))

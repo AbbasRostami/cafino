@@ -36,51 +36,44 @@ export const PriceSection = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.6 }}
-      className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-2xl p-5 shadow-md border border-amber-100 dark:border-amber-800/30"
+      className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-2xl p-4 shadow-md border border-amber-100 dark:border-amber-800/30"
     >
-      <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-        <div className="flex-1 min-w-0">
-          <div className="flex flex-col md:flex-row items-center gap-4">
-            <div className="flex flex-col">
-              <div className="flex items-baseline gap-2">
-                <span className="text-xl font-bold text-amber-700 dark:text-amber-300">
-                  {formatCurrency(finalPrice)} تومان
-                </span>
-                {discount > 0 && (
-                  <span className="text-sm text-gray-500 dark:text-gray-400 line-through">
-                    {formatCurrency(originalPrice)}
-                  </span>
-                )}
-              </div>
-
-              <div className="flex items-center gap-1.5 mt-1">
-                <div
-                  className={`w-2 h-2 rounded-full ${
-                    item?.quantity > 0 ? "bg-green-500" : "bg-red-500"
-                  }`}
-                ></div>
-                <span className="text-sm text-gray-600 dark:text-gray-400">
-                  {item?.quantity > 0
-                    ? `${item?.quantity} عدد موجود`
-                    : "ناموجود"}
-                </span>
-              </div>
-            </div>
+      <div className="flex flex-col justify-between items-center gap-4">
+        <div className="w-full flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <span className="text-xl font-bold text-amber-700 dark:text-amber-300">
+              {formatCurrency(finalPrice)} تومان
+            </span>
+            {discount > 0 && (
+              <span className="text-sm text-gray-500 dark:text-gray-400 line-through">
+                {formatCurrency(originalPrice)}
+              </span>
+            )}
           </div>
+          <MotionDiv
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="flex-shrink-0"
+          >
+            <AddToCartButtonStyled
+              itemId={item?.id}
+              itemData={itemData}
+              disabled={item?.quantity === 0}
+              className=""
+            />
+          </MotionDiv>
         </div>
 
-        <MotionDiv
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="flex-shrink-0"
-        >
-          <AddToCartButtonStyled
-            itemId={item?.id}
-            itemData={itemData}
-            disabled={item?.quantity === 0}
-            className=""
-          />
-        </MotionDiv>
+        <div className="flex items-center gap-1.5 mt-1">
+          <div
+            className={`w-2 h-2 rounded-full ${
+              item?.quantity > 0 ? "bg-green-500" : "bg-red-500"
+            }`}
+          ></div>
+          <span className="text-sm text-gray-600 dark:text-gray-300">
+            {item?.quantity > 0 ? `${item?.quantity} عدد موجود` : "ناموجود"}
+          </span>
+        </div>
       </div>
 
       {item?.quantity > 0 && (
