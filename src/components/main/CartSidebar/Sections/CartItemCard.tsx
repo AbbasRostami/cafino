@@ -6,6 +6,8 @@ import CartItemControls from "@/components/main/CartSidebar/CartItemControlsSide
 import { formatCurrency } from "@/utils/formatters";
 
 export const CartItemCard: React.FC<CartItemCardProps> = ({ item }) => {
+  console.log("item", item);
+
   return (
     <div className="group relative bg-white/60 dark:bg-neutral-900/70 rounded-xl overflow-hidden  border border-gray-100 dark:border-neutral-800 shadow-lg transition-all duration-300">
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 to-orange-500"></div>
@@ -25,14 +27,23 @@ export const CartItemCard: React.FC<CartItemCardProps> = ({ item }) => {
             <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg ring-2 ring-white dark:ring-neutral-900">
               {item?.count}
             </div>
+
+            {item?.discount > 0 && (
+              <div className="mt-1">
+                <span className="inline-flex items-center text-xs font-bold px-2 py-0.5 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-full">
+                  <span className="ml-1">{Number(item?.discount)}%</span>
+                  تخفیف
+                </span>
+              </div>
+            )}
           </div>
 
-          <div className="flex-1 min-w-0">
-            <div className="flex justify-between items-start mb-2">
-              <h3 className="font-bold text-xl text-gray-900 dark:text-gray-100 line-clamp-2 tracking-tight">
+          <div className="flex-1 flex flex-col justify-between">
+            <div className="flex flex-col sm:flex-row justify-between gap-2 items-start mb-2">
+              <h3 className="font-bold text-sm sm:text-xl text-gray-900 dark:text-gray-100 line-clamp-2 tracking-tight">
                 {item?.title}
               </h3>
-              <div className="flex flex-col items-end">
+              <div className="w-full flex justify-end items-center gap-1">
                 <span className="text-base font-semibold text-amber-700 dark:text-amber-400">
                   {formatCurrency(Number(item?.price))}
                 </span>
@@ -41,15 +52,6 @@ export const CartItemCard: React.FC<CartItemCardProps> = ({ item }) => {
                 </span>
               </div>
             </div>
-
-            {Number(item?.discount) > 0 && (
-              <div className="mb-2">
-                <span className="inline-flex items-center text-xs font-bold px-2 py-0.5 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-full">
-                  <span className="ml-1">{Number(item?.discount)}%</span>
-                  تخفیف
-                </span>
-              </div>
-            )}
 
             <div className="flex items-center justify-between mt-4">
               <CartItemControls itemId={item?.itemId} />

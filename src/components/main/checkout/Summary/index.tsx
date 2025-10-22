@@ -60,7 +60,7 @@ export default function OrderSummary({
     );
   };
 
-  const renderCompleteOrderButton = (className: string) => (
+    const renderCompleteOrderButton = (className: string) => (
     <Button
       className={className}
       aria-label="ادامه فرآیند خرید"
@@ -170,7 +170,7 @@ export default function OrderSummary({
           </div>
         )}
 
-        <Separator className="my-2 bg-amber-200 dark:bg-amber-800" />
+        <div className="h-0.5 bg-gradient-to-r from-transparent via-amber-400 to-transparent"></div>
 
         <div className="flex flex-col xl:flex-row justify-center md:justify-between items-center gap-3 mt-5">
           <span className=" text-medium font-bold">مبلغ قابل پرداخت</span>
