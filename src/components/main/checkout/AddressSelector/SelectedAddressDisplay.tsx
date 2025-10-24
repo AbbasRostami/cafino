@@ -45,12 +45,16 @@ export default function SelectedAddressDisplay({
         <CardContent className="!space-y-4">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <span className="font-medium text-gray-800 dark:text-white">
+              <span className="gap-2 font-medium text-gray-800 dark:text-white flex items-center">
+              <span className="text-amber-600 dark:text-amber-400 mr-1 ">
                 <MapPin
                   size={16}
                   className="text-amber-600 dark:text-amber-400"
                 />
-                {selectedAddress?.province}، {selectedAddress?.city}
+                </span>
+                <span className="text-gray-800 dark:text-white">
+                  {selectedAddress?.province}، {selectedAddress?.city}
+                </span>
               </span>
             </div>
             <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">

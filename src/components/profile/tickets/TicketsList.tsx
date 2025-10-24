@@ -57,7 +57,7 @@ export default function TicketsList({
 
     if (hasActiveFilters) {
       return (
-        <div className="space-y-6 bg-white dark:bg-gray-900 rounded-2xl p-6">
+        <div className="space-y-6 bg-white dark:bg-gray-900 rounded-2xl p-4">
           <TicketFilter
             filters={filters}
             onFilterChange={onFilterChange}
@@ -76,7 +76,7 @@ export default function TicketsList({
   }
 
   return (
-    <div className="space-y-6 bg-white dark:bg-gray-900 rounded-2xl p-6">
+    <div className="space-y-6 bg-white dark:bg-gray-900 rounded-2xl p-4">
       <TicketFilter
         filters={filters}
         onFilterChange={onFilterChange}

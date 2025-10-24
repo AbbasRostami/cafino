@@ -1,6 +1,6 @@
 <div align="center">
 
-# ☕ Cafino (کافینو) - Modern Cafe & Restaurant Management Platform
+# ☕ Cafino - Modern Cafe & Restaurant Management Platform
 
 <h3><strong>Core Technologies & Frameworks</strong></h3>
 <div>
@@ -72,7 +72,7 @@
 
 ## 🎯 Project Overview
 
-**Cafino (کافی‌نو)** is a comprehensive and modern platform for cafe and restaurant management, developed using the latest web technologies. This project consists of two main parts: **Frontend** (Next.js) and **Backend** (Nest.js).
+**Cafino** is a comprehensive and modern platform for cafe and restaurant management, developed using the latest web technologies. This project consists of two main parts: **Frontend** (Next.js) and **Backend** (Nest.js).
 
 ### 🔧 **Backend:**
 

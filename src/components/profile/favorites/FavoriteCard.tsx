@@ -18,11 +18,12 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
+import { useRouter } from "next/navigation";
 
 export const FavoriteCard = ({ favorite }: FavoriteCardProps) => {
   const { mutate: deleteFromFavorite, isPending } = useDeleteFromFavorite();
   const isAvailable = favorite?.isAvailable;
-
+  const router = useRouter();
   const handleDelete = async () => {
     const isConfirmed = await confirm({
       title: "آیا از حذف از علاقه مندی مطمئن هستید؟",
@@ -92,7 +93,12 @@ export const FavoriteCard = ({ favorite }: FavoriteCardProps) => {
 
       <div className="p-5 space-y-4">
         <div className="flex justify-between items-center">
-          <h3 className="font-bold text-[17px] text-gray-800 dark:text-white leading-tight group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-all duration-300">
+          <h3
+            onClick={() =>
+              router.push(`/menu/${favorite?.item?.id}/${favorite?.item?.slug}`)
+            }
+            className="font-bold text-[17px] text-gray-800 dark:text-white leading-tight group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-all duration-300 cursor-pointer"
+          >
             {favorite?.item?.title}
           </h3>
           <div className="flex items-center gap-1 text-amber-600 dark:text-amber-400 bg-amber-100/60 dark:bg-amber-500/10 px-2 py-1 rounded-full text-sm shadow-sm">

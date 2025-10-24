@@ -40,7 +40,7 @@ export default function TicketsPage() {
   };
   return (
     <>
-      <div className="h-full mb-12 ">
+      <div className="h-full mb-12 px-2">
         {view === "list" && (
           <TicketsList
             totalPages={ticketsData?.data?.total || 0}
