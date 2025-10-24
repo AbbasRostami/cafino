@@ -13,8 +13,20 @@ export const useUnblockUser = () => {
         toast.success("محدودیت با موفقیت آنبلاک شد");
         queryClient.invalidateQueries({ queryKey: ["rate-limit-records"] });
       },
-      onError: () => {
-        toast.error("خطا در آنبلاک شدن محدودیت");
+      onError: (error: any) => {
+        switch (error?.statusCode) {
+          case 403:
+            toast.error(
+              "دسترسی غیرمجاز: شما اجازه آنبلاک شدن محدودیت را ندارید"
+            );
+            break;
+          case 404:
+            toast.error("محدودیت یافت نشد");
+            break;
+          default:
+            toast.error("خطا در آنبلاک شدن محدودیت. لطفاً دوباره تلاش کنید.");
+            break;
+        }
       },
     }
   );

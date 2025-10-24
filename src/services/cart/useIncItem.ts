@@ -8,16 +8,26 @@ export const useIncItem = () => {
     "/v1/cart/inc-item",
     undefined,
     {
-    
       onSuccess: () => {
         toast.success("تعداد محصول با موفقیت افزایش یافت");
         queryClient.invalidateQueries({ queryKey: ["/v1/cart"] });
       },
       onError: (error: any) => {
-        if (error?.status === 422) {
-          toast.error("موجودی این محصول کافی نیست.");
-        } else {
-          toast.error("خطا در افزایش تعداد محصول");
+        switch (error?.statusCode) {
+          case 404:
+            toast.error("محصول یافت نشد");
+            break;
+          case 409:
+            toast.error("محصول در سبد خرید شما وجود ندارد");
+            break;
+          case 422:
+            toast.error(
+              `${error?.message?.item}, موجودی این محصول ${error?.message?.available_quantity} .عدد است`
+            );
+            break;
+          default:
+            toast.error("خطا در افزایش تعداد محصول. لطفاً دوباره تلاش کنید.");
+            break;
         }
       },
     }

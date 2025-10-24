@@ -9,13 +9,15 @@ import { formatCurrency } from "@/utils/formatters";
 import { Loader2, Trash2, Package } from "lucide-react";
 import { useAddToCartButtonLogic } from "@/hooks/business/AddToCartButton";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export default function CartItemCard({ item }: CartItemCardProps) {
   const isUnavailable = item?.isAvailable === false;
   const { removeLoading, handleRemove } = useAddToCartButtonLogic({
     itemId: item?.itemId,
   });
-
+  const router = useRouter();
+  console.log("item", item);
   return (
     <MotionDiv
       layout
@@ -42,7 +44,7 @@ export default function CartItemCard({ item }: CartItemCardProps) {
 
           {item?.discount > 0 && (
             <div className="absolute top-4 left-4">
-              <Badge className="bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg rounded-full px-3 py-1.5 flex items-center gap-1 border-2 border-white dark:border-gray-800">
+              <Badge className="bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg rounded-full px-3 py-1.5 flex items-center gap-1">
                 <span className="text-sm font-bold">
                   {item?.discount}% تخفیف
                 </span>
@@ -63,10 +65,15 @@ export default function CartItemCard({ item }: CartItemCardProps) {
         </div>
 
         <div className="flex-1 p-6 flex flex-col justify-between">
-          <div className="space-y-4">
+          <div className="space-y-4 mb-4">
             <div className="flex justify-between items-start gap-4">
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors duration-300">
+                <h3
+                  onClick={() =>
+                    router.push(`/menu/${item?.itemId}/${item?.slug}`)
+                  }
+                  className="text-2xl cursor-pointer font-bold text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors duration-300"
+                >
                   {item?.title}
                 </h3>
                 <div className="flex items-center gap-2 mt-2">
@@ -78,12 +85,12 @@ export default function CartItemCard({ item }: CartItemCardProps) {
               </div>
             </div>
 
-            <p className="text-gray-600 dark:text-gray-300 line-clamp-2 leading-relaxed">
+            <p className="text-gray-600 dark:text-gray-300 line-clamp-2 leading-relaxed text-justify">
               {item?.description}
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-gray-100 dark:border-gray-700">
+          <div className="flex flex-col 2xsm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-gray-100 dark:border-gray-700">
             <div className="space-y-1">
               <div className="flex items-baseline gap-3">
                 <p className="flex items-center gap-1">

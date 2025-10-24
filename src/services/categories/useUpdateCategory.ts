@@ -13,8 +13,18 @@ export const useUpdateCategory = () => {
         toast.success("دسته بندی مورد نظر با موفقیت ویرایش شد.");
         queryClient.invalidateQueries({ queryKey: ["categories-admin"] });
       },
-      onError: () => {
-        toast.error("خطا در ویرایش دسته بندی");
+      onError: (error: any) => {
+        switch (error?.statusCode) {
+          case 403:
+            toast.error("دسترسی غیرمجاز: شما اجازه ویرایش دسته بندی را ندارید");
+            break;
+          case 409:
+            toast.error("دسته بندی با عنوان قبلاً وجود دارد");
+            break;
+          default:
+            toast.error("خطا در ویرایش دسته بندی. لطفاً دوباره تلاش کنید.");
+            break;
+        }
       },
     }
   );

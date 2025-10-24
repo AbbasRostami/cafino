@@ -14,8 +14,20 @@ export const useCreateDiscount = () => {
         toast.success("کد تخفیف با موفقیت ایجاد شد");
         queryClient.invalidateQueries({ queryKey: ["discounts"] });
       },
-      onError: () => {
-        toast.error("خطا در ایجاد کد تخفیف");
+      onError: (error: any) => {
+        switch (error?.statusCode) {
+          case 403:
+            toast.error("دسترسی غیرمجاز: شما اجازه ایجاد کد تخفیف را ندارید");
+            break;
+          case 409:
+            toast.error("کد تخفیف قبلاً وجود دارد");
+            break;
+          case 422:
+            toast.error("باید فقط یک مقدار متناسب با نوع تخفیف وارد شود");
+            break;
+          default:
+            toast.error("خطا در ایجاد کد تخفیف. لطفاً دوباره تلاش کنید.");
+        }
       },
     }
   );

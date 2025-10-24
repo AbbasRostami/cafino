@@ -15,8 +15,21 @@ export const useRejectComment = () => {
         queryClient.invalidateQueries({ queryKey: ["admin-overview"] });
         queryClient.invalidateQueries({ queryKey: ["comment-overview"] });
       },
-      onError: () => {
-        toast.error("خطا در رد نظر");
+      onError: (error: any) => {
+        switch (error?.statusCode) {
+          case 403:
+            toast.error("دسترسی غیرمجاز: شما اجازه رد نظر را ندارید");
+            break;
+          case 404:
+            toast.error("نظر یافت نشد");
+            break;
+          case 409:
+            toast.error("نظر قبلاً رد شده است");
+            break;
+          default:
+            toast.error("خطا در رد نظر. لطفاً دوباره تلاش کنید.");
+            break;
+        }
       },
     }
   );

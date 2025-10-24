@@ -1,4 +1,5 @@
 export interface CartItemData {
+  slug: string;
   image: string;
   itemId: string;
   title: string;

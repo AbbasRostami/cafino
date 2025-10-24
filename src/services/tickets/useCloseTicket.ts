@@ -18,8 +18,17 @@ export const useCloseTicket = () => {
         queryClient.invalidateQueries({ queryKey: ["user-tickets"] });
         queryClient.invalidateQueries({ queryKey: ["tickets-overview"] });
       },
-      onError: () => {
-        toast.error("خطا در بستن تیکت");
+      onError: (error: any) => {
+        switch (error?.statusCode) {
+          case 403:
+            toast.error("دسترسی غیرمجاز: شما اجازه بستن تیکت را ندارید");
+            break;
+          case 404:
+            toast.error("تیکت یافت نشد");
+            break;
+          default:
+            toast.error("خطا در بستن تیکت. لطفاً دوباره تلاش کنید.");
+        }
       },
     }
   );

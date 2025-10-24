@@ -19,8 +19,21 @@ export const useAddToFavorite = () => {
         queryClient.invalidateQueries({ queryKey: ["items-landing"] });
       },
       onError: (error: any) => {
-        if (error.message !== "User is not authenticated") {
-          toast.error("خطا در اضافه کردن به علاقه مندی ها");
+        switch (error?.statusCode) {
+          case 401:
+            toast.error(
+              "دسترسی غیرمجاز: شما اجازه اضافه کردن به علاقه مندی ها را ندارید"
+            );
+            break;
+          case 404:
+            toast.error("محصول یافت نشد");
+            break;
+          case 409:
+            toast.error("محصول قبلاً در علاقه مندی ها وجود دارد");
+            break;
+          default:
+            toast.error("خطا در اضافه کردن به علاقه مندی ها");
+            break;
         }
       },
     }

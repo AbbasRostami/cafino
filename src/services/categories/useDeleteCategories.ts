@@ -12,8 +12,18 @@ export const useDeleteCategories = () => {
         toast.success("دسته بندی مورد نظر با موفقیت حذف شد.");
         queryClient.invalidateQueries({ queryKey: ["categories-admin"] });
       },
-      onError: () => {
-        toast.error("خطا در حذف دسته بندی");
+      onError: (error: any) => {
+        switch (error?.statusCode) {
+          case 403:
+            toast.error("دسترسی غیرمجاز: شما اجازه حذف دسته بندی را ندارید");
+            break;
+          case 404:
+            toast.error("دسته بندی یافت نشد");
+            break;
+          default:
+            toast.error("خطا در حذف دسته بندی. لطفاً دوباره تلاش کنید.");
+            break;
+        }
       },
     });
   return { mutate, isPending, error, variables };

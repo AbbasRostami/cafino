@@ -14,8 +14,17 @@ export const useDeleteTicket = () => {
       queryClient.invalidateQueries({ queryKey: ["tickets"] });
       queryClient.invalidateQueries({ queryKey: ["user-tickets"] });
     },
-    onError: () => {
-      toast.error("خطا در حذف تیکت");
+    onError: (error: any) => {
+      switch (error?.statusCode) {
+        case 403:
+          toast.error("دسترسی غیرمجاز: شما اجازه حذف تیکت را ندارید");
+          break;
+        case 404:
+          toast.error("تیکت یافت نشد");
+          break;
+        default:
+          toast.error("خطا در حذف تیکت. لطفاً دوباره تلاش کنید.");
+      }
     },
   });
 

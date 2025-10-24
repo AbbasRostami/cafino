@@ -13,7 +13,6 @@ export const useChangeUserPermission = () => {
         queryClient.invalidateQueries({ queryKey: ["user-list-admin"] });
       },
       onError: (error: any) => {
-        console.log(" error in change user permission", error?.statusCode);
         switch (error?.statusCode) {
           case 403:
             toast.error("شما اجازه تغییر نقش کاربر را ندارید.");

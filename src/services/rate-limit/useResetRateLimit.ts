@@ -13,8 +13,20 @@ export const useResetRateLimit = () => {
         toast.success("محدودیت با موفقیت ریست شد");
         queryClient.invalidateQueries({ queryKey: ["rate-limit-records"] });
       },
-      onError: () => {
-        toast.error("خطا در ریست کردن محدودیت");
+      onError: (error: any) => {
+        switch (error?.statusCode) {
+          case 403:
+            toast.error(
+              "دسترسی غیرمجاز: شما اجازه ریست کردن محدودیت را ندارید"
+            );
+            break;
+          case 404:
+            toast.error("محدودیت یافت نشد");
+            break;
+          default:
+            toast.error("خطا در ریست کردن محدودیت. لطفاً دوباره تلاش کنید.");
+            break;
+        }
       },
     }
   );

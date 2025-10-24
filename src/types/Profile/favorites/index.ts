@@ -3,6 +3,7 @@ export interface FavoriteItem {
   isAvailable: boolean;
   item: {
     id: string;
+    slug: string;
     title: string;
     ingredients: string[];
     description: string;
