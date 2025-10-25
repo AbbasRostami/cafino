@@ -10,7 +10,9 @@ import {
   ItemsMetricsSkeleton,
   CommentsMetricsSkeleton,
   LatestCommentsSkeleton,
-} from "@/components/skeleton";
+  SalesReportSkeleton,
+  TicketsChartSkeleton,
+} from "@/components/skeleton/admin/overview";
 
 const Statistics = dynamic(() =>
   import("./components").then((mod) => mod.Statistics)
@@ -38,6 +40,14 @@ const CommentsMetrics = dynamic(() =>
 
 const LastestComments = dynamic(() =>
   import("./components").then((mod) => mod.LastestComments)
+);
+
+const SalesReportChart = dynamic(() =>
+  import("./components").then((mod) => mod.SalesReportChart)
+);
+
+const TicketsChart = dynamic(() =>
+  import("./components").then((mod) => mod.TicketsChart)
 );
 
 export default function Overview() {
@@ -109,10 +119,22 @@ export default function Overview() {
 
         <div className="col-span-12 xl:col-span-6">
           {isLoading ? (
+            <TicketsChartSkeleton />
+          ) : (
+            <TicketsChart data={data?.ticket} />
+          )}
+        </div>
+
+        <div className="col-span-12 xl:col-span-6">
+          {isLoading ? (
             <LatestCommentsSkeleton />
           ) : (
             <LastestComments data={data?.comment} />
           )}
+        </div>
+
+        <div className="col-span-12 xl:col-span-6">
+          {isLoading ? <SalesReportSkeleton /> : <SalesReportChart />}
         </div>
       </div>
     </>

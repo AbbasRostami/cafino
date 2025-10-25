@@ -18,7 +18,7 @@ export function LastestComments({ data }: { data?: CommentOverview }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      <Card className="border-none rounded-3xl overflow-hidden shadow-xl backdrop-blur-xl bg-white/70 dark:bg-gray-900/70 transition-all hover:shadow-xl h-full sm:h-[450px]">
+      <Card className="bg-white/90 dark:bg-gray-900 border-none shadow-lg hover:shadow-xl transition-all duration-500 h-full sm:h-[450px]">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">

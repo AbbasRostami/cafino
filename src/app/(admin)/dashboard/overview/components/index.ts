@@ -5,3 +5,5 @@ export { RevenueMetrics } from "./RevenueMetrics";
 export { OrderMetrics } from "./OrderMetrics";
 export { LastestComments } from "./LastestComments";
 export { ItemsMetrics } from "./ItemsMetrics";
+export { SalesReportChart } from "./SalesReportChart";
+export { TicketsChart } from "./TicketsChart";
