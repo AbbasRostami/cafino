@@ -60,7 +60,7 @@ export const PopularProducts = ({
 
                 <div className="flex flex-col lg:flex-row justify-between items-center gap-2">
                   <div className="flex items-center gap-1 text-gray-500 dark:text-gray-400 font-normal text-sm">
-                    <span className="text-red-600 dark:text-red-400 font-semibold text-base">
+                    <span className="text-red-600 dark:text-red-500 font-semibold text-base">
                       {formatCurrency(fav?.item?.price)}
                     </span>
                     <span className="text-gray-500 dark:text-gray-400 font-normal text-sm">
@@ -69,7 +69,7 @@ export const PopularProducts = ({
                   </div>
                   <div className="flex-shrink-0">
                     {fav?.isAvailable ? (
-                      <AddToCartButtonStyled itemId={fav?.item?.id} />
+                      <AddToCartButtonStyled title="افزودن" itemId={fav?.item?.id} />
                     ) : (
                       <Button
                         className="bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg flex items-center justify-center gap-1 px-3 py-1.5"

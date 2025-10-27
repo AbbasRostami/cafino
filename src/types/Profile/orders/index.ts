@@ -13,6 +13,7 @@ export type OrderStatus =
 export interface OrderProfile {
   id: string;
   payment_amount: number;
+  created_at: string;
   discount_amount: number;
   total_amount: number;
   status: OrderStatus;

@@ -46,9 +46,9 @@ export const RecentOrders = ({
               data-testid="order-item"
               className="min-h-[120px] group flex flex-col  items-start sm:items-center justify-between px-4 py-3 bg-gray-100/50 dark:bg-gray-700/50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
             >
-              <div className="mb-3 sm:mb-0 flex justify-between gap-2 w-full">
+              <div className="mb-3 sm:mb-0 flex justify-between items-start gap-2 w-full">
                 <div className="flex-1 text-sm text-gray-600 dark:text-gray-300 flex flex-col gap-1 w-full">
-                  <span className="text-md text-gray-800 dark:text-gray-400 font-semibold">
+                  <span className="text-md text-gray-800 dark:text-gray-200 font-semibold">
                     محصولات سفارش:
                   </span>
                   <TooltipProvider>
@@ -60,7 +60,7 @@ export const RecentOrders = ({
                             .map((ing: any, i: number) => (
                               <span
                                 key={i}
-                                className="group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-all duration-300 py-0.5 rounded-full text-gray-800 dark:text-gray-200  text-xs  truncate max-w-[100px]"
+                                className="group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-all duration-300 py-0.5 rounded-full text-gray-800 dark:text-gray-100  text-xs  truncate max-w-[100px]"
                               >
                                 {ing?.item?.title}
                               </span>
@@ -85,18 +85,18 @@ export const RecentOrders = ({
                   </TooltipProvider>
                 </div>
 
-                <div className="flex-1 text-sm text-gray-500 dark:text-gray-400 flex justify-end items-center gap-1">
+                <div className="text-sm text-gray-600 dark:text-gray-300">
+                  {getStatusBadge(order?.status)}
+                </div>
+              </div>
+              <div className="w-full flex justify-between items-center gap-2">
+                <div className="flex-1 text-sm text-gray-500 dark:text-gray-400 flex justify-start items-center gap-1">
                   <span className="text-sm text-gray-800 dark:text-gray-200">
                     {formatRelativeTime(order?.payments[0]?.created_at)}
                   </span>
                 </div>
-              </div>
-              <div className="w-full flex justify-between items-center gap-2">
-                <div className="text-sm text-gray-600 dark:text-gray-300">
-                  {getStatusBadge(order?.status)}
-                </div>
-                <div className="font-medium text-gray-800 dark:text-white text-sm sm:text-base flex items-center gap-1">
-                  <span className="text-red-600 dark:text-red-400 font-semibold text-base">
+                <div className="flex-1 font-medium text-gray-800 dark:text-white text-sm sm:text-base flex justify-end items-center gap-1">
+                  <span className="text-red-600 dark:text-red-500 font-semibold text-base">
                     {formatCurrency(order?.payment_amount)}
                   </span>
                   <span className="text-gray-500 dark:text-gray-400 font-normal text-sm">

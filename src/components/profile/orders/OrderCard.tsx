@@ -11,8 +11,8 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "lucide-react";
 import {
   formatCurrency,
-  formatJalaliDate,
   getStatusBadge,
+  formatRelativeTime,
 } from "@/utils/formatters";
 import { OrderCardProps, OrderProfile } from "@/types/Profile";
 
@@ -35,7 +35,9 @@ export const OrderCard = ({ orders, onViewDetails }: OrderCardProps) => {
                     تاریخ سفارش
                   </span>
                   <span className="text-xs sm:text-base font-semibold group-hover:text-amber-600 group-hover:dark:text-amber-600 text-gray-700 dark:text-gray-200 group-hover/date:text-gray-900 transition-colors">
-                    {formatJalaliDate(order?.payments[0]?.created_at)}
+                    {formatRelativeTime(
+                      order?.payments?.[0]?.created_at || order?.created_at
+                    )}
                   </span>
                 </div>
               </div>
