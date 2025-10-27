@@ -36,7 +36,9 @@ export const OrderCard = ({ orders, onViewDetails }: OrderCardProps) => {
                   </span>
                   <span className="text-xs sm:text-base font-semibold group-hover:text-amber-600 group-hover:dark:text-amber-600 text-gray-700 dark:text-gray-200 group-hover/date:text-gray-900 transition-colors">
                     {formatRelativeTime(
-                      order?.payments?.[0]?.created_at || order?.created_at
+                      order?.payments?.[0]?.created_at ||
+                        order?.created_at ||
+                        ""
                     )}
                   </span>
                 </div>
