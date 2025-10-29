@@ -1,6 +1,6 @@
 "use client";
 import { DataTable } from "@/app/(admin)/components/common/DataTable";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { ChartBarStacked } from "lucide-react";
 import { useDeleteCategories, useGetCategoriesAdmin } from "@/services";
 import { Button } from "@/components/ui/button";
@@ -23,24 +23,21 @@ export default function Categories() {
     variables: deletingVars,
   } = useDeleteCategories();
 
-  const headerProps = useMemo(
-    () => ({
-      title: "لیست دسته‌بندی‌ها",
-      icon: <ChartBarStacked size={30} />,
-      showColumnVisibility: true,
-      actions: (
-        <CategoryModal
-          initialData={null}
-          trigger={
-            <Button className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 shadow-lg hover:shadow-xl transition-all duration-300">
-              افزودن دسته‌بندی
-            </Button>
-          }
-        />
-      ),
-    }),
-    []
-  );
+  const headerProps = {
+    title: "لیست دسته‌بندی‌ها",
+    icon: <ChartBarStacked size={30} />,
+    showColumnVisibility: true,
+    actions: (
+      <CategoryModal
+        initialData={null}
+        trigger={
+          <Button className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 shadow-lg hover:shadow-xl transition-all duration-300">
+            افزودن دسته‌بندی
+          </Button>
+        }
+      />
+    ),
+  };
 
   return (
     <DataTable

@@ -3,24 +3,23 @@ import { useState } from "react";
 import { useGetItemDetails } from "@/services/items";
 import { useGetCommentsItems } from "@/services";
 import { ImageGallery, ItemInfo, PriceSection, CommentsSection } from "./index";
-import { Item, SortBy } from "@/types/main";
+import { SortBy } from "@/types/main";
 
 export default function ItemsDetails({
   id,
   slug,
-  initialItem,
 }: {
   id: string;
   slug: string;
-  initialItem?: Item;
 }) {
-  const [activeImage, setActiveImage] = useState(0);
   const [limit, setLimit] = useState(2);
   const [sortBy, setSortBy] = useState<SortBy>("newest");
   const [activeReplyId, setActiveReplyId] = useState<string | null>(null);
 
-  const { data } = useGetItemDetails(id, slug, initialItem);
+  // Item Details
+  const { data } = useGetItemDetails(id, slug);
 
+  // Comments
   const { data: CommentsItems, isLoading: isLoadingComments } =
     useGetCommentsItems({
       itemId: id,
@@ -46,12 +45,7 @@ export default function ItemsDetails({
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         <div className="space-y-8">
-          <ImageGallery
-            images={data?.item?.images}
-            activeImage={activeImage}
-            onImageChange={setActiveImage}
-            discount={discount}
-          />
+          <ImageGallery images={data?.item?.images} discount={discount} />
         </div>
 
         <div className="space-y-8">

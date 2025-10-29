@@ -7,6 +7,7 @@ import { ItemDetailsSkeleton } from "@/components/skeleton";
 import { Suspense } from "react";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getQueryClient } from "@/components/providers/queryClient";
+import { useGetItemDetails } from "@/services";
 
 export default async function MenuItemPage({ params }: MenuItemClientProps) {
   return (
@@ -25,7 +26,7 @@ async function MenuItemPageWithPrefetch({ params }: MenuItemClientProps) {
 
   await queryClient.prefetchQuery({
     queryKey: ["item-details", id, slug],
-    queryFn: () => useGetItemsDetailsServer(id, slug),
+    queryFn: () => useGetItemDetails(id, slug),
   });
 
   return (

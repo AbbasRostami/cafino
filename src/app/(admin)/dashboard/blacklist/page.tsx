@@ -1,6 +1,6 @@
 "use client";
 import { DataTable } from "@/app/(admin)/components/common/DataTable";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { User } from "lucide-react";
 import { columns } from "./columns";
 import { useGetBlacklist, useRemoveUserFromBlacklist } from "@/services";
@@ -22,15 +22,12 @@ export default function Blacklist() {
     isPending: isRemoving,
     variables: removingVars,
   } = useRemoveUserFromBlacklist();
-  
-  const headerProps = useMemo(
-    () => ({
-      title: "لیست سیاه",
-      icon: <User size={30} />,
-      showColumnVisibility: true,
-    }),
-    []
-  );
+
+  const headerProps = {
+    title: "لیست سیاه",
+    icon: <User size={30} />,
+    showColumnVisibility: true,
+  };
 
   return (
     <DataTable

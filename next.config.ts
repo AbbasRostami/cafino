@@ -43,8 +43,8 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value:
               process.env.NODE_ENV === "development"
-                ? `default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob: https://cafino.storage.c2.liara.space ${process.env.NEXT_PUBLIC_SITE_URL}; connect-src 'self' https://cafino.storage.c2.liara.space ${process.env.NEXT_PUBLIC_API_URL}; font-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self';`
-                : `default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob: https://cafino.storage.c2.liara.space ${process.env.NEXT_PUBLIC_SITE_URL}; connect-src 'self' https://cafino.storage.c2.liara.space ${process.env.NEXT_PUBLIC_API_URL}; font-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self';`,
+                ? `default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob: https://cafino.storage.c2.liara.space ${process.env.NEXT_PUBLIC_SITE_URL}; connect-src 'self' https://cafino.storage.c2.liara.space https://iranplacesapi.liara.run ${process.env.NEXT_PUBLIC_API_URL}; font-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self';`
+                : `default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob: https://cafino.storage.c2.liara.space ${process.env.NEXT_PUBLIC_SITE_URL}; connect-src 'self' https://cafino.storage.c2.liara.space https://iranplacesapi.liara.run ${process.env.NEXT_PUBLIC_API_URL}; font-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self';`,
           },
         ],
       },

@@ -1,6 +1,6 @@
 "use client";
 import { DataTable } from "@/app/(admin)/components/common/DataTable";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Users as UsersIcon, UserX, UserPlus, Activity } from "lucide-react";
 
 import { columns } from "./columns";
@@ -14,7 +14,6 @@ import { StatisticsSkeleton } from "@/components/skeleton";
 import { StatisticsCard } from "../../components/common/StatisticsCard";
 
 export default function Users() {
-
   const [filters, setFilters] = useState({
     page: 1,
     limit: 10,
@@ -43,14 +42,11 @@ export default function Users() {
     variables: addToBlacklistVars,
   } = useAddUserToBlacklist();
 
-  const headerProps = useMemo(
-    () => ({
-      title: "لیست کاربران",
-      icon: <UsersIcon size={30} />,
-      showColumnVisibility: true,
-    }),
-    []
-  );
+  const headerProps = {
+    title: "لیست کاربران",
+    icon: <UsersIcon size={30} />,
+    showColumnVisibility: true,
+  };
 
   return (
     <>

@@ -93,9 +93,22 @@ export const columns = ({
         cell: (info) => {
           const subject = info.getValue() as any;
           return (
-            <span className="text-gray-800 dark:text-gray-200">
-              {subject || "نامشخص"}
-            </span>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="max-w-[150px] text-ellipsis overflow-hidden items-center gap-2 cursor-pointer">
+                    <span className=" text-gray-800 dark:text-gray-200">
+                      {subject || "نامشخص"}
+                    </span>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p className="text-sm text-justify line-clamp-2">
+                    {subject || "نامشخص"}
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           );
         },
         enableSorting: true,

@@ -90,8 +90,21 @@ const navItems: NavItem[] = [
 ];
 
 const AppSidebar: React.FC = () => {
-  const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
+  const {
+    isExpanded,
+    isMobileOpen,
+    isHovered,
+    setIsHovered,
+    toggleMobileSidebar,
+  } = useSidebar();
+  
   const pathname = usePathname();
+
+  const handleLinkClick = () => {
+    if (isMobileOpen) {
+      toggleMobileSidebar();
+    }
+  };
 
   const [openSubmenu, setOpenSubmenu] = useState<{
     type: "main";
@@ -162,7 +175,11 @@ const AppSidebar: React.FC = () => {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <button
-                    onClick={() => handleSubmenuToggle(index, menuType)}
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                      e.preventDefault();
+                      handleSubmenuToggle(index, menuType);
+                      setOpenSubmenu(null);
+                    }}
                     className={`menu-item group flex items-center px-4 py-3 rounded-lg ${
                       openSubmenu?.type === menuType &&
                       openSubmenu?.index === index
@@ -213,6 +230,7 @@ const AppSidebar: React.FC = () => {
                   <TooltipTrigger asChild>
                     <Link
                       href={nav.path}
+                      onClick={handleLinkClick}
                       className={`menu-item group flex items-center px-4 py-3 rounded-lg ${
                         isActive(nav.path)
                           ? "menu-item-active"
@@ -264,6 +282,7 @@ const AppSidebar: React.FC = () => {
                   <li key={subItem.name}>
                     <Link
                       href={subItem.path}
+                      onClick={handleLinkClick}
                       className={`menu-dropdown-item text-base px-4 py-2 ${
                         isActive(subItem.path)
                           ? "menu-dropdown-item-active"

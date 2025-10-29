@@ -28,11 +28,11 @@ export default function Menus({
     clearFilters,
     handleSearchChange,
   } = useMenuFiltersNuqs();
-  
+
   const { data: items } = useGetItems(queryString, initialData);
 
   const itemsList = items?.data?.items || [];
-  const totalParam = Number(items?.data?.total || 0);
+  const totalParam = items?.data?.total || 0;
   const totalPages = Math.max(1, Math.ceil(totalParam / filters.limit));
   const currentPage = filters.page;
 

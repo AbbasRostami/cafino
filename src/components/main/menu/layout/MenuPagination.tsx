@@ -14,6 +14,14 @@ export const MenuPagination = ({
   totalPages,
   onPageChange,
 }: MenuPaginationProps) => {
+  const handlePageChange = (page: number) => {
+    onPageChange(page);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <>
       <Pagination dir="ltr" className="mt-6">
@@ -22,7 +30,7 @@ export const MenuPagination = ({
             <PaginationItem>
               <PaginationPrevious
                 className="!p-1"
-                onClick={() => onPageChange(currentPage - 1)}
+                onClick={() => handlePageChange(currentPage - 1)}
               />
             </PaginationItem>
           )}
@@ -31,7 +39,7 @@ export const MenuPagination = ({
             <PaginationItem key={page}>
               <PaginationLink
                 isActive={page === currentPage}
-                onClick={() => onPageChange(page)}
+                onClick={() => handlePageChange(page)}
                 className={`!px-3 !py-1 rounded-lg ${
                   page === currentPage
                     ? "bg-muted font-bold"
@@ -47,7 +55,7 @@ export const MenuPagination = ({
             <PaginationItem>
               <PaginationNext
                 className="!p-1"
-                onClick={() => onPageChange(currentPage + 1)}
+                onClick={() => handlePageChange(currentPage + 1)}
               />
             </PaginationItem>
           )}

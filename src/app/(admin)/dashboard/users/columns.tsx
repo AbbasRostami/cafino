@@ -13,13 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Loader2,
-  ShieldUser,
-  OctagonX,
-  CircleUserRound,
-  ChevronDown,
-} from "lucide-react";
+import { Loader2, OctagonX, CircleUserRound, ChevronDown } from "lucide-react";
 import { formatJalaliDate } from "@/utils/formatters";
 import { confirm } from "@/components/shared/ConfirmModal";
 import {
@@ -36,23 +30,21 @@ import {
 } from "@/types/admin";
 import Image from "next/image";
 
-// Helper function to get role display info
 const getRoleInfo = (role: UserRole) => {
   switch (role) {
     case "admin":
-      return { label: "مدیر", variant: "pending" as const };
+      return { label: "ادمین", variant: "pending" as const };
     case "manager":
-      return { label: "مدیر اصلی", variant: "success" as const };
+      return { label: "مدیر", variant: "success" as const };
     case "user":
     default:
       return { label: "کاربر", variant: "default" as const };
   }
 };
-// Available roles for selection
 const availableRoles: { value: UserRole; label: string }[] = [
   { value: "user", label: "کاربر" },
-  { value: "admin", label: "مدیر" },
-  { value: "manager", label: "مدیر اصلی" },
+  { value: "admin", label: "ادمین" },
+  { value: "manager", label: "مدیر" },
 ];
 
 export const columns = ({
@@ -60,7 +52,6 @@ export const columns = ({
   currentLimit,
   changePermission,
   isChangingPermission,
-  changePermissionVars,
   addToBlacklist,
   isAddingToBlacklist,
   addToBlacklistVars,
@@ -207,7 +198,6 @@ export const columns = ({
 
           return (
             <div className="flex justify-center items-center gap-2">
-              {/* Role Selection Dropdown */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
@@ -261,7 +251,6 @@ export const columns = ({
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              {/* Blacklist Button */}
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
