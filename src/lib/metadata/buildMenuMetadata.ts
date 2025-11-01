@@ -1,5 +1,5 @@
 import type { Metadata, ResolvingMetadata } from "next";
-import { MenuItemResponse } from "@/types/main/menu";
+import type { MenuItemResponse } from "@/types/main/menu";
 
 type BuildMenuMetadataOptions = {
   baseUrl?: string;
@@ -24,7 +24,6 @@ type MenuItem = {
   category?: { title: string };
 };
 
-// Type guard for menu data
 function isValidMenuData(data: unknown): data is MenuItemResponse {
   return (
     typeof data === "object" &&
@@ -36,7 +35,6 @@ function isValidMenuData(data: unknown): data is MenuItemResponse {
   );
 }
 
-// Build canonical URL with query params
 function buildCanonicalUrl(
   baseUrl: string,
   searchParams?: { [key: string]: string | string[] | undefined }
@@ -44,7 +42,6 @@ function buildCanonicalUrl(
   const url = new URL("/menu", baseUrl);
 
   if (searchParams) {
-    // Only include relevant SEO parameters in canonical URL
     const seoParams = ["category", "search", "sortBy", "page"];
 
     seoParams.forEach((key) => {
@@ -62,7 +59,6 @@ function buildCanonicalUrl(
   return url.toString();
 }
 
-// Build pagination links
 function buildPaginationLinks(
   baseUrl: string,
   currentPage: number,
@@ -114,7 +110,6 @@ export function buildMenuMetadata(
   menuData: MenuItemResponse | undefined,
   { baseUrl, parentImages, searchParams }: BuildMenuMetadataOptions
 ): Metadata {
-  // Error handling
   if (!isValidMenuData(menuData)) {
     return {
       title: "خطا در دریافت منو",
@@ -137,7 +132,6 @@ export function buildMenuMetadata(
     const page = searchParams?.page;
     const sortBy = searchParams?.sortBy;
 
-    // Base title and description
     if (category) {
       title = `منوی ${category} - کافینو`;
       description = `انواع ${category} در کافینو با کیفیت عالی و قیمت مناسب`;
@@ -146,7 +140,6 @@ export function buildMenuMetadata(
       description = `نتایج جستجو برای "${search}" در منوی کافینو`;
     }
 
-    // Add sorting information to title and description
     if (sortBy) {
       const sortLabels: { [key: string]: string } = {
         newest: "جدیدترین",

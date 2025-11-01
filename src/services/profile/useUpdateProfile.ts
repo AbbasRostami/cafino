@@ -19,14 +19,8 @@ export const useUpdateProfile = () => {
         queryClient.invalidateQueries({ queryKey: ["user-profile"] });
         queryClient.refetchQueries({ queryKey: ["user-profile"] });
       },
-      onError: (error: any) => {
-        if (error?.response?.data?.statusCode === 409) {
-          toast.error("این نام کاربری قبلاً استفاده شده است");
-        } else {
-          toast.error(
-            error?.response?.data?.message || "خطا در ویرایش پروفایل"
-          );
-        }
+      onError: () => {
+        toast.error("خطا در ویرایش پروفایل");
       },
     }
   );

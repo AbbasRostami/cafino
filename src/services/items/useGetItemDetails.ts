@@ -8,11 +8,13 @@ export const useGetItemDetails = (
 ) => {
   const endpoint = `/v1/item/item-${id}/${slug}`;
 
-  const { data } = useGet<{ data: Item }>(endpoint, {
+  const result = useGet<{ data: Item }>(endpoint, {
     queryKey: ["item-details", id, slug],
     initialData: initialData,
   });
+
   return {
-    data: data?.data,
+    data: result.data?.data,
+    isLoading: result.isLoading,
   };
 };
