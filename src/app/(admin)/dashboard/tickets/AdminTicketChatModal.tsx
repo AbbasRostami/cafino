@@ -30,6 +30,12 @@ import { AdminTicketChatSkeleton } from "@/components/skeleton/admin";
 import { useIsMobile } from "@/hooks/ui/useMediaQuery";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import Image from "next/image";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface AdminTicketChatModalProps {
   ticketId: string | null;
@@ -116,16 +122,27 @@ export default function AdminTicketChatModal({
   const config = statusConfig[status as string];
 
   const ChatContent = () => (
-    <div className="flex flex-col h-full max-h-[90vh] overflow-hidden">
+    <div className="flex flex-col h-full max-h-[90vh] overflow-hidden rounded-2xl">
       <div className="p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 flex-shrink-0">
-        <div className="flex items-center justify-between">
-          <div className="flex  items-center gap-3">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
+          <div className="flex items-center gap-3">
             <div className="flex flex-col gap-2">
-              <div className="flex items-center gap-2">
+              <div className=" flex items-center gap-2">
                 <span className="text-2xl"> • </span>
-                <span className="font-semibold text-gray-900 dark:text-gray-100">
-                  {messagesData?.data?.ticket?.subject || "تیکت"}
-                </span>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="max-w-[250px] sm:max-w-[600px] text-ellipsis overflow-hidden font-semibold text-gray-900 dark:text-gray-100">
+                        {messagesData?.data?.ticket?.subject || "تیکت"}
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p className="text-sm text-justify line-clamp-2 max-w-xs sm:max-w-[600px]">
+                        {messagesData?.data?.ticket?.subject || "تیکت"}
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </div>
               <div className="flex flex-col sm:flex-row items-center gap-2">
                 <Badge
@@ -286,8 +303,13 @@ export default function AdminTicketChatModal({
 
   if (isMobile) {
     return (
-      <Drawer open={isOpen} onOpenChange={onClose}>
-        <DrawerContent className="!h-full p-0 border-none flex flex-col focus:outline-none focus-visible:outline-none">
+      <Drawer open={isOpen} onOpenChange={onClose} modal={true}>
+        <DrawerContent
+          className="!h-full p-0 border-none flex flex-col focus:outline-none focus-visible:outline-none"
+          onOpenAutoFocus={(e) => {
+            e.preventDefault();
+          }}
+        >
           <VisuallyHidden>
             <DrawerTitle>مشاهده تیکت</DrawerTitle>
             <DrawerDescription>مشاهده تیکت</DrawerDescription>
@@ -304,7 +326,12 @@ export default function AdminTicketChatModal({
       <DialogContent
         showCloseButton={false}
         className="min-w-4xl h-[90vh] border-none p-0 gap-0 rounded-2xl flex flex-col focus:outline-none focus-visible:outline-none"
-        onOpenAutoFocus={(e) => e.preventDefault()}
+        onOpenAutoFocus={(e) => {
+          e.preventDefault();
+        }}
+        onEscapeKeyDown={(e) => {
+          onClose();
+        }}
       >
         <VisuallyHidden>
           <DialogTitle>مشاهده تیکت</DialogTitle>

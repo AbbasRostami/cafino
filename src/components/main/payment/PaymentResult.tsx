@@ -75,7 +75,7 @@ const SuccessPayment = ({ orderInfo }: { orderInfo: any }) => (
     initial={{ opacity: 0, scale: 0.95, y: 20 }}
     animate={{ opacity: 1, scale: 1, y: 0 }}
     transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-    className="relative text-center space-y-6 max-w-2xl mx-auto p-4"
+    className="relative text-center space-y-6 max-w-2xl mx-auto p-6 md:p-8"
   >
     <div className="absolute inset-0 -z-10 overflow-hidden">
       <div className="absolute top-0 left-1/4 w-72 h-72 bg-green-500/10 rounded-full blur-3xl"></div>
@@ -104,8 +104,8 @@ const SuccessPayment = ({ orderInfo }: { orderInfo: any }) => (
         پرداخت با موفقیت انجام شد!
       </h1>
       <p className="text-base md:text-xl text-gray-600 dark:text-gray-300 max-w-md mx-auto leading-relaxed">
-        سفارش شما با موفقیت ثبت شد و در حال پردازش است. به زودی با شما تماس
-        خواهیم گرفت.
+        سفارش شما با موفقیت ثبت شد و در حال پردازش است. به زودی برای شما ارسال
+        خواهد شد.
       </p>
     </MotionDiv>
 
@@ -153,7 +153,7 @@ const SuccessPayment = ({ orderInfo }: { orderInfo: any }) => (
       </MotionDiv>
     )}
 
-    <MotionDiv
+    {/* <MotionDiv
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.35, duration: 0.5 }}
@@ -178,7 +178,7 @@ const SuccessPayment = ({ orderInfo }: { orderInfo: any }) => (
           </p>
         </CardContent>
       </Card>
-    </MotionDiv>
+    </MotionDiv> */}
 
     <MotionDiv
       initial={{ opacity: 0, y: 10 }}
@@ -212,7 +212,7 @@ const FailedPayment = () => (
     initial={{ opacity: 0, scale: 0.95, y: 20 }}
     animate={{ opacity: 1, scale: 1, y: 0 }}
     transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-    className="relative text-center space-y-8 max-w-2xl mx-auto p-4"
+    className="relative text-center space-y-8 max-w-2xl mx-auto p-6 md:p-8"
   >
     <div className="absolute inset-0 -z-10 overflow-hidden">
       <div className="absolute top-0 left-1/4 w-72 h-72 bg-red-500/10 rounded-full blur-3xl"></div>
@@ -241,12 +241,11 @@ const FailedPayment = () => (
         پرداخت ناموفق بود
       </h1>
       <p className="text-base md:text-xl text-gray-600 dark:text-gray-300 max-w-md mx-auto leading-relaxed">
-        متأسفانه پرداخت شما با مشکل مواجه شد. لطفاً دوباره تلاش کنید یا روش
-        پرداخت دیگری انتخاب کنید.
+        متأسفانه پرداخت شما با مشکل مواجه شد. لطفاً دوباره تلاش کنید.
       </p>
     </MotionDiv>
 
-    <MotionDiv
+    {/* <MotionDiv
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3, duration: 0.5 }}
@@ -285,7 +284,7 @@ const FailedPayment = () => (
           </p>
         </CardContent>
       </Card>
-    </MotionDiv>
+    </MotionDiv> */}
 
     <MotionDiv
       initial={{ opacity: 0, y: 10 }}
@@ -319,7 +318,7 @@ const PendingPayment = () => (
     initial={{ opacity: 0, scale: 0.95, y: 20 }}
     animate={{ opacity: 1, scale: 1, y: 0 }}
     transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-    className="relative text-center space-y-8 max-w-2xl mx-auto p-4"
+    className="relative text-center space-y-8 max-w-2xl mx-auto p-6 md:p-8"
   >
     <div className="absolute inset-0 -z-10 overflow-hidden">
       <div className="absolute top-0 left-1/4 w-72 h-72 bg-amber-400/10 rounded-full blur-3xl"></div>

@@ -4,6 +4,7 @@ import { useGetItemDetails } from "@/services/items";
 import { useGetCommentsItems } from "@/services";
 import { ImageGallery, ItemInfo, PriceSection, CommentsSection } from "./index";
 import { SortBy } from "@/types/main";
+import { ItemDetailsSkeleton } from "@/components/skeleton";
 
 export default function ItemsDetails({
   id,
@@ -17,7 +18,7 @@ export default function ItemsDetails({
   const [activeReplyId, setActiveReplyId] = useState<string | null>(null);
 
   // Item Details
-  const { data } = useGetItemDetails(id, slug);
+  const { data, isLoading } = useGetItemDetails(id, slug);
 
   // Comments
   const { data: CommentsItems, isLoading: isLoadingComments } =
@@ -27,6 +28,10 @@ export default function ItemsDetails({
       limit,
       sortBy,
     });
+
+  if (isLoading || !data?.item) {
+    return <ItemDetailsSkeleton />;
+  }
 
   const originalPrice = data?.item?.price;
   const discount = data?.item?.discount;

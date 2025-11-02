@@ -39,7 +39,11 @@ export const Header = ({ user }: { user?: User | null }) => {
               {user?.first_name} {user?.last_name}
             </p>
             <p className="text-sm sm:text-base text-white dark:text-amber-200">
-              {user?.role === "admin" ? "مدیر سیستم" : "کاربر عادی"}
+              {user?.role === "admin"
+                ? "ادمین"
+                : user?.role === "manager"
+                ? "مدیر"
+                : "کاربر عادی"}
             </p>
             <div className="flex flex-col items-center sm:items-start gap-1 mt-2">
               <div className="flex items-center gap-2 text-white dark:text-amber-200 text-sm">

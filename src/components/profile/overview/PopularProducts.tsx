@@ -13,19 +13,21 @@ import { FavoriteItem } from "@/types/Profile";
 import { MotionDiv } from "@/utils/MotionWrapper";
 import { formatCurrency } from "@/utils/formatters";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export const PopularProducts = ({
   favoritesData,
 }: {
   favoritesData: FavoriteItem[];
 }) => {
+  const router = useRouter();
   return (
     <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-xl rounded-2xl border-none">
       {favoritesData?.length ? (
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-sm sm:text-xl font-bold text-gray-800 dark:text-white">
             <Star size={18} />
-            محبوب‌ترین محصولات
+            علاقه مندی های شما
           </CardTitle>
         </CardHeader>
       ) : null}
@@ -49,7 +51,12 @@ export const PopularProducts = ({
 
               <div className="flex-1 flex flex-col justify-between min-w-0 p-3">
                 <div className="flex justify-between items-start gap-2 mb-2">
-                  <h3 className="font-semibold group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-all duration-300 text-gray-800 dark:text-white text-sm sm:text-base truncate flex-1">
+                  <h3
+                    onClick={() =>
+                      router.push(`/menu/${fav?.item?.id}/${fav?.item?.slug}`)
+                    }
+                    className="font-semibold group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-all duration-300 text-gray-800 dark:text-white text-sm sm:text-base truncate flex-1 cursor-pointer"
+                  >
                     {fav?.item?.title}
                   </h3>
                   <div className="flex items-center gap-1 text-xs sm:text-sm text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 px-2 py-1 rounded-full">
@@ -69,7 +76,10 @@ export const PopularProducts = ({
                   </div>
                   <div className="flex-shrink-0">
                     {fav?.isAvailable ? (
-                      <AddToCartButtonStyled title="افزودن" itemId={fav?.item?.id} />
+                      <AddToCartButtonStyled
+                        title="افزودن"
+                        itemId={fav?.item?.id}
+                      />
                     ) : (
                       <Button
                         className="bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg flex items-center justify-center gap-1 px-3 py-1.5"

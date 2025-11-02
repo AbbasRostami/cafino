@@ -1,6 +1,32 @@
 import { useAuthStore } from "@/store/authStore";
 import { toast } from "sonner";
 
+//  CONSTANTS
+const AUTH_ENDPOINTS = {
+  REFRESH: "/v1/auth/refresh",
+} as const;
+
+const HTTP_STATUS = {
+  UNAUTHORIZED: 401,
+  FORBIDDEN: 403,
+  NOT_FOUND: 404,
+  INTERNAL_SERVER_ERROR: 500,
+} as const;
+
+const ERROR_MESSAGES = {
+  SESSION_EXPIRED: "نشست شما منقضی شده، لطفاً دوباره وارد شوید.",
+  REFRESH_ERROR: "خطا در بروزرسانی نشست",
+  ACCESS_DENIED: "دسترسی شما به این بخش محدود شده است",
+  USER_NOT_LOGGED_IN: "کاربر لاگین نیست",
+  SESSION_EXPIRED_ERROR: "نشست منقضی شده",
+  ACCESS_DENIED_ERROR: "دسترسی محدود شده",
+} as const;
+
+// REFRESH TOKEN STATE
+let isRefreshing = false;
+let refreshPromise: Promise<boolean> | null = null;
+
+// GET API URL
 export const getApiUrl = (endpoint: string, isServer: boolean = false) => {
   if (isServer) {
     return endpoint.startsWith("http")
@@ -10,6 +36,7 @@ export const getApiUrl = (endpoint: string, isServer: boolean = false) => {
   return endpoint.startsWith("/api") ? endpoint : `/api${endpoint}`;
 };
 
+// MAKE REQUEST
 const makeRequest = (url: string, options: RequestInit) => {
   const fullUrl = getApiUrl(url);
   const isFormData = options.body instanceof FormData;
@@ -27,9 +54,9 @@ const makeRequest = (url: string, options: RequestInit) => {
   });
 };
 
+// ON ERROR
 const onError = async (response: Response, url: string) => {
   let errorData: any = {};
-
   try {
     errorData = await response.json();
   } catch {
@@ -53,39 +80,94 @@ const onError = async (response: Response, url: string) => {
   throw customError;
 };
 
+// FETCH WITH AUTH
 export async function fetchWithAuth(url: string, options: RequestInit = {}) {
   try {
     const response = await makeRequest(url, options);
 
-    if (response.status === 401) {
+    if (response.status === HTTP_STATUS.UNAUTHORIZED) {
       const authState = useAuthStore.getState();
+
       if (!authState.isAuthenticated && !authState.user) {
-        throw { status: 401, message: "کاربر لاگین نیست" };
+        throw {
+          status: HTTP_STATUS.UNAUTHORIZED,
+          message: ERROR_MESSAGES.USER_NOT_LOGGED_IN,
+        };
       }
 
-      const refreshResponse = await fetch(getApiUrl("/v1/auth/refresh"), {
-        method: "GET",
-        credentials: "include",
-      });
+      if (!isRefreshing) {
+        isRefreshing = true;
 
-      if (refreshResponse.ok) {
-        useAuthStore.getState().setAuthenticated(true);
+        refreshPromise = fetch(getApiUrl(AUTH_ENDPOINTS.REFRESH), {
+          method: "GET",
+          credentials: "include",
+        })
+          .then(async (refreshResponse) => {
+            if (refreshResponse.ok) {
+              useAuthStore.getState().setAuthenticated(true);
+              return true;
+            } else {
+              useAuthStore.getState().resetAuth();
+              toast.error(ERROR_MESSAGES.SESSION_EXPIRED);
+              return false;
+            }
+          })
+          .catch((error) => {
+            useAuthStore.getState().resetAuth();
+            toast.error(ERROR_MESSAGES.REFRESH_ERROR);
+            return false;
+          })
+          .finally(() => {
+            isRefreshing = false;
+          });
+      }
+
+      if (!refreshPromise) {
+        throw {
+          status: HTTP_STATUS.UNAUTHORIZED,
+          message: ERROR_MESSAGES.REFRESH_ERROR,
+        };
+      }
+
+      const refreshed = await refreshPromise;
+
+      if (refreshed) {
         const retry = await makeRequest(url, options);
-        return await retry.json();
+
+        if (!retry.ok) {
+          if (retry.status === HTTP_STATUS.UNAUTHORIZED) {
+            useAuthStore.getState().resetAuth();
+            toast.error(ERROR_MESSAGES.SESSION_EXPIRED);
+            throw {
+              status: HTTP_STATUS.UNAUTHORIZED,
+              message: ERROR_MESSAGES.SESSION_EXPIRED_ERROR,
+            };
+          }
+
+          await onError(retry, url);
+        }
+
+        const result = await retry.json();
+        return result;
       } else {
-        useAuthStore.getState().resetAuth();
-        toast.error("نشست شما منقضی شده، لطفاً دوباره وارد شوید.");
-        throw { status: 401, message: "نشست منقضی شده" };
+        throw {
+          status: HTTP_STATUS.UNAUTHORIZED,
+          message: ERROR_MESSAGES.SESSION_EXPIRED_ERROR,
+        };
       }
     }
 
-    if (response.status === 403) {
-      toast.error("دسترسی شما به این بخش محدود شده است");
-      throw { status: 403, message: "دسترسی محدود شده" };
+    if (response.status === HTTP_STATUS.FORBIDDEN) {
+      toast.error(ERROR_MESSAGES.ACCESS_DENIED);
+      throw {
+        status: HTTP_STATUS.FORBIDDEN,
+        message: ERROR_MESSAGES.ACCESS_DENIED_ERROR,
+      };
     }
 
     if (response.ok) {
-      return await response.json();
+      const result = await response.json();
+      return result;
     }
 
     await onError(response, url);
@@ -93,11 +175,35 @@ export async function fetchWithAuth(url: string, options: RequestInit = {}) {
     if (error instanceof Error && (error as any).statusCode) {
       throw error;
     }
+
+    if (error && typeof error === "object" && "status" in error) {
+      throw error;
+    }
+
+    throw error;
   }
 }
 
+// FETCH OPTIONS
 type FetchOptions = Omit<RequestInit, "method" | "body">;
 
+// PREPARE REQUEST BODY
+const prepareRequestBody = (
+  data: any,
+  existingHeaders?: HeadersInit
+): { body?: BodyInit; headers: HeadersInit } => {
+  const isFormData = data instanceof FormData;
+
+  return {
+    body: isFormData ? data : data ? JSON.stringify(data) : undefined,
+    headers: {
+      ...(existingHeaders || {}),
+      ...(isFormData ? {} : { "Content-Type": "application/json" }),
+    },
+  };
+};
+
+// FETCH API
 export const fetchApi = {
   get: <T>(url: string, options: FetchOptions = {}): Promise<T> =>
     fetchWithAuth(url, { ...options, method: "GET" }) as Promise<T>,
@@ -107,16 +213,12 @@ export const fetchApi = {
     data?: D,
     options: FetchOptions = {}
   ): Promise<T> => {
-    const isFormData = data instanceof FormData;
-
+    const { body, headers } = prepareRequestBody(data, options.headers);
     return fetchWithAuth(url, {
       ...options,
       method: "POST",
-      body: isFormData ? data : data ? JSON.stringify(data) : undefined,
-      headers: {
-        ...(options.headers || {}),
-        ...(isFormData ? {} : { "Content-Type": "application/json" }),
-      },
+      body,
+      headers,
     }) as Promise<T>;
   },
 
@@ -125,16 +227,12 @@ export const fetchApi = {
     data?: D,
     options: FetchOptions = {}
   ): Promise<T> => {
-    const isFormData = data instanceof FormData;
-
+    const { body, headers } = prepareRequestBody(data, options.headers);
     return fetchWithAuth(url, {
       ...options,
       method: "PUT",
-      body: isFormData ? data : data ? JSON.stringify(data) : undefined,
-      headers: {
-        ...(options.headers || {}),
-        ...(isFormData ? {} : { "Content-Type": "application/json" }),
-      },
+      body,
+      headers,
     }) as Promise<T>;
   },
 
@@ -143,16 +241,12 @@ export const fetchApi = {
     data?: D,
     options: FetchOptions = {}
   ): Promise<T> => {
-    const isFormData = data instanceof FormData;
-
+    const { body, headers } = prepareRequestBody(data, options.headers);
     return fetchWithAuth(url, {
       ...options,
       method: "DELETE",
-      body: isFormData ? data : data ? JSON.stringify(data) : undefined,
-      headers: {
-        ...(options.headers || {}),
-        ...(isFormData ? {} : { "Content-Type": "application/json" }),
-      },
+      body,
+      headers,
     }) as Promise<T>;
   },
 
@@ -161,16 +255,12 @@ export const fetchApi = {
     data?: D,
     options: FetchOptions = {}
   ): Promise<T> => {
-    const isFormData = data instanceof FormData;
-
+    const { body, headers } = prepareRequestBody(data, options.headers);
     return fetchWithAuth(url, {
       ...options,
       method: "PATCH",
-      body: isFormData ? data : data ? JSON.stringify(data) : undefined,
-      headers: {
-        ...(options.headers || {}),
-        ...(isFormData ? {} : { "Content-Type": "application/json" }),
-      },
+      body,
+      headers,
     }) as Promise<T>;
   },
 };

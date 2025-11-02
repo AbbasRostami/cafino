@@ -5,8 +5,10 @@ import { CartItemCardProps } from "@/types/main";
 import CartItemControls from "@/components/main/CartSidebar/CartItemControlsSidebar";
 import { formatCurrency } from "@/utils/formatters";
 import { Package } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export const CartItemCard: React.FC<CartItemCardProps> = ({ item }) => {
+  const router = useRouter();
   return (
     <div className="group relative bg-white/60 dark:bg-neutral-900/70 rounded-xl overflow-hidden  border border-gray-100 dark:border-neutral-800 shadow-lg transition-all duration-300">
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 to-orange-500"></div>
@@ -14,7 +16,10 @@ export const CartItemCard: React.FC<CartItemCardProps> = ({ item }) => {
       <div className="p-4 h-full">
         <div className="flex items-start gap-3">
           <div className="!h-full relative">
-            <div className="bg-gray-50 dark:bg-neutral-800 rounded-lg overflow-hidden w-20 h-20 flex items-center justify-center backdrop-blur-sm">
+            <div
+              onClick={() => router.push(`/menu/${item?.itemId}/${item?.slug}`)}
+              className="bg-gray-50 dark:bg-neutral-800 rounded-lg overflow-hidden w-20 h-20 flex items-center justify-center backdrop-blur-sm cursor-pointer"
+            >
               <Image
                 width={80}
                 height={80}
@@ -30,7 +35,7 @@ export const CartItemCard: React.FC<CartItemCardProps> = ({ item }) => {
             {item?.discount > 0 && (
               <div className=" mt-1 sm:mt-4">
                 <span className="inline-flex items-center text-xs font-bold px-2 py-0.5 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-full">
-                  <span className="ml-1">{Number(item?.discount)}%</span>
+                  <span className="ml-1">{item?.discount}%</span>
                   تخفیف
                 </span>
               </div>
@@ -38,7 +43,12 @@ export const CartItemCard: React.FC<CartItemCardProps> = ({ item }) => {
           </div>
           <div className="w-full flex flex-col justify-between gap-4 sm:gap-5">
             <div className="flex flex-col sm:flex-row justify-between gap-2 items-start">
-              <h3 className="font-bold text-sm sm:text-base text-gray-900 dark:text-gray-100 line-clamp-2 tracking-tight">
+              <h3
+                onClick={() =>
+                  router.push(`/menu/${item?.itemId}/${item?.slug}`)
+                }
+                className="font-bold text-sm sm:text-base text-gray-900 dark:text-gray-100 line-clamp-2 tracking-tight cursor-pointer group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-all duration-300"
+              >
                 {item?.title}
               </h3>
               <div className="hidden sm:flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">

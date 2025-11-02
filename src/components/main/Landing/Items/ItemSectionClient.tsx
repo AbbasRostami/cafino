@@ -111,8 +111,8 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
           style={{ direction: "rtl" }}
         >
           {itemsResponse?.data?.items?.map((item: Item, index: number) => {
-            const discount = Number(item?.discount || 0);
-            const originalPrice = Number(item?.price);
+            const discount = item?.discount || 0;
+            const originalPrice = item?.price;
             const finalPrice = discount
               ? originalPrice - (originalPrice * discount) / 100
               : originalPrice;

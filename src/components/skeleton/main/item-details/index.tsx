@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export const ItemDetailsSkeleton = () => {
   return (
-    <div className="px-4 md:px-8 lg:px-8 xl:px-24 pt-28 pb-10">
+    <div className="px-4 md:px-8 lg:px-8 xl:px-24 pt-10 sm:pt-14 pb-10">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         <div className="space-y-8">
           <div className="relative">
