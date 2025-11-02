@@ -57,13 +57,11 @@ export default function AddressSelector({
             افزودن آدرس
           </Button>
         </CardHeader>
-        <CardContent className="space-y-4 !border-none ">
+        <CardContent className="space-y-4 !border-none overflow-x-hidden max-w-full">
           {addresses && addresses.length > 0 ? (
             addresses.map((address) => (
               <MotionDiv
                 key={address?.id}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
                 className={`relative cursor-pointer transition-all duration-200 ${
                   selectedAddressId === address?.id
                     ? " ring-amber-500 dark:ring-amber-400"
@@ -71,35 +69,35 @@ export default function AddressSelector({
                 }`}
               >
                 <div
-                  className={`p-4 rounded-xl border-2 transition-all duration-200 ${
+                  className={`p-4 rounded-xl border-2 transition-all duration-200 overflow-x-hidden ${
                     selectedAddressId === address?.id
                       ? "border-amber-500 dark:border-amber-400 bg-amber-50 dark:bg-amber-950/20"
                       : "border-gray-200 dark:border-gray-700 hover:border-amber-300 dark:hover:border-amber-600"
                   }`}
                   onClick={() => onAddressSelect(address?.id)}
                 >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
+                  <div className="flex items-start justify-between gap-3 overflow-x-hidden">
+                    <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-2">
                         <MapPin
                           size={16}
-                          className="text-amber-600 dark:text-amber-400"
+                          className="text-amber-600 dark:text-amber-400 flex-shrink-0"
                         />
-                        <span className="font-medium text-gray-800 dark:text-white">
+                        <span className="font-medium text-gray-800 dark:text-white break-words">
                           {address?.province}، {address?.city}
                         </span>
                         {selectedAddressId === address?.id && (
-                          <Badge className="bg-amber-500 text-white text-xs">
+                          <Badge className="bg-amber-500 text-white text-xs flex-shrink-0">
                             انتخاب شده
                           </Badge>
                         )}
                       </div>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                      <p className="w-full max-w-full text-gray-600 dark:text-gray-400 text-sm leading-relaxed break-words overflow-x-hidden">
                         {address?.address}
                       </p>
                     </div>
                     {selectedAddressId === address?.id && (
-                      <div className="ml-3 p-1 bg-amber-500 rounded-full">
+                      <div className="ml-3 p-1 bg-amber-500 rounded-full flex-shrink-0">
                         <Check size={16} className="text-white" />
                       </div>
                     )}

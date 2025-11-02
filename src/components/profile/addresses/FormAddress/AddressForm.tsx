@@ -16,6 +16,7 @@ import { X, MapPinHouse } from "lucide-react";
 import { AddressFormProps } from "@/types/Profile";
 import { useIsMobile } from "@/hooks/ui/useMediaQuery";
 import { FormContent } from "./FormContent";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 export const AddressForm = ({
   open,
@@ -51,15 +52,18 @@ export const AddressForm = ({
     return (
       <Drawer open={open} onOpenChange={onOpenChange}>
         <DrawerContent className="p-0 border-none">
-          <div className="flex flex-col !h-auto !max-h-[90vh]">
+          <div className="flex flex-col !h-auto !max-h-[90vh] overflow-y-auto">
             <DrawerHeader className="p-4">
               <DrawerTitle className="flex justify-center items-center gap-2">
                 <MapPinHouse size={20} />
                 {editingId ? "ویرایش آدرس" : "افزودن آدرس"}
               </DrawerTitle>
-              <DrawerDescription>
-                لطفاً اطلاعات آدرس خود را وارد کنید
-              </DrawerDescription>
+              <VisuallyHidden>
+                <DrawerTitle>افزودن آدرس</DrawerTitle>
+                <DrawerDescription>
+                  لطفاً اطلاعات آدرس خود را وارد کنید
+                </DrawerDescription>
+              </VisuallyHidden>
             </DrawerHeader>
             <div className="flex-1 overflow-y-auto px-5 pb-5">
               {FormContentComponent}

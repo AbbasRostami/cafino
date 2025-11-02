@@ -17,7 +17,6 @@ export default function CartItemCard({ item }: CartItemCardProps) {
     itemId: item?.itemId,
   });
   const router = useRouter();
-  console.log("item", item);
   return (
     <MotionDiv
       layout
@@ -32,7 +31,7 @@ export default function CartItemCard({ item }: CartItemCardProps) {
       <div className="absolute inset-0 bg-gradient-to-br from-amber-50/5 to-orange-50/5 dark:from-amber-900/5 dark:to-orange-900/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
 
       <div className="relative z-10 flex flex-col sm:flex-row">
-        <div className="relative sm:w-2/5 lg:w-1/3 h-32 sm:h-52 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800">
+        <div className="relative sm:w-2/5 lg:w-1/3 h-32 sm:h-56 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800">
           <Image
             src={item?.image || item?.images?.[0] || "/placeholder.jpg"}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

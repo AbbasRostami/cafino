@@ -46,18 +46,18 @@ export default function SelectedAddressDisplay({
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <span className="gap-2 font-medium text-gray-800 dark:text-white flex items-center">
-              <span className="text-amber-600 dark:text-amber-400 mr-1 ">
-                <MapPin
-                  size={16}
-                  className="text-amber-600 dark:text-amber-400"
-                />
+                <span className="text-amber-600 dark:text-amber-400 mr-1 ">
+                  <MapPin
+                    size={16}
+                    className="text-amber-600 dark:text-amber-400"
+                  />
                 </span>
                 <span className="text-gray-800 dark:text-white">
                   {selectedAddress?.province}، {selectedAddress?.city}
                 </span>
               </span>
             </div>
-            <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+            <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed break-words">
               {selectedAddress?.address}
             </p>
           </div>

@@ -16,14 +16,19 @@ export const useUpdateDiscountStatus = () => {
         },
         onError: (error: any) => {
           switch (error?.statusCode) {
-            case 400:
-              toast.error("کد تخفیف منقضی شده است");
+            case 403:
+              toast.error(
+                "دسترسی غیرمجاز: شما اجازه تغییر وضعیت کد تخفیف را ندارید"
+              );
               break;
             case 404:
               toast.error("کد تخفیف یافت نشد");
               break;
             case 409:
               toast.error("این کد تخفیف قبلاً در همین وضعیت بوده است");
+              break;
+            case 410:
+              toast.error("کد تخفیف منقضی شده است");
               break;
             default:
               toast.error("خطا در تغییر وضعیت کد تخفیف");

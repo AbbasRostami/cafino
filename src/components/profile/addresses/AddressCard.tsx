@@ -10,14 +10,16 @@ export const AddressCard = ({
 }: AddressCardProps) => {
   return (
     <div className="rounded-2xl p-5 border border-muted hover:border-amber-200 dark:hover:border-amber-500 hover:bg-muted/40 transition-all duration-200 shadow-sm bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl">
-      <div className="flex flex-col lg:flex-row gap-4 md:gap-8 justify-between items-start md:items-center">
-        <div className="space-y-1">
+      <div className=" flex flex-col lg:flex-row gap-4 md:gap-8 justify-between items-end md:items-center">
+        <div className="space-y-1 w-full lg:w-1/2 max-w-full flex-shrink-0">
           <h3 className="text-base font-bold text-foreground">
             {address?.province} - {address?.city}
           </h3>
-          <p className="text-sm text-muted-foreground">{address?.address}</p>
+          <p className="text-sm text-muted-foreground break-words w-full max-w-full text-justify">
+            {address?.address}
+          </p>
         </div>
-        <div className="flex gap-2 flex-wrap justify-end md:justify-start">
+        <div className=" flex-shrink-0 flex gap-2 flex-wrap justify-end md:justify-start">
           <Button
             size="sm"
             onClick={() => onEdit()}

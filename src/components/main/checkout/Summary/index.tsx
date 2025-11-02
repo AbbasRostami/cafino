@@ -38,20 +38,22 @@ export default function OrderSummary({
     }
 
     return (
-      <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800">
-        <div className="flex items-start gap-2">
-          <MapPin
-            size={16}
-            className="text-amber-600 dark:text-amber-400 mt-0.5"
-          />
-          <div className="flex-1">
+      <div className="p-3  rounded-lg bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800">
+        <div className="flex flex-col items-start justify-between gap-2 scrollbar-hide">
+          <div className="flex-1 flex items-center gap-2">
+            <MapPin
+              size={16}
+              className="text-amber-600 dark:text-amber-400 mt-0.5"
+            />
             <p className="text-sm font-medium text-amber-800 dark:text-amber-200">
               آدرس تحویل:
             </p>
-            <p className="text-xs text-amber-700 dark:text-amber-300 mt-1">
+          </div>
+          <div className="flex-1 w-full max-w-full">
+            <p className="text-xs text-amber-700 dark:text-amber-300 mt-1 break-words border-b border-amber-200 dark:border-amber-800 pb-2">
               {selectedAddress?.province}، {selectedAddress?.city}
             </p>
-            <p className="text-xs text-amber-700 dark:text-amber-300">
+            <p className="text-xs text-amber-700 dark:text-amber-300 break-words pt-2">
               {selectedAddress?.address}
             </p>
           </div>
@@ -60,7 +62,7 @@ export default function OrderSummary({
     );
   };
 
-    const renderCompleteOrderButton = (className: string) => (
+  const renderCompleteOrderButton = (className: string) => (
     <Button
       className={className}
       aria-label="ادامه فرآیند خرید"
@@ -151,9 +153,7 @@ export default function OrderSummary({
             </div>
             <div className="text-xs text-gray-500 dark:text-gray-300 text-left mt-1">
               {cart?.generalDiscount?.percent
-                ? `${Number(
-                    cart?.generalDiscount?.percent
-                  )}% تخفیف روی کل سبد خرید`
+                ? `${cart?.generalDiscount?.percent}% تخفیف روی کل سبد خرید`
                 : `${formatCurrency(
                     cart?.generalDiscount?.amount
                   )} تومان تخفیف ثابت`}

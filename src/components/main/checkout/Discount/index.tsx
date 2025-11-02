@@ -62,10 +62,8 @@ export default function DiscountSection({
           {cart?.generalDiscount?.discountAmount > 0 && (
             <p className="text-xs text-emerald-700 dark:text-emerald-300 mt-2">
               {cart?.generalDiscount?.percent
-                ? `${Number(
-                    cart?.generalDiscount?.percent
-                  )}% تخفیف روی کل سبد خرید`
-                : `${Number(cart?.generalDiscount?.amount)} تومان تخفیف ثابت`}
+                ? `${cart?.generalDiscount?.percent}% تخفیف روی کل سبد خرید`
+                : `${cart?.generalDiscount?.amount} تومان تخفیف ثابت`}
             </p>
           )}
         </div>
