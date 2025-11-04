@@ -70,12 +70,12 @@ export const generateRestaurantStructuredData = () => {
     name: "Cafino",
     description: "رستوران و کافه با بهترین غذاها و نوشیدنی‌ها",
     url: "https://cafinoo.vercel.app",
-    telephone: "+98-21-XXXXXXXX",
+    telephone: "+98-912-3456789",
     address: {
       "@type": "PostalAddress",
       addressCountry: "IR",
-      addressLocality: "تهران",
-      addressRegion: "تهران",
+      addressLocality: "گیلان",
+      addressRegion: "گیلان",
     },
     geo: {
       "@type": "GeoCoordinates",

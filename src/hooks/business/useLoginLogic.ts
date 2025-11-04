@@ -4,6 +4,7 @@ import { migrateGuestCartToServer } from "@/store/cartStore";
 import { useAddToCartMultiple, useCart } from "@/services";
 import { useResendOTP, useSendOTP, useVerifyOTP } from "@/services";
 import { LoginStep, UseLoginLogicProps } from "@/types/main";
+import { toast } from "sonner";
 
 export const useLoginLogic = ({
   onSuccess,
@@ -23,7 +24,17 @@ export const useLoginLogic = ({
     sendOTP(
       { phone },
       {
-        onSuccess: () => {
+        onSuccess: (data: any) => {
+        //   {
+        //     "statusCode": 200,
+        //     "message": "Code sent successfully.",
+        //     "data": {
+        //         "otpCode": "80898"
+        //     }
+          // }
+          toast.success(`کد تایید با موفقیت ارسال شد: ${data?.otpCode}`);
+          toast.success(`کد تایید با موفقیت ارسال شد: ${data?.message}`);
+          toast.success(`کد تایید با موفقیت ارسال شد: ${data}`);
           setPhoneValue(phone);
           setStep("otp");
           setResendTimer(120);

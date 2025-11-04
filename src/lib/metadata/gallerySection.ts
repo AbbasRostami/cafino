@@ -10,8 +10,8 @@ export const gallerySectionStructuredData = {
     description: "کافه مدرن با فضای آرامش‌بخش و منوی متنوع",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "خیابان ولیعصر، پلاک ۱۲۳",
-      addressLocality: "تهران",
+      streetAddress: "خیابان گلسار، پلاک ۱۲۳",
+      addressLocality: "گیلان",
       addressCountry: "IR",
     },
     geo: {

@@ -16,10 +16,10 @@ const HTTP_STATUS = {
 const ERROR_MESSAGES = {
   SESSION_EXPIRED: "نشست شما منقضی شده، لطفاً دوباره وارد شوید.",
   REFRESH_ERROR: "خطا در بروزرسانی نشست",
-  ACCESS_DENIED: "دسترسی شما به این بخش محدود شده است",
+  // ACCESS_DENIED: "دسترسی شما به این بخش محدود شده است",
   USER_NOT_LOGGED_IN: "کاربر لاگین نیست",
   SESSION_EXPIRED_ERROR: "نشست منقضی شده",
-  ACCESS_DENIED_ERROR: "دسترسی محدود شده",
+  // ACCESS_DENIED_ERROR: "دسترسی محدود شده",
 } as const;
 
 // REFRESH TOKEN STATE
@@ -157,13 +157,13 @@ export async function fetchWithAuth(url: string, options: RequestInit = {}) {
       }
     }
 
-    if (response.status === HTTP_STATUS.FORBIDDEN) {
-      toast.error(ERROR_MESSAGES.ACCESS_DENIED);
-      throw {
-        status: HTTP_STATUS.FORBIDDEN,
-        message: ERROR_MESSAGES.ACCESS_DENIED_ERROR,
-      };
-    }
+    // if (response.status === HTTP_STATUS.FORBIDDEN) {
+    //   toast.error(ERROR_MESSAGES.ACCESS_DENIED);
+    //   throw {
+    //     status: HTTP_STATUS.FORBIDDEN,
+    //     message: ERROR_MESSAGES.ACCESS_DENIED_ERROR,
+    //   };
+    // }
 
     if (response.ok) {
       const result = await response.json();

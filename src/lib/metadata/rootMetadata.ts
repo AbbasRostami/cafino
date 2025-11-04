@@ -53,9 +53,7 @@ export const rootMetadata: Metadata = {
       { url: "/favicon.ico", sizes: "32x32", type: "image/x-icon" },
       { url: "/favicon.ico", sizes: "16x16", type: "image/x-icon" },
     ],
-    apple: [
-      { url: "/favicon.ico", sizes: "180x180", type: "image/x-icon" },
-    ],
+    apple: [{ url: "/favicon.ico", sizes: "180x180", type: "image/x-icon" }],
     other: [
       {
         rel: "mask-icon",
@@ -102,8 +100,8 @@ export const rootMetadata: Metadata = {
     "msapplication-config": "/browserconfig.xml",
     "theme-color": "#8B4513",
 
-    "business:contact_data:locality": "تهران",
-    "business:contact_data:country_name": "ایران",
+    "business:contact_data:locality": "گیلان",
+    "business:contact_data:country_name": "IR",
     "business:contact_data:website": siteUrl,
 
     "restaurant:cuisine": "ایرانی, بین‌المللی",
@@ -162,10 +160,7 @@ export function generatePageMetadata({
       card: "summary_large_image",
       title: fullTitle,
       description,
-      images:
-        pageImages?.length > 0
-          ? [pageImages[0].url]
-          : ["/favicon.ico"],
+      images: pageImages?.length > 0 ? [pageImages[0].url] : ["/favicon.ico"],
     },
     robots: noIndex
       ? {
