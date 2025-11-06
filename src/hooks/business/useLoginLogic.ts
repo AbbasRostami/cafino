@@ -24,17 +24,7 @@ export const useLoginLogic = ({
     sendOTP(
       { phone },
       {
-        onSuccess: (data: any) => {
-        //   {
-        //     "statusCode": 200,
-        //     "message": "Code sent successfully.",
-        //     "data": {
-        //         "otpCode": "80898"
-        //     }
-          // }
-          toast.success(`کد تایید با موفقیت ارسال شد: ${data?.otpCode}`);
-          toast.success(`کد تایید با موفقیت ارسال شد: ${data?.message}`);
-          toast.success(`کد تایید با موفقیت ارسال شد: ${data}`);
+        onSuccess: () => {
           setPhoneValue(phone);
           setStep("otp");
           setResendTimer(120);

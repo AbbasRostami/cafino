@@ -7,8 +7,9 @@ export const useSendOTP = () => {
     () => "/v1/auth/send-otp",
     undefined,
     {
-      onSuccess: () => {
+      onSuccess: (data: any) => {
         toast.success("کد تایید با موفقیت ارسال شد");
+        // toast.success(`کد تایید با موفقیت ارسال شد: ${data?.data?.otpCode}`);
       },
       onError: (error: any) => {
         switch (error?.statusCode) {
