@@ -245,7 +245,7 @@ const FailedPayment = () => (
       </p>
     </MotionDiv>
 
-    {/* <MotionDiv
+    <MotionDiv
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3, duration: 0.5 }}
@@ -272,11 +272,7 @@ const FailedPayment = () => (
         <CardContent className="text-left space-y-3 relative z-10">
           <p className="text-sm text-red-700 dark:text-red-300 flex items-center gap-2 justify-start">
             <span className="w-2 h-2 bg-red-500 rounded-full flex-shrink-0"></span>
-            بررسی کنید که کارت بانکی شما فعال باشد
-          </p>
-          <p className="text-sm text-red-700 dark:text-red-300 flex items-center gap-2 justify-start">
-            <span className="w-2 h-2 bg-red-500 rounded-full flex-shrink-0"></span>
-            موجودی کافی در حساب خود داشته باشید
+            در صورت مشاهده خطا، چند دقیقه بعد دوباره تلاش کنید
           </p>
           <p className="text-sm text-red-700 dark:text-red-300 flex items-center gap-2 justify-start">
             <span className="w-2 h-2 bg-red-500 rounded-full flex-shrink-0"></span>
@@ -284,7 +280,7 @@ const FailedPayment = () => (
           </p>
         </CardContent>
       </Card>
-    </MotionDiv> */}
+    </MotionDiv>
 
     <MotionDiv
       initial={{ opacity: 0, y: 10 }}

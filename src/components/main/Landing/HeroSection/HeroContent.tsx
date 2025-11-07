@@ -51,13 +51,15 @@ const HeroContent = () => {
   const contactInfo = [
     {
       icon: MapPin,
-      text: "تهران، خیابان ولیعصر",
+      text: "گیلان، رشت، خیابان گلسار ",
       color: "text-amber-600 dark:text-amber-400",
+      href: "https://maps.app.goo.gl/asc4o33GqgiHZa3E7",
     },
     {
       icon: Phone,
-      text: "۰۲۱-۱۲۳۴۵۶۷۸",
+      text: "۰۹۱۲۳۴۵۶۷۸۹",
       color: "text-orange-600 dark:text-orange-300",
+      href: "tel:09123456789",
     },
   ];
 
@@ -193,7 +195,9 @@ const HeroContent = () => {
             whileHover={{ x: 5 }}
           >
             <item.icon className={`w-4 h-4 ${item?.color}`} />
-            <span className="dark:text-gray-200 font-bold">{item?.text}</span>
+            <span className="dark:text-gray-200 font-bold">
+              {item?.href ? <a href={item?.href}>{item?.text}</a> : item?.text}
+            </span>
           </MotionDiv>
         ))}
       </MotionDiv>

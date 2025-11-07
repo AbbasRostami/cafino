@@ -37,8 +37,8 @@ const footerData = {
   ],
 
   contactInfo: [
-    { icon: MapPin, text: "تهران، خیابان ولیعصر، پلاک ۱۲۳" },
-    { icon: Phone, text: "۰۲۱-۱۲۳۴۵۶۷۸", href: "tel:02112345678" },
+    { icon: MapPin, text: "گیلان، رشت، خیابان گلسار ", href: "https://maps.app.goo.gl/asc4o33GqgiHZa3E7" },
+    { icon: Phone, text: "۰۹۱۲۳۴۵۶۷۸۹", href: "tel:09123456789" },
     { icon: Mail, text: "info@cafino.ir", href: "mailto:info@cafino.ir" },
     { icon: Clock, text: "همه روزه: ۸ صبح تا ۱۱ شب" },
   ],

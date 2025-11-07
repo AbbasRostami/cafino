@@ -5,7 +5,7 @@ import UserDropdown from "./UserLink";
 import { User } from "@/types";
 
 export interface BottomNavProps {
-  user: User;
+  user?: User;
   isAuthenticated: boolean;
   openMobileLoginDialog: boolean;
   setOpenMobileLoginDialog: (open: boolean) => void;
