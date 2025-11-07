@@ -5,7 +5,7 @@ const timelineData = [
   {
     year: "1400",
     title: "تأسیس کافینو",
-    description: "شروع فعالیت با یک شعبه کوچک در تهران",
+    description: "شروع فعالیت با یک شعبه کوچک در گیلان",
     icon: Crown,
   },
   {
@@ -17,7 +17,7 @@ const timelineData = [
   {
     year: "1403",
     title: "افتتاح شعبه دوم",
-    description: "گسترش فعالیت با افتتاح شعبه در شمال تهران",
+    description: "گسترش فعالیت با افتتاح شعبه در شمال گیلان",
     icon: MapPin,
   },
   {
@@ -29,7 +29,7 @@ const timelineData = [
   {
     year: "1404",
     title: "ارسال آنلاین",
-    description: "راه‌اندازی سرویس تحویل در محل در سراسر تهران",
+    description: "راه‌اندازی سرویس تحویل در محل در سراسر گیلان",
     icon: Coffee,
   },
 ];

@@ -243,7 +243,7 @@ export default function AddAddressModal({
         <Textarea
           id="address"
           {...form.register("address")}
-          placeholder="مثال: گیلان، رشت، خیابان امام، کوچه"
+          placeholder="مثال:  گیلان، رشت، خیابان گلسار، کوچه یک، پلاک ۱۲۳"
           className="rounded-lg resize-none w-full max-w-full overflow-x-hidden break-words overflow-y-auto max-h-[100px]"
           rows={3}
           maxLength={200}
@@ -303,7 +303,9 @@ export default function AddAddressModal({
               افزودن آدرس جدید
             </DrawerTitle>
           </DrawerHeader>
-          <div className="px-6 pb-6 overflow-x-hidden scrollbar-hide">{FormContent}</div>
+          <div className="px-6 pb-6 overflow-x-hidden scrollbar-hide">
+            {FormContent}
+          </div>
         </DrawerContent>
       </Drawer>
     );

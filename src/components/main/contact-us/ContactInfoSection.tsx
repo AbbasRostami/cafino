@@ -12,9 +12,9 @@ export const ContactInfoSection = () => {
     {
       icon: Phone,
       title: "تلفن تماس",
-      description: "۰۲۱-۱۲۳۴۵۶۷۸",
+      description: "۰۹۱۲۳۴۵۶۷۸۹",
       color: "text-green-700 dark:text-green-300",
-      href: "tel:02112345678",
+      href: "tel:09123456789",
     },
     {
       icon: Mailbox,
@@ -27,7 +27,7 @@ export const ContactInfoSection = () => {
       icon: MapPin,
       title: "آدرس",
       href: "https://maps.app.goo.gl/1234567890",
-      description: "تهران، خیابان ولیعصر، کوچه فلان، پلاک ۱۲۳",
+      description: "گیلان، رشت، خیابان گلسار  ، کوچه یک، پلاک ۱۲۳",
       color: "text-yellow-700 dark:text-yellow-300",
     },
     {

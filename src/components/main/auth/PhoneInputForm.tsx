@@ -54,7 +54,7 @@ export const PhoneInputForm: React.FC<PhoneInputFormProps> = ({
   ];
 
   const handleFormSubmit = (data: { phone: string }) => {
-    onSubmit(data.phone);
+    onSubmit(data?.phone);
   };
 
   return (
