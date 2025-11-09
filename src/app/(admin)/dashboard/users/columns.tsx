@@ -101,6 +101,15 @@ export const columns = ({
         enableSorting: true,
       },
       {
+        header: "نام و نام خانوادگی",
+        accessorFn: (row) => `${row.first_name} ${row.last_name}`,
+        cell: (info) => {
+          const row = info?.row?.original;
+          return row?.first_name && row?.last_name ? `${row?.first_name} ${row?.last_name}` : "-";
+        },
+        enableSorting: true,
+      },
+      {
         header: "تاریخ تولد",
         accessorKey: "birthday",
         cell: (info) =>
