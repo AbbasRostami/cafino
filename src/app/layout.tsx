@@ -24,6 +24,10 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl" suppressHydrationWarning>
       <head>
+        <meta
+          name="google-site-verification"
+          content="SEucRGtURfTsosYq-_qdx9i9c4C0MVBn9XfLrSSbGjA"
+        />
         <StructuredDataScripts />
       </head>
       <body className={vazirmatn.className}>
