@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://cafinoo.vercel.app/sitemap.xml
+Sitemap: https://cafino.site/sitemap.xml
 
 # Crawl-delay
 Crawl-delay: 1

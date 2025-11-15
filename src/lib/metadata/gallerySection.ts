@@ -3,7 +3,7 @@ export const gallerySectionStructuredData = {
   "@type": "ImageGallery",
   name: "گالری تصاویر کافینو",
   description: "گالری تصاویر فضای داخلی و بیرونی کافه کافینو با طراحی مدرن",
-  url: "https://cafinoo.vercel.app",
+  url: "https://cafino.site",
   mainEntity: {
     "@type": "Restaurant",
     name: "کافینو",

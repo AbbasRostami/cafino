@@ -4,7 +4,7 @@ export const footerStructuredData = {
   name: "کافینو",
   alternateName: "Cafino",
   description: "برند متفاوت در دنیای کافه و رستوران با کیفیت، طعم و طراحی مدرن",
-  url: "https://cafinoo.vercel.app",
+  url: "https://cafino.site",
   telephone: "+98-912-3456789",
   email: "info@cafino.ir",
   address: {
@@ -24,7 +24,7 @@ export const footerStructuredData = {
   servesCuisine: ["کافه", "رستوران", "فست فود"],
   priceRange: "$$",
   acceptsReservations: true,
-  hasMenu: "https://cafinoo.vercel.app/menu",
+  hasMenu: "https://cafino.site/menu",
   sameAs: [
     "https://facebook.com/cafino",
     "https://instagram.com/cafino",

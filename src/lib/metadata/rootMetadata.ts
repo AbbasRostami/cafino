@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://cafinoo.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://cafino.site";
 const siteName = "کافینو";
 const siteDescription =
   "کافه و رستوران کافینو - بهترین تجربه طعم و مزه با منوی متنوع نوشیدنی‌ها، غذاها و دسرهای خوشمزه";

@@ -6,7 +6,7 @@ export const generateItemsSectionStructuredData = (items: Item[]) => {
     "@type": "ItemList",
     name: "محبوب ترین ها",
     description: "بهترین انتخاب‌های ما از میان صدها غذای خوشمزه",
-    url: "https://cafinoo.vercel.app/menu",
+    url: "https://cafino.site/menu",
     numberOfItems: items.length,
     itemListElement: items.map((item, index) => ({
       "@type": "ListItem",
@@ -69,7 +69,7 @@ export const generateRestaurantStructuredData = () => {
     "@type": "Restaurant",
     name: "Cafino",
     description: "رستوران و کافه با بهترین غذاها و نوشیدنی‌ها",
-    url: "https://cafinoo.vercel.app",
+    url: "https://cafino.site",
     telephone: "+98-912-3456789",
     address: {
       "@type": "PostalAddress",
@@ -85,7 +85,7 @@ export const generateRestaurantStructuredData = () => {
     openingHours: ["Mo-Su 08:00-23:00"],
     priceRange: "$$",
     servesCuisine: ["ایرانی", "فست فود", "کافه", "دسر"],
-    hasMenu: "https://cafinoo.vercel.app/menu",
+    hasMenu: "https://cafino.site/menu",
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: 4.5,
