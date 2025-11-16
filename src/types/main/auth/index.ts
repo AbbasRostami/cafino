@@ -1,3 +1,5 @@
+import ReCAPTCHA from "react-google-recaptcha";
+
 export type LoginStep = "phone" | "otp";
 
 export interface LoginFormProps {
@@ -17,17 +19,19 @@ export interface LoginContentProps {
   isVerifyOTPLoading: boolean;
   isResendOTPLoading: boolean;
   phoneValue: string;
-  handleSendOTP: (phone: string) => void;
+  handleSendOTP: (phone: string, captchaToken: string) => void;
   handleVerifyOTP: (otp: string, phone: string) => void;
   handleResendOTP: () => void;
   goBackToPhone: () => void;
   resendTimer: number;
   formatTime: (seconds: number) => string;
+  captchaRef: React.RefObject<ReCAPTCHA | any>;
 }
 
 export interface PhoneInputFormProps {
-  onSubmit: (phone: string) => void;
+  onSubmit: (phone: string, captchaToken: string) => void;
   isLoading: boolean;
+  captchaRef: React.RefObject<ReCAPTCHA | any>;
 }
 
 export interface OtpInputFormProps {

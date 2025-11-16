@@ -20,9 +20,9 @@ export const useLoginLogic = ({
   const { mutate: verifyOTP, isPending: isVerifyOTPLoading } = useVerifyOTP();
   const { mutate: resendOTP, isPending: isResendOTPLoading } = useResendOTP();
 
-  const handleSendOTP = (phone: string) => {
+  const handleSendOTP = (phone: string, captchaToken: string) => {
     sendOTP(
-      { phone },
+      { phone, captchaToken },
       {
         onSuccess: () => {
           setPhoneValue(phone);

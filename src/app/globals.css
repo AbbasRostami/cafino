@@ -641,3 +641,12 @@ body {
 .swiper-slide-thumb-active > div {
   @apply ring-4 ring-amber-500 scale-105 shadow-lg;
 }
+
+.recaptcha-fixed-portal {
+  position: static !important;
+  bottom: 20px !important;
+  left: 20px !important;
+  right: auto !important;
+  top: auto !important;
+  z-index: 9999999 !important;
+}
