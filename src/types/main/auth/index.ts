@@ -25,13 +25,13 @@ export interface LoginContentProps {
   goBackToPhone: () => void;
   resendTimer: number;
   formatTime: (seconds: number) => string;
-  captchaRef: React.RefObject<ReCAPTCHA | any>;
+  captchaRef?: React.RefObject<ReCAPTCHA | any>;
 }
 
 export interface PhoneInputFormProps {
   onSubmit: (phone: string, captchaToken: string) => void;
   isLoading: boolean;
-  captchaRef: React.RefObject<ReCAPTCHA | any>;
+  captchaRef?: React.RefObject<ReCAPTCHA | any>;
 }
 
 export interface OtpInputFormProps {

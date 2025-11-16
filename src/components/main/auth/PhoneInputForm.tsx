@@ -8,12 +8,8 @@ import { Smartphone, LogIn, CheckCircle2, XCircle } from "lucide-react";
 import { cn } from "@/utils/utils";
 import { PhoneInputFormProps } from "@/types/main";
 import { phoneSchema } from "@/schemas";
-import { useRef, useState } from "react";
-import dynamic from "next/dynamic";
 import { toast } from "sonner";
-const ReCAPTCHA = dynamic(() => import("react-google-recaptcha"), {
-  ssr: false,
-});
+
 export const PhoneInputForm: React.FC<PhoneInputFormProps> = ({
   onSubmit,
   isLoading,
@@ -60,13 +56,13 @@ export const PhoneInputForm: React.FC<PhoneInputFormProps> = ({
   ];
   const handleFormSubmit = async (data: { phone: string }) => {
     try {
-      const token = await captchaRef.current.executeAsync();
+      const token = await captchaRef?.current?.executeAsync();
       if (!token) {
         toast.warning("لطفاً کپچا را تأیید کنید.");
         return;
       }
       onSubmit(data.phone, token);
-      captchaRef.current.reset();
+      captchaRef?.current?.reset();
     } catch (error) {
       console.error("Captcha execution failed:", error);
     }
