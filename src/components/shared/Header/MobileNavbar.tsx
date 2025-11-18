@@ -126,14 +126,16 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
           <div className="border-t border-amber-100/60 dark:border-zinc-800/60 pt-6 pb-6 px-4 space-y-4">
             {!isAuthenticated ? (
               <>
-                <Button
-                  data-testid="mobile-login-button"
-                  className="w-full gap-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl shadow-lg transition-all"
-                  onClick={() => setOpenMobileLoginDialog(true)}
-                >
-                  <LogIn className="w-4 h-4" />
-                  ورود / ثبت نام
-                </Button>
+                <SheetClose asChild>
+                  <Button
+                    data-testid="mobile-login-button"
+                    className="w-full gap-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl shadow-lg transition-all"
+                    onClick={() => setOpenMobileLoginDialog(true)}
+                  >
+                    <LogIn className="w-4 h-4" />
+                    ورود / ثبت نام
+                  </Button>
+                </SheetClose>
               </>
             ) : (
               <SheetClose asChild>

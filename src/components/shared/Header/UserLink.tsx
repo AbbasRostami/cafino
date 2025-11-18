@@ -44,16 +44,16 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
       >
         <Avatar>
           <AvatarImage
-            src={user.imageUrl || ""}
-            alt={user.username || "avatar"}
+            src={user?.imageUrl || ""}
+            alt={user?.username || "avatar"}
           />
           <AvatarFallback>
-            {user.first_name?.[0] || user.username?.[0]}
+            {user?.first_name?.[0] || user?.username?.[0]}
           </AvatarFallback>
         </Avatar>
 
         <span className="max-w-[100px] truncate text-sm font-semibold text-gray-800 dark:text-gray-200">
-          {user.first_name || user.username}
+          {user?.first_name || user?.username}
         </span>
 
         <span

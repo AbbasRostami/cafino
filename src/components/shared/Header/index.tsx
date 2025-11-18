@@ -34,7 +34,11 @@ const Navbar = () => {
 
           <DesktopNavbar {...sharedProps} />
           <div className="flex items-center gap-2">
-            <BottomNav {...sharedProps} openMobileLoginDialog={openMobileLoginDialog} setOpenMobileLoginDialog={setOpenMobileLoginDialog} />
+            <BottomNav
+              {...sharedProps}
+              openMobileLoginDialog={openMobileLoginDialog}
+              setOpenMobileLoginDialog={setOpenMobileLoginDialog}
+            />
             <MobileNavbar
               {...sharedProps}
               openMobileMenu={openMobileMenu}
