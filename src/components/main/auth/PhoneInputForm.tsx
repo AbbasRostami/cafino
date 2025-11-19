@@ -9,11 +9,12 @@ import { cn } from "@/utils/utils";
 import { PhoneInputFormProps } from "@/types/main";
 import { phoneSchema } from "@/schemas";
 import { toast } from "sonner";
+import { useReCaptcha } from "next-recaptcha-v3";
+import { useEffect } from "react";
 
 export const PhoneInputForm: React.FC<PhoneInputFormProps> = ({
   onSubmit,
   isLoading,
-  captchaRef,
 }) => {
   const {
     register,
@@ -25,6 +26,7 @@ export const PhoneInputForm: React.FC<PhoneInputFormProps> = ({
     defaultValues: { phone: "" },
     mode: "onChange",
   });
+  const { executeRecaptcha, loaded } = useReCaptcha(); // ✔ درست همین است
 
   const phoneValue = useWatch({ name: "phone", control });
 
@@ -54,20 +56,41 @@ export const PhoneInputForm: React.FC<PhoneInputFormProps> = ({
       isValid: /^[0-9]*$/.test(phoneValue),
     },
   ];
+  useEffect(() => {
+    console.log("Captcha loaded?", loaded);
+    console.log("executeRecaptcha available?", !!executeRecaptcha);
+  }, [executeRecaptcha, loaded]);
+
   const handleFormSubmit = async (data: { phone: string }) => {
+    console.log("Submitting phone:", data.phone);
+
     try {
-      const token = await captchaRef?.current?.executeAsync();
-      if (!token) {
-        toast.warning("لطفاً کپچا را تأیید کنید.");
+      if (!loaded) {
+        toast.error("کپچا هنوز بارگذاری نشده، چند لحظه صبر کنید.");
         return;
       }
+
+      if (!executeRecaptcha) {
+        toast.error("امکان اجرای کپچا وجود ندارد.");
+        console.error("executeRecaptcha is undefined!");
+        return;
+      }
+
+      // 🔥 اجرای کپچا
+      const token = await executeRecaptcha("phone_submit");
+      console.log("ReCaptcha Token:", token);
+
+      if (!token) {
+        toast.error("کپچا توکن بازگرداند نشد");
+        return;
+      }
+
       onSubmit(data.phone, token);
-      captchaRef?.current?.reset();
     } catch (error) {
       console.error("Captcha execution failed:", error);
+      toast.error("مشکلی در اجرای کپچا رخ داد.");
     }
   };
-
   return (
     <div className="space-y-3">
       <div className="text-center space-y-2">
@@ -78,7 +101,6 @@ export const PhoneInputForm: React.FC<PhoneInputFormProps> = ({
           برای ورود، شماره موبایل خود را وارد کنید
         </p>
       </div>
-
       <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-3">
         <div className="space-y-4">
           <div className="flex justify-center">
@@ -142,6 +164,7 @@ export const PhoneInputForm: React.FC<PhoneInputFormProps> = ({
             </div>
           )}
         </div>
+
         <div className="space-y-3 flex justify-center">
           <Button
             data-testid="send-otp-button"
