@@ -36,6 +36,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     isResendOTPLoading,
     phoneValue,
     resendTimer,
+    setTurnstileToken,
+    turnstileToken,
     handleSendOTP,
     handleVerifyOTP,
     handleResendOTP,
@@ -75,6 +77,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                 goBackToPhone={goBackToPhone}
                 resendTimer={resendTimer}
                 formatTime={formatTime}
+                turnstileToken={turnstileToken}
+                setTurnstileToken={setTurnstileToken}
               />
             </div>
           </DrawerContent>
@@ -115,6 +119,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               goBackToPhone={goBackToPhone}
               resendTimer={resendTimer}
               formatTime={formatTime}
+              turnstileToken={turnstileToken}
+              setTurnstileToken={setTurnstileToken}
             />
           </DialogContent>
         </Dialog>

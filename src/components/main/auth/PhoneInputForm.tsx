@@ -9,12 +9,13 @@ import { cn } from "@/utils/utils";
 import { PhoneInputFormProps } from "@/types/main";
 import { phoneSchema } from "@/schemas";
 import { toast } from "sonner";
-import { useState } from "react";
 import TurnstileWidget from "./TurnstileWidget";
 
 export const PhoneInputForm: React.FC<PhoneInputFormProps> = ({
   onSubmit,
   isLoading,
+  setTurnstileToken,
+  turnstileToken,
 }) => {
   const {
     register,
@@ -26,7 +27,7 @@ export const PhoneInputForm: React.FC<PhoneInputFormProps> = ({
     defaultValues: { phone: "" },
     mode: "onChange",
   });
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+
   const phoneValue = useWatch({ name: "phone", control });
 
   const validationRules = [
@@ -57,19 +58,15 @@ export const PhoneInputForm: React.FC<PhoneInputFormProps> = ({
   ];
 
   const handleFormSubmit = async (data: { phone: string }) => {
-    try {
-      if (!turnstileToken) {
-        toast.error(
-          "مشکلی در تایید امنیتی پیش آمد. لطفاً اتصال اینترنت خود و فیلترشکن را بررسی کنید و دوباره تلاش کنید."
-        );
-        return;
-      }
-
-      onSubmit(data?.phone, turnstileToken);
-    } catch (error) {
-      toast.error("مشکلی در ارسال رخ داد.");
+    if (!turnstileToken) {
+      toast.error(
+        "مشکلی در تایید امنیتی پیش آمد. لطفاً اتصال اینترنت خود و فیلترشکن را بررسی کنید و دوباره تلاش کنید."
+      );
+      return;
     }
+    onSubmit(data?.phone, turnstileToken);
   };
+
   return (
     <div className="space-y-3">
       <div className="text-center space-y-2">
@@ -144,7 +141,9 @@ export const PhoneInputForm: React.FC<PhoneInputFormProps> = ({
           )}
         </div>
 
-        <TurnstileWidget onVerify={setTurnstileToken} />
+        <div className="flex justify-center items-center">
+          <TurnstileWidget onVerify={setTurnstileToken} />
+        </div>
 
         <div className="space-y-3 flex justify-center">
           <Button

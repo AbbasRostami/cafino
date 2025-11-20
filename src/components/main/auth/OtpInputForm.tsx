@@ -13,9 +13,9 @@ import { CheckCircle2, ArrowLeft } from "lucide-react";
 import { otpSchema } from "@/schemas/main";
 import { cn } from "@/utils/utils";
 import { OtpInputFormProps } from "@/types/main";
-import { useState } from "react";
-import { toast } from "sonner";
+import { useEffect, useState } from "react";
 import TurnstileWidget from "./TurnstileWidget";
+import { toast } from "sonner";
 
 export const OtpInputForm: React.FC<OtpInputFormProps> = ({
   phoneNumber,
@@ -26,6 +26,8 @@ export const OtpInputForm: React.FC<OtpInputFormProps> = ({
   resendTimer,
   formatTime,
   isResendLoading,
+  turnstileToken,
+  setTurnstileToken,
 }) => {
   const { control, handleSubmit, watch, reset } = useForm<{ otp: string }>({
     resolver: zodResolver(otpSchema),
@@ -39,8 +41,7 @@ export const OtpInputForm: React.FC<OtpInputFormProps> = ({
     onSubmit(data.otp, phoneNumber);
   };
 
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
-
+  const [showTurnstile, setShowTurnstile] = useState(false);
   const handleResend = () => {
     if (!turnstileToken) {
       toast.error(
@@ -48,8 +49,14 @@ export const OtpInputForm: React.FC<OtpInputFormProps> = ({
       );
       return;
     }
+    setShowTurnstile(true);
     onResend(phoneNumber, turnstileToken);
   };
+  useEffect(() => {
+    if (resendTimer === 0) {
+      setShowTurnstile(true);
+    }
+  }, [resendTimer]);
 
   const handleBack = () => {
     onBack();
@@ -134,14 +141,18 @@ export const OtpInputForm: React.FC<OtpInputFormProps> = ({
             <CheckCircle2 size={20} />
             {isVerifyOTPLoading ? "در حال تایید..." : "تایید"}
           </Button>
-          <TurnstileWidget onVerify={setTurnstileToken} />
+          {showTurnstile && (
+            <div className="flex justify-center items-center">
+              <TurnstileWidget onVerify={setTurnstileToken} />
+            </div>
+          )}
           <div className="w-full flex justify-center items-center  gap-2">
             <Button
               data-testid="resend-otp-button"
               type="button"
               variant="outline"
               onClick={handleResend}
-              disabled={isResendLoading || resendTimer > 0}
+              disabled={isResendLoading || resendTimer > 0 || !turnstileToken}
               className={cn(
                 " h-10 transition-all duration-300 rounded-lg cursor-pointer",
                 resendTimer > 0

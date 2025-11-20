@@ -12,6 +12,7 @@ export const useLoginLogic = ({
   const [step, setStep] = useState<LoginStep>("phone");
   const [phoneValue, setPhoneValue] = useState<string>("");
   const [resendTimer, setResendTimer] = useState(0);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   const { mutateAsync: addToCartMultiple } = useAddToCartMultiple();
   const { refetch: refetchCart } = useCart();
@@ -99,6 +100,8 @@ export const useLoginLogic = ({
     step,
     phoneValue,
     resendTimer,
+    turnstileToken,
+    setTurnstileToken,
 
     isSendOTPLoading,
     isVerifyOTPLoading,

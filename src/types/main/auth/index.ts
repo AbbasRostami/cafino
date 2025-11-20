@@ -23,11 +23,15 @@ export interface LoginContentProps {
   goBackToPhone: () => void;
   resendTimer: number;
   formatTime: (seconds: number) => string;
+  turnstileToken: string | null;
+  setTurnstileToken: (token: string | null) => void;
 }
 
 export interface PhoneInputFormProps {
   onSubmit: (phone: string, captchaToken: string) => void;
   isLoading: boolean;
+  turnstileToken: string | null;
+  setTurnstileToken: (token: string | null) => void;
 }
 
 export interface OtpInputFormProps {
@@ -39,4 +43,6 @@ export interface OtpInputFormProps {
   resendTimer: number;
   formatTime: (seconds: number) => string;
   isResendLoading: boolean;
+  turnstileToken: string | null;
+  setTurnstileToken: (token: string | null) => void;
 }

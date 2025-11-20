@@ -19,13 +19,22 @@ export const LoginContent: React.FC<LoginContentProps> = ({
   goBackToPhone,
   resendTimer,
   formatTime,
+  setTurnstileToken,
+  turnstileToken,
 }) => {
   return (
     <>
       {step === "phone" ? (
-        <PhoneInputForm onSubmit={handleSendOTP} isLoading={isSendOTPLoading} />
+        <PhoneInputForm
+          turnstileToken={turnstileToken}
+          setTurnstileToken={setTurnstileToken}
+          onSubmit={handleSendOTP}
+          isLoading={isSendOTPLoading}
+        />
       ) : (
         <OtpInputForm
+          turnstileToken={turnstileToken}
+          setTurnstileToken={setTurnstileToken}
           phoneNumber={phoneValue}
           onSubmit={handleVerifyOTP}
           onResend={handleResendOTP}
