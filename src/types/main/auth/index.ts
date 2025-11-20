@@ -1,5 +1,3 @@
-import ReCAPTCHA from "react-google-recaptcha";
-
 export type LoginStep = "phone" | "otp";
 
 export interface LoginFormProps {
