@@ -96,7 +96,7 @@ export default async function () {
       { url: "/checkout-cart", revision: revision },
       { url: "/payment", revision: revision },
       { url: "/favicon.ico", revision: revision },
-      { url: "/src/app/manifest.ts", revision },
+      { url: "/manifest.webmanifest", revision },
       { url: "/icon-192x192.png", revision },
       { url: "/icon-512x512.png", revision },
       { url: "/Main-logo-192x192.webp", revision },
