@@ -16,6 +16,8 @@ export default function LoginAdminPage() {
     handleResendOTP,
     goBackToPhone,
     formatTime,
+    setTurnstileToken,
+    turnstileToken,
   } = useLoginLogic({
     onSuccess: () => {
       window.location.href = "/dashboard/overview";
@@ -37,6 +39,8 @@ export default function LoginAdminPage() {
           goBackToPhone={goBackToPhone}
           resendTimer={resendTimer}
           formatTime={formatTime}
+          turnstileToken={turnstileToken}
+          setTurnstileToken={setTurnstileToken}
         />
       </div>
     </div>
