@@ -46,7 +46,7 @@ export const rootMetadata: Metadata = {
     images: ["/favicon.ico"],
   },
 
-  manifest: "/manifest.json",
+  manifest: "/src/app/manifest.ts",
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "32x32", type: "image/x-icon" },

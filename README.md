@@ -248,16 +248,29 @@ Playwright tests cover critical user flows:
 cafino/
 ├── 📁 public/                     # Static files
 │   ├── 🖼️ images/                # Images and icons
-│   ├── 📄 manifest.json          # PWA manifest
 │   └── 🔧 sw.js                  # Service Worker
 ├── 📁 src/
 │   ├── 📁 app/                   # Next.js App Router
-│   │   ├── 📁 (admin)/           # Admin panel
-│   │   │   ├── 📁 dashboard/     # Admin dashboard
-│   │   │   └── 📁 admin-login/   # Admin login
+│   │   ├── 📁 (admin)/                # Admin Panel Route Group
+│   │   │   ├── 📁 components/          # Reusable components for the admin section
+│   │   │   ├── 📁 context/             # React contexts for admin state
+│   │   │   └── 📁 dashboard/           # The main admin dashboard area
+│   │   │       ├── 📁 blacklist/       # Management of Banned users/Blacklist
+│   │   │       ├── 📁 categories/      # Management of Categories
+│   │   │       ├── 📁 comments/        # Management of Comments
+│   │   │       ├── 📁 discounts/       # Management of Discounts/coupons
+│   │   │       ├── 📁 items/           # Management of Items/products
+│   │   │       ├── 📁 messages/        # Management of Internal messages
+│   │   │       ├── 📁 orders/          # Management of Orders
+│   │   │       ├── 📁 overview/        # Management of Admin dashboard/General overview
+│   │   │       ├── 📁 rate-limit/      # Management of Request rate limiting
+│   │   │       ├── 📁 tickets/         # Management of Support tickets
+│   │   │       ├── 📁 users/           # Management of Users
+│   │   │       ├── 📄 DashboardClient.tsx
+│   │   │       └── 📄 layout.tsx
 │   │   ├── 📁 (main)/            # Customer-facing pages
 │   │   │   ├── 🏠 page.tsx       # Homepage
-│   │   │   ├── 🍽️ menu/         # Menu
+│   │   │   ├── 🍽️ menu/          # Menu
 │   │   │   ├── 🛒 checkout-cart/ # Shopping cart
 │   │   │   ├── 💳 payment/       # Payment
 │   │   │   ├── 📞 contact-us/    # Contact us
@@ -269,9 +282,16 @@ cafino/
 │   │   │       ├── 📁 orders/    # Order history
 │   │   │       ├── 📁 overview/  # Profile overview
 │   │   │       ├── 📁 settings/  # User settings
-│   │   │       └── 📁 tickets/   # Support tickets
+│   │   │       ├── 📁 tickets/   # Support tickets
+│   │   │       └── 📄 layout.tsx
 │   │   ├── 📁 offline/           # PWA offline page
-│   │   └── 📄 layout.tsx         # Root layout
+│   │   ├── 📄 layout.tsx         # Root layout
+│   │   ├── 📄 manifest.ts        # Web App Manifest
+│   │   ├── 📄 not-found.ts       # Custom 404 page
+│   │   ├── 📄 globals.css        # Global styles
+│   │   ├── 📄 robots.ts          # Dynamic robots.txt
+│   │   ├── 📄 sitemap.ts         # Dynamic sitemap.xml
+│   │   └── 📄 sw.ts              # Service Worker Configuration (Serwist)
 │   ├── 📁 components/            # React components
 │   │   ├── 📁 main/              # Customer UI components
 │   │   ├── 📁 profile/           # Profile components
