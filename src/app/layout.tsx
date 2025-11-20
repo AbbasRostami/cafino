@@ -7,7 +7,6 @@ import { QueryProvider } from "@/components/providers/QueryProviders";
 import { rootMetadata } from "@/lib/metadata/rootMetadata";
 import { StructuredDataScripts } from "@/lib/metadata/structuredData";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
-import { ReCaptchaProvider } from "next-recaptcha-v3";
 
 const vazirmatn = localFont({
   src: "./../assets/fonts/Vazirmatn-UI-FD-Regular.ttf",
@@ -39,12 +38,8 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <ReCaptchaProvider
-              reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
-            >
-              <Toaster position="top-right" expand={true} richColors />
-              <NuqsAdapter>{children}</NuqsAdapter>
-            </ReCaptchaProvider>
+            <Toaster position="top-right" expand={true} richColors />
+            <NuqsAdapter>{children}</NuqsAdapter>
           </ThemeProvider>
         </QueryProvider>
       </body>

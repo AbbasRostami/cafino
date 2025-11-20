@@ -4,7 +4,6 @@ import { migrateGuestCartToServer } from "@/store/cartStore";
 import { useAddToCartMultiple, useCart } from "@/services";
 import { useResendOTP, useSendOTP, useVerifyOTP } from "@/services";
 import { LoginStep, UseLoginLogicProps } from "@/types/main";
-import { toast } from "sonner";
 
 export const useLoginLogic = ({
   onSuccess,
@@ -34,7 +33,7 @@ export const useLoginLogic = ({
             setPhoneValue(phone);
             setStep("otp");
             if (error?.retryAfter) {
-              setResendTimer(error.retryAfter);
+              setResendTimer(error?.retryAfter);
             } else {
               setResendTimer(120);
             }
@@ -66,9 +65,9 @@ export const useLoginLogic = ({
     );
   };
 
-  const handleResendOTP = () => {
+  const handleResendOTP = (phone: string, captchaToken: string) => {
     resendOTP(
-      { phone: phoneValue },
+      { phone: phone, captchaToken: captchaToken },
       {
         onSuccess: () => {
           setResendTimer(120);

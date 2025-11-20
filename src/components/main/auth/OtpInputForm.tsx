@@ -13,6 +13,9 @@ import { CheckCircle2, ArrowLeft } from "lucide-react";
 import { otpSchema } from "@/schemas/main";
 import { cn } from "@/utils/utils";
 import { OtpInputFormProps } from "@/types/main";
+import { useState } from "react";
+import { toast } from "sonner";
+import TurnstileWidget from "./TurnstileWidget";
 
 export const OtpInputForm: React.FC<OtpInputFormProps> = ({
   phoneNumber,
@@ -34,11 +37,18 @@ export const OtpInputForm: React.FC<OtpInputFormProps> = ({
 
   const handleFormSubmit = (data: { otp: string }) => {
     onSubmit(data.otp, phoneNumber);
-    
   };
 
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+
   const handleResend = () => {
-    onResend();
+    if (!turnstileToken) {
+      toast.error(
+        "مشکلی در تایید امنیتی پیش آمد. لطفاً اتصال اینترنت خود و فیلترشکن را بررسی کنید و دوباره تلاش کنید."
+      );
+      return;
+    }
+    onResend(phoneNumber, turnstileToken);
   };
 
   const handleBack = () => {
@@ -124,7 +134,7 @@ export const OtpInputForm: React.FC<OtpInputFormProps> = ({
             <CheckCircle2 size={20} />
             {isVerifyOTPLoading ? "در حال تایید..." : "تایید"}
           </Button>
-
+          <TurnstileWidget onVerify={setTurnstileToken} />
           <div className="w-full flex justify-center items-center  gap-2">
             <Button
               data-testid="resend-otp-button"
@@ -135,7 +145,7 @@ export const OtpInputForm: React.FC<OtpInputFormProps> = ({
               className={cn(
                 " h-10 transition-all duration-300 rounded-lg cursor-pointer",
                 resendTimer > 0
-                  ? "text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700 cursor-not-allowed"
+                  ? "text-gray-500 dark:text-gray-200 bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700 cursor-not-allowed"
                   : "text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-900/20 border-amber-200 dark:border-amber-800 hover:border-amber-300 dark:hover:border-amber-700"
               )}
             >

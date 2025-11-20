@@ -9,8 +9,8 @@ import { cn } from "@/utils/utils";
 import { PhoneInputFormProps } from "@/types/main";
 import { phoneSchema } from "@/schemas";
 import { toast } from "sonner";
-import { useReCaptcha } from "next-recaptcha-v3";
-import { useEffect } from "react";
+import { useState } from "react";
+import TurnstileWidget from "./TurnstileWidget";
 
 export const PhoneInputForm: React.FC<PhoneInputFormProps> = ({
   onSubmit,
@@ -26,8 +26,7 @@ export const PhoneInputForm: React.FC<PhoneInputFormProps> = ({
     defaultValues: { phone: "" },
     mode: "onChange",
   });
-  const { executeRecaptcha, loaded } = useReCaptcha(); // ✔ درست همین است
-
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const phoneValue = useWatch({ name: "phone", control });
 
   const validationRules = [
@@ -56,39 +55,19 @@ export const PhoneInputForm: React.FC<PhoneInputFormProps> = ({
       isValid: /^[0-9]*$/.test(phoneValue),
     },
   ];
-  useEffect(() => {
-    console.log("Captcha loaded?", loaded);
-    console.log("executeRecaptcha available?", !!executeRecaptcha);
-  }, [executeRecaptcha, loaded]);
 
   const handleFormSubmit = async (data: { phone: string }) => {
-    console.log("Submitting phone:", data.phone);
-
     try {
-      if (!loaded) {
-        toast.error("کپچا هنوز بارگذاری نشده، چند لحظه صبر کنید.");
+      if (!turnstileToken) {
+        toast.error(
+          "مشکلی در تایید امنیتی پیش آمد. لطفاً اتصال اینترنت خود و فیلترشکن را بررسی کنید و دوباره تلاش کنید."
+        );
         return;
       }
 
-      if (!executeRecaptcha) {
-        toast.error("امکان اجرای کپچا وجود ندارد.");
-        console.error("executeRecaptcha is undefined!");
-        return;
-      }
-
-      // 🔥 اجرای کپچا
-      const token = await executeRecaptcha("phone_submit");
-      console.log("ReCaptcha Token:", token);
-
-      if (!token) {
-        toast.error("کپچا توکن بازگرداند نشد");
-        return;
-      }
-
-      onSubmit(data.phone, token);
+      onSubmit(data?.phone, turnstileToken);
     } catch (error) {
-      console.error("Captcha execution failed:", error);
-      toast.error("مشکلی در اجرای کپچا رخ داد.");
+      toast.error("مشکلی در ارسال رخ داد.");
     }
   };
   return (
@@ -165,11 +144,13 @@ export const PhoneInputForm: React.FC<PhoneInputFormProps> = ({
           )}
         </div>
 
+        <TurnstileWidget onVerify={setTurnstileToken} />
+
         <div className="space-y-3 flex justify-center">
           <Button
             data-testid="send-otp-button"
             type="submit"
-            disabled={isLoading || !isValid}
+            disabled={isLoading || !isValid || !turnstileToken}
             className={cn(
               "w-full  max-w-sm h-12 cursor-pointer text-lg font-bold",
               "bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600",

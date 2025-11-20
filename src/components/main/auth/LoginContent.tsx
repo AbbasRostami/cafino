@@ -19,16 +19,11 @@ export const LoginContent: React.FC<LoginContentProps> = ({
   goBackToPhone,
   resendTimer,
   formatTime,
-  captchaRef,
 }) => {
   return (
     <>
       {step === "phone" ? (
-        <PhoneInputForm
-          captchaRef={captchaRef}
-          onSubmit={handleSendOTP}
-          isLoading={isSendOTPLoading}
-        />
+        <PhoneInputForm onSubmit={handleSendOTP} isLoading={isSendOTPLoading} />
       ) : (
         <OtpInputForm
           phoneNumber={phoneValue}

@@ -16,6 +16,11 @@ export const useSendOTP = () => {
         case 403:
           toast.error("شماره تلفن شما در لیست سیاه قرار دارد");
           break;
+        case 422:
+          toast.error(
+            "مشکلی در تایید امنیتی پیش آمد. لطفاً اتصال اینترنت خود و فیلترشکن را بررسی کنید و دوباره تلاش کنید."
+          );
+          break;
         case 409:
           if (error?.retryAfter) {
             const timeText = formatRetryAfter(error.retryAfter);

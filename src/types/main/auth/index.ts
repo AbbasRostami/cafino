@@ -21,23 +21,21 @@ export interface LoginContentProps {
   phoneValue: string;
   handleSendOTP: (phone: string, captchaToken: string) => void;
   handleVerifyOTP: (otp: string, phone: string) => void;
-  handleResendOTP: () => void;
+  handleResendOTP: (phone: string, captchaToken: string) => void;
   goBackToPhone: () => void;
   resendTimer: number;
   formatTime: (seconds: number) => string;
-  captchaRef?: React.RefObject<ReCAPTCHA | any>;
 }
 
 export interface PhoneInputFormProps {
   onSubmit: (phone: string, captchaToken: string) => void;
   isLoading: boolean;
-  captchaRef?: React.RefObject<ReCAPTCHA | any>;
 }
 
 export interface OtpInputFormProps {
   phoneNumber: string;
   onSubmit: (otp: string, phone: string) => void;
-  onResend: () => void;
+  onResend: (phone: string, captchaToken: string) => void;
   onBack: () => void;
   isVerifyOTPLoading: boolean;
   resendTimer: number;
