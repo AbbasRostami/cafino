@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "کافی‌نو - کافه و رستوران آنلاین",
-    short_name: "کافی‌نو",
-    description: "سفارش آنلاین غذا از بهترین کافه/رستوران شهر - کافی‌نو",
+    name: "کافینو",
+    short_name: "کافینو",
+    description: "سفارش آنلاین غذا از بهترین کافه/رستوران شهر - کافینو",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",

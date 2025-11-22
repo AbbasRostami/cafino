@@ -45,15 +45,17 @@ export const OtpInputForm: React.FC<OtpInputFormProps> = ({
   const handleResend = () => {
     if (!turnstileToken) {
       toast.error(
-        "مشکلی در تایید امنیتی پیش آمد. لطفاً اتصال اینترنت خود و فیلترشکن را بررسی کنید و دوباره تلاش کنید."
+        "لطفاً کپچا را کامل انجام دهید. در صورت ادامه مشکل، صفحه را رفرش کنید."
       );
       return;
     }
     setShowTurnstile(true);
     onResend(phoneNumber, turnstileToken);
   };
+
   useEffect(() => {
     if (resendTimer === 0) {
+      setTurnstileToken(null);
       setShowTurnstile(true);
     }
   }, [resendTimer]);

@@ -33,7 +33,7 @@ const StatsSection = () => {
       <div className="flex-1 flex items-center justify-center">
         <Image
           src={Logo}
-          alt="لوگو کافی‌نو"
+          alt="لوگو کافینو"
           width={550}
           className="object-contain"
           loading="lazy"

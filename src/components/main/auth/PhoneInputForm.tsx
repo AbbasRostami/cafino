@@ -60,7 +60,7 @@ export const PhoneInputForm: React.FC<PhoneInputFormProps> = ({
   const handleFormSubmit = async (data: { phone: string }) => {
     if (!turnstileToken) {
       toast.error(
-        "مشکلی در تایید امنیتی پیش آمد. لطفاً اتصال اینترنت خود و فیلترشکن را بررسی کنید و دوباره تلاش کنید."
+        "لطفاً کپچا را کامل انجام دهید. در صورت ادامه مشکل، صفحه را رفرش کنید."
       );
       return;
     }
