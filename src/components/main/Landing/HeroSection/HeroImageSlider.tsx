@@ -5,10 +5,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import "swiper/css/effect-fade";
 import { MotionDiv } from "@/utils/MotionWrapper";
-import Photo1 from "./../../../../assets/HeroSection/HeroSection1.png";
-import Photo2 from "./../../../../assets/HeroSection/HeroSection2.png";
-import Photo3 from "./../../../../assets/HeroSection/HeroSection3.png";
-import Photo4 from "./../../../../assets/HeroSection/HeroSection4.png";
+import Photo1 from "./../../../../assets/HeroSection/HeroSection1.webp";
+import Photo2 from "./../../../../assets/HeroSection/HeroSection2.webp";
+import Photo3 from "./../../../../assets/HeroSection/HeroSection3.webp";
+import Photo4 from "./../../../../assets/HeroSection/HeroSection4.webp";
 
 const HeroImageSlider = () => {
   const photos = [Photo1, Photo2, Photo3, Photo4];
@@ -41,6 +41,7 @@ const HeroImageSlider = () => {
               src={photo}
               alt={`Slide ${idx + 1}`}
               className="object-cover h-auto"
+              fetchPriority={idx === 0 ? "high" : "auto"}
               priority={idx === 0}
             />
           </SwiperSlide>
