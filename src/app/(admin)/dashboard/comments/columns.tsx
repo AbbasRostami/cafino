@@ -44,6 +44,17 @@ export const columns = ({
         enableSorting: true,
       },
       {
+        header: "نام و نام خانوادگی",
+        accessorFn: (row) => `${row.user.first_name} ${row.user.last_name}`,
+        cell: (info) => {
+          const row = info?.row?.original;
+          return row?.user?.first_name && row?.user?.last_name
+            ? `${row?.user?.first_name} ${row?.user?.last_name}`
+            : "-";
+        },
+        enableSorting: true,
+      },
+      {
         accessorKey: "text",
         header: "متن کامنت",
         cell: ({ row }) => {

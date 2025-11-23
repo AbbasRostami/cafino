@@ -164,7 +164,10 @@ export default function AdminTicketChatModal({
 
           <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
             <User size={16} />
-            <span>{messagesData?.data?.ticket?.user?.username}</span>
+            {messagesData?.data?.ticket?.user?.first_name &&
+            messagesData?.data?.ticket?.user?.last_name
+              ? `${messagesData?.data?.ticket?.user?.first_name} ${messagesData?.data?.ticket?.user?.last_name}`
+              : messagesData?.data?.ticket?.user?.username || "کاربر"}{" "}
           </div>
         </div>
       </div>
@@ -174,7 +177,8 @@ export default function AdminTicketChatModal({
           <AdminTicketChatSkeleton />
         ) : (
           messages?.map((msg: TicketMessage) => {
-            const isAdminMessage = msg?.sender?.role === "admin";
+            const isAdminMessage =
+              msg?.sender?.role === "admin" || msg?.sender?.role === "manager";
             return (
               <MotionDiv
                 key={msg?.id}
@@ -223,11 +227,17 @@ export default function AdminTicketChatModal({
                       />
                     ) : (
                       <p className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center overflow-hidden text-white">
-                        {msg?.sender?.username[0]}
+                        {(
+                          msg?.sender?.first_name?.[0] ||
+                          msg?.sender?.username?.[0] ||
+                          "U"
+                        ).toUpperCase()}
                       </p>
                     )}
                     <span className="text-right text-sm font-medium text-gray-900 dark:text-gray-100">
-                      {msg?.sender?.username}
+                      {msg?.sender?.first_name && msg?.sender?.last_name
+                        ? `${msg.sender.first_name} ${msg.sender.last_name}`
+                        : msg?.sender?.username || "کاربر"}
                     </span>
                   </div>
                   <div

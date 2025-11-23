@@ -78,12 +78,23 @@ export const columns = ({
         cell: (info) => {
           const user = info.getValue() as any;
           return (
-            <div className="flex items-center gap-2">
+            <div className="flex justify-center items-center gap-2">
               <span className="text-gray-800 dark:text-gray-200">
                 {user || "نامشخص"}
               </span>
             </div>
           );
+        },
+        enableSorting: true,
+      },
+      {
+        header: "نام و نام خانوادگی",
+        accessorFn: (row) => `${row.user.first_name} ${row.user.last_name}`,
+        cell: (info) => {
+          const row = info?.row?.original;
+          return row?.user?.first_name && row?.user?.last_name
+            ? `${row?.user?.first_name} ${row?.user?.last_name}`
+            : "-";
         },
         enableSorting: true,
       },

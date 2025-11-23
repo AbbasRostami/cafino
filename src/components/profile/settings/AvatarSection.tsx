@@ -1,7 +1,7 @@
 import { CardFooter } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Edit, Trash2 } from "lucide-react";
-import { AvatarProps } from "@/types/Profile"
+import { AvatarProps } from "@/types/Profile";
 import { MotionButton, MotionDiv } from "@/utils/MotionWrapper";
 
 export const AvatarSection = ({
@@ -27,7 +27,7 @@ export const AvatarSection = ({
                 className="object-cover"
               />
               <AvatarFallback className="bg-gradient-to-br from-amber-500 to-orange-500 text-white text-3xl">
-                {user?.username?.[0] || "U"}
+                {user?.first_name?.[0] || user?.username?.[0]}
               </AvatarFallback>
             </Avatar>
 

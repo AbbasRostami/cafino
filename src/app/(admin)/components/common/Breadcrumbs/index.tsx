@@ -32,7 +32,7 @@ export default function DashboardBreadcrumbs() {
     <div className="w-full mb-6">
       <div className="flex items-center gap-2 text-sm">
         <Link
-          href="/dashboard"
+          href="/dashboard/overview"
           className={cn(
             "flex items-center gap-1 p-2 rounded-lg transition-all",
             "text-gray-600 hover:text-primary hover:bg-gray-100",

@@ -62,7 +62,7 @@ export const columns = ({
         cell: (info) => {
           const user = info.getValue() as any;
           return (
-            <span className="text-gray-800 dark:text-gray-200">
+            <span className="text-gray-800 dark:text-gray-200 force-ltr">
               {user || "نامشخص"}
             </span>
           );

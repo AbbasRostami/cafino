@@ -641,3 +641,8 @@ body {
 .swiper-slide-thumb-active > div {
   @apply ring-4 ring-amber-500 scale-105 shadow-lg;
 }
+
+.force-ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+}

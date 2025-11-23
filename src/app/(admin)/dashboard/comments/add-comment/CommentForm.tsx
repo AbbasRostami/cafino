@@ -53,14 +53,19 @@ export function CommentForm({
         <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700 overflow-hidden">
           <div className="flex items-center gap-2 mb-2">
             <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
-              {parentComment.user?.username?.[0] || "U"}
+              {parentComment.user?.first_name && parentComment?.user?.last_name
+                ? parentComment?.user?.first_name[0] +
+                  parentComment?.user?.last_name[0]
+                : parentComment?.user?.username?.[0] || "U"}
             </div>
             <span className="font-medium text-gray-800 dark:text-white">
-              {parentComment.user?.username || "کاربر"}
+              {parentComment?.user?.first_name && parentComment?.user?.last_name
+                ? `${parentComment?.user?.first_name} ${parentComment?.user?.last_name}`
+                : parentComment?.user?.username || "کاربر"}
             </span>
           </div>
           <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap break-words overflow-hidden">
-            {parentComment.text}
+            {parentComment?.text}
           </p>
         </div>
       )}

@@ -53,6 +53,13 @@ export default function UserDropdown() {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild className="cursor-pointer">
+            <Link href="/dashboard/users" className="font-bold">
+              <ShoppingBag size={16} />
+              مدیریت کاربران
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem asChild className="cursor-pointer">
             <Link href="/dashboard/orders" className="font-bold">
               <ShoppingBag size={16} />
               مدیریت سفارشات

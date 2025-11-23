@@ -4,7 +4,7 @@ export interface TicketUser {
   first_name: string | null;
   last_name: string | null;
   imageUrl: string | null;
-  role: "user" | "admin";
+  role: "user" | "admin" | "manager";
 }
 
 export interface Ticket {
@@ -20,7 +20,6 @@ export interface TicketMessage {
   id: string;
   message: string;
   created_at: string;
-
   sender: TicketUser;
 }
 

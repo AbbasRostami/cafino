@@ -83,11 +83,16 @@ export const CommentItem = ({
         <div className="space-y-4 min-h-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              {renderUserAvatar(comment?.user?.username)}
+              {renderUserAvatar(
+                comment?.user?.first_name || comment?.user?.username
+              )}
               <div className="space-y-1">
                 <p className="font-bold text-gray-800 dark:text-white">
-                  {comment?.user?.username}
+                  {comment?.user?.first_name && comment?.user?.last_name
+                    ? `${comment?.user?.first_name} ${comment?.user?.last_name}`
+                    : comment?.user?.username}
                 </p>
+
                 <span className="text-sm text-gray-700 dark:text-gray-300">
                   {formatRelativeTime(comment?.created_at)}
                 </span>
@@ -120,7 +125,7 @@ export const CommentItem = ({
             {`مشاهده ${comment?.children?.length} پاسخ`}
           </AccordionTrigger>
           <AccordionContent className="px-5 pb-4 space-y-4 border-t pt-4 border-amber-200 dark:border-amber-800/30 overflow-visible">
-            {comment?.children?.map((reply: any) => (
+            {comment?.children?.map((reply) => (
               <div
                 key={reply.id}
                 className="bg-white dark:bg-gray-800 p-4 rounded-xl border-2 border-amber-100 dark:border-amber-700"
@@ -128,19 +133,20 @@ export const CommentItem = ({
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
                     {renderUserAvatar(
-                      reply?.user?.username ||
-                        `${reply?.user?.first_name || ""} ${
-                          reply?.user?.last_name || ""
-                        }`.trim() ||
+                      `${reply?.user?.first_name || ""} ${
+                        reply?.user?.last_name || ""
+                      }`.trim() ||
+                        reply?.user?.username ||
                         "کاربر",
                       "sm"
                     )}
+
                     <div>
                       <p className="font-medium text-gray-800 dark:text-white text-sm">
-                        {reply?.user?.username ||
-                          `${reply?.user?.first_name || ""} ${
-                            reply?.user?.last_name || ""
-                          }`.trim() ||
+                        {`${reply?.user?.first_name || ""} ${
+                          reply?.user?.last_name || ""
+                        }`.trim() ||
+                          reply?.user?.username ||
                           "کاربر"}
                       </p>
                     </div>

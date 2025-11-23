@@ -105,7 +105,9 @@ export const columns = ({
         accessorFn: (row) => `${row.first_name} ${row.last_name}`,
         cell: (info) => {
           const row = info?.row?.original;
-          return row?.first_name && row?.last_name ? `${row?.first_name} ${row?.last_name}` : "-";
+          return row?.first_name && row?.last_name
+            ? `${row?.first_name} ${row?.last_name}`
+            : "-";
         },
         enableSorting: true,
       },
@@ -118,12 +120,12 @@ export const columns = ({
             : "-",
         enableSorting: true,
       },
-      {
-        header: "ایمیل",
-        accessorKey: "email",
-        cell: (info) => info?.getValue() || "-",
-        enableSorting: true,
-      },
+      // {
+      //   header: "ایمیل",
+      //   accessorKey: "email",
+      //   cell: (info) => info?.getValue() || "-",
+      //   enableSorting: true,
+      // },
       {
         header: "آدرس",
         accessorKey: "addressList",
@@ -151,27 +153,28 @@ export const columns = ({
         },
         enableSorting: false,
       },
-
-      {
-        header: "تایید ایمیل",
-        accessorKey: "is_email_verified",
-        cell: (info) => {
-          const active = info.getValue() as boolean;
-          return (
-            <Badge variant={active ? "success" : "destructive"}>
-              {active ? "تایید شده" : "تایید نشده"}
-            </Badge>
-          );
-        },
-        enableSorting: true,
-      },
+      // {
+      //   header: "تایید ایمیل",
+      //   accessorKey: "is_email_verified",
+      //   cell: (info) => {
+      //     const active = info.getValue() as boolean;
+      //     return (
+      //       <Badge variant={active ? "success" : "destructive"}>
+      //         {active ? "تایید شده" : "تایید نشده"}
+      //       </Badge>
+      //     );
+      //   },
+      //   enableSorting: true,
+      // },
       {
         header: "تلفن همراه",
         accessorKey: "phone",
-        cell: (info) => info.getValue() || "-",
+        cell: ({ getValue }) => {
+          const phone = getValue() || "-";
+          return <span className="force-ltr">{phone as string}</span>;
+        },
         enableSorting: true,
       },
-
       {
         header: "تاریخ ایجاد",
         accessorKey: "created_at",

@@ -11,7 +11,7 @@ function getRequiredRoles(pathname: string): Role[] | null {
 
 async function fetchRole(
   request: NextRequest,
-  timeoutMs = 3000
+  timeoutMs = 5000
 ): Promise<Role | null> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);

@@ -166,7 +166,7 @@ export const OrderContent = ({ order, isMobile }: OrderContentProps) => (
           <InfoItem
             label="تلفن"
             value={order?.user?.phone}
-            icon={<Phone className="w-4 h-4" />}
+            icon={<Phone className="w-4 h-4 " />}
           />
         </div>
       </MotionDiv>
@@ -349,19 +349,6 @@ export const OrderContent = ({ order, isMobile }: OrderContentProps) => (
               <div className="flex flex-col md:flex-row justify-between items-start gap-2">
                 <div className="flex items-center gap-2">
                   <div className="p-1.5 hover:scale-105 transition-all duration-300 bg-cyan-500/20 dark:bg-cyan-700/30 rounded-lg">
-                    <CreditCard className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
-                  </div>
-                  <span className="font-medium text-cyan-800 dark:text-cyan-200">
-                    کارت پرداخت:
-                  </span>
-                </div>
-                <span className="font-mono text-cyan-800 dark:text-cyan-200">
-                  {payment?.card_pan || "نامشخص"}
-                </span>
-              </div>
-              <div className="flex flex-col md:flex-row justify-between items-start gap-2">
-                <div className="flex items-center gap-2">
-                  <div className="p-1.5 hover:scale-105 transition-all duration-300 bg-cyan-500/20 dark:bg-cyan-700/30 rounded-lg">
                     <CheckCircle className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
                   </div>
                   <span className="font-medium text-cyan-800 dark:text-cyan-200">
@@ -408,7 +395,7 @@ export const InfoItem = ({
     </MotionDiv>
     <div>
       <div className="text-sm text-gray-600 dark:text-gray-300">{label}</div>
-      <div className="font-medium">{value}</div>
+      <div className="font-medium force-ltr">{value}</div>
     </div>
   </MotionDiv>
 );
