@@ -13,7 +13,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Loader2, OctagonX, CircleUserRound, ChevronDown } from "lucide-react";
+import {
+  Loader2,
+  OctagonX,
+  CircleUserRound,
+  ChevronDown,
+  CheckCircle,
+  XCircle,
+} from "lucide-react";
 import { formatJalaliDate } from "@/utils/formatters";
 import { confirm } from "@/components/shared/ConfirmModal";
 import {
@@ -175,6 +182,25 @@ export const columns = ({
         },
         enableSorting: true,
       },
+      {
+        header: "تأیید موبایل",
+        accessorKey: "is_phone_verified",
+        cell: ({ getValue }) => {
+          const verified = getValue() as boolean;
+
+          return (
+            <div className="flex items-center justify-center">
+              {verified ? (
+                <CheckCircle className="text-green-600 size-5" />
+              ) : (
+                <XCircle className="text-red-600 size-5" />
+              )}
+            </div>
+          );
+        },
+        enableSorting: true,
+      },
+
       {
         header: "تاریخ ایجاد",
         accessorKey: "created_at",

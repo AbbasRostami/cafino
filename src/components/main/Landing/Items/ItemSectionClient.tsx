@@ -28,6 +28,8 @@ import { useGetItemsLanding } from "@/services/items/useGetItems";
 import { useRouter } from "next/navigation";
 
 const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
+  const router = useRouter();
+
   const { data: itemsResponse, isLoading } = useGetItemsLanding(
     1,
     15,
@@ -63,7 +65,6 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
       </section>
     );
   }
-  const router = useRouter();
   return (
     <>
       <div className="max-w-4xl mx-auto text-center mt-12 mb-8">

@@ -97,7 +97,7 @@ const AppSidebar: React.FC = () => {
     setIsHovered,
     toggleMobileSidebar,
   } = useSidebar();
-  
+
   const pathname = usePathname();
 
   const handleLinkClick = () => {
@@ -299,7 +299,7 @@ const AppSidebar: React.FC = () => {
                                 : "menu-dropdown-badge-inactive"
                             } menu-dropdown-badge`}
                           >
-                            new
+                            کافی
                           </span>
                         )}
                         {subItem.pro && (
@@ -310,7 +310,7 @@ const AppSidebar: React.FC = () => {
                                 : "menu-dropdown-badge-inactive"
                             } menu-dropdown-badge`}
                           >
-                            pro
+                            نو
                           </span>
                         )}
                       </span>
@@ -365,10 +365,10 @@ const AppSidebar: React.FC = () => {
               />
               <p className="text-4xl font-extrabold mt-1 leading-none">
                 <span className="text-amber-600 dark:text-amber-400 drop-shadow-sm">
-                  Caf
+                  کافی
                 </span>
-                <span className="text-amber-600 dark:text-amber-400 drop-shadow-sm">
-                  ino
+                <span className="text-amber-700/80 dark:text-amber-600 drop-shadow-sm">
+                  نو
                 </span>
               </p>
             </>
