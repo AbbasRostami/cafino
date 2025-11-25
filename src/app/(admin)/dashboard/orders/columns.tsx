@@ -46,10 +46,15 @@ export const columns = ({
         header: "کاربر",
         cell: (info) => {
           const user = info.getValue() as any;
+          const fullName = `${user?.first_name || ""} ${
+            user?.last_name || ""
+          }`.trim();
+          const displayName =
+            fullName !== "" ? fullName : user?.username || "-";
           return (
-            <div className="flex items-center gap-2">
+            <div className="flex justify-center items-center gap-2">
               <span className="text-gray-800 dark:text-gray-200">
-                {user?.first_name + " " + user?.last_name || "نامشخص"}
+                {displayName}
               </span>
             </div>
           );
@@ -60,10 +65,10 @@ export const columns = ({
         accessorKey: "user.phone",
         header: "شماره تماس",
         cell: (info) => {
-          const user = info.getValue() as any;
+          const phone = info.getValue() as any;
           return (
             <span className="text-gray-800 dark:text-gray-200 force-ltr">
-              {user || "نامشخص"}
+              {phone || "-"}
             </span>
           );
         },
@@ -87,7 +92,7 @@ export const columns = ({
                 <TooltipContent>
                   <div className="max-w-xs">
                     {items?.map((item, index) => (
-                      <span key={index} className="text-sm">
+                      <span key={index} className="flex flex-col text-sm">
                         {item?.item?.title} - {item?.count} عدد
                       </span>
                     ))}

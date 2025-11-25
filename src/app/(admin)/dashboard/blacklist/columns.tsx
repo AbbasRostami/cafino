@@ -77,31 +77,34 @@ export const columns = ({
         },
         enableSorting: true,
       },
+      // {
+      //   header: "ایمیل",
+      //   accessorKey: "email",
+      //   cell: (info) => info.getValue() || "-",
+      //   enableSorting: true,
+      // },
       {
-        header: "ایمیل",
-        accessorKey: "email",
-        cell: (info) => info.getValue() || "-",
-        enableSorting: true,
-      },
-      {
-        header: "تلفن همراه",
+        header: "شماره تلفن",
         accessorKey: "phone",
-        cell: (info) => info.getValue() || "-",
-        enableSorting: true,
-      },
-      {
-        header: "تایید ایمیل",
-        accessorKey: "is_email_verified",
         cell: (info) => {
-          const active = info.getValue() as boolean;
-          return (
-            <Badge variant={active ? "success" : "destructive"}>
-              {active ? "تایید شده" : "تایید نشده"}
-            </Badge>
-          );
+          const phone = info.getValue() as string;
+          return <div className="force-ltr">{phone}</div>;
         },
         enableSorting: true,
       },
+      // {
+      //   header: "تایید ایمیل",
+      //   accessorKey: "is_email_verified",
+      //   cell: (info) => {
+      //     const active = info.getValue() as boolean;
+      //     return (
+      //       <Badge variant={active ? "success" : "destructive"}>
+      //         {active ? "تایید شده" : "تایید نشده"}
+      //       </Badge>
+      //     );
+      //   },
+      //   enableSorting: true,
+      // },
       {
         header: "نقش",
         accessorKey: "role",
@@ -152,9 +155,7 @@ export const columns = ({
                     <Button
                       variant="ghost"
                       size="icon"
-                      disabled={
-                        removingVars?.phone === user?.phone && isRemoving
-                      }
+                      disabled={removingVars?.id === user?.id && isRemoving}
                       className="h-8 w-8 rounded-full dark:bg-green-900/30 dark:hover:bg-green-900/50 transition-all duration-200 hover:scale-110"
                       onClick={async () => {
                         const isConfirmed = await confirm({
@@ -165,11 +166,11 @@ export const columns = ({
                           cancelText: "انصراف",
                         });
                         if (isConfirmed) {
-                          removeFromBlacklist({ phone: user?.phone });
+                          removeFromBlacklist({ id: user?.id });
                         }
                       }}
                     >
-                      {removingVars?.phone === user?.phone && isRemoving ? (
+                      {removingVars?.id === user?.id && isRemoving ? (
                         <Loader2 className="animate-spin" size={20} />
                       ) : (
                         <Trash2

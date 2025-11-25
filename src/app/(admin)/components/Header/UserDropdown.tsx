@@ -11,7 +11,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useUserProfile } from "@/services";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Home, LogOut, User, ShoppingBag } from "lucide-react";
+import {
+  Home,
+  LogOut,
+  User,
+  ShoppingBag,
+  User2Icon,
+  Users2,
+} from "lucide-react";
 import { useLogout } from "@/services";
 
 export default function UserDropdown() {
@@ -54,7 +61,7 @@ export default function UserDropdown() {
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild className="cursor-pointer">
             <Link href="/dashboard/users" className="font-bold">
-              <ShoppingBag size={16} />
+              <Users2 size={16} />
               مدیریت کاربران
             </Link>
           </DropdownMenuItem>

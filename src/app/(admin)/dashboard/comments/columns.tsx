@@ -113,13 +113,6 @@ export const columns = ({
         enableSorting: true,
       },
       {
-        accessorKey: "user.phone",
-        header: "شماره تلفن",
-        cell: (info) => info?.getValue() as string,
-        enableSorting: true,
-      },
-
-      {
         accessorKey: "item.title",
         header: "محصول",
         cell: (info) => info.getValue() || "-",

@@ -36,9 +36,8 @@ export function LastestComments({ data }: { data?: CommentOverview }) {
             </div>
           </div>
         </CardHeader>
-
         <CardContent className="px-6 ">
-          <div className="grid grid-cols-1 md:grid-cols-2  gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {data?.latestUnacceptedComments?.map((comment, index) => (
               <MotionDiv
                 key={comment?.id}
@@ -74,6 +73,21 @@ export function LastestComments({ data }: { data?: CommentOverview }) {
                 </div>
               </MotionDiv>
             ))}
+            {data?.latestUnacceptedComments?.length === 0 && (
+              <div className="col-span-full flex flex-col items-center justify-center py-16 opacity-80">
+                <div className="p-4 rounded-full bg-amber-100/60 dark:bg-amber-900/40 shadow-inner">
+                  <MessagesSquare className="h-10 w-10 text-amber-500 dark:text-amber-400" />
+                </div>
+
+                <p className="mt-4 text-base font-medium text-gray-700 dark:text-gray-300">
+                  هیچ کامنت تایید نشده‌ای موجود نیست
+                </p>
+
+                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                  به‌محض ثبت کامنت جدید، اینجا نمایش داده می‌شود
+                </p>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>

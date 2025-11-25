@@ -54,8 +54,8 @@ export const columns = ({
                   className="flex items-center gap-2 cursor-pointer"
                 >
                   <span className="text-gray-800 dark:text-gray-200 text-sm ">
-                    {identifier.length > 25
-                      ? identifier.slice(0, 25) + "..."
+                    {identifier.length > 20
+                      ? identifier.slice(0, 20) + "..."
                       : identifier}
                   </span>
                 </div>

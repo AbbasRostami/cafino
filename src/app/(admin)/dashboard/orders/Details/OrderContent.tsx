@@ -152,7 +152,7 @@ export const OrderContent = ({ order, isMobile }: OrderContentProps) => (
             اطلاعات کاربر
           </h3>
         </div>
-        <div className="space-y-3">
+        <div className="space-y-6">
           <InfoItem
             label="نام"
             value={order?.user?.first_name}

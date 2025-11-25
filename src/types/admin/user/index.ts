@@ -41,7 +41,7 @@ export interface DeleteUserRequest {
 }
 
 export interface ChangeUserPermissionRequest {
-  phone: string;
+  id: string;
   role: UserRole;
 }
 
@@ -50,12 +50,12 @@ export interface ChangeUserPermissionRequest {
 export interface UserColumnsProps {
   currentPage: number;
   currentLimit: number;
-  changePermission: (data: { phone: string; role: UserRole }) => void;
+  changePermission: (data: { id: string; role: UserRole }) => void;
   isChangingPermission: boolean;
-  changePermissionVars?: { phone: string; role: UserRole };
-  addToBlacklist: (data: { phone: string }) => void;
+  changePermissionVars?: { id: string; role: UserRole };
+  addToBlacklist: (data: { id: string }) => void;
   isAddingToBlacklist: boolean;
-  addToBlacklistVars?: { phone: string };
+  addToBlacklistVars?: { id: string };
 }
 
 // BlackList Types
@@ -111,5 +111,5 @@ export interface BlacklistResponse {
 }
 
 export interface RemoveUserFromBlacklistRequest {
-  phone: string;
+  id: string;
 }

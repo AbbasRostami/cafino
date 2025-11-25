@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
-import { LayoutList, Loader2, SquarePen, Trash2 } from "lucide-react";
+import { LayoutList, Link, Loader2, SquarePen, Trash2 } from "lucide-react";
 import { useDeleteItem } from "@/services";
 import { confirm } from "@/components/shared/ConfirmModal";
 import {
@@ -40,9 +40,7 @@ export const columns = ({
         cell: (info) => {
           const images = info.getValue() as { imageUrl: string }[];
           const url = images?.[0]?.imageUrl || "";
-
           if (!url) return "-";
-
           return (
             <>
               <div className="flex justify-center cursor-pointer">
@@ -50,7 +48,7 @@ export const columns = ({
                   <Image
                     src={url}
                     alt="تصویر محصول"
-                    className="w-16 h-16 rounded-md object-cover border hover:scale-105 transition"
+                    className="w-14 h-14 rounded-md object-cover border hover:scale-105 transition"
                     width={64}
                     height={64}
                     loading="lazy"
@@ -65,7 +63,22 @@ export const columns = ({
       {
         accessorKey: "title",
         header: "عنوان محصول",
-        cell: (info) => info?.getValue() as string,
+        cell: ({ row }) => {
+          const item = row.original;
+          const id = item?.id;
+          const slug = encodeURIComponent(item?.slug);
+
+          return (
+            <p
+              onClick={() => {
+                window.location.href = `/menu/${id}/${slug}`;
+              }}
+              className="text-blue-600 dark:text-blue-400 cursor-pointer hover:underline"
+            >
+              {item?.title}
+            </p>
+          );
+        },
         enableSorting: true,
       },
       {

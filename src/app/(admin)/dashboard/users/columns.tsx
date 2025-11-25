@@ -206,7 +206,7 @@ export const columns = ({
           const user = row?.original;
 
           const isCurrentUserAddingToBlacklist =
-            addToBlacklistVars?.phone === user?.phone && isAddingToBlacklist;
+            addToBlacklistVars?.id === user?.id && isAddingToBlacklist;
 
           return (
             <div className="flex justify-center items-center gap-2">
@@ -239,7 +239,7 @@ export const columns = ({
                     onValueChange={(newRole: string) => {
                       const role = newRole as UserRole;
                       if (role !== user?.role) {
-                        changePermission({ phone: user?.phone, role });
+                        changePermission({ id: user?.id, role });
                       }
                     }}
                   >
@@ -280,7 +280,7 @@ export const columns = ({
                           cancelText: "انصراف",
                         });
                         if (isConfirmed) {
-                          addToBlacklist({ phone: user?.phone });
+                          addToBlacklist({ id: user?.id });
                         }
                       }}
                     >

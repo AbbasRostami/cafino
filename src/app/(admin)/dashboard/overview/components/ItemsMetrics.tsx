@@ -98,37 +98,51 @@ export function ItemsMetrics({ data }: { data?: ItemOverview }) {
           </div>
 
           <ul className="space-y-1.5">
-            {data?.lowStockItems.map((item, index) => (
-              <MotionLi
-                key={item?.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-              >
-                <Link
-                  href={`/menu/${item?.id}`}
-                  className="group flex justify-between items-center rounded-xl border border-gray-200 dark:border-gray-700 p-2.5 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm hover:bg-gradient-to-r hover:from-rose-50 hover:to-pink-50 dark:hover:from-rose-900/20 dark:hover:to-pink-900/20 transition-all duration-300 shadow-sm hover:shadow-md"
+            {data?.lowStockItems?.length === 0 ? (
+              <li className="flex flex-col items-center justify-center mt-10 p-6 text-center border border-dashed border-gray-300 dark:border-gray-700 rounded-xl bg-white/50 dark:bg-gray-800/40 backdrop-blur-sm">
+                <div className="p-3 rounded-full bg-rose-100 dark:bg-rose-900/30 text-rose-500 dark:text-rose-300 mb-3">
+                  <PackageOpen className="w-6 h-6" />
+                </div>
+                <p className="font-medium text-gray-700 dark:text-gray-300">
+                  هیچ آیتم رو به اتمامی وجود ندارد
+                </p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  موجودی همه کالاها در سطح امن است
+                </p>
+              </li>
+            ) : (
+              data?.lowStockItems.map((item, index) => (
+                <MotionLi
+                  key={item?.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-rose-100 to-pink-100 dark:from-rose-900/30 dark:to-pink-900/30 text-rose-600 dark:text-rose-400 font-bold">
-                      !
+                  <Link
+                    href={`/menu/${item?.id}`}
+                    className="group flex justify-between items-center rounded-xl border border-gray-200 dark:border-gray-700 p-2.5 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm hover:bg-gradient-to-r hover:from-rose-50 hover:to-pink-50 dark:hover:from-rose-900/20 dark:hover:to-pink-900/20 transition-all duration-300 shadow-sm hover:shadow-md"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-rose-100 to-pink-100 dark:from-rose-900/30 dark:to-pink-900/30 text-rose-600 dark:text-rose-400 font-bold">
+                        !
+                      </div>
+                      <span className="font-semibold text-gray-800 dark:text-gray-200 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors">
+                        {item?.title.slice(0, 14)}...
+                      </span>
                     </div>
-                    <span className="font-semibold text-gray-800 dark:text-gray-200 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors">
-                      {item?.title.slice(0, 14)}...
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-sm font-medium text-rose-600 dark:text-rose-400">
-                      {item?.quantity}
-                    </span>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">
-                      عدد
-                    </span>
-                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-rose-500 transition-transform group-hover:translate-x-1" />
-                  </div>
-                </Link>
-              </MotionLi>
-            ))}
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-sm font-medium text-rose-600 dark:text-rose-400">
+                        {item?.quantity}
+                      </span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                        عدد
+                      </span>
+                      <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-rose-500 transition-transform group-hover:translate-x-1" />
+                    </div>
+                  </Link>
+                </MotionLi>
+              ))
+            )}
           </ul>
         </div>
       </CardContent>

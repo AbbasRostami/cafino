@@ -55,7 +55,10 @@ export const columns = ({
       {
         header: "شماره تلفن",
         accessorKey: "phone",
-        cell: (info) => info.getValue() as string,
+        cell: (info) => {
+          const phone = info.getValue() as string;
+          return <div className="force-ltr">{phone}</div>;
+        },
         enableSorting: true,
       },
       {

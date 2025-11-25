@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 import { useQueryStates, debounce, parseAsInteger, parseAsString } from "nuqs";
 import { DEFAULT_MIN, DEFAULT_MAX } from "@/utils/menuSearchParams";
+import { useDebounce } from "use-debounce";
 export const useMenuFiltersNuqs = () => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-
   // Use query states to manage filters
   const [filters, setFilters] = useQueryStates(
     {
@@ -22,6 +22,8 @@ export const useMenuFiltersNuqs = () => {
     }
   );
 
+  const [debouncedSearch] = useDebounce(filters.search, 500);
+
   // Build query string to use in useGetItems hook
   const queryString = useMemo(() => {
     const params = new URLSearchParams();
@@ -33,11 +35,15 @@ export const useMenuFiltersNuqs = () => {
       if (key === "maxPrice" && value === DEFAULT_MAX) return;
       if (key === "page" && value === 1) return;
 
-      params.set(key, String(value));
+      if (key === "search") {
+        params.set("search", debouncedSearch);
+      } else {
+        params.set(key, String(value));
+      }
     });
 
     return params.toString();
-  }, [filters]);
+  }, [filters, debouncedSearch]);
 
   const handleViewModeChange = (mode: "grid" | "list") => {
     setViewMode(mode);
