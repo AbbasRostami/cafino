@@ -26,10 +26,12 @@ import "swiper/css/effect-fade";
 import { SkeletonItemSection } from "@/components/skeleton";
 import { useGetItemsLanding } from "@/services/items/useGetItems";
 import { useRouter } from "next/navigation";
+import { useIsMobile } from "@/hooks/ui/useMediaQuery";
 
 const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
   const router = useRouter();
-
+  const isMobile = useIsMobile();
+  const Container = isMobile ? "div" : MotionDiv;
   const { data: itemsResponse, isLoading } = useGetItemsLanding(
     1,
     15,
@@ -136,12 +138,14 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
             };
             return (
               <SwiperSlide className=" py-2 md:py-10 " key={item?.id}>
-                <MotionDiv
-                  className="group bg-white dark:bg-[#1a1a1a]  rounded-2xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-xl relative border border-transparent hover:border-amber-400 dark:hover:border-amber-600 w-full max-w-[320px] mx-auto"
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                  viewport={{ once: true, amount: 0.2 }}
+                <Container
+                  className="group bg-white dark:bg-[#1a1a1a] rounded-2xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-xl relative border border-transparent hover:border-amber-400 dark:hover:border-amber-600 w-full max-w-[320px] mx-auto"
+                  {...(!isMobile && {
+                    initial: { opacity: 0, y: 50 },
+                    whileInView: { opacity: 1, y: 0 },
+                    viewport: { once: true, amount: 0.2 },
+                    transition: { duration: 0.4, delay: index * 0.1 },
+                  })}
                 >
                   <div className="relative rounded-t-2xl aspect-[4/3] w-full overflow-hidden">
                     <div className="relative rounded-t-2xl aspect-[4/3] w-full overflow-hidden group">
@@ -367,7 +371,7 @@ const ItemSectionClient: React.FC<ItemSectionClientProps> = ({ items }) => {
                       </div>
                     </div>
                   </div>
-                </MotionDiv>
+                </Container>
               </SwiperSlide>
             );
           })}

@@ -54,7 +54,6 @@ const makeRequest = (url: string, options: RequestInit) => {
   });
 };
 
-// ON ERROR
 const onError = async (response: Response, url: string) => {
   let errorData: any = {};
   try {

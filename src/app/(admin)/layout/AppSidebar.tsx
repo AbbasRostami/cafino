@@ -2,7 +2,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import logo from "./../../../assets/Logo/7.png";
+import logo from "./../../../assets/Logo/9.png";
+import logo1 from "./../../../assets/Logo/10.png";
+import logoWithotTextLight from "./../../../assets/Logo/7.png";
+import logoWithotTextDark from "./../../../assets/Logo/8.png";
 import { useSidebar } from "../context/SidebarContext";
 import {
   Tooltip,
@@ -346,7 +349,7 @@ const AppSidebar: React.FC = () => {
           !isExpanded && !isHovered ? "lg:justify-center" : "justify-center "
         }`}
       >
-        <Link href="/" className="flex items-center gap-1">
+        <Link href="/" className="flex items-center gap-1 px-3">
           {isExpanded || isHovered || isMobileOpen ? (
             <>
               <Image
@@ -359,21 +362,35 @@ const AppSidebar: React.FC = () => {
 
               <Image
                 className="hidden dark:block h-auto w-auto max-h-[70px]"
-                src={logo}
+                src={logo1}
                 alt="Logo"
                 width={70}
               />
-              <p className="text-4xl font-extrabold mt-1 leading-none">
+              {/* <p className="text-4xl font-extrabold mt-1 leading-none">
                 <span className="text-amber-600 dark:text-amber-400 drop-shadow-sm">
                   کافی
                 </span>
                 <span className="text-amber-700/80 dark:text-amber-600 drop-shadow-sm">
                   نو
                 </span>
-              </p>
+              </p> */}
             </>
           ) : (
-            <Image src={logo} alt="Logo" className="h-auto w-auto" width={32} />
+            <>
+              <Image
+                src={logoWithotTextLight}
+                alt="Logo"
+                width={32}
+                height={32}
+                className="block dark:hidden h-auto w-auto"
+              />
+              <Image
+                src={logoWithotTextDark}
+                alt="Logo"
+                width={32}
+                className="hidden dark:block h-auto w-auto"
+              />
+            </>
           )}
         </Link>
       </div>

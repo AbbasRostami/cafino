@@ -1,7 +1,9 @@
 "use client";
+
 import { useMotionValue, animate } from "framer-motion";
 import { MotionDiv, MotionSpan } from "@/utils/MotionWrapper";
 import { useEffect, useState } from "react";
+import { useIsMobile } from "@/hooks/ui/useMediaQuery";
 
 interface AnimatedStatItemProps {
   value: number;
@@ -14,10 +16,14 @@ export const AnimatedStatItem = ({
   title,
   subtitle,
 }: AnimatedStatItemProps) => {
+  const isMobile = useIsMobile();
+  const Container = isMobile ? "div" : MotionDiv;
+
   const motionValue = useMotionValue(0);
   const [displayValue, setDisplayValue] = useState("0");
 
   const startAnimation = () => {
+    if (isMobile) return;
     animate(motionValue, value, {
       duration: 2,
       ease: "easeOut",
@@ -28,20 +34,26 @@ export const AnimatedStatItem = ({
   };
 
   useEffect(() => {
+    if (isMobile) {
+      setDisplayValue(value.toString()); // نمایش مستقیم مقدار در موبایل
+      return;
+    }
     const unsubscribe = motionValue.on("change", (latest) => {
       setDisplayValue(Math.round(latest).toString());
     });
     return unsubscribe;
-  }, [motionValue]);
+  }, [motionValue, isMobile, value]);
 
   return (
-    <MotionDiv
+    <Container
       data-testid="stat-item"
       className="flex flex-col items-center gap-4"
-      whileInView={{ opacity: 1 }}
-      initial={{ opacity: 0 }}
-      viewport={{ once: true, amount: 0.5 }}
-      onViewportEnter={startAnimation}
+      {...(!isMobile && {
+        whileInView: { opacity: 1 },
+        initial: { opacity: 0 },
+        viewport: { once: true, amount: 0.5 },
+        onViewportEnter: startAnimation,
+      })}
     >
       <MotionSpan className="text-4xl md:text-6xl font-extrabold text-amber-500">
         {displayValue}
@@ -57,6 +69,6 @@ export const AnimatedStatItem = ({
           </span>
         )}
       </div>
-    </MotionDiv>
+    </Container>
   );
 };

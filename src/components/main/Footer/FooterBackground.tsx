@@ -1,7 +1,12 @@
+"use client";
+
 import { MotionDiv } from "@/utils/MotionWrapper";
 import { Coffee } from "lucide-react";
+import { useIsMobile } from "@/hooks/ui/useMediaQuery";
 
 const FooterBackground = () => {
+  const isMobile = useIsMobile();
+
   const coffeeIcons = [
     {
       top: "top-1/4",
@@ -50,32 +55,38 @@ const FooterBackground = () => {
     },
   ];
 
+  const WrapperDiv = isMobile ? "div" : MotionDiv;
+
   return (
     <>
       {coffeeIcons.map((icon, index) => (
-        <MotionDiv
+        <WrapperDiv
           key={index}
           className={`absolute ${icon.top} ${
             icon.left || icon.right
           } animate-pulse`}
-          initial={{ opacity: 0, scale: 0 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: index * 0.2 }}
-          style={{ animationDelay: `${icon.delay}ms` }}
+          {...(!isMobile && {
+            initial: { opacity: 0, scale: 0 },
+            whileInView: { opacity: 1, scale: 1 },
+            viewport: { once: true },
+            transition: { duration: 0.8, delay: index * 0.2 },
+            style: { animationDelay: `${icon.delay}ms` },
+          })}
         >
           <Coffee
             className={`${icon.size} ${icon.color} ${icon.opacity} ${icon.rotate}`}
           />
-        </MotionDiv>
+        </WrapperDiv>
       ))}
 
-      <MotionDiv
+      <WrapperDiv
         className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent"
-        initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.2, ease: "easeOut" }}
+        {...(!isMobile && {
+          initial: { scaleX: 0 },
+          whileInView: { scaleX: 1 },
+          viewport: { once: true },
+          transition: { duration: 1.2, ease: "easeOut" },
+        })}
       />
     </>
   );

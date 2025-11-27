@@ -275,7 +275,7 @@ export const columns = ({
                         value={role?.value}
                         className="text-right justify-end"
                       >
-                        <div className="flex items-center gap-2 justify-end w-full">
+                        <div className="flex items-center gap-2 justify-end w-full cursor-pointer ">
                           <Badge
                             variant={getRoleInfo(role?.value).variant}
                             className="text-xs"

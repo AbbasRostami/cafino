@@ -26,10 +26,11 @@ import {
   MotionSpan,
 } from "@/utils/MotionWrapper";
 import VideoButton from "./VideoButton";
-
+import { useIsMobile } from "@/hooks/ui/useMediaQuery";
 const HeroContent = () => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const isMobile = useIsMobile();
   const features = [
     {
       icon: Coffee,
@@ -63,19 +64,26 @@ const HeroContent = () => {
     },
   ];
 
+  // استفاده از MotionDiv در صورت نبود موبایل
+  const Container = isMobile ? "div" : MotionDiv;
+
   return (
     <div className="text-center lg:text-right space-y-8">
-      <MotionDiv
+      <Container
         className="space-y-4"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        {...(!isMobile && {
+          initial: { opacity: 0, y: 20 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.8 },
+        })}
       >
         <MotionH1
           className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          {...(!isMobile && {
+            initial: { opacity: 0, y: 30 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.8, delay: 0.2 },
+          })}
         >
           <MotionSpan
             data-testid="hero-title"
@@ -90,9 +98,11 @@ const HeroContent = () => {
           <br />
           <MotionSpan
             className="text-gray-800 dark:text-gray-200"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
+            {...(!isMobile && {
+              initial: { opacity: 0 },
+              animate: { opacity: 1 },
+              transition: { duration: 0.8, delay: 0.5 },
+            })}
           >
             تجربه‌ای متفاوت
           </MotionSpan>
@@ -101,19 +111,23 @@ const HeroContent = () => {
         <MotionP
           data-testid="hero-description"
           className="text-lg sm:text-xl font-bold text-gray-600 dark:text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
+          {...(!isMobile && {
+            initial: { opacity: 0 },
+            animate: { opacity: 1 },
+            transition: { duration: 0.8, delay: 0.7 },
+          })}
         >
           با بهترین قهوه‌ها و غذاهای خانگی، لحظات شیرین را با ما تجربه کنید
         </MotionP>
-      </MotionDiv>
+      </Container>
 
-      <MotionDiv
+      <Container
         className="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-lg mx-auto lg:mx-0"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.9 }}
+        {...(!isMobile && {
+          initial: { opacity: 0 },
+          animate: { opacity: 1 },
+          transition: { duration: 0.8, delay: 0.9 },
+        })}
       >
         {features.map((item, index) => (
           <MotionDiv
@@ -127,13 +141,15 @@ const HeroContent = () => {
             <span className="font-bold">{item.text}</span>
           </MotionDiv>
         ))}
-      </MotionDiv>
+      </Container>
 
-      <MotionDiv
+      <Container
         className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 1.1 }}
+        {...(!isMobile && {
+          initial: { opacity: 0 },
+          animate: { opacity: 1 },
+          transition: { duration: 0.8, delay: 1.1 },
+        })}
       >
         <MotionDiv whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Button
@@ -179,13 +195,15 @@ const HeroContent = () => {
             )}
           </DialogContent>
         </Dialog>
-      </MotionDiv>
+      </Container>
 
-      <MotionDiv
+      <Container
         className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start text-sm text-gray-600 dark:text-gray-300"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 1.3 }}
+        {...(!isMobile && {
+          initial: { opacity: 0 },
+          animate: { opacity: 1 },
+          transition: { duration: 0.8, delay: 1.3 },
+        })}
       >
         {contactInfo?.map((item, index) => (
           <MotionDiv
@@ -200,7 +218,7 @@ const HeroContent = () => {
             </span>
           </MotionDiv>
         ))}
-      </MotionDiv>
+      </Container>
     </div>
   );
 };

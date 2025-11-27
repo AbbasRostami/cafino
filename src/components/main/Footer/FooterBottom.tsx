@@ -1,10 +1,13 @@
 "use client";
-import { MotionButton, MotionDiv, MotionP } from "@/utils/MotionWrapper";
+
 import { HeartPulse } from "lucide-react";
 import { useEffect, useState } from "react";
+import { MotionDiv, MotionP, MotionButton } from "@/utils/MotionWrapper";
+import { useIsMobile } from "@/hooks/ui/useMediaQuery";
 
 const FooterBottom = () => {
   const [visible, setVisible] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const onScroll = () => setVisible(window.pageYOffset > 100);
@@ -16,54 +19,70 @@ const FooterBottom = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const WrapperDiv = isMobile ? "div" : MotionDiv;
+  const WrapperP = isMobile ? "p" : MotionP;
+  const WrapperButton = isMobile ? "button" : MotionButton;
+
   return (
     <>
-      <MotionDiv
+      <WrapperDiv
         className="pt-8 border-t border-amber-200 dark:border-amber-800/30 flex flex-col md:flex-row justify-between items-center"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+        {...(!isMobile && {
+          initial: { opacity: 0, y: 20 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: true },
+          transition: { duration: 0.6 },
+        })}
       >
         <div className="text-center md:text-right mb-4 md:mb-0">
-          <MotionP
+          <WrapperP
             className="text-gray-600 dark:text-gray-400 text-sm font-bold"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            {...(!isMobile && {
+              initial: { opacity: 0 },
+              whileInView: { opacity: 1 },
+              viewport: { once: true },
+              transition: { duration: 0.8, delay: 0.2 },
+            })}
           >
             © {new Date().getFullYear()} کافینو
-          </MotionP>
-          <MotionP
+          </WrapperP>
+
+          <WrapperP
             className="text-gray-500 dark:text-gray-500 text-xs mt-1"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            {...(!isMobile && {
+              initial: { opacity: 0 },
+              whileInView: { opacity: 1 },
+              viewport: { once: true },
+              transition: { duration: 0.8, delay: 0.4 },
+            })}
           >
             تمامی حقوق محفوظ است
-          </MotionP>
+          </WrapperP>
         </div>
 
-        <MotionDiv
+        <WrapperDiv
           className="flex items-center gap-2 text-amber-600 dark:text-amber-400"
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          {...(!isMobile && {
+            initial: { opacity: 0, scale: 0.8 },
+            whileInView: { opacity: 1, scale: 1 },
+            viewport: { once: true },
+            transition: { duration: 0.6, delay: 0.6 },
+          })}
         >
           <span className="text-lg font-bold">ساخته شده با</span>
-          <MotionDiv
-            animate={{ scale: [1, 1.2, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <HeartPulse size={20} />
-          </MotionDiv>
-        </MotionDiv>
-      </MotionDiv>
+          {!isMobile && (
+            <MotionDiv
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <HeartPulse size={20} />
+            </MotionDiv>
+          )}
+          {isMobile && <HeartPulse size={20} />}
+        </WrapperDiv>
+      </WrapperDiv>
 
-      <MotionButton
+      <WrapperButton
         onClick={scrollToTop}
         aria-label="بازگشت به بالا"
         className={`
@@ -77,11 +96,13 @@ const FooterBottom = () => {
               : "opacity-0 pointer-events-none"
           }
         `}
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: visible ? 1 : 0, scale: visible ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
+        {...(!isMobile && {
+          initial: { opacity: 0, scale: 0 },
+          animate: { opacity: visible ? 1 : 0, scale: visible ? 1 : 0 },
+          transition: { duration: 0.3 },
+          whileHover: { scale: 1.1 },
+          whileTap: { scale: 0.9 },
+        })}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +118,7 @@ const FooterBottom = () => {
             d="M5 15l7-7 7 7"
           />
         </svg>
-      </MotionButton>
+      </WrapperButton>
     </>
   );
 };

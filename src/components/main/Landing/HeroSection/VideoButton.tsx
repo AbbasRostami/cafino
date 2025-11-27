@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Play } from "lucide-react";
-import { MotionDiv } from "@/utils/MotionWrapper";
 
 interface VideoButtonProps {
   onClick: () => void;
@@ -10,12 +9,8 @@ interface VideoButtonProps {
 
 const VideoButton = ({ onClick }: VideoButtonProps) => {
   return (
-    <MotionDiv
-      className="relative"
-      whileHover={{ scale: 1 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      <MotionDiv className="absolute inset-0" />
+    <div className="relative">
+      <div className="absolute inset-0" />
       <Button
         variant="outline"
         size="lg"
@@ -29,7 +24,7 @@ const VideoButton = ({ onClick }: VideoButtonProps) => {
         <Play className="w-5 h-5 ml-2 fill-amber-500/20" />
         تماشای ویدیو
       </Button>
-    </MotionDiv>
+    </div>
   );
 };
 

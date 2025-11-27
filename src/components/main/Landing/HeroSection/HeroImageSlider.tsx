@@ -9,16 +9,22 @@ import Photo1 from "./../../../../assets/HeroSection/HeroSection1.webp";
 import Photo2 from "./../../../../assets/HeroSection/HeroSection2.webp";
 import Photo3 from "./../../../../assets/HeroSection/HeroSection3.webp";
 import Photo4 from "./../../../../assets/HeroSection/HeroSection4.webp";
+import { useIsMobile } from "@/hooks/ui/useMediaQuery";
 
 const HeroImageSlider = () => {
   const photos = [Photo1, Photo2, Photo3, Photo4];
+  const isMobile = useIsMobile();
+
+  const Container = isMobile ? "div" : MotionDiv;
 
   return (
-    <MotionDiv
+    <Container
       className="relative w-full max-w-[90vw] mx-auto rounded-2xl overflow-hidden mb-4"
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.8, delay: 0.5 }}
+      {...(!isMobile && {
+        initial: { opacity: 0, scale: 0.9 },
+        animate: { opacity: 1, scale: 1 },
+        transition: { duration: 0.8, delay: 0.5 },
+      })}
     >
       <Swiper
         spaceBetween={10}
@@ -47,7 +53,7 @@ const HeroImageSlider = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-    </MotionDiv>
+    </Container>
   );
 };
 

@@ -8,6 +8,7 @@ import Gallery3 from "./../../../../assets/Gallery/Gallery3.avif";
 import Gallery4 from "./../../../../assets/Gallery/Gallery4.avif";
 import Image from "next/image";
 import { MotionDiv, MotionP } from "@/utils/MotionWrapper";
+import { useIsMobile } from "@/hooks/ui/useMediaQuery";
 
 const GalleryImagesSection = ({
   hoveredIndex,
@@ -16,7 +17,35 @@ const GalleryImagesSection = ({
   hoveredIndex: number | null;
   setHoveredIndex: (index: number | null) => void;
 }) => {
+  const isMobile = useIsMobile();
   const containerRef = useRef(null);
+
+  const Container = isMobile ? "div" : MotionDiv;
+  const Item = isMobile ? "div" : MotionDiv;
+  const HoverOverlay = isMobile ? "div" : MotionDiv;
+  const HoverIcon = isMobile ? "div" : MotionDiv;
+  const TextWrapper = isMobile ? "div" : MotionDiv;
+
+  const containerVariants = !isMobile
+    ? {
+        hidden: { opacity: 0 },
+        visible: {
+          opacity: 1,
+          transition: { staggerChildren: 0.1 },
+        },
+      }
+    : {};
+
+  const itemVariants = !isMobile
+    ? {
+        hidden: { y: 20, opacity: 0 },
+        visible: {
+          y: 0,
+          opacity: 1,
+          transition: { duration: 0.5, ease: "easeOut" },
+        },
+      }
+    : {};
 
   const galleryItems = [
     {
@@ -49,90 +78,81 @@ const GalleryImagesSection = ({
     },
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-      },
-    },
-  };
-
   return (
-    <MotionDiv
+    <Container
       ref={containerRef}
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
+      {...(!isMobile && {
+        variants: containerVariants,
+        initial: "hidden",
+        whileInView: "visible",
+        viewport: { once: true, amount: 0.3 },
+      })}
       className="grid grid-cols-2 gap-4 order-1 lg:order-2"
     >
       {galleryItems.map((item, index) => (
-        <MotionDiv
+        <Item
           key={item.id}
-          variants={itemVariants}
+          {...(!isMobile && { variants: itemVariants, whileHover: { y: -5 } })}
           className={`overflow-hidden rounded-2xl shadow-xl ${
             index % 3 === 0 ? "col-span-2 h-52" : "h-40"
           }`}
-          onMouseEnter={() => setHoveredIndex(index)}
-          onMouseLeave={() => setHoveredIndex(null)}
-          whileHover={{ y: -5 }}
+          onMouseEnter={() => !isMobile && setHoveredIndex(index)}
+          onMouseLeave={() => !isMobile && setHoveredIndex(null)}
         >
           <div className="relative h-full w-full group">
             <Image
               data-testid="gallery-image"
-              src={item?.image}
+              src={item.image}
               alt={item.title}
               className="w-full h-full object-cover"
             />
-            <MotionDiv
+
+            <HoverOverlay
               className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"
-              initial={{ opacity: 0.6 }}
-              animate={{ opacity: hoveredIndex === index ? 0.9 : 0.6 }}
-              transition={{ duration: 0.3 }}
+              {...(!isMobile && {
+                initial: { opacity: 0.6 },
+                animate: { opacity: hoveredIndex === index ? 0.9 : 0.6 },
+                transition: { duration: 0.3 },
+              })}
             />
-            <MotionDiv
+
+            <TextWrapper
               className="absolute bottom-0 left-0 right-0 p-4 md:p-5 text-white"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.2 + index * 0.1 }}
+              {...(!isMobile && {
+                initial: { y: 20, opacity: 0 },
+                animate: { y: 0, opacity: 1 },
+                transition: { delay: 0.2 + index * 0.1 },
+              })}
             >
               <div className="flex items-center gap-2 mb-2">
-                <MotionDiv
-                  animate={{
-                    scale: hoveredIndex === index ? 1.2 : 1,
-                    rotate: hoveredIndex === index ? 5 : 0,
-                  }}
+                <HoverIcon
+                  {...(!isMobile && {
+                    animate: {
+                      scale: hoveredIndex === index ? 1.2 : 1,
+                      rotate: hoveredIndex === index ? 5 : 0,
+                    },
+                  })}
                 >
                   {item.icon}
-                </MotionDiv>
+                </HoverIcon>
+
                 <h3 className="font-bold text-lg md:text-xl">{item.title}</h3>
               </div>
+
               <MotionP
                 className="text-xs md:text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                initial={{ y: 10 }}
-                animate={{ y: 0 }}
+                {...(!isMobile && {
+                  initial: { y: 10 },
+                  animate: { y: 0 },
+                })}
               >
                 {item.description}
               </MotionP>
-            </MotionDiv>
+            </TextWrapper>
           </div>
-        </MotionDiv>
+        </Item>
       ))}
-    </MotionDiv>
+    </Container>
   );
 };
 
