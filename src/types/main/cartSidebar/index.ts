@@ -12,7 +12,7 @@ export interface CartItemData {
   category: {
     title: string;
   };
-  quantity: string;
+  quantity: string | number;
   isFav?: boolean;
   isAvailable?: boolean;
 }
