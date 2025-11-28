@@ -151,7 +151,12 @@ export const columns = ({
       },
       {
         accessorKey: "rate_count",
-        header: "تعداد رای",
+        header: () => (
+          <div className="flex flex-col leading-tight text-center">
+            <span>تعداد</span>
+            <span>امتیاز</span>
+          </div>
+        ),
         cell: (info) => info?.getValue() ?? "-",
         enableSorting: true,
       },
@@ -161,7 +166,6 @@ export const columns = ({
         cell: ({ row }) => {
           const value = row.getValue("show");
           const isActive = Boolean(value);
-
           return (
             <Badge variant={isActive ? "success" : "destructive"}>
               {isActive ? "فعال" : "غیرفعال"}

@@ -79,7 +79,10 @@ export const columns = ({
         header: "آیتم ها",
         cell: (info) => {
           const items = info?.getValue() as any[];
-          const totalItems = items?.reduce((sum, item) => sum + item?.count, 0);
+          const totalItems = items?.reduce(
+            (sum, item) => sum + (item?.count ?? 0),
+            0
+          );
           return (
             <TooltipProvider>
               <Tooltip>
@@ -92,8 +95,11 @@ export const columns = ({
                 <TooltipContent>
                   <div className="max-w-xs">
                     {items?.map((item, index) => (
-                      <span key={index} className="flex flex-col text-sm">
-                        {item?.item?.title} - {item?.count} عدد
+                      <span
+                        key={index}
+                        className="flex flex-col items-start text-sm"
+                      >
+                        • {item?.item?.title} - {item?.count} عدد
                       </span>
                     ))}
                   </div>
@@ -185,7 +191,7 @@ export const columns = ({
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <div className="flex items-center gap-1 cursor-help">
+                  <div className="flex justify-center items-center gap-1 cursor-help">
                     <MapPin className="w-4 h-4 " />
                     <span className="text-sm">{address?.city}</span>
                   </div>

@@ -150,7 +150,7 @@ export function DataTable<TData, TValue>({
                   <TableHead
                     key={header.id}
                     onClick={header.column.getToggleSortingHandler()}
-                    className={`p-4 font-bold cursor-pointer select-none hover:bg-white/10 dark:hover:bg-amber-500/20 text-center
+                    className={`py-4 px-2 font-bold cursor-pointer select-none hover:bg-white/10 dark:hover:bg-amber-500/20 text-center
                 ${header.column.id === "id" ? "w-12" : ""}`}
                   >
                     {flexRender(
@@ -190,7 +190,7 @@ export function DataTable<TData, TValue>({
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
-                      className={`p-3 font-bold text-gray-700 dark:text-gray-200 whitespace-nowrap
+                      className={`py-3 px-1 font-bold text-gray-700 dark:text-gray-200 whitespace-nowrap
                      ${cell.column.id === "id" ? "w-12" : ""}`}
                     >
                       {flexRender(

@@ -39,7 +39,7 @@ export const PriceSection = ({
       className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-2xl p-4 shadow-md border border-amber-100 dark:border-amber-800/30"
     >
       <div className="flex flex-col justify-between items-center gap-4">
-        <div className="w-full flex items-center justify-between gap-2">
+        <div className="w-full flex flex-col-reverse 2xsm:flex-row items-center justify-between gap-4.5 2xsm:gap-2">
           <div className="flex items-center gap-2">
             <span className="text-xl font-bold text-amber-700 dark:text-amber-300">
               {formatCurrency(finalPrice)} تومان
@@ -60,6 +60,7 @@ export const PriceSection = ({
               itemData={itemData}
               disabled={item?.quantity === 0}
               className=""
+              title="افزدون"
             />
           </MotionDiv>
         </div>
