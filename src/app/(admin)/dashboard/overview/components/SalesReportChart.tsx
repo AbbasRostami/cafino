@@ -167,9 +167,9 @@ export const SalesReportChart = ({ className }: SalesReportChartProps) => {
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            {dateRanges.map((range) => (
-              <SelectItem key={range.value} value={range.value}>
-                {range.label}
+            {dateRanges?.map((range) => (
+              <SelectItem key={range.value} value={range?.value}>
+                {range?.label}
               </SelectItem>
             ))}
           </SelectContent>

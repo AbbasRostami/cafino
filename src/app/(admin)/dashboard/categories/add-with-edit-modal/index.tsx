@@ -49,7 +49,7 @@ export function CategoryModal({
             <VisuallyHidden>
               <DrawerTitle>{titleLabel}</DrawerTitle>
               <DrawerDescription>
-                ویرایش و افزدون کامل دسته بندی ها
+                ویرایش و افزودن کامل دسته بندی ها
               </DrawerDescription>
             </VisuallyHidden>
           </DrawerHeader>
@@ -69,9 +69,9 @@ export function CategoryModal({
       <DialogTrigger asChild>{triggerButton}</DialogTrigger>
       <DialogContent className="max-w-2xl max-h-[90vh] scrollbar-hide overflow-y-auto bg-white dark:bg-gray-900 border-amber-200 dark:border-amber-800">
         <VisuallyHidden>
-          <DialogTitle>افزدون و ویرایش دسته بندی </DialogTitle>
+          <DialogTitle>افزودن و ویرایش دسته بندی </DialogTitle>
           <DialogDescription>
-            ویرایش و افزدون کامل دسته بندی ها
+            ویرایش و افزودن کامل دسته بندی ها
           </DialogDescription>
         </VisuallyHidden>
         <ModalContent

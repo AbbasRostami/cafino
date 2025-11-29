@@ -125,10 +125,10 @@ export function FormSections({
                 placeholder="نام محصول را وارد کنید"
                 className="text-right h-11 border-2 focus:border-blue-500 transition-colors"
               />
-              {errors.title && (
+              {errors?.title && (
                 <p className="text-sm text-red-500 text-right flex items-center gap-1">
                   <AlertCircle size={14} />
-                  {errors.title.message}
+                  {errors?.title?.message}
                 </p>
               )}
             </div>

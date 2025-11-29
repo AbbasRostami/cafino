@@ -94,7 +94,7 @@ export function useItemForm({ isOpen, onClose, item }: UseItemFormProps) {
       if (categoryObj) {
         setValue("category", categoryObj.id);
       }
-      setImagePreview(item.images?.map((img) => img.imageUrl) || []);
+      setImagePreview(item.images?.map((img) => img?.imageUrl) || []);
     } else {
       setImagePreview([]);
     }

@@ -320,7 +320,7 @@ export default function AddAddressModal({
             افزودن آدرس جدید
           </DialogTitle>
           <VisuallyHidden asChild>
-            <DialogDescription>افزدون آدرس</DialogDescription>
+            <DialogDescription>افزودن آدرس</DialogDescription>
           </VisuallyHidden>
           <DialogClose asChild>
             <Button

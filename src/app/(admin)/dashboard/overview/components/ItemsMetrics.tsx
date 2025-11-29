@@ -111,7 +111,7 @@ export function ItemsMetrics({ data }: { data?: ItemOverview }) {
                 </p>
               </li>
             ) : (
-              data?.lowStockItems.map((item, index) => (
+              data?.lowStockItems?.map((item, index) => (
                 <MotionLi
                   key={item?.id}
                   initial={{ opacity: 0, y: 10 }}

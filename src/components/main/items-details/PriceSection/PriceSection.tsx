@@ -60,7 +60,7 @@ export const PriceSection = ({
               itemData={itemData}
               disabled={item?.quantity === 0}
               className=""
-              title="افزدون"
+              title="افزودن"
             />
           </MotionDiv>
         </div>

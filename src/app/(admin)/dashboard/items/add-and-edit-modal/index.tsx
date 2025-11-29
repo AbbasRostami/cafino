@@ -28,7 +28,7 @@ export default function ItemFormModal({
       <Drawer open={isOpen} onOpenChange={onClose}>
         <DrawerContent className="max-h-[90vh]">
           <VisuallyHidden>
-            <DrawerTitle>افزدون و ویرایش ایتم</DrawerTitle>
+            <DrawerTitle>افزودن و ویرایش ایتم</DrawerTitle>
             <DrawerDescription>
               اینجا توضیح کوتاه در مورد دیالوگ یا Dialog
             </DrawerDescription>
@@ -52,7 +52,7 @@ export default function ItemFormModal({
         className="min-w-3xl max-h-[95vh] scrollbar-hide overflow-y-auto p-6 border-amber-200 dark:border-amber-800"
       >
         <VisuallyHidden>
-          <DialogTitle>ویرایش و افزدون ایتم</DialogTitle>
+          <DialogTitle>ویرایش و افزودن ایتم</DialogTitle>
           <DialogDescription>
             اینجا توضیح کوتاه در مورد دیالوگ یا Dialog
           </DialogDescription>

@@ -64,7 +64,7 @@ export const columns = ({
         accessorKey: "title",
         header: "عنوان محصول",
         cell: ({ row }) => {
-          const item = row.original;
+          const item = row?.original;
           const id = item?.id;
           const slug = encodeURIComponent(item?.slug);
 
@@ -133,12 +133,12 @@ export const columns = ({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <p className="cursor-pointer underline  decoration-dotted">
-                    {ingredients.length} مواد اولیه
+                    {ingredients?.length} مواد اولیه
                   </p>
                 </TooltipTrigger>
                 <TooltipContent className="max-w-xs">
                   <ul className="space-y-1 text-sm leading-5">
-                    {ingredients.map((i, index) => (
+                    {ingredients?.map((i, index) => (
                       <li key={index}>{i + ","}</li>
                     ))}
                   </ul>
@@ -164,7 +164,7 @@ export const columns = ({
         accessorKey: "show",
         header: "نمایش",
         cell: ({ row }) => {
-          const value = row.getValue("show");
+          const value = row?.getValue("show");
           const isActive = Boolean(value);
           return (
             <Badge variant={isActive ? "success" : "destructive"}>
@@ -268,7 +268,7 @@ export const columns = ({
                           cancelText: "انصراف",
                         });
                         if (isConfirmed) {
-                          mutate({ id: item.id });
+                          mutate({ id: item?.id });
                         }
                       }}
                     >
