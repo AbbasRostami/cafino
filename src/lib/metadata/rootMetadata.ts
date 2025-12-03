@@ -30,11 +30,11 @@ export const rootMetadata: Metadata = {
     description: siteDescription,
     images: [
       {
-        url: "/MainTel.jpg",
-        width: 1200,
-        height: 630,
+        url: "/MainTel.png",
+        width: 800,
+        height: 600,
         alt: `${siteName} - کافه و رستوران`,
-        type: "image/jpeg",
+        type: "image/png",
       },
     ],
   },
@@ -43,21 +43,22 @@ export const rootMetadata: Metadata = {
     card: "summary_large_image",
     title: `${siteName} | کافه و رستوران`,
     description: siteDescription,
-    images: ["/MainTel.jpg"],
+    images: ["/MainTel.png"],
   },
 
   manifest: "/manifest.webmanifest",
   icons: {
     icon: [
-      { url: "/MainTel.jpg", sizes: "32x32", type: "image/x-icon" },
-      { url: "/MainTel.jpg", sizes: "16x16", type: "image/x-icon" },
+      { url: "/favicon.ico", sizes: "32x32", type: "image/x-icon" },
+      { url: "/favicon.ico", sizes: "16x16", type: "image/x-icon" },
     ],
-    apple: [{ url: "/MainTel.jpg", sizes: "180x180", type: "image/x-icon" }],
+    apple: [{ url: "/MainTel.png", sizes: "180x180", type: "image/png" }],
     other: [
       {
         rel: "mask-icon",
-        url: "/MainTel.jpg",
+        url: "/MainTel.png",
         color: "#8B4513",
+        type: "image/png",
       },
     ],
   },
@@ -133,8 +134,8 @@ export function generatePageMetadata({
   const pageImages = [
     ...images,
     {
-      url: "/MainTel.jpg",
-      width: 1200,
+      url: "/MainTel.png",
+      width: 800,
       height: 600,
       alt: fullTitle,
     },
@@ -159,7 +160,7 @@ export function generatePageMetadata({
       card: "summary_large_image",
       title: fullTitle,
       description,
-      images: pageImages?.length > 0 ? [pageImages[0].url] : ["/MainTel.jpg"],
+      images: pageImages?.length > 0 ? [pageImages[0].url] : ["/MainTel.png"],
     },
     robots: noIndex
       ? {

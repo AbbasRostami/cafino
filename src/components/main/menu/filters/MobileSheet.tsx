@@ -15,6 +15,7 @@ import { MobileSheetProps } from "@/types";
 import { PriceInputs } from "./PriceInputs";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { useMenuFiltersNuqs } from "@/hooks/business/useMenuFiltersNuqs";
+import { formatCurrency } from "@/utils/formatters";
 
 const MobileSheet = ({
   isOpen,
@@ -115,10 +116,11 @@ const MobileSheet = ({
               <div>
                 <div className="grid grid-cols-2 gap-3">
                   {categories?.categories?.map((category: any) => {
-                    const isSelected = tempFilters.category === category?.title;
+                    const isSelected =
+                      tempFilters?.category === category?.title;
                     return (
                       <div
-                        key={category.id}
+                        key={category?.id}
                         className={cn(
                           "p-3 rounded-xl border transition-all duration-300 cursor-pointer",
                           isSelected
@@ -131,9 +133,9 @@ const MobileSheet = ({
                           setTempFilters({
                             ...tempFilters,
                             category:
-                              tempFilters.category === category.title
+                              tempFilters?.category === category?.title
                                 ? null
-                                : category.title,
+                                : category?.title,
                           });
                         }}
                       >
@@ -148,7 +150,7 @@ const MobileSheet = ({
                           ></div>
                           <div>
                             <h4 className="font-medium text-gray-800 dark:text-gray-200">
-                              {category.title}
+                              {category?.title}
                             </h4>
                           </div>
                         </div>
@@ -162,7 +164,7 @@ const MobileSheet = ({
                 <FilterSectionHeader title="محدوده قیمت" />
                 <div className="space-y-4">
                   <Slider
-                    value={[tempFilters.minPrice, tempFilters.maxPrice]}
+                    value={[tempFilters?.minPrice, tempFilters?.maxPrice]}
                     min={DEFAULT_MIN}
                     max={DEFAULT_MAX}
                     step={1000}
@@ -175,12 +177,12 @@ const MobileSheet = ({
                     }
                   />
                   <div className="flex justify-between text-sm font-medium text-gray-700 dark:text-gray-300">
-                    <span>{tempFilters.maxPrice} تومان</span>
-                    <span>{tempFilters.minPrice} تومان</span>
+                    <span>{formatCurrency(tempFilters?.maxPrice)} تومان</span>
+                    <span>{formatCurrency(tempFilters?.minPrice)} تومان</span>
                   </div>
                   <PriceInputs
-                    minPrice={tempFilters.minPrice}
-                    maxPrice={tempFilters.maxPrice}
+                    minPrice={tempFilters?.minPrice}
+                    maxPrice={tempFilters?.maxPrice}
                     onMinPriceChange={(val) =>
                       setTempFilters({ ...tempFilters, minPrice: val })
                     }
@@ -203,15 +205,15 @@ const MobileSheet = ({
                       label: "موجودی‌ها",
                       value: "true",
                       color: "bg-green-500",
-                      isSelected: tempFilters.availableOnly === "true",
+                      isSelected: tempFilters?.availableOnly === "true",
                     },
                     {
                       label: "همه",
                       value: null,
                       color: "bg-blue-500",
                       isSelected:
-                        !tempFilters.availableOnly ||
-                        tempFilters.availableOnly === null,
+                        !tempFilters?.availableOnly ||
+                        tempFilters?.availableOnly === null,
                     },
                   ].map((option) => (
                     <div
@@ -229,18 +231,18 @@ const MobileSheet = ({
                         e.preventDefault();
                         setTempFilters({
                           ...tempFilters,
-                          availableOnly: option.value,
+                          availableOnly: option?.value,
                         });
                       }}
                     >
-                      <div className={cn("p-2 rounded-lg", option.color)}>
+                      <div className={cn("p-2 rounded-lg", option?.color)}>
                         <div
-                          className={cn("w-2 h-2 rounded-full", option.color)}
+                          className={cn("w-2 h-2 rounded-full", option?.color)}
                         ></div>
                       </div>
                       <div>
                         <h4 className="font-medium text-gray-800 dark:text-gray-200">
-                          {option.label}
+                          {option?.label}
                         </h4>
                       </div>
                     </div>

@@ -13,9 +13,9 @@ export const CartSidebarTrigger: React.FC<CartSidebarTriggerProps> = ({
         aria-label="سبد خرید"
         data-testid="cart-icon"
         onClick={onOpen}
-        className="p-2 rounded-full border transition-all cursor-pointer duration-300 border-gray-300 dark:border-gray-600 bg-white dark:bg-neutral-800 shadow-sm hover:shadow-lg hover:scale-110 group"
+        className="!p-2 rounded-full border transition-all cursor-pointer duration-300 border-gray-300 dark:border-gray-600 bg-white dark:bg-neutral-800 shadow-sm hover:shadow-lg hover:scale-110 group"
       >
-        <ShoppingCart className="w-6 h-6 text-gray-700 dark:text-gray-200 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors" />
+        <ShoppingCart className="w-5  h-5 md:w-6 md:h-6 text-gray-700 dark:text-gray-200 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors" />
         {cartData?.cartItems && cartData?.cartItems?.length > 0 && (
           <span
             aria-label="تعداد محصولات در سبد خرید"

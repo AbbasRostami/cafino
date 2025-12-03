@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/utils/utils";
 import { PriceInputsProps } from "@/types/main";
+import { formatCurrency } from "@/utils/formatters";
 
 export const PriceInputs = ({
   minPrice,
@@ -52,7 +53,7 @@ export const PriceInputs = ({
               id="min-price"
               type="number"
               value={minPrice === defaultMin ? "" : minPrice}
-              placeholder={String(defaultMin)}
+              placeholder={formatCurrency(defaultMin)}
               onChange={(e) => onMinPriceChange(Number(e.target.value))}
               className="pr-8 text-sm [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               min={defaultMin}
