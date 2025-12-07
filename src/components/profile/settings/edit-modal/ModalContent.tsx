@@ -108,7 +108,6 @@ export const ModalContent = ({
 
             return (
               <DatePicker
-                portal
                 value={displayValue}
                 onChange={(date) => {
                   const gregorianDate = date

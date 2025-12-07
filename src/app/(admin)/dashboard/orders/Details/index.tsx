@@ -37,7 +37,7 @@ export default function OrderDetails({
             </Button>
           </DrawerTrigger>
 
-          <DrawerContent className="h-[80vh] overflow-y-auto border-none">
+          <DrawerContent className="border-none !p-0">
             <VisuallyHidden>
               <DialogTitle>جزئیات سفارش</DialogTitle>
             </VisuallyHidden>
@@ -65,7 +65,7 @@ export default function OrderDetails({
           </DialogTrigger>
           <DialogContent
             showCloseButton={false}
-            className="min-w-2xl max-h-[90vh] overflow-y-auto scrollbar-hide border-none rounded-2xl"
+            className="min-w-2xl p-0 max-h-[90vh] overflow-y-auto scrollbar-hide border-none rounded-2xl"
           >
             <VisuallyHidden>
               <DialogTitle>جزئیات سفارش</DialogTitle>

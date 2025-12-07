@@ -62,11 +62,11 @@ export const OrderContent = ({ order, isMobile }: OrderContentProps) => (
     variants={containerVariants}
     initial="hidden"
     animate="show"
-    className="space-y-8"
+    className="space-y-8 overflow-y-auto px-4 md:px-1 py-2 md:py-0"
   >
     {!isMobile && (
       <MotionDiv variants={itemVariants}>
-        <div className="bg-gradient-to-r from-amber-500 to-amber-600 dark:from-amber-700 dark:to-amber-800 p-6 rounded-t-2xl  -m-6 mb-6">
+        <div className="bg-gradient-to-r from-amber-500 to-amber-600 dark:from-amber-700 dark:to-amber-800 p-6 rounded-t-2xl">
           <div className="text-white">
             <>
               <div className="text-2xl font-bold flex items-center gap-3">
@@ -119,17 +119,17 @@ export const OrderContent = ({ order, isMobile }: OrderContentProps) => (
         <div className="space-y-3">
           <InfoItem
             label="مبلغ کل"
-            value={`${formatCurrency(order?.total_amount)} تومان`}
+            value={`${formatCurrency(order?.total_amount)}`}
             icon={<Banknote className="w-4 h-4" />}
           />
           <InfoItem
             label="تخفیف"
-            value={`${formatCurrency(order?.discount_amount)} تومان`}
+            value={`${formatCurrency(order?.discount_amount)}`}
             icon={<Tag className="w-4 h-4" />}
           />
           <InfoItem
             label="مبلغ پرداختی"
-            value={`${formatCurrency(order?.payment_amount)} تومان`}
+            value={`${formatCurrency(order?.payment_amount)}`}
             icon={<CreditCard className="w-4 h-4" />}
           />
         </div>

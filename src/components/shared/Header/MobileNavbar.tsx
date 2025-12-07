@@ -84,7 +84,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
                 label: "تماس با ما",
                 icon: Phone,
               },
-            ]?.map(({ href, label, icon: Icon }) => {
+            ].map(({ href, label, icon: Icon }) => {
               const isActive = pathname === href;
               return (
                 <SheetClose asChild key={href}>
@@ -99,7 +99,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
                   >
                     {isActive && (
                       <MotionDiv
-                        className="absolute right-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-amber-500 to-orange-500 rounded-l-lg"
+                        className="absolute right-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-amber-500 to-orange-500 rounded-r-2xl"
                         initial={{ height: 0 }}
                         animate={{ height: "100%" }}
                         transition={{ duration: 0.3 }}
