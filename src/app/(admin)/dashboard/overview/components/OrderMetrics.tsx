@@ -1,7 +1,15 @@
 "use client";
 
 import { ShoppingCart } from "lucide-react";
-import { Bar, BarChart, CartesianGrid, Cell, LabelList, XAxis } from "recharts";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
+  LabelList,
+  ResponsiveContainer,
+  XAxis,
+} from "recharts";
 
 import {
   Card,
@@ -80,50 +88,63 @@ export function OrderMetrics({ data }: { data?: OrderOverview }) {
           </div>
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
-          <BarChart
-            accessibilityLayer
-            data={chartData}
-            margin={{
-              top: 20,
-            }}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="status"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              tickFormatter={(value) =>
-                chartConfig[value as keyof typeof chartConfig]?.label ?? value
-              }
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Bar dataKey="count" radius={8}>
-              {chartData?.map((entry, index) => {
-                const cfg =
-                  chartConfig[entry?.status as keyof typeof chartConfig];
-                return (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={cfg?.color ?? "var(--chart-1)"}
+      <CardContent className="px-2 sm:p-6">
+        <div className="h-[300px] w-full">
+          <ChartContainer config={chartConfig} className="h-full w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                accessibilityLayer
+                data={chartData}
+                margin={{
+                  top: 25,
+                  right: 10,
+                  left: 10,
+                  bottom: 5,
+                }}
+              >
+                <CartesianGrid
+                  vertical={false}
+                  strokeDasharray="3 3"
+                  opacity={0.5}
+                />
+                <XAxis
+                  dataKey="status"
+                  tickLine={false}
+                  tickMargin={10}
+                  axisLine={false}
+                  fontSize={11}
+                  tickFormatter={(value) =>
+                    chartConfig[value as keyof typeof chartConfig]?.label ??
+                    value
+                  }
+                />
+                <ChartTooltip
+                  cursor={false}
+                  content={<ChartTooltipContent hideLabel />}
+                />
+                <Bar dataKey="count" radius={[6, 6, 0, 0]}>
+                  {chartData?.map((entry, index) => {
+                    const cfg =
+                      chartConfig[entry?.status as keyof typeof chartConfig];
+                    return (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={cfg?.color ?? "var(--chart-1)"}
+                      />
+                    );
+                  })}
+                  <LabelList
+                    dataKey="count"
+                    position="top"
+                    offset={8}
+                    className="fill-foreground font-medium"
+                    fontSize={11}
                   />
-                );
-              })}
-              <LabelList
-                dataKey="count"
-                position="top"
-                offset={12}
-                className="fill-foreground"
-                fontSize={12}
-              />
-            </Bar>
-          </BarChart>
-        </ChartContainer>
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartContainer>
+        </div>
       </CardContent>
     </Card>
   );
