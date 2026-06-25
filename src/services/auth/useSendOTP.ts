@@ -1,6 +1,6 @@
 import { usePost } from "@/hooks/api/useReactQueryHooks";
-import { toast } from "sonner";
 import { formatRetryAfter } from "@/utils/formatters";
+import { toast } from "sonner";
 
 export const useSendOTP = () => {
   const { mutate, isPending, error } = usePost<
@@ -8,8 +8,8 @@ export const useSendOTP = () => {
     { phone: string; captchaToken: string }
   >(() => "/v1/auth/send-otp", undefined, {
     onSuccess: (data: any) => {
-      toast.success("کد تایید با موفقیت ارسال شد");
-      // toast.success(`کد تایید با موفقیت ارسال شد: ${data?.data?.otpCode}`);
+      (toast.success(`کد تایید با موفقیت ارسال شد: ${data?.data?.otpCode}`),
+        15000);
     },
     onError: (error: any) => {
       switch (error?.statusCode) {
@@ -18,7 +18,7 @@ export const useSendOTP = () => {
           break;
         case 422:
           toast.error(
-            "لطفاً کپچا را کامل انجام دهید. در صورت ادامه مشکل، صفحه را رفرش کنید."
+            "لطفاً کپچا را کامل انجام دهید. در صورت ادامه مشکل، صفحه را رفرش کنید.",
           );
           break;
         case 409:
@@ -26,11 +26,11 @@ export const useSendOTP = () => {
             const timeText = formatRetryAfter(error.retryAfter);
 
             toast.error(
-              `کد تایید قبلی هنوز معتبر است. ${timeText} دیگر منقضی می‌شود.`
+              `کد تایید قبلی هنوز معتبر است. ${timeText} دیگر منقضی می‌شود.`,
             );
           } else {
             toast.error(
-              `کد تایید قبلی هنوز معتبر است. لطفاً از آن استفاده کنید.`
+              `کد تایید قبلی هنوز معتبر است. لطفاً از آن استفاده کنید.`,
             );
           }
           throw error;
@@ -52,16 +52,16 @@ export const useSendOTP = () => {
                     window.location.href = "/contact-us";
                   },
                 },
-              }
+              },
             );
           } else if (error?.retryAfter) {
             const timeText = formatRetryAfter(error.retryAfter);
             toast.error(
-              `تعداد درخواست‌ها بیش از حد مجاز است. دوباره در ${timeText} دیگر تلاش کنید.`
+              `تعداد درخواست‌ها بیش از حد مجاز است. دوباره در ${timeText} دیگر تلاش کنید.`,
             );
           } else {
             toast.error(
-              "تعداد درخواست‌های شما بیش از حد مجاز است. لطفاً بعداً تلاش کنید."
+              "تعداد درخواست‌های شما بیش از حد مجاز است. لطفاً بعداً تلاش کنید.",
             );
           }
           break;

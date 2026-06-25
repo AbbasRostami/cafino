@@ -20,6 +20,7 @@
       }
     ],
     "baseUrl": "./",
+    "ignoreDeprecations": "6.0",
     "paths": {
       "@/*": ["./src/*"],
       "@/validation/*": ["src/validation/*"]
@@ -28,7 +29,7 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    
+
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/utils/formatters.tsx"
