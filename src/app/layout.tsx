@@ -1,11 +1,10 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import { ThemeProvider } from "@/context/Theme-Provider";
-import localFont from "next/font/local";
-import { Toaster } from "@/components/ui/sonner";
 import { QueryProvider } from "@/components/providers/QueryProviders";
+import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "@/context/Theme-Provider";
 import { rootMetadata } from "@/lib/metadata/rootMetadata";
 import { StructuredDataScripts } from "@/lib/metadata/structuredData";
+import type { Metadata } from "next";
+import localFont from "next/font/local";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 const vazirmatn = localFont({

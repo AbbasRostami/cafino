@@ -99,9 +99,24 @@ export const organizationStructuredData = {
   },
 };
 
+export const webSiteStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "کافینو",
+  url: siteUrl,
+};
+
 export function StructuredDataScripts() {
   return (
     <>
+      <Script
+        id="website-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(webSiteStructuredData),
+        }}
+      />
+
       <Script
         id="restaurant-schema"
         type="application/ld+json"
