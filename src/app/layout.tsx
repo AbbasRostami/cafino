@@ -6,6 +6,7 @@ import { StructuredDataScripts } from "@/lib/metadata/structuredData";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
+import "./globals.css";
 
 const vazirmatn = localFont({
   src: "./../assets/fonts/Vazirmatn-UI-FD-Regular.ttf",
